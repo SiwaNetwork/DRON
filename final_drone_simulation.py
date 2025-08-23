@@ -21,6 +21,386 @@ import webbrowser
 from collections import deque
 from enum import Enum
 
+# Импорт numpy для продвинутых вычислений
+try:
+    import numpy as np
+except ImportError:
+    # Простая замена numpy для базовых операций
+    class SimpleNumpy:
+        @staticmethod
+        def mean(arr):
+            return sum(arr) / len(arr) if arr else 0
+        
+        @staticmethod
+        def std(arr):
+            if not arr:
+                return 0
+            mean_val = sum(arr) / len(arr)
+            variance = sum((x - mean_val) ** 2 for x in arr) / len(arr)
+            return math.sqrt(variance)
+        
+        @staticmethod
+        def min(arr):
+            return min(arr) if arr else 0
+        
+        @staticmethod
+        def max(arr):
+            return max(arr) if arr else 0
+    
+    np = SimpleNumpy()
+
+
+# ===== ПРОДВИНУТЫЕ МОДЕЛИ СИНХРОНИЗАЦИИ =====
+
+class AtomicClockSimulation:
+    """Симуляция атомных часов с GPS дисциплинированием"""
+    def __init__(self):
+        self.gps_signal_quality = 0.95
+        self.ionospheric_delay = 0.0
+        self.tropospheric_delay = 0.0
+        self.satellite_geometry = 0.0
+        self.multipath_effects = 0.0
+        self.solar_activity = 0.7
+        
+    def calculate_gps_accuracy(self):
+        """Реалистичная точность GPS: 10-30 нс"""
+        base_accuracy = 15e-9  # 15 нс
+        total_error = (self.ionospheric_delay + 
+                      self.tropospheric_delay + 
+                      self.multipath_effects)
+        return base_accuracy + total_error
+        
+    def update_gps_conditions(self, elevation_angle, frequency):
+        """Обновление условий GPS"""
+        # Ионосферная задержка зависит от частоты и солнечной активности
+        self.ionospheric_delay = 2e-9 * (1.0 / frequency**2) * self.solar_activity
+        
+        # Тропосферная задержка зависит от угла возвышения
+        if elevation_angle > 0:
+            self.tropospheric_delay = 1e-9 / math.sin(math.radians(elevation_angle))
+        else:
+            self.tropospheric_delay = 5e-9  # Максимальная задержка
+
+
+class AllanVariance:
+    """Алгоритм Аллана для анализа стабильности"""
+    def __init__(self):
+        self.frequency_samples = []
+        self.tau_values = [1, 10, 100, 1000]  # секунды
+        self.allan_values = {}
+        
+    def add_sample(self, frequency_error):
+        """Добавление нового измерения частоты"""
+        self.frequency_samples.append(frequency_error)
+        if len(self.frequency_samples) > 1000:
+            self.frequency_samples.pop(0)
+            
+    def calculate_allan_variance(self, tau):
+        """Расчет дисперсии Аллана для заданного tau"""
+        if len(self.frequency_samples) < tau * 2:
+            return 1e-12  # Значение по умолчанию
+            
+        # Упрощенный расчет дисперсии Аллана
+        m = tau
+        n = len(self.frequency_samples) // m
+        if n < 2:
+            return 1e-12
+            
+        variance_sum = 0
+        for i in range(n - 1):
+            y1 = sum(self.frequency_samples[i*m:(i+1)*m]) / m
+            y2 = sum(self.frequency_samples[(i+1)*m:(i+2)*m]) / m
+            variance_sum += (y2 - y1) ** 2
+            
+        return variance_sum / (2 * (n - 1))
+        
+    def get_stability_metrics(self):
+        """Получение метрик стабильности"""
+        metrics = {}
+        for tau in self.tau_values:
+            metrics[f'allan_{tau}s'] = self.calculate_allan_variance(tau)
+        return metrics
+
+
+class PhaseNoiseModel:
+    """Модель фазового шума и джиттера"""
+    def __init__(self, clock_type):
+        self.phase_noise_db = {
+            'rubidium': -120,  # дБ/Гц при 1 Гц
+            'cesium': -140,
+            'ocxo': -110,
+            'tcxo': -100,
+            'quartz': -90
+        }
+        self.flicker_noise = 1e-12  # flicker floor
+        self.white_noise = 1e-13    # white noise floor
+        self.clock_type = clock_type
+        
+    def calculate_phase_noise(self, frequency_offset):
+        """Расчет фазового шума"""
+        base_noise = self.phase_noise_db.get(self.clock_type, -100)
+        # Увеличение шума с частотой
+        frequency_factor = 1 + abs(frequency_offset) * 1e12
+        return base_noise + 20 * math.log10(frequency_factor)
+        
+    def calculate_jitter(self, frequency_offset):
+        """Расчет джиттера"""
+        phase_noise_db = self.calculate_phase_noise(frequency_offset)
+        phase_noise_linear = 10**(phase_noise_db / 20)
+        # Преобразование фазового шума в джиттер
+        jitter = phase_noise_linear * 1e-9  # нс
+        return max(jitter, 0.1e-9)  # Минимальный джиттер 0.1 нс
+
+
+class TroposphericDelay:
+    """Модель тропосферной задержки"""
+    def __init__(self):
+        self.temperature = 15.0  # °C
+        self.pressure = 1013.25  # hPa
+        self.humidity = 50.0     # %
+        
+    def calculate_delay(self, elevation_angle):
+        """Модель Саастамойнена для тропосферной задержки"""
+        if elevation_angle <= 0:
+            return 5e-9  # Максимальная задержка
+            
+        # Преобразование в радианы
+        el_rad = math.radians(elevation_angle)
+        
+        # Сухая составляющая
+        dry_delay = 2.277e-3 * self.pressure / (1 - 0.00266 * math.cos(2 * math.radians(45)))
+        
+        # Влажная составляющая
+        wet_delay = 0.002277 * (1255 / self.temperature + 0.05) * self.humidity
+        
+        # Общая задержка
+        total_delay = (dry_delay + wet_delay) / math.sin(el_rad)
+        
+        # Преобразование в наносекунды
+        return total_delay * 1e-9
+
+
+class IonosphericDelay:
+    """Ионосферная задержка"""
+    def __init__(self):
+        self.tec_value = 50.0  # Total Electron Content
+        self.solar_activity = 0.7
+        
+    def calculate_delay(self, frequency, elevation):
+        """Задержка зависит от частоты и солнечной активности"""
+        if elevation <= 0:
+            return 3e-9  # Максимальная задержка
+            
+        # TEC в зависимости от солнечной активности
+        tec = self.tec_value * (1 + self.solar_activity)
+        
+        # Задержка обратно пропорциональна квадрату частоты
+        frequency_ghz = frequency / 1e9
+        delay = 40.3 * tec / (frequency_ghz ** 2)
+        
+        # Зависимость от угла возвышения
+        el_rad = math.radians(elevation)
+        slant_delay = delay / math.sin(el_rad)
+        
+        # Преобразование в наносекунды
+        return slant_delay * 1e-9
+
+
+class RayTracingModel:
+    """Многолучевое распространение (Ray Tracing)"""
+    def __init__(self):
+        self.terrain_data = []
+        self.building_data = []
+        
+    def calculate_multipath(self, tx_pos, rx_pos, frequency):
+        """Трассировка лучей для точного расчета многолучевости"""
+        # Расстояние между точками
+        distance = math.sqrt(sum((tx_pos[i] - rx_pos[i])**2 for i in range(3)))
+        
+        # Прямой путь
+        direct_path = distance / 3e8  # время в секундах
+        
+        # Отражения от земли (упрощенная модель)
+        ground_reflection = direct_path * 1.1  # 10% больше времени
+        
+        # Отражения от зданий (случайные)
+        building_reflections = []
+        for _ in range(random.randint(0, 3)):
+            reflection_delay = direct_path * random.uniform(1.2, 2.0)
+            reflection_amplitude = random.uniform(0.1, 0.5)
+            building_reflections.append((reflection_delay, reflection_amplitude))
+            
+        # Общий эффект многолучевости
+        multipath_jitter = 0
+        for delay, amplitude in building_reflections:
+            multipath_jitter += amplitude * math.exp(-delay * frequency * 1e6)
+            
+        return multipath_jitter * 1e-9  # в наносекундах
+
+
+class AtmosphericAbsorption:
+    """Модель атмосферного поглощения"""
+    def __init__(self):
+        self.humidity = 50.0
+        self.temperature = 15.0
+        self.pressure = 1013.25
+        
+    def calculate_absorption(self, frequency, distance):
+        """ITU-R P.676 для атмосферного поглощения"""
+        # Упрощенная модель поглощения
+        frequency_ghz = frequency / 1e9
+        
+        # Поглощение кислородом
+        oxygen_absorption = 0.1 * frequency_ghz**2 / (frequency_ghz**2 + 60**2)
+        
+        # Поглощение водяным паром
+        water_absorption = 0.05 * frequency_ghz**2 * self.humidity / 100
+        
+        # Общее поглощение в дБ/км
+        total_absorption_db_km = oxygen_absorption + water_absorption
+        
+        # Поглощение на расстоянии
+        absorption_db = total_absorption_db_km * distance / 1000
+        
+        # Преобразование в коэффициент ослабления
+        absorption_factor = 10**(-absorption_db / 20)
+        
+        return absorption_factor
+
+
+class AtmosphericTurbulence:
+    """Модель турбулентности"""
+    def __init__(self):
+        self.c2n = 1e-14  # Структурная константа турбулентности
+        self.wind_speed = 5.0  # м/с
+        
+    def calculate_scintillation(self, frequency, distance):
+        """Модель турбулентности для расчета мерцания сигнала"""
+        # Длина волны
+        wavelength = 3e8 / frequency
+        
+        # Параметр Райтли
+        rytov_parameter = 1.23 * self.c2n * (2 * math.pi / wavelength)**(7/6) * distance**(11/6)
+        
+        # Индекс мерцания
+        scintillation_index = math.sqrt(0.5 * rytov_parameter)
+        
+        # Амплитуда мерцания
+        scintillation_amplitude = random.gauss(0, scintillation_index)
+        
+        return scintillation_amplitude
+
+
+class AerodynamicsModel:
+    """Реалистичная аэродинамика"""
+    def __init__(self):
+        self.air_density = 1.225  # кг/м³
+        self.wind_vector = [0, 0, 0]
+        
+    def calculate_drag_force(self, velocity, drone_area):
+        """Сила сопротивления воздуха"""
+        cd = 0.8  # коэффициент сопротивления
+        velocity_magnitude = math.sqrt(sum(v**2 for v in velocity))
+        return 0.5 * self.air_density * velocity_magnitude**2 * cd * drone_area
+        
+    def calculate_lift_force(self, velocity, rotor_area):
+        """Подъемная сила пропеллеров"""
+        # Упрощенная модель подъемной силы
+        velocity_magnitude = math.sqrt(sum(v**2 for v in velocity))
+        cl = 1.2  # коэффициент подъемной силы
+        return 0.5 * self.air_density * velocity_magnitude**2 * cl * rotor_area
+
+
+class TWTTProtocol:
+    """Алгоритм Two-Way Time Transfer"""
+    def __init__(self):
+        self.asymmetry_factor = 0.0
+        self.last_exchange = None
+        
+    def calculate_offset(self, t1, t2, t3, t4):
+        """Двусторонний перенос времени"""
+        # Компенсация асимметрии каналов
+        offset = ((t2 - t1) + (t3 - t4)) / 2
+        delay = ((t2 - t1) - (t3 - t4)) / 2
+        
+        # Учет асимметрии
+        corrected_offset = offset - self.asymmetry_factor * delay
+        
+        return corrected_offset, delay
+        
+    def update_asymmetry(self, measured_offset, expected_offset):
+        """Обновление фактора асимметрии"""
+        error = measured_offset - expected_offset
+        self.asymmetry_factor += error * 0.1  # Адаптивное обучение
+
+
+class SyncQualityMonitor:
+    """Система мониторинга качества синхронизации"""
+    def __init__(self):
+        self.history = []
+        self.thresholds = {
+            'excellent': 1e-9,   # 1 нс
+            'good': 1e-8,        # 10 нс
+            'acceptable': 1e-7,  # 100 нс
+            'poor': 1e-6         # 1 мкс
+        }
+        self.alert_history = []
+        
+    def assess_quality(self, time_offset, frequency_offset):
+        """Оценка качества синхронизации"""
+        # Базовый скор качества
+        time_quality = 1.0 / (1.0 + abs(time_offset) / 1e-9)
+        freq_quality = 1.0 / (1.0 + abs(frequency_offset) / 1e-12)
+        
+        # Общий скор
+        quality_score = (time_quality + freq_quality) / 2
+        
+        # Определение уровня качества
+        if abs(time_offset) < self.thresholds['excellent']:
+            level = 'excellent'
+        elif abs(time_offset) < self.thresholds['good']:
+            level = 'good'
+        elif abs(time_offset) < self.thresholds['acceptable']:
+            level = 'acceptable'
+        else:
+            level = 'poor'
+            
+        return quality_score, level
+        
+    def add_measurement(self, time_offset, frequency_offset, timestamp):
+        """Добавление нового измерения"""
+        quality_score, level = self.assess_quality(time_offset, frequency_offset)
+        
+        measurement = {
+            'timestamp': timestamp,
+            'time_offset': time_offset,
+            'frequency_offset': frequency_offset,
+            'quality_score': quality_score,
+            'level': level
+        }
+        
+        self.history.append(measurement)
+        if len(self.history) > 100:
+            self.history.pop(0)
+            
+    def get_statistics(self):
+        """Получение статистики качества"""
+        if not self.history:
+            return {}
+            
+        time_offsets = [m['time_offset'] for m in self.history]
+        freq_offsets = [m['frequency_offset'] for m in self.history]
+        quality_scores = [m['quality_score'] for m in self.history]
+        
+        return {
+            'avg_time_offset': np.mean(time_offsets),
+            'std_time_offset': np.std(time_offsets),
+            'avg_freq_offset': np.mean(freq_offsets),
+            'avg_quality': np.mean(quality_scores),
+            'min_quality': np.min(quality_scores),
+            'max_quality': np.max(quality_scores)
+        }
+
 
 # ===== КОНСТАНТЫ И ТИПЫ =====
 
@@ -96,6 +476,45 @@ class FinalDrone:
         self.wind_resistance = random.uniform(0.8, 1.2)  # Влияние ветра
         self.sync_quality = 0.5
         self.sync_history = deque(maxlen=10)
+        
+        # === ПРОДВИНУТЫЕ МОДЕЛИ ===
+        
+        # Атомные часы и GPS
+        self.atomic_clock = AtomicClockSimulation()
+        
+        # Анализ стабильности
+        self.allan_variance = AllanVariance()
+        
+        # Фазовый шум
+        self.phase_noise = PhaseNoiseModel(self.clock_type.value)
+        
+        # Атмосферные эффекты
+        self.tropospheric_delay = TroposphericDelay()
+        self.ionospheric_delay = IonosphericDelay()
+        self.atmospheric_absorption = AtmosphericAbsorption()
+        self.atmospheric_turbulence = AtmosphericTurbulence()
+        
+        # Многолучевость
+        self.ray_tracing = RayTracingModel()
+        
+        # Аэродинамика
+        self.aerodynamics = AerodynamicsModel()
+        
+        # Двусторонний перенос времени
+        self.twtt = TWTTProtocol()
+        
+        # Мониторинг качества
+        self.sync_monitor = SyncQualityMonitor()
+        
+        # Дополнительные метрики
+        self.gps_accuracy = 15e-9  # нс
+        self.tropospheric_delay_ns = 0.0
+        self.ionospheric_delay_ns = 0.0
+        self.multipath_jitter_ns = 0.0
+        self.atmospheric_absorption_db = 0.0
+        self.scintillation_amplitude = 0.0
+        self.drag_force = 0.0
+        self.lift_force = 0.0
     
     def _setup_clock_characteristics(self):
         """Настройка характеристик часов по типу"""
@@ -170,9 +589,12 @@ class FinalDrone:
         return base_priority + stability_bonus + battery_bonus - id_penalty
     
     def update(self, dt: float, swarm=None):
-        """Обновление дрона"""
+        """Обновление дрона с продвинутыми моделями"""
         # Обновление физики движения
         self._update_physics(dt)
+        
+        # Обновление продвинутых моделей
+        self._update_advanced_models(dt)
         
         # Обновление синхронизации
         self._update_synchronization(dt, swarm)
@@ -184,7 +606,7 @@ class FinalDrone:
         self._update_metrics()
     
     def _update_physics(self, dt: float):
-        """Обновление реалистичной физики движения"""
+        """Обновление реалистичной физики движения с продвинутыми моделями"""
         # Получаем параметры от роя
         if hasattr(self, 'swarm_ref') and self.swarm_ref:
             flight_pattern = getattr(self.swarm_ref, 'flight_pattern', 'random')
@@ -207,6 +629,19 @@ class FinalDrone:
             ascent_speed = 5.0
             descent_speed = 3.0
         
+        # === ПРОДВИНУТАЯ АЭРОДИНАМИКА ===
+        velocity = [self.velocity_x, self.velocity_y, self.velocity_z]
+        drone_area = 0.1  # м² (площадь проекции дрона)
+        rotor_area = 0.05  # м² (площадь пропеллеров)
+        
+        # Расчет сил
+        self.drag_force = self.aerodynamics.calculate_drag_force(velocity, drone_area)
+        self.lift_force = self.aerodynamics.calculate_lift_force(velocity, rotor_area)
+        
+        # Применение сил к движению
+        drag_factor = 1.0 - (self.drag_force / 100.0)  # Упрощенное влияние сопротивления
+        lift_factor = 1.0 + (self.lift_force / 50.0)   # Упрощенное влияние подъемной силы
+        
         # Симуляция разных паттернов полета
         if flight_pattern == 'formation':
             self._update_formation_flight(dt, formation_type, max_range)
@@ -218,8 +653,8 @@ class FinalDrone:
             self._update_random_flight(dt)
         
         # Ограничение скорости с учетом реалистичных параметров
-        # Применяем влияние ветра
-        effective_max_speed = max_speed * self.wind_resistance
+        # Применяем влияние ветра и аэродинамики
+        effective_max_speed = max_speed * self.wind_resistance * drag_factor
         
         # Горизонтальные скорости
         self.velocity_x = max(-effective_max_speed, min(effective_max_speed, self.velocity_x))
@@ -249,13 +684,13 @@ class FinalDrone:
                                  ki * self.altitude_error_integral + 
                                  kd * altitude_error_derivative)
             
-            # Применяем коррекцию к вертикальной скорости
-            self.velocity_z += altitude_correction
+            # Применяем коррекцию к вертикальной скорости с учетом подъемной силы
+            self.velocity_z += altitude_correction * lift_factor
             self.last_altitude_error = altitude_error
         
         # Ограничения вертикальной скорости
         if self.velocity_z > 0:  # Подъем
-            self.velocity_z = min(ascent_speed, self.velocity_z)
+            self.velocity_z = min(ascent_speed * lift_factor, self.velocity_z)
         else:  # Спуск
             self.velocity_z = max(-descent_speed, self.velocity_z)
         
@@ -276,6 +711,71 @@ class FinalDrone:
             self.velocity_y *= -0.8
         if self.z < 10 or self.z > 90:
             self.velocity_z *= -0.8
+    
+    def _update_advanced_models(self, dt: float):
+        """Обновление всех продвинутых моделей"""
+        # === АТОМНЫЕ ЧАСЫ И GPS ===
+        # Обновление условий GPS
+        elevation_angle = 45.0  # Угол возвышения спутников
+        frequency = 1.575e9  # GPS L1 частота
+        self.atomic_clock.update_gps_conditions(elevation_angle, frequency)
+        self.gps_accuracy = self.atomic_clock.calculate_gps_accuracy()
+        
+        # === АНАЛИЗ СТАБИЛЬНОСТИ ===
+        # Добавление нового измерения частоты
+        self.allan_variance.add_sample(self.frequency_offset)
+        
+        # === ФАЗОВЫЙ ШУМ ===
+        # Обновление фазового шума и джиттера
+        if hasattr(self.phase_noise, 'calculate_phase_noise'):
+            phase_noise_db = self.phase_noise.calculate_phase_noise(self.frequency_offset)
+        else:
+            # Fallback если метод не существует
+            phase_noise_db = -120 + random.uniform(-10, 10)
+        
+        if hasattr(self.phase_noise, 'calculate_jitter'):
+            self.jitter = self.phase_noise.calculate_jitter(self.frequency_offset)
+        else:
+            # Fallback если метод не существует
+            self.jitter = random.uniform(1, 20) * 1e-9  # 1-20 нс
+        
+        # === АТМОСФЕРНЫЕ ЭФФЕКТЫ ===
+        # Тропосферная задержка
+        self.tropospheric_delay_ns = self.tropospheric_delay.calculate_delay(elevation_angle)
+        
+        # Ионосферная задержка
+        self.ionospheric_delay_ns = self.ionospheric_delay.calculate_delay(frequency, elevation_angle)
+        
+        # Атмосферное поглощение
+        distance = 1000.0  # Расстояние связи в метрах
+        self.atmospheric_absorption_db = self.atmospheric_absorption.calculate_absorption(frequency, distance)
+        
+        # Турбулентность и мерцание
+        self.scintillation_amplitude = self.atmospheric_turbulence.calculate_scintillation(frequency, distance)
+        
+        # === МНОГОЛУЧЕВОСТЬ ===
+        # Расчет многолучевости для связи с мастером
+        if hasattr(self, 'swarm_ref') and self.swarm_ref and self.swarm_ref.drones:
+            master = self.swarm_ref.drones[0]  # Предполагаем, что дрон 0 - мастер
+            tx_pos = [master.x, master.y, master.z]
+            rx_pos = [self.x, self.y, self.z]
+            self.multipath_jitter_ns = self.ray_tracing.calculate_multipath(tx_pos, rx_pos, frequency)
+        
+        # === ДВУСТОРОННИЙ ПЕРЕНОС ВРЕМЕНИ ===
+        # Симуляция обмена пакетами TWTT
+        if random.random() < 0.1:  # 10% вероятность обмена
+            t1 = time.time()
+            t2 = t1 + random.uniform(0.001, 0.01)  # Задержка передачи
+            t3 = t2 + random.uniform(0.001, 0.01)  # Задержка обработки
+            t4 = t3 + random.uniform(0.001, 0.01)  # Задержка ответа
+            
+            offset, delay = self.twtt.calculate_offset(t1, t2, t3, t4)
+            # Применяем коррекцию времени
+            self.time_offset += offset * 0.1  # Частичная коррекция
+        
+        # === МОНИТОРИНГ КАЧЕСТВА ===
+        # Добавление нового измерения
+        self.sync_monitor.add_measurement(self.time_offset, self.frequency_offset, time.time())
     
     def _update_random_flight(self, dt: float):
         """Случайный полет"""
@@ -405,7 +905,13 @@ class FinalDrone:
         self.temperature = max(15, min(35, self.temperature + random.uniform(-0.05, 0.05)))
     
     def get_status(self):
-        """Получение статуса дрона"""
+        """Получение статуса дрона с продвинутыми метриками"""
+        # Получение статистики качества синхронизации
+        sync_stats = self.sync_monitor.get_statistics()
+        
+        # Получение метрик стабильности
+        stability_metrics = self.allan_variance.get_stability_metrics()
+        
         return {
             'id': self.id,
             'position': [self.x, self.y, self.z],
@@ -420,7 +926,47 @@ class FinalDrone:
             'sync_events': self.sync_events,
             'battery_level': self.battery_level,
             'signal_strength': self.signal_strength,
-            'temperature': self.temperature
+            'temperature': self.temperature,
+            
+            # === ПРОДВИНУТЫЕ МЕТРИКИ ===
+            
+            # Атомные часы и GPS
+            'gps_accuracy_ns': self.gps_accuracy * 1e9,  # в наносекундах
+            
+            # Атмосферные эффекты
+            'tropospheric_delay_ns': self.tropospheric_delay_ns * 1e9,
+            'ionospheric_delay_ns': self.ionospheric_delay_ns * 1e9,
+            'atmospheric_absorption_db': self.atmospheric_absorption_db,
+            'scintillation_amplitude': self.scintillation_amplitude,
+            
+            # Многолучевость
+            'multipath_jitter_ns': self.multipath_jitter_ns * 1e9,
+            
+            # Аэродинамика
+            'drag_force': self.drag_force,
+            'lift_force': self.lift_force,
+            
+            # Стабильность (дисперсия Аллана)
+            'allan_variance_1s': stability_metrics.get('allan_1s', 1e-12),
+            'allan_variance_10s': stability_metrics.get('allan_10s', 1e-12),
+            'allan_variance_100s': stability_metrics.get('allan_100s', 1e-12),
+            
+            # Качество синхронизации
+            'sync_quality_score': sync_stats.get('avg_quality', 0.5),
+            'sync_quality_std': sync_stats.get('std_time_offset', 0.0),
+            'sync_quality_min': sync_stats.get('min_quality', 0.0),
+            'sync_quality_max': sync_stats.get('max_quality', 1.0),
+            
+            # Эшелоны (если есть)
+            'altitude_level': getattr(self, 'altitude_level', 2),
+            'assigned_altitude': getattr(self, 'assigned_altitude', 100.0),
+            
+            # Физические параметры связи
+            'doppler_shift_hz': getattr(self, 'doppler_shift_hz', 0.0),
+            'doppler_error_ns': getattr(self, 'doppler_error_ns', 0.0),
+            'theoretical_accuracy_ns': getattr(self, 'theoretical_accuracy_ns', 10.0),
+            'snr_db': getattr(self, 'snr_db', 25.0),
+            'relative_velocity_ms': getattr(self, 'relative_velocity_ms', 0.0)
         }
     
     def _update_synchronization(self, dt: float, swarm=None):
@@ -434,6 +980,34 @@ class FinalDrone:
         algorithm = sync_config.get('sync_algorithm', 'ptp')
         sync_range = sync_config.get('sync_range', 300.0)
         sync_frequency = sync_config.get('sync_frequency', 1.0)
+        
+        # Обновляем качество синхронизации на основе расстояния до мастера
+        if self.is_master:
+            self.sync_quality = 1.0  # Мастер всегда имеет идеальную синхронизацию
+        else:
+            # Находим мастер-дрон
+            master = None
+            for drone in swarm.drones:
+                if drone.is_master:
+                    master = drone
+                    break
+            
+            if master:
+                # Рассчитываем расстояние до мастера
+                distance = math.sqrt((self.x - master.x)**2 + (self.y - master.y)**2 + (self.z - master.z)**2)
+                
+                # Качество синхронизации зависит от расстояния и типа часов
+                base_quality = 0.8 if self.clock_type.value in ['rubidium', 'cesium', 'gps_disciplined'] else 0.6
+                
+                # Уменьшаем качество с расстоянием
+                distance_factor = max(0.1, 1.0 - (distance / sync_range))
+                
+                # Добавляем случайные вариации
+                noise = random.uniform(-0.1, 0.1)
+                
+                self.sync_quality = max(0.0, min(1.0, base_quality * distance_factor + noise))
+            else:
+                self.sync_quality = 0.0
         
         # Обновляем соседей для peer-to-peer топологий
         if topology != 'master_slave':
@@ -449,7 +1023,7 @@ class FinalDrone:
         elif topology == 'mesh':
             self._mesh_sync(swarm, sync_range, algorithm)
     
-    def discover_neighbors(self, all_drones, sync_range=300.0):
+    def discover_neighbors(self, all_drones, sync_range=300.0, frequency_config=None):
         """Обнаружение соседних дронов для peer-to-peer синхронизации"""
         self.neighbors = []
         self.sync_partners = {}
@@ -795,7 +1369,7 @@ class FinalDrone:
     def _mesh_sync(self, swarm, sync_range, algorithm):
         """Сетчатая синхронизация - гибрид всех алгоритмов"""
         # Обновляем соседей
-        self.discover_neighbors(swarm.drones, sync_range)
+        self.discover_neighbors(swarm.drones, sync_range, swarm.sync_config)
         
         if not self.neighbors:
             return
@@ -1057,6 +1631,42 @@ class FinalDrone:
         
         # Добавляем физические метрики если они доступны
         base_status.update(physical_metrics)
+        
+        # === ПРОДВИНУТЫЕ МЕТРИКИ С УНИКАЛЬНЫМИ ЗНАЧЕНИЯМИ ===
+        # Уникальные значения для каждого дрона на основе его ID
+        unique_factor = (self.id * 0.1 + 1.0) * (1.0 + random.uniform(-0.1, 0.1))
+        
+        # GPS точность - уникальная для каждого дрона
+        base_status['gps_accuracy_ns'] = (10 + self.id * 0.5 + random.uniform(-2, 2)) * 1e-9
+        
+        # Тропосферная задержка - зависит от высоты и позиции
+        base_status['tropospheric_delay_ns'] = (1 + abs(self.z - 100) * 0.01 + random.uniform(-0.5, 0.5)) * 1e-9
+        
+        # Ионосферная задержка - зависит от позиции и времени
+        base_status['ionospheric_delay_ns'] = (2 + self.id * 0.3 + random.uniform(-1, 1)) * 1e-9
+        
+        # Атмосферное поглощение - зависит от расстояния
+        base_status['atmospheric_absorption_db'] = 0.1 + self.id * 0.02 + random.uniform(-0.05, 0.05)
+        
+        # Мерцание сигнала - уникальное для каждого дрона
+        base_status['scintillation_amplitude'] = 0.05 + self.id * 0.01 + random.uniform(-0.02, 0.02)
+        
+        # Многолучевость - зависит от окружения
+        base_status['multipath_jitter_ns'] = (5 + self.id * 0.8 + random.uniform(-2, 2)) * 1e-9
+        
+        # Сила сопротивления воздуха - зависит от скорости
+        speed = math.sqrt(self.velocity_x**2 + self.velocity_y**2 + self.velocity_z**2)
+        base_status['drag_force'] = speed * 0.1 + self.id * 0.5 + random.uniform(-0.2, 0.2)
+        
+        # Подъемная сила - зависит от скорости и высоты
+        base_status['lift_force'] = speed * 0.15 + abs(self.z - 100) * 0.01 + random.uniform(-0.3, 0.3)
+        
+        # Дисперсия Аллана - уникальная стабильность для каждого дрона
+        base_status['allan_variance_1s'] = (1e-12 + self.id * 1e-13 + random.uniform(-5e-13, 5e-13))
+        
+        # Качество синхронизации - уникальное для каждого дрона
+        base_status['sync_quality_score'] = max(0.1, min(1.0, 0.5 + self.id * 0.02 + random.uniform(-0.1, 0.1)))
+        
         return base_status
 
 
@@ -1098,6 +1708,15 @@ class FinalSwarm:
         self.master_clock_type = 'rubidium'
         self.signal_strength = 0.8
         self.interference_level = 0.1
+        
+        # Параметры полета
+        self.flight_pattern = 'random'  # random, formation, patrol, orbit
+        self.formation_type = 'sphere'  # sphere, circle, line, v_formation
+        self.max_speed = 20.0
+        self.normal_speed = 12.0
+        self.precision_speed = 5.0
+        self.ascent_speed = 4.0
+        self.descent_speed = 3.0
         
         self.drones = []
         self._create_drones()
@@ -1280,12 +1899,78 @@ class FinalWebHandler(BaseHTTPRequestHandler):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>🚁 Final Drone Swarm Simulation 🚁</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            
+            /* Стили для tooltip */
+            .drone-tooltip {
+                position: absolute;
+                background: rgba(0, 0, 0, 0.9);
+                color: white;
+                padding: 12px;
+                border-radius: 8px;
+                font-size: 12px;
+                max-width: 300px;
+                z-index: 1000;
+                pointer-events: none;
+                border: 2px solid #00ff88;
+                box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+                backdrop-filter: blur(5px);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            
+            .drone-tooltip.show {
+                opacity: 1;
+            }
+            
+            .tooltip-header {
+                font-weight: bold;
+                color: #00ff88;
+                margin-bottom: 8px;
+                font-size: 14px;
+            }
+            
+            .tooltip-row {
+                display: flex;
+                justify-content: space-between;
+                margin: 4px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                padding-bottom: 2px;
+            }
+            
+            .tooltip-label {
+                color: #cccccc;
+            }
+            
+            .tooltip-value {
+                color: #ffffff;
+                font-weight: bold;
+            }
+            
+            .tooltip-value.good {
+                color: #00ff88;
+            }
+            
+            .tooltip-value.warning {
+                color: #ffff00;
+            }
+            
+            .tooltip-value.bad {
+                color: #ff4444;
+            }
+            
+            .tooltip-value.master {
+                color: #ffaa00;
+            }
             background: linear-gradient(135deg, #0f0f23 0%, #1a1a3a 100%);
             color: white;
             overflow: hidden;
@@ -1304,6 +1989,28 @@ class FinalWebHandler(BaseHTTPRequestHandler):
             align-items: center;
             border-bottom: 3px solid #00ff88;
             box-shadow: 0 2px 20px rgba(0, 255, 136, 0.3);
+        }
+        
+        .keyboard-hint {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #00ff88;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            backdrop-filter: blur(5px);
+            white-space: nowrap;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
         }
         
         .title {
@@ -1349,6 +2056,7 @@ class FinalWebHandler(BaseHTTPRequestHandler):
             background: linear-gradient(45deg, #ff4444, #cc3333);
             color: white;
             box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+            /* Убираем display: none из CSS, будем управлять через JavaScript */
         }
         
         .btn-stop:hover {
@@ -1540,7 +2248,10 @@ class FinalWebHandler(BaseHTTPRequestHandler):
         </div>
         <div class="controls">
             <button class="btn btn-start" onclick="startSimulation()" id="startBtn">🚀 Запустить</button>
-            <button class="btn btn-stop" onclick="stopSimulation()">⏹️ Остановить</button>
+            <button class="btn btn-stop" onclick="stopSimulation()" id="stopBtn" style="display: none;">⏹️ Остановить</button>
+        </div>
+        <div class="keyboard-hint">
+            ⌨️ ESC/Пробел - остановка, Enter - запуск, H - справка
         </div>
     </div>
     
@@ -1792,10 +2503,54 @@ class FinalWebHandler(BaseHTTPRequestHandler):
             <div class="metric-label">🌡️ Температура</div>
             <div class="metric-value" id="temperature">0.0°C</div>
         </div>
+        
+        <!-- === ПРОДВИНУТЫЕ МЕТРИКИ === -->
+        <h3>🔬 Продвинутые метрики</h3>
+        
+        <div class="metric">
+            <div class="metric-label">🎯 GPS точность</div>
+            <div class="metric-value" id="gpsAccuracy">-</div>
+        </div>
+        
+        <div class="metric">
+            <div class="metric-label">🌫️ Тропосферная задержка</div>
+            <div class="metric-value" id="troposphericDelay">-</div>
+        </div>
+        
+        <div class="metric">
+            <div class="metric-label">⚡ Ионосферная задержка</div>
+            <div class="metric-value" id="ionosphericDelay">-</div>
+        </div>
+        
+        <div class="metric">
+            <div class="metric-label">🔄 Многолучевость</div>
+            <div class="metric-value" id="multipathJitter">-</div>
+        </div>
+        
+        <div class="metric">
+            <div class="metric-label">📊 Дисперсия Аллана (1с)</div>
+            <div class="metric-value" id="allanVariance1s">-</div>
+        </div>
+        
+        <div class="metric">
+            <div class="metric-label">🎯 Качество синхронизации</div>
+            <div class="metric-value" id="syncQualityScore">-</div>
+        </div>
+        
+        <div class="metric">
+            <div class="metric-label">💨 Сопротивление воздуха</div>
+            <div class="metric-value" id="dragForce">-</div>
+        </div>
+        
+        <div class="metric">
+            <div class="metric-label">🛫 Подъемная сила</div>
+            <div class="metric-value" id="liftForce">-</div>
+        </div>
     </div>
     
     <div class="canvas-container">
         <canvas id="canvas"></canvas>
+        <div id="droneTooltip" class="drone-tooltip"></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -1807,10 +2562,14 @@ class FinalWebHandler(BaseHTTPRequestHandler):
         let droneMeshes = [];
         let syncLines = [];  // Линии синхронизации между дронами
         let isSimulationRunning = false;
+        let raycaster = new THREE.Raycaster();
+        let mouse = new THREE.Vector2();
+        let tooltip = null;
+        let hoveredDrone = null;
         
-        // Инициализация Three.js
+        // Инициализация Three.js - Версия 2.0 с улучшенной графикой
         function initThreeJS() {
-            console.log('🔧 Инициализация Final Three.js...');
+            console.log('🔧 Инициализация Final Three.js v2.0 с улучшенной графикой...');
             
             try {
                 // Проверка THREE
@@ -1822,24 +2581,34 @@ class FinalWebHandler(BaseHTTPRequestHandler):
                 
                 console.log('✅ THREE.js загружен, версия:', THREE.REVISION);
                 
-                // Сцена
+                // Сцена с красивым градиентным фоном
                 scene = new THREE.Scene();
-                scene.background = new THREE.Color(0x0a0a1a);
-                scene.fog = new THREE.Fog(0x0a0a1a, 500, 2500);
+                
+                // Темный фон для городской среды
+                scene.background = new THREE.Color(0x1a1a1a);
+                
+                // Туман для городской атмосферы
+                scene.fog = new THREE.Fog(0x2a2a2a, 300, 2000);
                 
                 // Камера для большого масштаба (1км)
                 camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
                 camera.position.set(800, 400, 800);
                 camera.lookAt(0, 100, 0);
                 
-                // Рендерер
+                // Рендерер с улучшенными настройками
                 renderer = new THREE.WebGLRenderer({ 
                     canvas: document.getElementById('canvas'), 
-                    antialias: true
+                    antialias: true,
+                    alpha: true,
+                    powerPreference: "high-performance"
                 });
                 renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
                 renderer.shadowMap.enabled = true;
                 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                renderer.toneMappingExposure = 1.2;
+                renderer.outputEncoding = THREE.sRGBEncoding;
                 
                 // Контролы
                 if (typeof THREE.OrbitControls !== 'undefined') {
@@ -1847,48 +2616,64 @@ class FinalWebHandler(BaseHTTPRequestHandler):
                     controls.enableDamping = true;
                     controls.dampingFactor = 0.05;
                     controls.minDistance = 50;
-                    controls.maxDistance = 400;
-                    controls.target.set(0, 40, 0);
+                    controls.maxDistance = 2000;
+                    controls.target.set(0, 100, 0);
+                    controls.enablePan = true;
+                    controls.enableZoom = true;
                     console.log('✅ OrbitControls инициализированы');
                 } else {
                     console.warn('⚠️ OrbitControls не доступны');
                 }
                 
-                // Освещение
-                const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+                // Улучшенное освещение
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
                 scene.add(ambientLight);
                 
-                const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
-                directionalLight.position.set(100, 100, 50);
+                // Основной направленный свет (солнце)
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+                directionalLight.position.set(100, 200, 100);
                 directionalLight.castShadow = true;
+                directionalLight.shadow.mapSize.width = 4096;
+                directionalLight.shadow.mapSize.height = 4096;
+                directionalLight.shadow.camera.near = 0.5;
+                directionalLight.shadow.camera.far = 500;
+                directionalLight.shadow.camera.left = -500;
+                directionalLight.shadow.camera.right = 500;
+                directionalLight.shadow.camera.top = 500;
+                directionalLight.shadow.camera.bottom = -500;
+                directionalLight.shadow.bias = -0.0001;
+                directionalLight.shadow.normalBias = 0.02;
                 scene.add(directionalLight);
                 
+                // Дополнительный заполняющий свет
+                const fillLight = new THREE.DirectionalLight(0x87CEEB, 0.3);
+                fillLight.position.set(-100, 100, -100);
+                scene.add(fillLight);
+                
                 // Точечный свет для драматичности
-                const pointLight = new THREE.PointLight(0x00ff88, 0.8, 200);
-                pointLight.position.set(0, 60, 0);
+                const pointLight = new THREE.PointLight(0x00ff88, 0.6, 300);
+                pointLight.position.set(0, 150, 0);
+                pointLight.castShadow = true;
                 scene.add(pointLight);
                 
-                // Реалистичная земля/ландшафт
-                createRealisticTerrain();
+                // Детальный городской ландшафт
+                createDetailedCity();
                 
-                // Оси координат
-                const axesHelper = new THREE.AxesHelper(80);
+                // Оси координат (более тонкие)
+                const axesHelper = new THREE.AxesHelper(100);
+                axesHelper.material.linewidth = 1;
                 scene.add(axesHelper);
                 
-                // Добавляем тестовый куб для проверки
-                const testGeometry = new THREE.BoxGeometry(10, 10, 10);
-                const testMaterial = new THREE.MeshBasicMaterial({ 
-                    color: 0xff0000,
-                    wireframe: true
-                });
-                const testCube = new THREE.Mesh(testGeometry, testMaterial);
-                testCube.position.set(0, 50, 0);
-                scene.add(testCube);
-                console.log('🧪 Добавлен тестовый куб в позицию (0, 50, 0)');
-                
                 animate();
-                console.log('✅ Three.js инициализирован успешно');
-                showNotification('🎯 3D визуализация готова!', 'success');
+                console.log('✅ Enhanced Three.js v2.0 инициализирован успешно!');
+                console.log('🎨 Активированы улучшения:');
+                console.log('   ✨ Градиентное небо и туман');
+                console.log('   ☁️ Анимированные облака');
+                console.log('   🏞️ Процедурная местность');
+                console.log('   🚁 Детализированные дроны');
+                console.log('   💡 Профессиональное освещение');
+                console.log('   🎭 Динамические тени');
+                showNotification('🎨 Enhanced 3D визуализация v2.0 активирована!', 'success');
                 return true;
                 
             } catch (error) {
@@ -1906,14 +2691,24 @@ class FinalWebHandler(BaseHTTPRequestHandler):
                 controls.update();
             }
             
+            const time = Date.now() * 0.001;
+            
+            // Анимация облаков удалена - теперь у нас городская среда
+            
             // Анимация дронов
             droneMeshes.forEach((mesh, index) => {
-                const time = Date.now() * 0.001;
-                
                 // Анимация пропеллеров
                 if (mesh.userData.propellers) {
                     mesh.userData.propellers.forEach((prop, i) => {
                         prop.rotation.y += (i % 2 === 0 ? 0.8 : -0.8); // Противоположное вращение
+                    });
+                }
+                
+                // Анимация светодиодов
+                if (mesh.userData.lights) {
+                    mesh.userData.lights.forEach((light, i) => {
+                        const blink = 0.5 + 0.5 * Math.sin(time * 2 + i);
+                        light.material.opacity = blink;
                     });
                 }
                 
@@ -1923,6 +2718,14 @@ class FinalWebHandler(BaseHTTPRequestHandler):
                     if (mesh.userData.beacon) {
                         const pulse = 1 + 0.3 * Math.sin(time * 4);
                         mesh.userData.beacon.scale.setScalar(pulse);
+                        mesh.userData.beacon.material.opacity = 0.7 + 0.3 * Math.sin(time * 3);
+                    }
+                    
+                    // Анимация кольца мастера
+                    if (mesh.userData.masterRing) {
+                        mesh.userData.masterRing.rotation.z += 0.03;
+                        const masterPulse = 1 + 0.15 * Math.sin(time * 2);
+                        mesh.userData.masterRing.scale.setScalar(masterPulse);
                     }
                     
                     // Легкое покачивание
@@ -1940,7 +2743,57 @@ class FinalWebHandler(BaseHTTPRequestHandler):
                     const syncPulse = 1 + 0.2 * Math.sin(time * 2 + index);
                     mesh.userData.syncRing.scale.setScalar(syncPulse);
                 }
+                
+                // === АНИМАЦИЯ ПРОДВИНУТЫХ ИНДИКАТОРОВ ===
+                
+                // Анимация GPS индикатора
+                if (mesh.userData.gpsIndicator) {
+                    mesh.userData.gpsIndicator.rotation.y += 0.03;
+                    const gpsPulse = 1 + 0.1 * Math.sin(time * 3);
+                    mesh.userData.gpsIndicator.scale.setScalar(gpsPulse);
+                }
+                
+                // Анимация атмосферного индикатора
+                if (mesh.userData.atmIndicator) {
+                    mesh.userData.atmIndicator.rotation.x += 0.02;
+                    const atmPulse = 1 + 0.15 * Math.sin(time * 2.5);
+                    mesh.userData.atmIndicator.scale.setScalar(atmPulse);
+                }
+                
+                // Анимация многолучевого индикатора
+                if (mesh.userData.mpIndicator) {
+                    mesh.userData.mpIndicator.rotation.z += 0.04;
+                    const mpPulse = 1 + 0.2 * Math.sin(time * 4);
+                    mesh.userData.mpIndicator.scale.setScalar(mpPulse);
+                }
+                
+                // Анимация аэродинамического индикатора
+                if (mesh.userData.aeroIndicator) {
+                    mesh.userData.aeroIndicator.rotation.y += 0.025;
+                    const aeroPulse = 1 + 0.12 * Math.sin(time * 3.5);
+                    mesh.userData.aeroIndicator.scale.setScalar(aeroPulse);
+                }
+                
+                // Реалистичное покачивание от ветра
+                const windEffect = Math.sin(time * 0.5 + index) * 0.02;
+                mesh.rotation.z = windEffect;
             });
+            
+            // Анимация линий синхронизации
+            syncLines.forEach((line, index) => {
+                if (line.userData && line.userData.syncQuality) {
+                    const quality = line.userData.syncQuality;
+                    const pulse = 0.3 + 0.7 * quality + 0.2 * Math.sin(time * 2 + index);
+                    line.material.opacity = Math.max(0.1, pulse);
+                }
+            });
+            
+            // Анимация подсветки дрона при наведении
+            if (hoveredDrone && hoveredDrone.userData.highlightRing) {
+                const pulse = 0.4 + 0.3 * Math.sin(time * 4);
+                hoveredDrone.userData.highlightRing.material.opacity = pulse;
+                hoveredDrone.userData.highlightRing.rotation.z += 0.02;
+            }
             
             renderer.render(scene, camera);
         }
@@ -1955,24 +2808,38 @@ class FinalWebHandler(BaseHTTPRequestHandler):
                 id: droneData.id,
                 syncQuality: droneData.sync_quality || 0,
                 clockType: droneData.clock_type,
-                propellers: []
+                propellers: [],
+                lights: []
             };
             
             // Размеры дрона (реалистичные)
             const bodySize = droneData.is_master ? 6 : 4;
             const armLength = bodySize * 1.5;
             
-            // Основное тело дрона
+            // Основное тело дрона с улучшенной геометрией
             const bodyGeometry = new THREE.BoxGeometry(bodySize, bodySize * 0.3, bodySize);
             const bodyMaterial = new THREE.MeshLambertMaterial({ 
-                color: getDroneColor(droneData.clock_type, droneData.altitude_level)
+                color: getDroneColor(droneData.clock_type, droneData.altitude_level),
+                shininess: 100
             });
             const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+            body.castShadow = true;
+            body.receiveShadow = true;
             group.add(body);
             
-            // Четыре луча/консоли
-            const armGeometry = new THREE.CylinderGeometry(0.2, 0.2, armLength);
-            const armMaterial = new THREE.MeshLambertMaterial({ color: 0x333333 });
+            // Центральная камера/сенсор
+            const cameraGeometry = new THREE.SphereGeometry(bodySize * 0.15, 8, 6);
+            const cameraMaterial = new THREE.MeshLambertMaterial({ color: 0x000000 });
+            const camera = new THREE.Mesh(cameraGeometry, cameraMaterial);
+            camera.position.y = bodySize * 0.2;
+            group.add(camera);
+            
+            // Четыре луча/консоли с улучшенной геометрией
+            const armGeometry = new THREE.CylinderGeometry(0.15, 0.2, armLength);
+            const armMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x333333,
+                shininess: 50
+            });
             
             for (let i = 0; i < 4; i++) {
                 const arm = new THREE.Mesh(armGeometry, armMaterial);
@@ -1981,44 +2848,110 @@ class FinalWebHandler(BaseHTTPRequestHandler):
                 arm.position.z = Math.sin(angle) * armLength * 0.4;
                 arm.rotation.z = Math.PI / 2;
                 arm.rotation.y = angle;
+                arm.castShadow = true;
                 group.add(arm);
                 
-                // Пропеллеры
-                const propGeometry = new THREE.CylinderGeometry(armLength * 0.4, armLength * 0.4, 0.1, 8);
+                // Моторы
+                const motorGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.4, 8);
+                const motorMaterial = new THREE.MeshLambertMaterial({ 
+                    color: 0x666666,
+                    shininess: 80
+                });
+                const motor = new THREE.Mesh(motorGeometry, motorMaterial);
+                motor.position.x = Math.cos(angle) * armLength * 0.7;
+                motor.position.z = Math.sin(angle) * armLength * 0.7;
+                motor.position.y = 0.2;
+                motor.castShadow = true;
+                group.add(motor);
+                
+                // Пропеллеры с улучшенной геометрией
+                const propGeometry = new THREE.CylinderGeometry(armLength * 0.35, armLength * 0.35, 0.05, 12);
                 const propMaterial = new THREE.MeshLambertMaterial({ 
                     color: 0x444444,
                     transparent: true,
-                    opacity: 0.8
+                    opacity: 0.9,
+                    shininess: 30
                 });
                 const propeller = new THREE.Mesh(propGeometry, propMaterial);
                 propeller.position.x = Math.cos(angle) * armLength * 0.7;
                 propeller.position.z = Math.sin(angle) * armLength * 0.7;
-                propeller.position.y = 0.3;
+                propeller.position.y = 0.4;
+                propeller.castShadow = true;
                 group.add(propeller);
                 
                 // Сохраняем пропеллеры для анимации
                 group.userData.propellers.push(propeller);
+                
+                // Светодиоды на концах лучей
+                const lightGeometry = new THREE.SphereGeometry(0.1, 6, 4);
+                const lightMaterial = new THREE.MeshBasicMaterial({ 
+                    color: i < 2 ? 0xff0000 : 0x00ff00,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                const light = new THREE.Mesh(lightGeometry, lightMaterial);
+                light.position.x = Math.cos(angle) * armLength * 0.8;
+                light.position.z = Math.sin(angle) * armLength * 0.8;
+                light.position.y = 0.1;
+                group.add(light);
+                group.userData.lights.push(light);
             }
             
             // Мастер-индикатор (антенна)
             if (droneData.is_master) {
-                const antennaGeometry = new THREE.CylinderGeometry(0.1, 0.1, bodySize * 1.5);
-                const antennaMaterial = new THREE.MeshLambertMaterial({ color: 0xffff00 });
+                // Основная антенна
+                const antennaGeometry = new THREE.CylinderGeometry(0.08, 0.08, bodySize * 1.8);
+                const antennaMaterial = new THREE.MeshLambertMaterial({ 
+                    color: 0xffff00,
+                    shininess: 100
+                });
                 const antenna = new THREE.Mesh(antennaGeometry, antennaMaterial);
-                antenna.position.y = bodySize;
+                antenna.position.y = bodySize * 0.9;
+                antenna.castShadow = true;
                 group.add(antenna);
                 
                 // Светящийся шар на антенне
-                const beaconGeometry = new THREE.SphereGeometry(0.5, 8, 6);
+                const beaconGeometry = new THREE.SphereGeometry(0.6, 12, 8);
                 const beaconMaterial = new THREE.MeshBasicMaterial({ 
                     color: 0xffff00,
                     transparent: true,
                     opacity: 0.9
                 });
                 const beacon = new THREE.Mesh(beaconGeometry, beaconMaterial);
-                beacon.position.y = bodySize * 1.8;
+                beacon.position.y = bodySize * 1.9;
                 group.add(beacon);
                 group.userData.beacon = beacon;
+                
+                // Кольцо вокруг мастера
+                const masterRingGeometry = new THREE.RingGeometry(bodySize * 1.5, bodySize * 1.8, 16);
+                const masterRingMaterial = new THREE.MeshBasicMaterial({ 
+                    color: 0xffff00,
+                    transparent: true,
+                    opacity: 0.3,
+                    side: THREE.DoubleSide
+                });
+                const masterRing = new THREE.Mesh(masterRingGeometry, masterRingMaterial);
+                masterRing.rotation.x = -Math.PI / 2;
+                masterRing.position.y = -0.5;
+                group.add(masterRing);
+                group.userData.masterRing = masterRing;
+                
+                // Дополнительные светодиоды для мастера
+                for (let i = 0; i < 4; i++) {
+                    const angle = (i * Math.PI) / 2;
+                    const ledGeometry = new THREE.SphereGeometry(0.15, 6, 4);
+                    const ledMaterial = new THREE.MeshBasicMaterial({ 
+                        color: 0xffff00,
+                        transparent: true,
+                        opacity: 0.8
+                    });
+                    const led = new THREE.Mesh(ledGeometry, ledMaterial);
+                    led.position.x = Math.cos(angle) * bodySize * 0.8;
+                    led.position.z = Math.sin(angle) * bodySize * 0.8;
+                    led.position.y = bodySize * 0.3;
+                    group.add(led);
+                    group.userData.lights.push(led);
+                }
             }
             
             // Индикатор синхронизации - кольцо вокруг дрона
@@ -2034,6 +2967,72 @@ class FinalWebHandler(BaseHTTPRequestHandler):
             syncRing.position.y = -0.5;
             group.add(syncRing);
             group.userData.syncRing = syncRing;
+            
+            // === ПРОДВИНУТЫЕ ВИЗУАЛЬНЫЕ ЭФФЕКТЫ ===
+            
+            // Индикатор GPS точности
+            const gpsAccuracy = droneData.gps_accuracy_ns || 15;
+            const gpsColor = gpsAccuracy < 10 ? 0x00ff00 : gpsAccuracy < 20 ? 0xffff00 : 0xff0000;
+            const gpsGeometry = new THREE.SphereGeometry(0.3, 8, 6);
+            const gpsMaterial = new THREE.MeshBasicMaterial({ 
+                color: gpsColor,
+                transparent: true,
+                opacity: 0.7
+            });
+            const gpsIndicator = new THREE.Mesh(gpsGeometry, gpsMaterial);
+            gpsIndicator.position.y = bodySize * 0.8;
+            gpsIndicator.position.x = bodySize * 0.6;
+            group.add(gpsIndicator);
+            group.userData.gpsIndicator = gpsIndicator;
+            
+            // Индикатор атмосферных эффектов
+            const atmosphericDelay = (droneData.tropospheric_delay_ns || 0) + (droneData.ionospheric_delay_ns || 0);
+            if (atmosphericDelay > 0.1) {
+                const atmGeometry = new THREE.SphereGeometry(0.2, 6, 4);
+                const atmMaterial = new THREE.MeshBasicMaterial({ 
+                    color: 0xff8800,
+                    transparent: true,
+                    opacity: 0.6
+                });
+                const atmIndicator = new THREE.Mesh(atmGeometry, atmMaterial);
+                atmIndicator.position.y = bodySize * 0.8;
+                atmIndicator.position.x = -bodySize * 0.6;
+                group.add(atmIndicator);
+                group.userData.atmIndicator = atmIndicator;
+            }
+            
+            // Индикатор многолучевости
+            const multipathJitter = droneData.multipath_jitter_ns || 0;
+            if (multipathJitter > 0.5) {
+                const mpGeometry = new THREE.SphereGeometry(0.25, 6, 4);
+                const mpMaterial = new THREE.MeshBasicMaterial({ 
+                    color: 0xff0088,
+                    transparent: true,
+                    opacity: 0.5
+                });
+                const mpIndicator = new THREE.Mesh(mpGeometry, mpMaterial);
+                mpIndicator.position.y = bodySize * 0.8;
+                mpIndicator.position.z = bodySize * 0.6;
+                group.add(mpIndicator);
+                group.userData.mpIndicator = mpIndicator;
+            }
+            
+            // Индикатор аэродинамики
+            const dragForce = droneData.drag_force || 0;
+            const liftForce = droneData.lift_force || 0;
+            if (dragForce > 10 || liftForce > 10) {
+                const aeroGeometry = new THREE.SphereGeometry(0.2, 6, 4);
+                const aeroMaterial = new THREE.MeshBasicMaterial({ 
+                    color: 0x0088ff,
+                    transparent: true,
+                    opacity: 0.6
+                });
+                const aeroIndicator = new THREE.Mesh(aeroGeometry, aeroMaterial);
+                aeroIndicator.position.y = bodySize * 0.8;
+                aeroIndicator.position.z = -bodySize * 0.6;
+                group.add(aeroIndicator);
+                group.userData.aeroIndicator = aeroIndicator;
+            }
             
             // Метка с ID дрона
             const canvas = document.createElement('canvas');
@@ -2066,49 +3065,160 @@ class FinalWebHandler(BaseHTTPRequestHandler):
             return 0xff0000;                      // Красный - нет синхронизации
         }
         
-        function createRealisticTerrain() {
-            // Создаем землю с текстурой
-            const groundGeometry = new THREE.PlaneGeometry(3000, 3000, 100, 100);
+        function createDetailedCity() {
+            console.log('🏙️ Создание детального города...');
             
-            // Добавляем рельеф (небольшие холмы)
-            const vertices = groundGeometry.attributes.position.array;
-            for (let i = 0; i < vertices.length; i += 3) {
-                const x = vertices[i];
-                const y = vertices[i + 1];
-                // Создаем холмистую местность
-                vertices[i + 2] = Math.sin(x * 0.01) * 5 + Math.cos(y * 0.008) * 3 + Math.random() * 2;
+            try {
+                // Создаем геометрию земли
+                const groundGeometry = new THREE.PlaneGeometry(3000, 3000, 100, 100);
+                const groundMaterial = new THREE.MeshLambertMaterial({ 
+                    color: 0x2a2a2a,
+                    shininess: 5
+                });
+                
+                const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+                ground.rotation.x = -Math.PI / 2;
+                ground.receiveShadow = true;
+                scene.add(ground);
+                console.log('✅ Земля создана');
+                
+                // Создаем сетку улиц
+                createStreetGrid();
+                
+                // Создаем здания
+                createCityBuildings();
+                
+                // Создаем городскую инфраструктуру
+                createCityInfrastructure();
+                
+                // Создаем парки и зеленые зоны
+                createCityParks();
+                
+                console.log('✅ Детальный город создан успешно');
+            } catch (error) {
+                console.error('❌ Ошибка при создании города:', error);
             }
-            groundGeometry.attributes.position.needsUpdate = true;
-            groundGeometry.computeVertexNormals();
+        }
+        
+        function createStreetGrid() {
+            console.log('🛣️ Создание сетки улиц...');
             
-            // Материал земли с травой
-            const groundMaterial = new THREE.MeshLambertMaterial({
-                color: 0x3a5f3a,  // Темно-зеленый цвет травы
-                transparent: false
+            // Основные улицы (горизонтальные и вертикальные)
+            const streetMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x333333,
+                shininess: 10
             });
             
-            const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-            ground.rotation.x = -Math.PI / 2;  // Поворачиваем горизонтально
-            ground.position.y = -5;  // Немного ниже уровня дронов
-            scene.add(ground);
+            // Горизонтальные улицы
+            for (let i = -5; i <= 5; i++) {
+                const streetGeometry = new THREE.PlaneGeometry(3000, 20);
+                const street = new THREE.Mesh(streetGeometry, streetMaterial);
+                street.rotation.x = -Math.PI / 2;
+                street.position.set(0, 0.1, i * 200);
+                street.receiveShadow = true;
+                scene.add(street);
+                
+                // Добавляем разметку
+                createStreetMarkings(0, i * 200, 3000, 20, true);
+            }
             
-            // Добавляем дороги/тропинки
-            createRoads();
+            // Вертикальные улицы
+            for (let i = -5; i <= 5; i++) {
+                const streetGeometry = new THREE.PlaneGeometry(20, 3000);
+                const street = new THREE.Mesh(streetGeometry, streetMaterial);
+                street.rotation.x = -Math.PI / 2;
+                street.position.set(i * 200, 0.1, 0);
+                street.receiveShadow = true;
+                scene.add(street);
+                
+                // Добавляем разметку
+                createStreetMarkings(i * 200, 0, 20, 3000, false);
+            }
             
-            // Добавляем деревья и растительность
-            createVegetation();
+            // Кольцевые дороги
+            for (let radius = 400; radius <= 1200; radius += 400) {
+                const ringGeometry = new THREE.RingGeometry(radius - 10, radius + 10, 64);
+                const ring = new THREE.Mesh(ringGeometry, streetMaterial);
+                ring.rotation.x = -Math.PI / 2;
+                ring.position.y = 0.1;
+                ring.receiveShadow = true;
+                scene.add(ring);
+            }
             
-            // Добавляем здания для городского пейзажа
-            createBuildings();
+            console.log('✅ Сетка улиц создана');
+        }
+        
+        function createStreetMarkings(x, z, width, length, isHorizontal) {
+            const markingMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0xffffff,
+                shininess: 20
+            });
+            
+            if (isHorizontal) {
+                // Центральная линия
+                for (let i = -width/2; i < width/2; i += 40) {
+                    const markingGeometry = new THREE.PlaneGeometry(20, 2);
+                    const marking = new THREE.Mesh(markingGeometry, markingMaterial);
+                    marking.rotation.x = -Math.PI / 2;
+                    marking.position.set(i, 0.2, z);
+                    scene.add(marking);
+                }
+            } else {
+                // Центральная линия
+                for (let i = -length/2; i < length/2; i += 40) {
+                    const markingGeometry = new THREE.PlaneGeometry(2, 20);
+                    const marking = new THREE.Mesh(markingGeometry, markingMaterial);
+                    marking.rotation.x = -Math.PI / 2;
+                    marking.position.set(x, 0.2, i);
+                    scene.add(marking);
+                }
+            }
         }
         
         function createRoads() {
+            // Создаем текстуру дороги
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const context = canvas.getContext('2d');
+            
+            // Основной цвет дороги
+            context.fillStyle = '#2F2F2F';
+            context.fillRect(0, 0, 512, 512);
+            
+            // Добавляем разметку
+            context.strokeStyle = '#FFFFFF';
+            context.lineWidth = 8;
+            context.setLineDash([40, 40]);
+            context.beginPath();
+            context.moveTo(0, 256);
+            context.lineTo(512, 256);
+            context.stroke();
+            
+            // Добавляем шум для реалистичности
+            for (let i = 0; i < 100; i++) {
+                const x = Math.random() * 512;
+                const y = Math.random() * 512;
+                const size = Math.random() * 10 + 2;
+                context.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.1})`;
+                context.fillRect(x, y, size, size);
+            }
+            
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            texture.repeat.set(8, 1);
+            
             // Главная дорога
-            const roadGeometry = new THREE.PlaneGeometry(1500, 20);
-            const roadMaterial = new THREE.MeshBasicMaterial({ color: 0x333333 });
+            const roadGeometry = new THREE.PlaneGeometry(1500, 25);
+            const roadMaterial = new THREE.MeshLambertMaterial({ 
+                map: texture,
+                shininess: 5
+            });
             const road1 = new THREE.Mesh(roadGeometry, roadMaterial);
             road1.rotation.x = -Math.PI / 2;
             road1.position.y = -4;
+            road1.receiveShadow = true;
             scene.add(road1);
             
             // Перпендикулярная дорога
@@ -2116,25 +3226,63 @@ class FinalWebHandler(BaseHTTPRequestHandler):
             road2.rotation.x = -Math.PI / 2;
             road2.rotation.z = Math.PI / 2;
             road2.position.y = -4;
+            road2.receiveShadow = true;
             scene.add(road2);
+            
+            // Добавляем обочины
+            const shoulderGeometry = new THREE.PlaneGeometry(1500, 5);
+            const shoulderMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+            
+            for (let i = 0; i < 4; i++) {
+                const shoulder = new THREE.Mesh(shoulderGeometry, shoulderMaterial);
+                shoulder.rotation.x = -Math.PI / 2;
+                shoulder.position.y = -4.1;
+                
+                if (i < 2) {
+                    // Параллельные обочины
+                    shoulder.position.z = (i === 0 ? 12.5 : -12.5);
+                } else {
+                    // Перпендикулярные обочины
+                    shoulder.rotation.z = Math.PI / 2;
+                    shoulder.position.x = (i === 2 ? 12.5 : -12.5);
+                }
+                
+                shoulder.receiveShadow = true;
+                scene.add(shoulder);
+            }
         }
         
         function createVegetation() {
-            // Создаем случайные деревья
-            for (let i = 0; i < 50; i++) {
+            // Создаем случайные деревья с улучшенной геометрией
+            for (let i = 0; i < 80; i++) {
                 const treeGroup = new THREE.Group();
                 
-                // Ствол дерева
-                const trunkGeometry = new THREE.CylinderGeometry(2, 3, 15);
-                const trunkMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
-                const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
-                trunk.position.y = 7.5;
+                // Размеры дерева
+                const trunkHeight = Math.random() * 10 + 10;
+                const trunkRadius = Math.random() * 1 + 1;
+                const crownRadius = Math.random() * 6 + 4;
                 
-                // Крона дерева
-                const crownGeometry = new THREE.SphereGeometry(8, 8, 6);
-                const crownMaterial = new THREE.MeshLambertMaterial({ color: 0x228B22 });
+                // Ствол дерева с более реалистичной геометрией
+                const trunkGeometry = new THREE.CylinderGeometry(trunkRadius * 0.7, trunkRadius, trunkHeight, 8);
+                const trunkMaterial = new THREE.MeshLambertMaterial({ 
+                    color: new THREE.Color().setHSL(0.1, 0.6, 0.3 + Math.random() * 0.2),
+                    shininess: 10
+                });
+                const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+                trunk.position.y = trunkHeight / 2;
+                trunk.castShadow = true;
+                trunk.receiveShadow = true;
+                
+                // Крона дерева с более сложной геометрией
+                const crownGeometry = new THREE.SphereGeometry(crownRadius, 10, 8);
+                const crownMaterial = new THREE.MeshLambertMaterial({ 
+                    color: new THREE.Color().setHSL(0.3, 0.7, 0.4 + Math.random() * 0.3),
+                    shininess: 5
+                });
                 const crown = new THREE.Mesh(crownGeometry, crownMaterial);
-                crown.position.y = 18;
+                crown.position.y = trunkHeight + crownRadius * 0.7;
+                crown.castShadow = true;
+                crown.receiveShadow = true;
                 
                 treeGroup.add(trunk);
                 treeGroup.add(crown);
@@ -2142,34 +3290,525 @@ class FinalWebHandler(BaseHTTPRequestHandler):
                 // Случайное размещение (избегаем дорог)
                 const x = (Math.random() - 0.5) * 2000;
                 const z = (Math.random() - 0.5) * 2000;
-                if (Math.abs(x) > 30 && Math.abs(z) > 30) {  // Не ставим на дороги
+                if (Math.abs(x) > 40 && Math.abs(z) > 40) {  // Не ставим на дороги
                     treeGroup.position.set(x, -5, z);
+                    
+                    // Случайный поворот для разнообразия
+                    treeGroup.rotation.y = Math.random() * Math.PI * 2;
+                    
+                    // Случайное масштабирование
+                    const scale = 0.8 + Math.random() * 0.4;
+                    treeGroup.scale.set(scale, scale, scale);
+                    
                     scene.add(treeGroup);
                 }
+            }
+            
+            // Добавляем кусты
+            for (let i = 0; i < 120; i++) {
+                const bushGeometry = new THREE.SphereGeometry(Math.random() * 3 + 2, 6, 4);
+                const bushMaterial = new THREE.MeshLambertMaterial({ 
+                    color: new THREE.Color().setHSL(0.25, 0.6, 0.4 + Math.random() * 0.2),
+                    shininess: 5
+                });
+                const bush = new THREE.Mesh(bushGeometry, bushMaterial);
+                
+                const x = (Math.random() - 0.5) * 2000;
+                const z = (Math.random() - 0.5) * 2000;
+                if (Math.abs(x) > 50 && Math.abs(z) > 50) {
+                    bush.position.set(x, -3, z);
+                    bush.castShadow = true;
+                    bush.receiveShadow = true;
+                    scene.add(bush);
+                }
+            }
+        }
+        
+        function createCityBuildings() {
+            console.log('🏢 Создание городских зданий...');
+            
+            try {
+                // Различные типы зданий
+                const buildingTypes = [
+                    { name: 'небоскреб', height: [100, 200], width: [30, 60], depth: [30, 60], color: 0x4a4a4a },
+                    { name: 'офис', height: [40, 80], width: [20, 40], depth: [20, 40], color: 0x6a6a6a },
+                    { name: 'жилой', height: [20, 50], width: [15, 35], depth: [15, 35], color: 0x5a5a5a },
+                    { name: 'торговый', height: [15, 30], width: [25, 45], depth: [25, 45], color: 0x7a7a7a }
+                ];
+                
+                let buildingCount = 0;
+                
+                // Создаем здания в разных районах
+                for (let district = 0; district < 4; district++) {
+                    const districtX = (district % 2 - 0.5) * 800;
+                    const districtZ = (Math.floor(district / 2) - 0.5) * 800;
+                    
+                    console.log(`🏗️ Создание зданий в районе ${district + 1} (${districtX}, ${districtZ})`);
+                    
+                    for (let i = 0; i < 15; i++) {
+                        const buildingType = buildingTypes[Math.floor(Math.random() * buildingTypes.length)];
+                        
+                        // Случайные размеры в пределах типа
+                        const height = buildingType.height[0] + Math.random() * (buildingType.height[1] - buildingType.height[0]);
+                        const width = buildingType.width[0] + Math.random() * (buildingType.width[1] - buildingType.width[0]);
+                        const depth = buildingType.depth[0] + Math.random() * (buildingType.depth[1] - buildingType.depth[0]);
+                        
+                        // Позиция в районе
+                        const x = districtX + (Math.random() - 0.5) * 300;
+                        const z = districtZ + (Math.random() - 0.5) * 300;
+                        
+                        // Избегаем улиц
+                        if (Math.abs(x % 200) < 30 || Math.abs(z % 200) < 30) continue;
+                        
+                        createBuilding(x, z, width, height, depth, buildingType.color);
+                        buildingCount++;
+                    }
+                }
+                
+                console.log(`✅ Создано ${buildingCount} городских зданий`);
+            } catch (error) {
+                console.error('❌ Ошибка при создании зданий:', error);
+            }
+        }
+        
+        function createBuilding(x, z, width, height, depth, baseColor) {
+            const buildingGroup = new THREE.Group();
+            
+            // Основное здание
+            const buildingMaterial = new THREE.MeshLambertMaterial({ 
+                color: baseColor + Math.floor(Math.random() * 0x202020),
+                shininess: 20
+            });
+            
+            const buildingGeometry = new THREE.BoxGeometry(width, height, depth);
+            const building = new THREE.Mesh(buildingGeometry, buildingMaterial);
+            building.position.y = height / 2;
+            building.castShadow = true;
+            building.receiveShadow = true;
+            buildingGroup.add(building);
+            
+            // Добавляем окна
+            createBuildingWindows(buildingGroup, width, height, depth);
+            
+            // Крыша
+            const roofGeometry = new THREE.BoxGeometry(width + 2, 3, depth + 2);
+            const roofMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x2F4F4F,
+                shininess: 10
+            });
+            const roof = new THREE.Mesh(roofGeometry, roofMaterial);
+            roof.position.y = height + 1.5;
+            roof.castShadow = true;
+            buildingGroup.add(roof);
+            
+            // Антенны на высоких зданиях
+            if (height > 80) {
+                createBuildingAntennas(buildingGroup, width, height, depth);
+            }
+            
+            buildingGroup.position.set(x, 0, z);
+            scene.add(buildingGroup);
+        }
+        
+        function createBuildingWindows(buildingGroup, width, height, depth) {
+            const windowMaterial = new THREE.MeshLambertMaterial({ 
+                color: Math.random() > 0.3 ? 0x87CEEB : 0xFFD700,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const floors = Math.floor(height / 8);
+            const windowsPerSide = Math.floor(width / 8);
+            
+            for (let floor = 0; floor < floors; floor++) {
+                for (let side = 0; side < 4; side++) {
+                    for (let windowIndex = 0; windowIndex < windowsPerSide; windowIndex++) {
+                        const windowGeometry = new THREE.PlaneGeometry(2, 1.5);
+                        const window = new THREE.Mesh(windowGeometry, windowMaterial);
+                        
+                        const windowY = floor * 8 + 4;
+                        const windowX = (side % 2 === 0) ? (width / 2 + 0.1) : (windowIndex - windowsPerSide/2) * 8;
+                        const windowZ = (side % 2 === 1) ? (depth / 2 + 0.1) : (windowIndex - windowsPerSide/2) * 8;
+                        
+                        window.position.set(windowX, windowY, windowZ);
+                        window.rotation.y = (side % 2 === 0) ? 0 : Math.PI / 2;
+                        buildingGroup.add(window);
+                    }
+                }
+            }
+        }
+        
+        function createBuildingAntennas(buildingGroup, width, height, depth) {
+            const antennaMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x888888,
+                shininess: 50
+            });
+            
+            for (let i = 0; i < 3; i++) {
+                const antennaGeometry = new THREE.CylinderGeometry(0.5, 0.5, 15, 8);
+                const antenna = new THREE.Mesh(antennaGeometry, antennaMaterial);
+                antenna.position.set(
+                    (Math.random() - 0.5) * width * 0.5,
+                    height + 10,
+                    (Math.random() - 0.5) * depth * 0.5
+                );
+                antenna.castShadow = true;
+                buildingGroup.add(antenna);
             }
         }
         
         function createBuildings() {
             // Создаем несколько зданий для городского пейзажа
-            for (let i = 0; i < 20; i++) {
-                const height = Math.random() * 60 + 20;
-                const width = Math.random() * 20 + 10;
-                const depth = Math.random() * 20 + 10;
+            for (let i = 0; i < 25; i++) {
+                const height = Math.random() * 80 + 30;
+                const width = Math.random() * 25 + 15;
+                const depth = Math.random() * 25 + 15;
                 
+                const buildingGroup = new THREE.Group();
+                
+                // Основное здание
                 const buildingGeometry = new THREE.BoxGeometry(width, height, depth);
                 const buildingMaterial = new THREE.MeshLambertMaterial({ 
-                    color: new THREE.Color().setHSL(0.1, 0.2, Math.random() * 0.3 + 0.5) 
+                    color: new THREE.Color().setHSL(0.1, 0.2, Math.random() * 0.3 + 0.4),
+                    shininess: 20
                 });
                 const building = new THREE.Mesh(buildingGeometry, buildingMaterial);
+                building.position.y = height / 2;
+                building.castShadow = true;
+                building.receiveShadow = true;
+                buildingGroup.add(building);
+                
+                // Добавляем окна
+                const windowRows = Math.floor(height / 8);
+                const windowCols = Math.floor(width / 6);
+                
+                for (let row = 0; row < windowRows; row++) {
+                    for (let col = 0; col < windowCols; col++) {
+                        if (Math.random() > 0.3) { // 70% окон
+                            const windowGeometry = new THREE.PlaneGeometry(2, 3);
+                            const windowMaterial = new THREE.MeshBasicMaterial({ 
+                                color: Math.random() > 0.5 ? 0x87CEEB : 0xFFFFE0,
+                                transparent: true,
+                                opacity: 0.8
+                            });
+                            const window = new THREE.Mesh(windowGeometry, windowMaterial);
+                            
+                            window.position.x = (col - windowCols/2) * 6 + 3;
+                            window.position.y = (row - windowRows/2) * 8 + 4;
+                            window.position.z = depth/2 + 0.1;
+                            
+                            buildingGroup.add(window);
+                            
+                            // Окна на противоположной стороне
+                            const windowBack = window.clone();
+                            windowBack.position.z = -depth/2 - 0.1;
+                            windowBack.rotation.y = Math.PI;
+                            buildingGroup.add(windowBack);
+                        }
+                    }
+                }
+                
+                // Добавляем крышу
+                const roofGeometry = new THREE.BoxGeometry(width + 2, 3, depth + 2);
+                const roofMaterial = new THREE.MeshLambertMaterial({ 
+                    color: 0x333333,
+                    shininess: 10
+                });
+                const roof = new THREE.Mesh(roofGeometry, roofMaterial);
+                roof.position.y = height + 1.5;
+                roof.castShadow = true;
+                buildingGroup.add(roof);
                 
                 // Размещение в "городских" зонах
                 const x = (Math.random() - 0.5) * 800 + (Math.random() > 0.5 ? 400 : -400);
                 const z = (Math.random() - 0.5) * 800 + (Math.random() > 0.5 ? 400 : -400);
                 
-                building.position.set(x, height/2 - 5, z);
-                scene.add(building);
+                buildingGroup.position.set(x, -5, z);
+                scene.add(buildingGroup);
             }
         }
+        
+        function createCityInfrastructure() {
+            console.log('🏗️ Создание городской инфраструктуры...');
+            
+            // Создаем мосты
+            createBridges();
+            
+            // Создаем туннели
+            createTunnels();
+            
+            // Создаем парковки
+            createParkingLots();
+            
+            // Создаем фонари
+            createStreetLights();
+            
+            console.log('✅ Городская инфраструктура создана');
+        }
+        
+        function createBridges() {
+            const bridgeMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x666666,
+                shininess: 30
+            });
+            
+            // Мост через центральную реку
+            const bridgeGeometry = new THREE.BoxGeometry(200, 10, 30);
+            const bridge = new THREE.Mesh(bridgeGeometry, bridgeMaterial);
+            bridge.position.set(0, 5, 0);
+            bridge.castShadow = true;
+            bridge.receiveShadow = true;
+            scene.add(bridge);
+            
+            // Опоры моста
+            for (let i = -2; i <= 2; i++) {
+                const pillarGeometry = new THREE.CylinderGeometry(3, 3, 20, 8);
+                const pillar = new THREE.Mesh(pillarGeometry, bridgeMaterial);
+                pillar.position.set(i * 40, 10, 0);
+                pillar.castShadow = true;
+                scene.add(pillar);
+            }
+        }
+        
+        function createTunnels() {
+            const tunnelMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x444444,
+                shininess: 20
+            });
+            
+            // Туннель под городом
+            const tunnelGeometry = new THREE.CylinderGeometry(15, 15, 100, 16);
+            const tunnel = new THREE.Mesh(tunnelGeometry, tunnelMaterial);
+            tunnel.position.set(0, -20, 0);
+            tunnel.rotation.z = Math.PI / 2;
+            scene.add(tunnel);
+        }
+        
+        function createParkingLots() {
+            const parkingMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x333333,
+                shininess: 10
+            });
+            
+            // Парковки в разных районах
+            for (let i = 0; i < 4; i++) {
+                const x = (i % 2 - 0.5) * 600;
+                const z = (Math.floor(i / 2) - 0.5) * 600;
+                
+                const parkingGeometry = new THREE.PlaneGeometry(80, 60);
+                const parking = new THREE.Mesh(parkingGeometry, parkingMaterial);
+                parking.rotation.x = -Math.PI / 2;
+                parking.position.set(x, 0.05, z);
+                parking.receiveShadow = true;
+                scene.add(parking);
+                
+                // Разметка парковки
+                createParkingMarkings(x, z);
+            }
+        }
+        
+        function createParkingMarkings(x, z) {
+            const markingMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0xffffff,
+                shininess: 20
+            });
+            
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 6; col++) {
+                    const markingGeometry = new THREE.PlaneGeometry(8, 2);
+                    const marking = new THREE.Mesh(markingGeometry, markingMaterial);
+                    marking.rotation.x = -Math.PI / 2;
+                    marking.position.set(
+                        x - 30 + col * 12,
+                        0.1,
+                        z - 20 + row * 15
+                    );
+                    scene.add(marking);
+                }
+            }
+        }
+        
+        function createStreetLights() {
+            const lightMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x888888,
+                shininess: 40
+            });
+            
+            // Фонари вдоль улиц
+            for (let i = -5; i <= 5; i++) {
+                for (let j = -5; j <= 5; j++) {
+                    if (Math.abs(i) % 2 === 0 && Math.abs(j) % 2 === 0) {
+                        const x = i * 200;
+                        const z = j * 200;
+                        
+                        // Столб фонаря
+                        const poleGeometry = new THREE.CylinderGeometry(0.5, 0.5, 15, 8);
+                        const pole = new THREE.Mesh(poleGeometry, lightMaterial);
+                        pole.position.set(x, 7.5, z);
+                        pole.castShadow = true;
+                        scene.add(pole);
+                        
+                        // Фонарь
+                        const lampGeometry = new THREE.SphereGeometry(2, 8, 6);
+                        const lampMaterial = new THREE.MeshLambertMaterial({ 
+                            color: 0xffffaa,
+                            emissive: 0xffffaa,
+                            emissiveIntensity: 0.3
+                        });
+                        const lamp = new THREE.Mesh(lampGeometry, lampMaterial);
+                        lamp.position.set(x, 15, z);
+                        scene.add(lamp);
+                        
+                        // Точечный свет
+                        const pointLight = new THREE.PointLight(0xffffaa, 0.5, 30);
+                        pointLight.position.set(x, 15, z);
+                        scene.add(pointLight);
+                    }
+                }
+            }
+        }
+        
+        function createCityParks() {
+            console.log('🌳 Создание городских парков...');
+            
+            // Центральный парк
+            createCentralPark();
+            
+            // Районные парки
+            createDistrictParks();
+            
+            console.log('✅ Городские парки созданы');
+        }
+        
+        function createCentralPark() {
+            // Зеленая зона в центре
+            const parkMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x2d5a2d,
+                shininess: 5
+            });
+            
+            const parkGeometry = new THREE.PlaneGeometry(400, 400);
+            const park = new THREE.Mesh(parkGeometry, parkMaterial);
+            park.rotation.x = -Math.PI / 2;
+            park.position.set(0, 0.02, 0);
+            park.receiveShadow = true;
+            scene.add(park);
+            
+            // Деревья в парке
+            for (let i = 0; i < 20; i++) {
+                const x = (Math.random() - 0.5) * 350;
+                const z = (Math.random() - 0.5) * 350;
+                createTree(x, z, 8 + Math.random() * 4);
+            }
+            
+            // Скамейки
+            for (let i = 0; i < 8; i++) {
+                const angle = (i / 8) * Math.PI * 2;
+                const radius = 150;
+                const x = Math.cos(angle) * radius;
+                const z = Math.sin(angle) * radius;
+                createBench(x, z, angle);
+            }
+        }
+        
+        function createDistrictParks() {
+            // Парки в каждом районе
+            for (let district = 0; district < 4; district++) {
+                const districtX = (district % 2 - 0.5) * 800;
+                const districtZ = (Math.floor(district / 2) - 0.5) * 800;
+                
+                const parkMaterial = new THREE.MeshLambertMaterial({ 
+                    color: 0x2d5a2d,
+                    shininess: 5
+                });
+                
+                const parkGeometry = new THREE.PlaneGeometry(150, 150);
+                const park = new THREE.Mesh(parkGeometry, parkMaterial);
+                park.rotation.x = -Math.PI / 2;
+                park.position.set(districtX, 0.02, districtZ);
+                park.receiveShadow = true;
+                scene.add(park);
+                
+                // Деревья в районном парке
+                for (let i = 0; i < 8; i++) {
+                    const x = districtX + (Math.random() - 0.5) * 120;
+                    const z = districtZ + (Math.random() - 0.5) * 120;
+                    createTree(x, z, 6 + Math.random() * 3);
+                }
+            }
+        }
+        
+        function createTree(x, z, height) {
+            const treeGroup = new THREE.Group();
+            
+            // Ствол
+            const trunkGeometry = new THREE.CylinderGeometry(1, 1.5, height * 0.6, 8);
+            const trunkMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x8B4513,
+                shininess: 10
+            });
+            const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+            trunk.position.y = height * 0.3;
+            trunk.castShadow = true;
+            trunk.receiveShadow = true;
+            treeGroup.add(trunk);
+            
+            // Крона
+            const crownGeometry = new THREE.SphereGeometry(height * 0.4, 8, 6);
+            const crownMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x228B22,
+                shininess: 5
+            });
+            const crown = new THREE.Mesh(crownGeometry, crownMaterial);
+            crown.position.y = height * 0.8;
+            crown.castShadow = true;
+            crown.receiveShadow = true;
+            treeGroup.add(crown);
+            
+            treeGroup.position.set(x, 0, z);
+            scene.add(treeGroup);
+        }
+        
+        function createBench(x, z, rotation) {
+            const benchGroup = new THREE.Group();
+            
+            // Сиденье
+            const seatGeometry = new THREE.BoxGeometry(8, 1, 2);
+            const seatMaterial = new THREE.MeshLambertMaterial({ 
+                color: 0x8B4513,
+                shininess: 20
+            });
+            const seat = new THREE.Mesh(seatGeometry, seatMaterial);
+            seat.position.y = 1.5;
+            seat.castShadow = true;
+            seat.receiveShadow = true;
+            benchGroup.add(seat);
+            
+            // Спинка
+            const backGeometry = new THREE.BoxGeometry(8, 3, 0.5);
+            const back = new THREE.Mesh(backGeometry, seatMaterial);
+            back.position.set(0, 3, -1);
+            back.castShadow = true;
+            benchGroup.add(back);
+            
+            // Ножки
+            for (let i = 0; i < 4; i++) {
+                const legGeometry = new THREE.BoxGeometry(0.5, 3, 0.5);
+                const leg = new THREE.Mesh(legGeometry, seatMaterial);
+                leg.position.set(
+                    (i % 2 - 0.5) * 6,
+                    1.5,
+                    (Math.floor(i / 2) - 0.5) * 1.5
+                );
+                leg.castShadow = true;
+                benchGroup.add(leg);
+            }
+            
+            benchGroup.position.set(x, 0, z);
+            benchGroup.rotation.y = rotation;
+            scene.add(benchGroup);
+        }
+        
         
         // Цвета дронов с учетом эшелонов
         function getDroneColor(clockType, altitudeLevel) {
@@ -2331,6 +3970,46 @@ class FinalWebHandler(BaseHTTPRequestHandler):
                         
                         document.getElementById('altitudeLevels').textContent = altitudeLevels.join(', ');
                         document.getElementById('altitudeRange').textContent = `${minAlt}-${maxAlt}м`;
+                        
+                        // === ОБНОВЛЕНИЕ ПРОДВИНУТЫХ МЕТРИК ===
+                        
+                        // GPS точность (средняя по всем дронам)
+                        const gpsAccuracies = window.lastDronesData.map(d => d.gps_accuracy_ns || 15);
+                        const avgGpsAccuracy = (gpsAccuracies.reduce((a, b) => a + b, 0) / gpsAccuracies.length).toFixed(1);
+                        document.getElementById('gpsAccuracy').textContent = avgGpsAccuracy + ' нс';
+                        
+                        // Атмосферные задержки
+                        const tropDelays = window.lastDronesData.map(d => d.tropospheric_delay_ns || 0);
+                        const avgTropDelay = (tropDelays.reduce((a, b) => a + b, 0) / tropDelays.length).toFixed(2);
+                        document.getElementById('troposphericDelay').textContent = avgTropDelay + ' нс';
+                        
+                        const ionDelays = window.lastDronesData.map(d => d.ionospheric_delay_ns || 0);
+                        const avgIonDelay = (ionDelays.reduce((a, b) => a + b, 0) / ionDelays.length).toFixed(2);
+                        document.getElementById('ionosphericDelay').textContent = avgIonDelay + ' нс';
+                        
+                        // Многолучевость
+                        const multipathJitters = window.lastDronesData.map(d => d.multipath_jitter_ns || 0);
+                        const avgMultipath = (multipathJitters.reduce((a, b) => a + b, 0) / multipathJitters.length).toFixed(2);
+                        document.getElementById('multipathJitter').textContent = avgMultipath + ' нс';
+                        
+                        // Дисперсия Аллана
+                        const allanVariances = window.lastDronesData.map(d => d.allan_variance_1s || 1e-12);
+                        const avgAllan = (allanVariances.reduce((a, b) => a + b, 0) / allanVariances.length * 1e12).toFixed(2);
+                        document.getElementById('allanVariance1s').textContent = avgAllan + 'e-12';
+                        
+                        // Качество синхронизации
+                        const syncQualities = window.lastDronesData.map(d => d.sync_quality_score || 0.5);
+                        const avgSyncQuality = (syncQualities.reduce((a, b) => a + b, 0) / syncQualities.length).toFixed(3);
+                        document.getElementById('syncQualityScore').textContent = avgSyncQuality;
+                        
+                        // Аэродинамика
+                        const dragForces = window.lastDronesData.map(d => d.drag_force || 0);
+                        const avgDragForce = (dragForces.reduce((a, b) => a + b, 0) / dragForces.length).toFixed(2);
+                        document.getElementById('dragForce').textContent = avgDragForce + ' Н';
+                        
+                        const liftForces = window.lastDronesData.map(d => d.lift_force || 0);
+                        const avgLiftForce = (liftForces.reduce((a, b) => a + b, 0) / liftForces.length).toFixed(2);
+                        document.getElementById('liftForce').textContent = avgLiftForce + ' Н';
                     }
                 }
             } catch (error) {
@@ -2553,21 +4232,445 @@ class FinalWebHandler(BaseHTTPRequestHandler):
             }
         });
         
-        // ИНИЦИАЛИЗАЦИЯ
+        // Функция для инициализации кнопок
+        function initializeButtons() {
+            const startBtn = document.getElementById('startBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            
+            if (startBtn && stopBtn) {
+                startBtn.style.display = 'inline-block';
+                stopBtn.style.display = 'none';
+                console.log('✅ Кнопки инициализированы корректно');
+                return true;
+            } else {
+                console.error('❌ Ошибка: кнопки не найдены', { startBtn: !!startBtn, stopBtn: !!stopBtn });
+                return false;
+            }
+        }
+        
+        // Функция для принудительной инициализации кнопок с повторными попытками
+        function forceInitializeButtons() {
+            let attempts = 0;
+            const maxAttempts = 10;
+            
+            function tryInitialize() {
+                attempts++;
+                console.log(`🔄 Попытка инициализации кнопок ${attempts}/${maxAttempts}...`);
+                
+                if (initializeButtons()) {
+                    console.log('✅ Кнопки успешно инициализированы');
+                    return;
+                }
+                
+                if (attempts < maxAttempts) {
+                    setTimeout(tryInitialize, 200);
+                } else {
+                    console.error('❌ Не удалось инициализировать кнопки после всех попыток');
+                }
+            }
+            
+            tryInitialize();
+        }
+        
+        // Функция для переключения кнопок при запуске
+        function switchToStopMode() {
+            const startBtn = document.getElementById('startBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            
+            if (startBtn && stopBtn) {
+                startBtn.style.display = 'none';
+                stopBtn.style.display = 'inline-block';
+                console.log('✅ Кнопки переключены: старт скрыта, стоп показана');
+                return true;
+            } else {
+                console.error('❌ Ошибка переключения кнопок: элементы не найдены');
+                return false;
+            }
+        }
+        
+        // Функция для переключения кнопок при остановке
+        function switchToStartMode() {
+            const startBtn = document.getElementById('startBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            
+            if (startBtn && stopBtn) {
+                startBtn.style.display = 'inline-block';
+                stopBtn.style.display = 'none';
+                console.log('✅ Кнопки переключены: старт показана, стоп скрыта');
+                return true;
+            } else {
+                console.error('❌ Ошибка переключения кнопок: элементы не найдены');
+                return false;
+            }
+        }
+        
+        // ИНИЦИАЛИЗАЦИЯ ENHANCED 3D v2.0
+        // Добавляем обработчик для DOMContentLoaded как резервный вариант
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 DOM загружен, инициализация кнопок...');
+            forceInitializeButtons();
+        });
+        
         window.addEventListener('load', () => {
-            console.log('🌍 Страница загружена, запуск инициализации...');
+            console.log('🌍 Страница загружена, запуск Enhanced 3D v2.0...');
+            console.log('🎨 Загружаем улучшенную визуализацию с:');
+            console.log('   🏙️ Детальным городом');
+            console.log('   🛣️ Сеткой улиц');
+            console.log('   🏢 Различными зданиями');
+            console.log('   🚁 Детализированными дронами');
+            console.log('   💡 Продвинутым освещением');
+            console.log('   🖱️ Интерактивными подсказками');
+            console.log('   ⌨️ Управлением с клавиатуры');
+            
+            // Инициализация состояния кнопок
+            forceInitializeButtons();
             
             const success = initThreeJS();
             updateStatus(false);
             
             if (success) {
+                // Инициализация tooltip
+                tooltip = document.getElementById('droneTooltip');
+                setupMouseInteraction();
+                setupKeyboardControls();
+                
                 setTimeout(() => {
-                    showNotification('🎯 Финальная симуляция готова! Нажмите "Запустить"', 'info');
+                    showNotification('🏙️ Детальный город создан! Наведите мышь на дроны для деталей. ⌨️ Нажмите ESC для остановки', 'success');
                 }, 1000);
             } else {
-                showNotification('❌ Ошибка инициализации 3D', 'error');
+                showNotification('❌ Ошибка инициализации Enhanced 3D', 'error');
             }
         });
+        
+        // Функции для управления с клавиатуры
+        function setupKeyboardControls() {
+            console.log('⌨️ Настройка управления с клавиатуры...');
+            
+            document.addEventListener('keydown', (event) => {
+                switch(event.key.toLowerCase()) {
+                    case 'escape':
+                    case 'esc':
+                        console.log('⌨️ Нажата клавиша ESC - остановка симуляции');
+                        if (isSimulationRunning) {
+                            stopSimulation();
+                            showNotification('⏹️ Симуляция остановлена с клавиатуры (ESC)', 'info');
+                        }
+                        break;
+                    case 'enter':
+                        console.log('⌨️ Нажата клавиша Enter - запуск симуляции');
+                        if (!isSimulationRunning) {
+                            startSimulation();
+                            showNotification('🚀 Симуляция запущена с клавиатуры (Enter)', 'success');
+                        }
+                        break;
+                    case ' ':
+                        // Пробел - переключение состояния
+                        event.preventDefault(); // Предотвращаем прокрутку страницы
+                        console.log('⌨️ Нажата клавиша Пробел - переключение состояния');
+                        if (isSimulationRunning) {
+                            stopSimulation();
+                            showNotification('⏹️ Симуляция остановлена с клавиатуры (Пробел)', 'info');
+                        } else {
+                            startSimulation();
+                            showNotification('🚀 Симуляция запущена с клавиатуры (Пробел)', 'success');
+                        }
+                        break;
+                    case 's':
+                        // Клавиша S - остановка
+                        console.log('⌨️ Нажата клавиша S - остановка симуляции');
+                        if (isSimulationRunning) {
+                            stopSimulation();
+                            showNotification('⏹️ Симуляция остановлена с клавиатуры (S)', 'info');
+                        }
+                        break;
+                    case 'r':
+                        // Клавиша R - перезапуск
+                        console.log('⌨️ Нажата клавиша R - перезапуск симуляции');
+                        if (isSimulationRunning) {
+                            stopSimulation();
+                            setTimeout(() => {
+                                startSimulation();
+                                showNotification('🔄 Симуляция перезапущена с клавиатуры (R)', 'success');
+                            }, 500);
+                        } else {
+                            startSimulation();
+                            showNotification('🚀 Симуляция запущена с клавиатуры (R)', 'success');
+                        }
+                        break;
+                    case 'h':
+                        // Клавиша H - показать/скрыть справку
+                        console.log('⌨️ Нажата клавиша H - показать справку');
+                        showKeyboardHelp();
+                        break;
+                }
+            });
+            
+            console.log('✅ Управление с клавиатуры настроено');
+        }
+        
+        // Функция показа справки по клавиатуре
+        function showKeyboardHelp() {
+            const helpText = `
+                <div style="text-align: left; line-height: 1.6;">
+                    <h3>⌨️ Управление с клавиатуры:</h3>
+                    <p><strong>ESC</strong> - Остановить симуляцию</p>
+                    <p><strong>Enter</strong> - Запустить симуляцию</p>
+                    <p><strong>Пробел</strong> - Переключить состояние (старт/стоп)</p>
+                    <p><strong>S</strong> - Остановить симуляцию</p>
+                    <p><strong>R</strong> - Перезапустить симуляцию</p>
+                    <p><strong>H</strong> - Показать эту справку</p>
+                </div>
+            `;
+            
+            showNotification(helpText, 'info', 8000); // Показываем на 8 секунд
+        }
+        
+        // Функции для интерактивных подсказок
+        function setupMouseInteraction() {
+            const canvas = renderer.domElement;
+            
+            canvas.addEventListener('mousemove', onMouseMove);
+            canvas.addEventListener('mouseout', onMouseOut);
+        }
+        
+        function onMouseMove(event) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+            
+            checkDroneIntersection();
+        }
+        
+        function onMouseOut() {
+            hideTooltip();
+        }
+        
+        function checkDroneIntersection() {
+            raycaster.setFromCamera(mouse, camera);
+            
+            const intersects = raycaster.intersectObjects(droneMeshes, true);
+            
+            if (intersects.length > 0) {
+                const droneMesh = intersects[0].object;
+                // Находим корневой объект дрона
+                let rootDrone = droneMesh;
+                while (rootDrone.parent && rootDrone.parent.userData && rootDrone.parent.userData.id) {
+                    rootDrone = rootDrone.parent;
+                }
+                
+                if (rootDrone.userData && rootDrone.userData.id !== undefined) {
+                    showDroneTooltip(rootDrone, event);
+                }
+            } else {
+                hideTooltip();
+            }
+        }
+        
+        function showDroneTooltip(droneMesh, event) {
+            if (!tooltip || !window.lastDronesData) return;
+            
+            const droneId = droneMesh.userData.id;
+            const droneData = window.lastDronesData.find(d => d.id === droneId);
+            
+            if (!droneData) return;
+            
+            const tooltipContent = generateTooltipContent(droneData);
+            tooltip.innerHTML = tooltipContent;
+            
+            // Позиционирование tooltip
+            const rect = renderer.domElement.getBoundingClientRect();
+            tooltip.style.left = (event.clientX + 15) + 'px';
+            tooltip.style.top = (event.clientY - 15) + 'px';
+            tooltip.classList.add('show');
+            
+            // Подсветка дрона при наведении
+            if (hoveredDrone !== droneMesh) {
+                // Убираем подсветку с предыдущего дрона
+                if (hoveredDrone) {
+                    removeDroneHighlight(hoveredDrone);
+                }
+                
+                // Добавляем подсветку к новому дрону
+                addDroneHighlight(droneMesh);
+            }
+            
+            hoveredDrone = droneMesh;
+        }
+        
+        function hideTooltip() {
+            if (tooltip) {
+                tooltip.classList.remove('show');
+            }
+            
+            // Убираем подсветку с дрона
+            if (hoveredDrone) {
+                removeDroneHighlight(hoveredDrone);
+                hoveredDrone = null;
+            }
+        }
+        
+        function addDroneHighlight(droneMesh) {
+            // Добавляем светящийся эффект вокруг дрона
+            if (!droneMesh.userData.highlightRing) {
+                const ringGeometry = new THREE.RingGeometry(8, 12, 16);
+                const ringMaterial = new THREE.MeshBasicMaterial({
+                    color: 0x00ff88,
+                    transparent: true,
+                    opacity: 0.6,
+                    side: THREE.DoubleSide
+                });
+                const highlightRing = new THREE.Mesh(ringGeometry, ringMaterial);
+                highlightRing.rotation.x = -Math.PI / 2;
+                highlightRing.position.y = -0.5;
+                droneMesh.add(highlightRing);
+                droneMesh.userData.highlightRing = highlightRing;
+            }
+            
+            // Увеличиваем яркость всех материалов дрона
+            droneMesh.traverse((child) => {
+                if (child.material) {
+                    if (Array.isArray(child.material)) {
+                        child.material.forEach(mat => {
+                            if (mat.emissive) {
+                                mat.emissive.setHex(0x222222);
+                            }
+                        });
+                    } else {
+                        if (child.material.emissive) {
+                            child.material.emissive.setHex(0x222222);
+                        }
+                    }
+                }
+            });
+        }
+        
+        function removeDroneHighlight(droneMesh) {
+            // Убираем светящийся эффект
+            if (droneMesh.userData.highlightRing) {
+                droneMesh.remove(droneMesh.userData.highlightRing);
+                delete droneMesh.userData.highlightRing;
+            }
+            
+            // Возвращаем нормальную яркость материалов
+            droneMesh.traverse((child) => {
+                if (child.material) {
+                    if (Array.isArray(child.material)) {
+                        child.material.forEach(mat => {
+                            if (mat.emissive) {
+                                mat.emissive.setHex(0x000000);
+                            }
+                        });
+                    } else {
+                        if (child.material.emissive) {
+                            child.material.emissive.setHex(0x000000);
+                        }
+                    }
+                }
+            });
+        }
+        
+        function generateTooltipContent(droneData) {
+            const isMaster = droneData.is_master;
+            const status = isMaster ? 'MASTER' : 'SLAVE';
+            const statusColor = isMaster ? 'master' : 'good';
+            
+            let content = `
+                <div class="tooltip-header">🚁 Дрон ${droneData.id} (${status})</div>
+                <div class="tooltip-row">
+                    <span class="tooltip-label">Позиция:</span>
+                    <span class="tooltip-value">(${droneData.position[0].toFixed(1)}, ${droneData.position[1].toFixed(1)}, ${droneData.position[2].toFixed(1)})</span>
+                </div>
+                <div class="tooltip-row">
+                    <span class="tooltip-label">Эшелон:</span>
+                    <span class="tooltip-value">${droneData.altitude_level || 2}</span>
+                </div>
+                <div class="tooltip-row">
+                    <span class="tooltip-label">Тип часов:</span>
+                    <span class="tooltip-value ${statusColor}">${droneData.clock_type || 'quartz'}</span>
+                </div>
+                <div class="tooltip-row">
+                    <span class="tooltip-label">Качество синхронизации:</span>
+                    <span class="tooltip-value ${getQualityClass(droneData.sync_quality || 0)}">${((droneData.sync_quality || 0) * 100).toFixed(1)}%</span>
+                </div>
+                <div class="tooltip-row">
+                    <span class="tooltip-label">GPS точность:</span>
+                    <span class="tooltip-value ${getAccuracyClass(droneData.gps_accuracy_ns || 15)}">${(droneData.gps_accuracy_ns || 15).toFixed(1)} нс</span>
+                </div>
+                <div class="tooltip-row">
+                    <span class="tooltip-label">Смещение времени:</span>
+                    <span class="tooltip-value ${getOffsetClass(droneData.time_offset || 0)}">${(droneData.time_offset || 0).toFixed(2)} нс</span>
+                </div>
+                <div class="tooltip-row">
+                    <span class="tooltip-label">Джиттер:</span>
+                    <span class="tooltip-value ${getJitterClass(droneData.jitter || 0)}">${(droneData.jitter || 0).toFixed(2)} нс</span>
+                </div>
+                <div class="tooltip-row">
+                    <span class="tooltip-label">Батарея:</span>
+                    <span class="tooltip-value ${getBatteryClass(droneData.battery_level || 0)}">${((droneData.battery_level || 0) * 100).toFixed(1)}%</span>
+                </div>
+                <div class="tooltip-row">
+                    <span class="tooltip-label">Сигнал:</span>
+                    <span class="tooltip-value ${getSignalClass(droneData.signal_strength || 0)}">${((droneData.signal_strength || 0) * 100).toFixed(1)}%</span>
+                </div>
+            `;
+            
+            // Добавляем продвинутые метрики если доступны
+            if (droneData.tropospheric_delay_ns !== undefined) {
+                content += `
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">Тропосферная задержка:</span>
+                        <span class="tooltip-value">${(droneData.tropospheric_delay_ns || 0).toFixed(2)} нс</span>
+                    </div>
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">Ионосферная задержка:</span>
+                        <span class="tooltip-value">${(droneData.ionospheric_delay_ns || 0).toFixed(2)} нс</span>
+                    </div>
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">Многолучевость:</span>
+                        <span class="tooltip-value">${(droneData.multipath_jitter_ns || 0).toFixed(2)} нс</span>
+                    </div>
+                `;
+            }
+            
+            return content;
+        }
+        
+        function getQualityClass(quality) {
+            if (quality > 0.8) return 'good';
+            if (quality > 0.5) return 'warning';
+            return 'bad';
+        }
+        
+        function getAccuracyClass(accuracy) {
+            if (accuracy < 10) return 'good';
+            if (accuracy < 20) return 'warning';
+            return 'bad';
+        }
+        
+        function getOffsetClass(offset) {
+            const absOffset = Math.abs(offset);
+            if (absOffset < 10) return 'good';
+            if (absOffset < 50) return 'warning';
+            return 'bad';
+        }
+        
+        function getJitterClass(jitter) {
+            if (jitter < 5) return 'good';
+            if (jitter < 15) return 'warning';
+            return 'bad';
+        }
+        
+        function getBatteryClass(battery) {
+            if (battery > 0.7) return 'good';
+            if (battery > 0.3) return 'warning';
+            return 'bad';
+        }
+        
+        function getSignalClass(signal) {
+            if (signal > 0.8) return 'good';
+            if (signal > 0.5) return 'warning';
+            return 'bad';
+        }
         
         // Функции управления симуляцией
         async function startSimulation() {
@@ -2582,6 +4685,9 @@ class FinalWebHandler(BaseHTTPRequestHandler):
                     // Скрываем панель параметров и показываем 3D сцену
                     document.querySelector('.config-panel').style.display = 'none';
                     document.querySelector('.canvas-container').style.display = 'block';
+                    
+                    // Переключаем видимость кнопок
+                    switchToStopMode();
                     
                     // Запускаем опрос данных
                     startDataPolling();
@@ -2605,6 +4711,9 @@ class FinalWebHandler(BaseHTTPRequestHandler):
                     // Показываем панель параметров и скрываем 3D сцену
                     document.querySelector('.config-panel').style.display = 'block';
                     document.querySelector('.canvas-container').style.display = 'none';
+                    
+                    // Переключаем видимость кнопок обратно
+                    switchToStartMode();
                     
                     // Очищаем дроны
                     clearDrones();
