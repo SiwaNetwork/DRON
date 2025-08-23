@@ -1,0 +1,49 @@
+#Start recording tcl command: 12/6/2024 10:41:02
+#Project Location: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test; Project name: wiwisdr_ecp5_test
+prj_project open "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.ldf"
+prj_run PAR -impl impl1 -forceAll
+prj_run PAR -impl impl1 -forceAll
+prj_run PAR -impl impl1 -forceAll
+prj_run PAR -impl impl1 -forceAll
+prj_run PAR -impl impl1 -forceAll
+prj_run PAR -impl impl1 -forceAll
+set currentPath [pwd];set tmp_autopath $auto_path
+cd "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_2in_2out"
+source "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_2in_2out/generate_core.tcl"
+set auto_path $tmp_autopath;cd $currentPath
+prj_src add "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_2in_2out/fifo_dc_2in_2out.sbx"
+prj_src add "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/ddr_workaround.v"
+sbp_design open -dsgn "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_2in_2out/fifo_dc_2in_2out.sbx"
+set currentPath [pwd];set tmp_autopath $auto_path
+cd "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_2in_2out"
+source "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_2in_2out/generate_core.tcl"
+set auto_path $tmp_autopath;cd $currentPath
+prj_run PAR -impl impl1 -forceAll
+prj_run PAR -impl impl1 -forceAll
+prj_run PAR -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+set currentPath [pwd];set tmp_autopath $auto_path
+cd "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_32in_32out"
+source "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_32in_32out/generate_core.tcl"
+set auto_path $tmp_autopath;cd $currentPath
+prj_src add "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_32in_32out/fifo_32in_32out.sbx"
+set currentPath [pwd];set tmp_autopath $auto_path
+cd "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_32in_1out"
+source "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_32in_1out/generate_core.tcl"
+set auto_path $tmp_autopath;cd $currentPath
+prj_src add "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_32in_1out/fifo_dc_32in_1out.sbx"
+prj_run Export -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+prj_run Export -impl impl1 -forceAll
+#Stop recording: 12/6/2024 13:34:00

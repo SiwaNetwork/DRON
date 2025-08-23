@@ -1,0 +1,26 @@
+SCUBA, Version Diamond (64-bit) 3.14.0.75.2
+Sun Dec 08 09:47:04 2024
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+
+    Issued command   : C:\lscc\diamond\3.14\ispfpga\bin\nt64\scuba.exe -w -n internal_pll -lang verilog -synth lse -bus_exp 7 -bb -arch sa5p00 -type pll -fin 8 -fclkop 64 -fclkop_tol 0.0 -fclkos 160 -fclkos_tol 0.0 -phases 0 -fclkos2 80 -fclkos2_tol 0.0 -phases2 0 -fclkos3 64 -fclkos3_tol 0.0 -phases3 121.50 -phase_cntl STATIC -rst -lock -fb_mode 1 -fdc C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/internal_pll/internal_pll.fdc 
+    Circuit name     : internal_pll
+    Module type      : pll
+    Module Version   : 5.7
+    Ports            : 
+	Inputs       : CLKI, RST
+	Outputs      : CLKOP, CLKOS, CLKOS2, CLKOS3, LOCK
+    I/O buffer       : not inserted
+    EDIF output      : internal_pll.edn
+    Verilog output   : internal_pll.v
+    Verilog template : internal_pll_tmpl.v
+    Verilog purpose  : for synthesis and simulation
+    Bus notation     : big endian
+    Report output    : internal_pll.srp
+    Element Usage    :
+        EHXPLLL : 1
+    Estimated Resource Usage:

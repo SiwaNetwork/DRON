@@ -1,0 +1,54 @@
+-a "ECP5U"
+-d LFE5U-25F
+-t CABGA256
+-s 6
+-frequency 200
+-optimization_goal Timing
+-bram_utilization 100
+-ramstyle Auto
+-romstyle auto
+-dsp_utilization 100
+-use_dsp 1
+-use_carry_chain 1
+-carry_chain_length 0
+-force_gsr Auto
+-resource_sharing 1
+-propagate_constants 1
+-remove_duplicate_regs 1
+-mux_style Auto
+-max_fanout 1000
+-fsm_encoding_style Auto
+-twr_paths 3
+-fix_gated_clocks 1
+-loop_limit 1950
+
+
+
+
+-use_io_insertion 1
+-resolve_mixed_drivers 0
+-use_io_reg auto
+
+
+-lpf 1
+-p "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test"
+-ver "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/top.v"
+"C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/lvds_rx.v"
+"C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/myled.v"
+"C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/myspi.v"
+"C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/filter.v"
+"C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/i2cslave_controller.v"
+"C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/i2cslave_controller_top.v"
+"C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/internal_pll/internal_pll.v"
+"C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_16in_16out/fifo_dc_16in_16out.v"
+"C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_2in_2out/fifo_dc_2in_2out.v"
+"C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/ddr_workaround.v"
+"C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_32in_1out/fifo_dc_32in_1out.v"
+"C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/pll_10MHzInput/pll_10MHzInput.v"
+-top top
+
+
+-p "C:/lscc/diamond/3.14/ispfpga/sa5p00/data" "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/impl1" "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test"
+
+-ngd "wiwisdr_ecp5_test_impl1.ngd"
+

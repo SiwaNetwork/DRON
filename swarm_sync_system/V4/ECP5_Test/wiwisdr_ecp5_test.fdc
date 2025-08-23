@@ -1,0 +1,30 @@
+# frequency domain config, same as .sdc I believe
+
+create_clock -period 15.625ns [get_clocks {internal_64MHz_90deg}]
+create_clock -period 6.25ns [get_clocks {internal_160MHz}]
+create_clock -period 12.5ns [get_clocks {internal_80MHz}]
+create_clock -period 15.625ns [get_clocks {internal_64MHz}]
+create_clock -period 5.0ns [get_clocks {internal_200MHz}]
+create_clock -period 125.0ns [get_clocks {dpll_clkout2}]
+create_clock -period 100.0ns [get_clocks {dpll_clkout0}]
+create_clock -period 15.625ns [get_clocks {sdr_txclk}]
+
+
+
+create_clock -period 15.625ns [get_clocks {spi1_sck}]
+create_clock -period 15.625ns [get_clocks {spi2_sck}]
+create_clock -period 15.625ns [get_clocks {spi3_sck}]
+create_clock -period 15.625ns [get_clocks {spi4_sck}]
+
+
+set_output_delay -max 3.0 -min 3.0 -clock [get_clocks {spi1_sck}] [get_ports {spi1_mosi}]
+
+set_output_delay -max 3.0 -min 3.0  -clock [get_clocks {spi2_sck}] [get_ports {spi2_mosi}]
+
+set_output_delay -max 3.0 -min 3.0 -clock [get_clocks {spi3_sck}] [get_ports {spi3_mosi}]
+
+set_output_delay -max 3.0 -min 3.0 -clock [get_clocks {spi4_sck}] [get_ports {spi4_mosi}]
+
+# Not sure how to do this properly, looks good enough on scope
+#set_output_delay -max 5.0 -clock [get_clocks {internal_64MHz_90deg}] [get_ports {sdr_txdata}] # Output delay
+#set_output_delay -min 4.0 -clock [get_clocks {internal_64MHz_90deg}] [get_ports {sdr_txdata}] # Output delay

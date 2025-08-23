@@ -1,0 +1,594 @@
+<HTML>
+<HEAD><TITLE>Lattice Synthesis Timing Report</TITLE>
+<STYLE TYPE="text/css">
+<!--
+ body,pre{    font-family:'Courier New', monospace;    color: #000000;    font-size:88%;    background-color: #ffffff;}h1 {    font-weight: bold;    margin-top: 24px;    margin-bottom: 10px;    border-bottom: 3px solid #000;    font-size: 1em;}h2 {    font-weight: bold;    margin-top: 18px;    margin-bottom: 5px;    font-size: 0.90em;}h3 {    font-weight: bold;    margin-top: 12px;    margin-bottom: 5px;    font-size: 0.80em;}p {    font-size:78%;}P.Table {    margin-top: 4px;    margin-bottom: 4px;    margin-right: 4px;    margin-left: 4px;}table{    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    border-collapse: collapse;}th {    font-weight:bold;    padding: 4px;    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    vertical-align:top;    text-align:left;    font-size:78%;}td {    padding: 4px;    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    vertical-align:top;    font-size:78%;}a {    color:#013C9A;    text-decoration:none;}a:visited {    color:#013C9A;}a:hover, a:active {    text-decoration:underline;    color:#5BAFD4;}.pass{background-color: #00ff00;}.fail{background-color: #ff0000;}.comment{    font-size: 90%;    font-style: italic;}
+-->
+</STYLE>
+</HEAD>
+<PRE><A name="Map_Twr"></A><B><U><big>Lattice Synthesis Timing Report</big></U></B>
+--------------------------------------------------------------------------------
+Lattice Synthesis Timing Report, Version  
+Tue Dec 10 10:42:47 2024
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+
+<A name="mtw1_ri"></A><B><U><big>Report Information</big></U></B>
+------------------
+Design:     top
+Constraint file:  
+Report level:    verbose report, limited to 3 items per constraint
+--------------------------------------------------------------------------------
+
+
+
+================================================================================
+Constraint: create_clock -period 5.000000 -name clk3 [get_nets int_clk_out]
+            1066 items scored, 468 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Error:  The following path violates requirements by 3.037ns
+
+ Logical Details:  Cell type  Pin type       Cell name  (clock net +/-)
+
+   Source:         FD1S3IX    CK             \my_led/counter_257__i4  (from int_clk_out +)
+   Destination:    FD1S3AX    D              \my_led/led_12  (to int_clk_out +)
+
+   Delay:                   8.212ns  (14.6% logic, 85.4% route), 6 logic levels.
+
+ Constraint Details:
+
+      8.212ns data_path \my_led/counter_257__i4 to \my_led/led_12 violates
+      5.000ns delay constraint less
+     -0.175ns L_S requirement (totaling 5.175ns) by 3.037ns
+
+ Path Details: \my_led/counter_257__i4 to \my_led/led_12
+
+   Name    Fanout   Delay (ns)          Pins               Resource(Cell.Net)
+L_CO        ---     0.365             CK to Q              \my_led/counter_257__i4 (from int_clk_out)
+Route         2   e 1.258                                  \my_led/counter[4]
+LUT4        ---     0.166              B to Z              \my_led/i1_2_lut_adj_22
+Route         1   e 1.020                                  \my_led/n2705
+LUT4        ---     0.166              C to Z              \my_led/i1_4_lut_adj_20
+Route         1   e 1.020                                  \my_led/n2725
+LUT4        ---     0.166              B to Z              \my_led/i1_4_lut
+Route         1   e 1.020                                  \my_led/n2739
+LUT4        ---     0.166              B to Z              \my_led/i2258_4_lut
+Route        27   e 1.679                                  \my_led/n1943
+LUT4        ---     0.166              B to Z              \my_led/i1_2_lut
+Route         1   e 1.020                                  \my_led/led_N_63
+                  --------
+                    8.212  (14.6% logic, 85.4% route), 6 logic levels.
+
+
+Error:  The following path violates requirements by 3.037ns
+
+ Logical Details:  Cell type  Pin type       Cell name  (clock net +/-)
+
+   Source:         FD1S3IX    CK             \my_led/counter_257__i21  (from int_clk_out +)
+   Destination:    FD1S3AX    D              \my_led/led_12  (to int_clk_out +)
+
+   Delay:                   8.212ns  (14.6% logic, 85.4% route), 6 logic levels.
+
+ Constraint Details:
+
+      8.212ns data_path \my_led/counter_257__i21 to \my_led/led_12 violates
+      5.000ns delay constraint less
+     -0.175ns L_S requirement (totaling 5.175ns) by 3.037ns
+
+ Path Details: \my_led/counter_257__i21 to \my_led/led_12
+
+   Name    Fanout   Delay (ns)          Pins               Resource(Cell.Net)
+L_CO        ---     0.365             CK to Q              \my_led/counter_257__i21 (from int_clk_out)
+Route         2   e 1.258                                  \my_led/counter[21]
+LUT4        ---     0.166              A to Z              \my_led/i1_2_lut_adj_22
+Route         1   e 1.020                                  \my_led/n2705
+LUT4        ---     0.166              C to Z              \my_led/i1_4_lut_adj_20
+Route         1   e 1.020                                  \my_led/n2725
+LUT4        ---     0.166              B to Z              \my_led/i1_4_lut
+Route         1   e 1.020                                  \my_led/n2739
+LUT4        ---     0.166              B to Z              \my_led/i2258_4_lut
+Route        27   e 1.679                                  \my_led/n1943
+LUT4        ---     0.166              B to Z              \my_led/i1_2_lut
+Route         1   e 1.020                                  \my_led/led_N_63
+                  --------
+                    8.212  (14.6% logic, 85.4% route), 6 logic levels.
+
+
+Error:  The following path violates requirements by 1.851ns
+
+ Logical Details:  Cell type  Pin type       Cell name  (clock net +/-)
+
+   Source:         FD1S3IX    CK             \my_led/counter_257__i0  (from int_clk_out +)
+   Destination:    FD1S3AX    D              \my_led/led_12  (to int_clk_out +)
+
+   Delay:                   7.026ns  (14.6% logic, 85.4% route), 5 logic levels.
+
+ Constraint Details:
+
+      7.026ns data_path \my_led/counter_257__i0 to \my_led/led_12 violates
+      5.000ns delay constraint less
+     -0.175ns L_S requirement (totaling 5.175ns) by 1.851ns
+
+ Path Details: \my_led/counter_257__i0 to \my_led/led_12
+
+   Name    Fanout   Delay (ns)          Pins               Resource(Cell.Net)
+L_CO        ---     0.365             CK to Q              \my_led/counter_257__i0 (from int_clk_out)
+Route         2   e 1.258                                  \my_led/counter[0]
+LUT4        ---     0.166              B to Z              \my_led/i1_4_lut_adj_21
+Route         1   e 1.020                                  \my_led/n2717
+LUT4        ---     0.166              D to Z              \my_led/i1_4_lut
+Route         1   e 1.020                                  \my_led/n2739
+LUT4        ---     0.166              B to Z              \my_led/i2258_4_lut
+Route        27   e 1.679                                  \my_led/n1943
+LUT4        ---     0.166              B to Z              \my_led/i1_2_lut
+Route         1   e 1.020                                  \my_led/led_N_63
+                  --------
+                    7.026  (14.6% logic, 85.4% route), 5 logic levels.
+
+Warning: 8.037 ns is the maximum delay for this constraint.
+
+
+
+================================================================================
+Constraint: create_clock -period 5.000000 -name clk2 [get_nets internal_200MHz]
+            219 items scored, 8 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Error:  The following path violates requirements by 1.393ns
+
+ Logical Details:  Cell type  Pin type       Cell name  (clock net +/-)
+
+   Source:         FD1S3AX    CK             \subg_iddr/fifo_inst/FF_0  (from internal_200MHz +)
+   Destination:    FD1S3AX    D              \subg_iddr/fifo_inst/FF_0  (to internal_200MHz +)
+
+   Delay:                   6.568ns  (22.9% logic, 77.1% route), 8 logic levels.
+
+ Constraint Details:
+
+      6.568ns data_path \subg_iddr/fifo_inst/FF_0 to \subg_iddr/fifo_inst/FF_0 violates
+      5.000ns delay constraint less
+     -0.175ns L_S requirement (totaling 5.175ns) by 1.393ns
+
+ Path Details: \subg_iddr/fifo_inst/FF_0 to \subg_iddr/fifo_inst/FF_0
+
+   Name    Fanout   Delay (ns)          Pins               Resource(Cell.Net)
+L_CO        ---     0.365             CK to Q              \subg_iddr/fifo_inst/FF_0 (from internal_200MHz)
+Route         3   e 1.339                                  \subg_iddr/fifo_full
+LUT4        ---     0.166              A to Z              \subg_iddr/fifo_inst/INV_1
+Route         1   e 1.020                                  \subg_iddr/fifo_inst/invout_1
+LUT4        ---     0.166              B to Z              \subg_iddr/fifo_inst/AND2_t10
+Route        18   e 1.608                                  \subg_iddr/fifo_inst/wren_i
+A1_TO_FCO   ---     0.329           A[2] to COUT           \subg_iddr/fifo_inst/full_cmp_ci_a
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/cmp_ci_1
+FCI_TO_FCO  ---     0.051            CIN to COUT           \subg_iddr/fifo_inst/full_cmp_0
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/co0_3
+FCI_TO_FCO  ---     0.051            CIN to COUT           \subg_iddr/fifo_inst/full_cmp_1
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/co1_3
+FCI_TO_FCO  ---     0.051            CIN to COUT           \subg_iddr/fifo_inst/full_cmp_2
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/full_d_c
+FCI_TO_F    ---     0.322            CIN to S[2]           \subg_iddr/fifo_inst/a1
+Route         1   e 1.020                                  \subg_iddr/fifo_inst/full_d
+                  --------
+                    6.568  (22.9% logic, 77.1% route), 8 logic levels.
+
+
+Error:  The following path violates requirements by 1.393ns
+
+ Logical Details:  Cell type  Pin type       Cell name  (clock net +/-)
+
+   Source:         FD1S3AX    CK             \subg_iddr/fifo_inst/FF_0  (from internal_200MHz +)
+   Destination:    FD1S3AX    D              \subg_iddr/fifo_inst/FF_0  (to internal_200MHz +)
+
+   Delay:                   6.568ns  (22.9% logic, 77.1% route), 8 logic levels.
+
+ Constraint Details:
+
+      6.568ns data_path \subg_iddr/fifo_inst/FF_0 to \subg_iddr/fifo_inst/FF_0 violates
+      5.000ns delay constraint less
+     -0.175ns L_S requirement (totaling 5.175ns) by 1.393ns
+
+ Path Details: \subg_iddr/fifo_inst/FF_0 to \subg_iddr/fifo_inst/FF_0
+
+   Name    Fanout   Delay (ns)          Pins               Resource(Cell.Net)
+L_CO        ---     0.365             CK to Q              \subg_iddr/fifo_inst/FF_0 (from internal_200MHz)
+Route         3   e 1.339                                  \subg_iddr/fifo_full
+LUT4        ---     0.166              A to Z              \subg_iddr/fifo_inst/INV_1
+Route         1   e 1.020                                  \subg_iddr/fifo_inst/invout_1
+LUT4        ---     0.166              B to Z              \subg_iddr/fifo_inst/AND2_t10
+Route        18   e 1.608                                  \subg_iddr/fifo_inst/wren_i
+A1_TO_FCO   ---     0.329           B[2] to COUT           \subg_iddr/fifo_inst/full_cmp_ci_a
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/cmp_ci_1
+FCI_TO_FCO  ---     0.051            CIN to COUT           \subg_iddr/fifo_inst/full_cmp_0
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/co0_3
+FCI_TO_FCO  ---     0.051            CIN to COUT           \subg_iddr/fifo_inst/full_cmp_1
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/co1_3
+FCI_TO_FCO  ---     0.051            CIN to COUT           \subg_iddr/fifo_inst/full_cmp_2
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/full_d_c
+FCI_TO_F    ---     0.322            CIN to S[2]           \subg_iddr/fifo_inst/a1
+Route         1   e 1.020                                  \subg_iddr/fifo_inst/full_d
+                  --------
+                    6.568  (22.9% logic, 77.1% route), 8 logic levels.
+
+
+Error:  The following path violates requirements by 1.393ns
+
+ Logical Details:  Cell type  Pin type       Cell name  (clock net +/-)
+
+   Source:         FD1S3AX    CK             \wifi_iddr/fifo_inst/FF_0  (from internal_200MHz +)
+   Destination:    FD1S3AX    D              \wifi_iddr/fifo_inst/FF_0  (to internal_200MHz +)
+
+   Delay:                   6.568ns  (22.9% logic, 77.1% route), 8 logic levels.
+
+ Constraint Details:
+
+      6.568ns data_path \wifi_iddr/fifo_inst/FF_0 to \wifi_iddr/fifo_inst/FF_0 violates
+      5.000ns delay constraint less
+     -0.175ns L_S requirement (totaling 5.175ns) by 1.393ns
+
+ Path Details: \wifi_iddr/fifo_inst/FF_0 to \wifi_iddr/fifo_inst/FF_0
+
+   Name    Fanout   Delay (ns)          Pins               Resource(Cell.Net)
+L_CO        ---     0.365             CK to Q              \wifi_iddr/fifo_inst/FF_0 (from internal_200MHz)
+Route         3   e 1.339                                  \wifi_iddr/fifo_full
+LUT4        ---     0.166              A to Z              \wifi_iddr/fifo_inst/INV_1
+Route         1   e 1.020                                  \wifi_iddr/fifo_inst/invout_1
+LUT4        ---     0.166              B to Z              \wifi_iddr/fifo_inst/AND2_t10
+Route        18   e 1.608                                  \wifi_iddr/fifo_inst/wren_i
+A1_TO_FCO   ---     0.329           A[2] to COUT           \wifi_iddr/fifo_inst/full_cmp_ci_a
+Route         1   e 0.020                                  \wifi_iddr/fifo_inst/cmp_ci_1
+FCI_TO_FCO  ---     0.051            CIN to COUT           \wifi_iddr/fifo_inst/full_cmp_0
+Route         1   e 0.020                                  \wifi_iddr/fifo_inst/co0_3
+FCI_TO_FCO  ---     0.051            CIN to COUT           \wifi_iddr/fifo_inst/full_cmp_1
+Route         1   e 0.020                                  \wifi_iddr/fifo_inst/co1_3
+FCI_TO_FCO  ---     0.051            CIN to COUT           \wifi_iddr/fifo_inst/full_cmp_2
+Route         1   e 0.020                                  \wifi_iddr/fifo_inst/full_d_c
+FCI_TO_F    ---     0.322            CIN to S[2]           \wifi_iddr/fifo_inst/a1
+Route         1   e 1.020                                  \wifi_iddr/fifo_inst/full_d
+                  --------
+                    6.568  (22.9% logic, 77.1% route), 8 logic levels.
+
+Warning: 6.393 ns is the maximum delay for this constraint.
+
+
+
+================================================================================
+Constraint: create_clock -period 5.000000 -name clk1 [get_nets internal_80MHz]
+            796 items scored, 34 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Error:  The following path violates requirements by 1.312ns
+
+ Logical Details:  Cell type  Pin type       Cell name  (clock net +/-)
+
+   Source:         FD1S3BX    CK             \subg_iddr/fifo_inst/FF_1  (from internal_80MHz +)
+   Destination:    FD1S3BX    D              \subg_iddr/fifo_inst/FF_1  (to internal_80MHz +)
+
+   Delay:                   6.487ns  (23.1% logic, 76.9% route), 8 logic levels.
+
+ Constraint Details:
+
+      6.487ns data_path \subg_iddr/fifo_inst/FF_1 to \subg_iddr/fifo_inst/FF_1 violates
+      5.000ns delay constraint less
+     -0.175ns L_S requirement (totaling 5.175ns) by 1.312ns
+
+ Path Details: \subg_iddr/fifo_inst/FF_1 to \subg_iddr/fifo_inst/FF_1
+
+   Name    Fanout   Delay (ns)          Pins               Resource(Cell.Net)
+L_CO        ---     0.365             CK to Q              \subg_iddr/fifo_inst/FF_1 (from internal_80MHz)
+Route         2   e 1.258                                  \subg_iddr/fifo_empty
+LUT4        ---     0.166              A to Z              \subg_iddr/fifo_inst/INV_0
+Route         1   e 1.020                                  \subg_iddr/fifo_inst/invout_0
+LUT4        ---     0.166              B to Z              \subg_iddr/fifo_inst/AND2_t9
+Route        18   e 1.608                                  \subg_iddr/fifo_inst/rden_i
+A1_TO_FCO   ---     0.329           A[2] to COUT           \subg_iddr/fifo_inst/empty_cmp_ci_a
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/cmp_ci
+FCI_TO_FCO  ---     0.051            CIN to COUT           \subg_iddr/fifo_inst/empty_cmp_0
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/co0_2
+FCI_TO_FCO  ---     0.051            CIN to COUT           \subg_iddr/fifo_inst/empty_cmp_1
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/co1_2
+FCI_TO_FCO  ---     0.051            CIN to COUT           \subg_iddr/fifo_inst/empty_cmp_2
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/empty_d_c
+FCI_TO_F    ---     0.322            CIN to S[2]           \subg_iddr/fifo_inst/a0
+Route         1   e 1.020                                  \subg_iddr/fifo_inst/empty_d
+                  --------
+                    6.487  (23.1% logic, 76.9% route), 8 logic levels.
+
+
+Error:  The following path violates requirements by 1.312ns
+
+ Logical Details:  Cell type  Pin type       Cell name  (clock net +/-)
+
+   Source:         FD1S3BX    CK             \subg_iddr/fifo_inst/FF_1  (from internal_80MHz +)
+   Destination:    FD1S3BX    D              \subg_iddr/fifo_inst/FF_1  (to internal_80MHz +)
+
+   Delay:                   6.487ns  (23.1% logic, 76.9% route), 8 logic levels.
+
+ Constraint Details:
+
+      6.487ns data_path \subg_iddr/fifo_inst/FF_1 to \subg_iddr/fifo_inst/FF_1 violates
+      5.000ns delay constraint less
+     -0.175ns L_S requirement (totaling 5.175ns) by 1.312ns
+
+ Path Details: \subg_iddr/fifo_inst/FF_1 to \subg_iddr/fifo_inst/FF_1
+
+   Name    Fanout   Delay (ns)          Pins               Resource(Cell.Net)
+L_CO        ---     0.365             CK to Q              \subg_iddr/fifo_inst/FF_1 (from internal_80MHz)
+Route         2   e 1.258                                  \subg_iddr/fifo_empty
+LUT4        ---     0.166              A to Z              \subg_iddr/fifo_inst/INV_0
+Route         1   e 1.020                                  \subg_iddr/fifo_inst/invout_0
+LUT4        ---     0.166              B to Z              \subg_iddr/fifo_inst/AND2_t9
+Route        18   e 1.608                                  \subg_iddr/fifo_inst/rden_i
+A1_TO_FCO   ---     0.329           B[2] to COUT           \subg_iddr/fifo_inst/empty_cmp_ci_a
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/cmp_ci
+FCI_TO_FCO  ---     0.051            CIN to COUT           \subg_iddr/fifo_inst/empty_cmp_0
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/co0_2
+FCI_TO_FCO  ---     0.051            CIN to COUT           \subg_iddr/fifo_inst/empty_cmp_1
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/co1_2
+FCI_TO_FCO  ---     0.051            CIN to COUT           \subg_iddr/fifo_inst/empty_cmp_2
+Route         1   e 0.020                                  \subg_iddr/fifo_inst/empty_d_c
+FCI_TO_F    ---     0.322            CIN to S[2]           \subg_iddr/fifo_inst/a0
+Route         1   e 1.020                                  \subg_iddr/fifo_inst/empty_d
+                  --------
+                    6.487  (23.1% logic, 76.9% route), 8 logic levels.
+
+
+Error:  The following path violates requirements by 1.312ns
+
+ Logical Details:  Cell type  Pin type       Cell name  (clock net +/-)
+
+   Source:         FD1S3BX    CK             \wifi_iddr/fifo_inst/FF_1  (from internal_80MHz +)
+   Destination:    FD1S3BX    D              \wifi_iddr/fifo_inst/FF_1  (to internal_80MHz +)
+
+   Delay:                   6.487ns  (23.1% logic, 76.9% route), 8 logic levels.
+
+ Constraint Details:
+
+      6.487ns data_path \wifi_iddr/fifo_inst/FF_1 to \wifi_iddr/fifo_inst/FF_1 violates
+      5.000ns delay constraint less
+     -0.175ns L_S requirement (totaling 5.175ns) by 1.312ns
+
+ Path Details: \wifi_iddr/fifo_inst/FF_1 to \wifi_iddr/fifo_inst/FF_1
+
+   Name    Fanout   Delay (ns)          Pins               Resource(Cell.Net)
+L_CO        ---     0.365             CK to Q              \wifi_iddr/fifo_inst/FF_1 (from internal_80MHz)
+Route         2   e 1.258                                  \wifi_iddr/fifo_empty
+LUT4        ---     0.166              A to Z              \wifi_iddr/fifo_inst/INV_0
+Route         1   e 1.020                                  \wifi_iddr/fifo_inst/invout_0
+LUT4        ---     0.166              B to Z              \wifi_iddr/fifo_inst/AND2_t9
+Route        18   e 1.608                                  \wifi_iddr/fifo_inst/rden_i
+A1_TO_FCO   ---     0.329           B[2] to COUT           \wifi_iddr/fifo_inst/empty_cmp_ci_a
+Route         1   e 0.020                                  \wifi_iddr/fifo_inst/cmp_ci
+FCI_TO_FCO  ---     0.051            CIN to COUT           \wifi_iddr/fifo_inst/empty_cmp_0
+Route         1   e 0.020                                  \wifi_iddr/fifo_inst/co0_2
+FCI_TO_FCO  ---     0.051            CIN to COUT           \wifi_iddr/fifo_inst/empty_cmp_1
+Route         1   e 0.020                                  \wifi_iddr/fifo_inst/co1_2
+FCI_TO_FCO  ---     0.051            CIN to COUT           \wifi_iddr/fifo_inst/empty_cmp_2
+Route         1   e 0.020                                  \wifi_iddr/fifo_inst/empty_d_c
+FCI_TO_F    ---     0.322            CIN to S[2]           \wifi_iddr/fifo_inst/a0
+Route         1   e 1.020                                  \wifi_iddr/fifo_inst/empty_d
+                  --------
+                    6.487  (23.1% logic, 76.9% route), 8 logic levels.
+
+Warning: 6.312 ns is the maximum delay for this constraint.
+
+
+
+================================================================================
+Constraint: create_clock -period 5.000000 -name clk0 [get_nets internal_160MHz]
+            514 items scored, 24 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Error:  The following path violates requirements by 0.327ns
+
+ Logical Details:  Cell type  Pin type       Cell name  (clock net +/-)
+
+   Source:         FD1P3IX    CK             \subg_i_spi/bit_count_i1  (from internal_160MHz +)
+   Destination:    FD1S3AX    D              \subg_i_spi/spi_busy_42  (to internal_160MHz +)
+
+   Delay:                   5.502ns  (15.7% logic, 84.3% route), 4 logic levels.
+
+ Constraint Details:
+
+      5.502ns data_path \subg_i_spi/bit_count_i1 to \subg_i_spi/spi_busy_42 violates
+      5.000ns delay constraint less
+     -0.175ns L_S requirement (totaling 5.175ns) by 0.327ns
+
+ Path Details: \subg_i_spi/bit_count_i1 to \subg_i_spi/spi_busy_42
+
+   Name    Fanout   Delay (ns)          Pins               Resource(Cell.Net)
+L_CO        ---     0.365             CK to Q              \subg_i_spi/bit_count_i1 (from internal_160MHz)
+Route         5   e 1.441                                  \subg_i_spi/bit_count[1]
+LUT4        ---     0.166              A to Z              \subg_i_spi/i1_3_lut_adj_12
+Route         2   e 1.158                                  \subg_i_spi/n8
+LUT4        ---     0.166              B to Z              \subg_i_spi/i1_3_lut
+Route         1   e 1.020                                  n2693
+LUT4        ---     0.166              D to Z              i1666_4_lut_4_lut
+Route         1   e 1.020                                  n1237
+                  --------
+                    5.502  (15.7% logic, 84.3% route), 4 logic levels.
+
+
+Error:  The following path violates requirements by 0.327ns
+
+ Logical Details:  Cell type  Pin type       Cell name  (clock net +/-)
+
+   Source:         FD1P3IX    CK             \subg_i_spi/bit_count_i1  (from internal_160MHz +)
+   Destination:    FD1S3AX    D              \subg_i_spi/spi_clk_enable_41  (to internal_160MHz +)
+
+   Delay:                   5.502ns  (15.7% logic, 84.3% route), 4 logic levels.
+
+ Constraint Details:
+
+      5.502ns data_path \subg_i_spi/bit_count_i1 to \subg_i_spi/spi_clk_enable_41 violates
+      5.000ns delay constraint less
+     -0.175ns L_S requirement (totaling 5.175ns) by 0.327ns
+
+ Path Details: \subg_i_spi/bit_count_i1 to \subg_i_spi/spi_clk_enable_41
+
+   Name    Fanout   Delay (ns)          Pins               Resource(Cell.Net)
+L_CO        ---     0.365             CK to Q              \subg_i_spi/bit_count_i1 (from internal_160MHz)
+Route         5   e 1.441                                  \subg_i_spi/bit_count[1]
+LUT4        ---     0.166              A to Z              \subg_i_spi/i1_3_lut_adj_12
+Route         2   e 1.158                                  \subg_i_spi/n8
+LUT4        ---     0.166              A to Z              \subg_i_spi/i1_3_lut_adj_13
+Route         1   e 1.020                                  \subg_i_spi/n2653
+LUT4        ---     0.166              A to Z              \subg_i_spi/i1387_4_lut
+Route         1   e 1.020                                  \subg_i_spi/n1908
+                  --------
+                    5.502  (15.7% logic, 84.3% route), 4 logic levels.
+
+
+Error:  The following path violates requirements by 0.327ns
+
+ Logical Details:  Cell type  Pin type       Cell name  (clock net +/-)
+
+   Source:         FD1P3IX    CK             \subg_q_spi/bit_count_i1  (from internal_160MHz +)
+   Destination:    FD1S3AX    D              \subg_q_spi/spi_clk_enable_41  (to internal_160MHz +)
+
+   Delay:                   5.502ns  (15.7% logic, 84.3% route), 4 logic levels.
+
+ Constraint Details:
+
+      5.502ns data_path \subg_q_spi/bit_count_i1 to \subg_q_spi/spi_clk_enable_41 violates
+      5.000ns delay constraint less
+     -0.175ns L_S requirement (totaling 5.175ns) by 0.327ns
+
+ Path Details: \subg_q_spi/bit_count_i1 to \subg_q_spi/spi_clk_enable_41
+
+   Name    Fanout   Delay (ns)          Pins               Resource(Cell.Net)
+L_CO        ---     0.365             CK to Q              \subg_q_spi/bit_count_i1 (from internal_160MHz)
+Route         5   e 1.441                                  \subg_q_spi/bit_count[1]
+LUT4        ---     0.166              A to Z              \subg_q_spi/i1_3_lut_adj_10
+Route         2   e 1.158                                  \subg_q_spi/n8
+LUT4        ---     0.166              A to Z              \subg_q_spi/i1_3_lut
+Route         1   e 1.020                                  \subg_q_spi/n2641
+LUT4        ---     0.166              A to Z              \subg_q_spi/i1379_4_lut
+Route         1   e 1.020                                  \subg_q_spi/n1900
+                  --------
+                    5.502  (15.7% logic, 84.3% route), 4 logic levels.
+
+Warning: 5.327 ns is the maximum delay for this constraint.
+
+
+<A name="mtw1_rs"></A><B><U><big>Timing Report Summary</big></U></B>
+--------------
+--------------------------------------------------------------------------------
+Constraint                              |   Constraint|       Actual|Levels
+--------------------------------------------------------------------------------
+                                        |             |             |
+create_clock -period 5.000000 -name     |             |             |
+clk3 [get_nets int_clk_out]             |     5.000 ns|     8.037 ns|     6 *
+                                        |             |             |
+create_clock -period 5.000000 -name     |             |             |
+clk2 [get_nets internal_200MHz]         |     5.000 ns|     6.393 ns|     8 *
+                                        |             |             |
+create_clock -period 5.000000 -name     |             |             |
+clk1 [get_nets internal_80MHz]          |     5.000 ns|     6.312 ns|     8 *
+                                        |             |             |
+create_clock -period 5.000000 -name     |             |             |
+clk0 [get_nets internal_160MHz]         |     5.000 ns|     5.327 ns|     4 *
+                                        |             |             |
+--------------------------------------------------------------------------------
+
+
+4 constraints not met.
+
+--------------------------------------------------------------------------------
+Critical Nets                           |   Loads|  Errors| % of total
+--------------------------------------------------------------------------------
+\my_led/n1943                           |      27|     468|     87.64%
+                                        |        |        |
+\my_led/n2739                           |       1|     352|     65.92%
+                                        |        |        |
+\my_led/n2725                           |       1|     135|     25.28%
+                                        |        |        |
+\my_led/n2721                           |       1|     110|     20.60%
+                                        |        |        |
+\my_led/n2713                           |       1|     108|     20.22%
+                                        |        |        |
+\my_led/n2717                           |       1|     108|     20.22%
+                                        |        |        |
+\my_led/n2699                           |       1|      54|     10.11%
+                                        |        |        |
+\my_led/n2701                           |       1|      54|     10.11%
+                                        |        |        |
+\my_led/n2705                           |       1|      54|     10.11%
+                                        |        |        |
+--------------------------------------------------------------------------------
+
+
+<A name="mtw1_ts"></A><B><U><big>Timing summary:</big></U></B>
+---------------
+
+Timing errors: 534  Score: 435822
+
+Constraints cover  2730 paths, 696 nets, and 1581 connections (73.6% coverage)
+
+
+Peak memory: 88379392 bytes, TRCE: 0 bytes, DLYMAN: 0 bytes
+CPU_TIME_REPORT: 0 secs 
+
+
+
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+</PRE></FONT>
+</BODY>
+</HTML>

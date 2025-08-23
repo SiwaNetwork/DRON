@@ -1,0 +1,212 @@
+[ START MERGED ]
+n14348 subg_q_empty
+n1 r_state_0_adj_1181
+subg_i_empty_N_227 subg_i_empty
+wifi_i_fifo_dc/rden_i n14347
+lvds_rx_09_inst/n14358 r_state_0
+rRst main_reset_n_N_208
+subg_i_fifo_dc/invout_1 subg_i_fifo_dc/Full
+wifi_i_fifo_dc/invout_1 wifi_i_fifo_dc/Full
+subg_q_fifo_dc/invout_1 subg_q_fifo_dc/Full
+n14346 wifi_q_empty
+i2c_slave/n7342 wb_dat_o_7
+i2c_slave/n7320 wb_dat_o_0
+i2c_slave/n7338 wb_dat_o_3
+i2c_slave/n7341 wb_dat_o_6
+i2c_slave/n7340 wb_dat_o_5
+i2c_slave/n7339 wb_dat_o_4
+i2c_slave/n7337 wb_dat_o_2
+i2c_slave/n7336 wb_dat_o_1
+wifi_q_fifo_dc/invout_1 wifi_q_fifo_dc/Full
+[ END MERGED ]
+[ START CLIPPED ]
+wifi_q_fifo_dc/invout_0
+subg_q_fifo_dc/invout_0
+wifi_i_fifo_dc/invout_0
+subg_i_fifo_dc/invout_0
+VCC_net
+wifi_q_fifo_dc/a1/S1
+wifi_q_fifo_dc/a1/CO
+wifi_q_fifo_dc/full_cmp_1/S1
+wifi_q_fifo_dc/full_cmp_1/S0
+wifi_q_fifo_dc/full_cmp_0/S1
+wifi_q_fifo_dc/full_cmp_0/S0
+wifi_q_fifo_dc/full_cmp_ci_a/S1
+wifi_q_fifo_dc/full_cmp_ci_a/S0
+wifi_q_fifo_dc/full_cmp_ci_a/CI
+wifi_q_fifo_dc/a0/S1
+wifi_q_fifo_dc/a0/CO
+wifi_q_fifo_dc/empty_cmp_1/S1
+wifi_q_fifo_dc/empty_cmp_1/S0
+wifi_q_fifo_dc/empty_cmp_0/S1
+wifi_q_fifo_dc/empty_cmp_0/S0
+wifi_q_fifo_dc/empty_cmp_ci_a/S1
+wifi_q_fifo_dc/empty_cmp_ci_a/S0
+wifi_q_fifo_dc/empty_cmp_ci_a/CI
+wifi_q_fifo_dc/r_gctr_1/S1
+wifi_q_fifo_dc/r_gctr_1/CO
+wifi_q_fifo_dc/r_gctr_cia/S1
+wifi_q_fifo_dc/r_gctr_cia/S0
+wifi_q_fifo_dc/r_gctr_cia/CI
+wifi_q_fifo_dc/w_gctr_1/S1
+wifi_q_fifo_dc/w_gctr_1/CO
+wifi_q_fifo_dc/w_gctr_cia/S1
+wifi_q_fifo_dc/w_gctr_cia/S0
+wifi_q_fifo_dc/w_gctr_cia/CI
+i2c_slave/addr_reg_1305_add_4_1/S1
+i2c_slave/addr_reg_1305_add_4_1/S0
+i2c_slave/addr_reg_1305_add_4_1/CI
+i2c_slave/addr_reg_1305_add_4_17/CO
+subg_q_fifo_dc/a1/S1
+subg_q_fifo_dc/a1/CO
+subg_q_fifo_dc/full_cmp_1/S1
+subg_q_fifo_dc/full_cmp_1/S0
+subg_q_fifo_dc/full_cmp_0/S1
+subg_q_fifo_dc/full_cmp_0/S0
+subg_q_fifo_dc/full_cmp_ci_a/S1
+subg_q_fifo_dc/full_cmp_ci_a/S0
+subg_q_fifo_dc/full_cmp_ci_a/CI
+subg_q_fifo_dc/a0/S1
+subg_q_fifo_dc/a0/CO
+subg_q_fifo_dc/empty_cmp_1/S1
+subg_q_fifo_dc/empty_cmp_1/S0
+subg_q_fifo_dc/empty_cmp_0/S1
+subg_q_fifo_dc/empty_cmp_0/S0
+subg_q_fifo_dc/empty_cmp_ci_a/S1
+subg_q_fifo_dc/empty_cmp_ci_a/S0
+subg_q_fifo_dc/empty_cmp_ci_a/CI
+subg_q_fifo_dc/r_gctr_1/S1
+subg_q_fifo_dc/r_gctr_1/CO
+subg_q_fifo_dc/r_gctr_cia/S1
+subg_q_fifo_dc/r_gctr_cia/S0
+subg_q_fifo_dc/r_gctr_cia/CI
+subg_q_fifo_dc/w_gctr_1/S1
+subg_q_fifo_dc/w_gctr_1/CO
+subg_q_fifo_dc/w_gctr_cia/S1
+subg_q_fifo_dc/w_gctr_cia/S0
+subg_q_fifo_dc/w_gctr_cia/CI
+wifi_i_fifo_dc/a1/S1
+wifi_i_fifo_dc/a1/CO
+wifi_i_fifo_dc/full_cmp_1/S1
+wifi_i_fifo_dc/full_cmp_1/S0
+wifi_i_fifo_dc/full_cmp_0/S1
+wifi_i_fifo_dc/full_cmp_0/S0
+wifi_i_fifo_dc/full_cmp_ci_a/S1
+wifi_i_fifo_dc/full_cmp_ci_a/S0
+wifi_i_fifo_dc/full_cmp_ci_a/CI
+wifi_i_fifo_dc/a0/S1
+wifi_i_fifo_dc/a0/CO
+wifi_i_fifo_dc/empty_cmp_1/S1
+wifi_i_fifo_dc/empty_cmp_1/S0
+wifi_i_fifo_dc/empty_cmp_0/S1
+wifi_i_fifo_dc/empty_cmp_0/S0
+wifi_i_fifo_dc/empty_cmp_ci_a/S1
+wifi_i_fifo_dc/empty_cmp_ci_a/S0
+wifi_i_fifo_dc/empty_cmp_ci_a/CI
+wifi_i_fifo_dc/r_gctr_1/S1
+wifi_i_fifo_dc/r_gctr_1/CO
+wifi_i_fifo_dc/r_gctr_cia/S1
+wifi_i_fifo_dc/r_gctr_cia/S0
+wifi_i_fifo_dc/r_gctr_cia/CI
+wifi_i_fifo_dc/w_gctr_1/S1
+wifi_i_fifo_dc/w_gctr_1/CO
+wifi_i_fifo_dc/w_gctr_cia/S1
+wifi_i_fifo_dc/w_gctr_cia/S0
+wifi_i_fifo_dc/w_gctr_cia/CI
+subg_i_fifo_dc/a1/S1
+subg_i_fifo_dc/a1/CO
+subg_i_fifo_dc/full_cmp_1/S1
+subg_i_fifo_dc/full_cmp_1/S0
+subg_i_fifo_dc/full_cmp_0/S1
+subg_i_fifo_dc/full_cmp_0/S0
+subg_i_fifo_dc/full_cmp_ci_a/S1
+subg_i_fifo_dc/full_cmp_ci_a/S0
+subg_i_fifo_dc/full_cmp_ci_a/CI
+subg_i_fifo_dc/a0/S1
+subg_i_fifo_dc/a0/CO
+subg_i_fifo_dc/empty_cmp_1/S1
+subg_i_fifo_dc/empty_cmp_1/S0
+subg_i_fifo_dc/empty_cmp_0/S1
+subg_i_fifo_dc/empty_cmp_0/S0
+subg_i_fifo_dc/empty_cmp_ci_a/S1
+subg_i_fifo_dc/empty_cmp_ci_a/S0
+subg_i_fifo_dc/empty_cmp_ci_a/CI
+subg_i_fifo_dc/r_gctr_1/S1
+subg_i_fifo_dc/r_gctr_1/CO
+subg_i_fifo_dc/r_gctr_cia/S1
+subg_i_fifo_dc/r_gctr_cia/S0
+subg_i_fifo_dc/r_gctr_cia/CI
+subg_i_fifo_dc/w_gctr_1/S1
+subg_i_fifo_dc/w_gctr_1/CO
+subg_i_fifo_dc/w_gctr_cia/S1
+subg_i_fifo_dc/w_gctr_cia/S0
+subg_i_fifo_dc/w_gctr_cia/CI
+tx_counter_1302_add_4_1/S0
+tx_counter_1302_add_4_1/CI
+tx_counter_1302_add_4_9/S1
+tx_counter_1302_add_4_9/CO
+my_led/counter_1303_add_4_27/S1
+my_led/counter_1303_add_4_27/CO
+my_led/counter_1303_add_4_1/S0
+my_led/counter_1303_add_4_1/CI
+[ END CLIPPED ]
+[ START OSC ]
+int_clk_out
+[ END OSC ]
+[ START DESIGN PREFS ]
+SCHEMATIC START ;
+# map:  version Diamond (64-bit) 3.14.0.75.2 -- WARNING: Map write only section -- Tue Jan 28 18:13:57 2025
+
+SYSCONFIG SLAVE_SPI_PORT=DISABLE MASTER_SPI_PORT=ENABLE SLAVE_PARALLEL_PORT=DISABLE BACKGROUND_RECONFIG=OFF DONE_EX=OFF DONE_OD=ON DONE_PULL=ON MCCLK_FREQ=2.4 TRANSFR=OFF CONFIG_IOVOLTAGE=3.3 CONFIG_SECURE=OFF WAKE_UP=21 COMPRESS_CONFIG=OFF CONFIG_MODE=SPI_SERIAL INBUF=OFF ;
+LOCATE COMP "fpga_scl" SITE "C5" ;
+LOCATE COMP "sdr_txclk" SITE "N1" ;
+LOCATE COMP "fpga_sda" SITE "D5" ;
+LOCATE COMP "fpga_neopixel" SITE "A5" ;
+LOCATE COMP "fpga_led" SITE "B5" ;
+LOCATE COMP "sdr_txdata" SITE "D1" ;
+LOCATE COMP "rf_sel_0" SITE "L16" ;
+LOCATE COMP "rf_sel_1" SITE "N16" ;
+LOCATE COMP "rf_sel_2" SITE "M16" ;
+LOCATE COMP "rf_sel_3" SITE "K16" ;
+LOCATE COMP "subg_fem_sel0" SITE "D11" ;
+LOCATE COMP "subg_fem_sel1" SITE "F16" ;
+LOCATE COMP "wifi_fem_sel0" SITE "B15" ;
+LOCATE COMP "wifi_fem_sel1" SITE "B16" ;
+LOCATE COMP "wifi_fem_csd" SITE "E13" ;
+LOCATE COMP "wifi_fem_cps" SITE "B13" ;
+LOCATE COMP "wifi_fem_crx" SITE "D16" ;
+LOCATE COMP "wifi_fem_ctx" SITE "D13" ;
+LOCATE COMP "wifi_fem_chl" SITE "A13" ;
+LOCATE COMP "subg_fem_cps" SITE "A13" ;
+LOCATE COMP "subg_fem_ctx" SITE "A13" ;
+LOCATE COMP "subg_fem_csd" SITE "A13" ;
+LOCATE COMP "spi1_sck" SITE "E4" ;
+LOCATE COMP "spi1_mosi" SITE "C6" ;
+LOCATE COMP "spi2_sck" SITE "B3" ;
+LOCATE COMP "spi2_mosi" SITE "E7" ;
+LOCATE COMP "spi3_sck" SITE "A6" ;
+LOCATE COMP "spi3_mosi" SITE "D7" ;
+LOCATE COMP "spi4_sck" SITE "A2" ;
+LOCATE COMP "spi4_mosi" SITE "D6" ;
+LOCATE COMP "fpga_ufl_p7" SITE "G16" ;
+LOCATE COMP "fpga_ufl_p8" SITE "B12" ;
+LOCATE COMP "dpll_clkout2" SITE "C8" ;
+LOCATE COMP "dpll_clkout0" SITE "E8" ;
+LOCATE COMP "sdr_rx_wifi" SITE "C1" ;
+LOCATE COMP "sdr_rx_subg" SITE "F1" ;
+LOCATE COMP "sdr_rxclk" SITE "L1" ;
+LOCATE COMP "stm_fpga_spare1" SITE "D4" ;
+LOCATE COMP "stm_fpga_spare2" SITE "C4" ;
+LOCATE COMP "stm_fpga_spare5" SITE "B7" ;
+FREQUENCY NET "dpll_clkout2_c" 8.000000 MHz ;
+FREQUENCY NET "sdr_txclk_c" 64.000000 MHz ;
+FREQUENCY NET "int_clk_out" 9.700000 MHz ;
+FREQUENCY NET "dpll_clkout0_c" 10.000000 MHz ;
+FREQUENCY NET "second_pll/CLKOP" 200.000000 MHz ;
+FREQUENCY PORT "dpll_clkout2" 8.000000 MHz ;
+FREQUENCY PORT "dpll_clkout0" 10.000000 MHz ;
+FREQUENCY NET "internal_80MHz" 80.000000 MHz ;
+FREQUENCY NET "internal_64MHz" 64.000000 MHz ;
+FREQUENCY PORT "sdr_rxclk" 64.000000 MHz ;
+SCHEMATIC END ;
+[ END DESIGN PREFS ]

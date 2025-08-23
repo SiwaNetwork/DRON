@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BaliMessageLog>
+    <Task name="Bitgen">
+        <Message>
+            <ID>1009992</ID>
+            <Severity>Info</Severity>
+            <Dynamic> SW_XO3D_SECURITY_ENCRYPTION *NOT* controlled by sa5p00.acd ###</Dynamic>
+        </Message>
+        <Message>
+            <ID>1009992</ID>
+            <Severity>Info</Severity>
+            <Dynamic> SW_XO3D_SECURITY_ENCRYPTION license_securityIP OK</Dynamic>
+        </Message>
+    </Task>
+    <Task name="MapVerilogSimFile">
+        <Message>
+            <ID>35400250</ID>
+            <Severity>Info</Severity>
+            <Dynamic>0</Dynamic>
+        </Message>
+    </Task>
+    <Task name="MapVHDLSimFile">
+        <Message>
+            <ID>35400250</ID>
+            <Severity>Info</Severity>
+            <Dynamic>0</Dynamic>
+        </Message>
+    </Task>
+    <Task name="Map">
+        <Message>
+            <ID>1100523</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(11): Semantic error in &quot;FREQUENCY NET &quot;internal_160MHz&quot; 160.000000 MHz ;&quot;: </Dynamic>
+            <Dynamic>internal_160MHz matches no clock nets in the design. </Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>11</Navigation>
+        </Message>
+        <Message>
+            <ID>1100523</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(14): Semantic error in &quot;FREQUENCY NET &quot;internal_64MHz_90deg&quot; 64.000000 MHz ;&quot;: </Dynamic>
+            <Dynamic>internal_64MHz_90deg matches no clock nets in the design. </Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>14</Navigation>
+        </Message>
+        <Message>
+            <ID>1100523</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(15): Semantic error in &quot;FREQUENCY NET &quot;internal_200MHz&quot; 200.000000 MHz ;&quot;: </Dynamic>
+            <Dynamic>internal_200MHz matches no clock nets in the design. </Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>15</Navigation>
+        </Message>
+        <Message>
+            <ID>1100679</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(54): Semantic error in &quot;LOCATE COMP &quot;stm_fpga_spare3&quot; SITE &quot;B4&quot; ;&quot;: </Dynamic>
+            <Dynamic>stm_fpga_spare3</Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>54</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(55): Semantic error in &quot;IOBUF PORT &quot;stm_fpga_spare3&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>stm_fpga_spare3</Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>55</Navigation>
+        </Message>
+        <Message>
+            <ID>1100679</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(56): Semantic error in &quot;LOCATE COMP &quot;stm_fpga_spare4&quot; SITE &quot;C7&quot; ;&quot;: </Dynamic>
+            <Dynamic>stm_fpga_spare4</Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>56</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(57): Semantic error in &quot;IOBUF PORT &quot;stm_fpga_spare4&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>stm_fpga_spare4</Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>57</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(68): Semantic error in &quot;IOBUF PORT &quot;spi1_miso&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>spi1_miso</Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>68</Navigation>
+        </Message>
+        <Message>
+            <ID>1100679</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(69): Semantic error in &quot;LOCATE COMP &quot;spi1_miso&quot; SITE &quot;B6&quot; ;&quot;: </Dynamic>
+            <Dynamic>spi1_miso</Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>69</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(74): Semantic error in &quot;IOBUF PORT &quot;spi2_miso&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>spi2_miso</Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>74</Navigation>
+        </Message>
+        <Message>
+            <ID>1100679</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(75): Semantic error in &quot;LOCATE COMP &quot;spi2_miso&quot; SITE &quot;A4&quot; ;&quot;: </Dynamic>
+            <Dynamic>spi2_miso</Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>75</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(80): Semantic error in &quot;IOBUF PORT &quot;spi3_miso&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>spi3_miso</Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>80</Navigation>
+        </Message>
+        <Message>
+            <ID>1100679</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(81): Semantic error in &quot;LOCATE COMP &quot;spi3_miso&quot; SITE &quot;E6&quot; ;&quot;: </Dynamic>
+            <Dynamic>spi3_miso</Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>81</Navigation>
+        </Message>
+        <Message>
+            <ID>1100644</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(86): Semantic error in &quot;IOBUF PORT &quot;spi4_miso&quot; IO_TYPE=LVCMOS33 ;&quot;: </Dynamic>
+            <Dynamic>spi4_miso</Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>86</Navigation>
+        </Message>
+        <Message>
+            <ID>1100679</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(87): Semantic error in &quot;LOCATE COMP &quot;spi4_miso&quot; SITE &quot;A3&quot; ;&quot;: </Dynamic>
+            <Dynamic>spi4_miso</Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>87</Navigation>
+        </Message>
+        <Message>
+            <ID>1100521</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf(103): Semantic error in &quot;FREQUENCY PORT &quot;sdr_txclk&quot; 64.000000 MHz ;&quot;: </Dynamic>
+            <Dynamic>sdr_txclk</Dynamic>
+            <Navigation>C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf</Navigation>
+            <Navigation>103</Navigation>
+        </Message>
+        <Message>
+            <ID>51001104</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>A13</Dynamic>
+        </Message>
+        <Message>
+            <ID>51001104</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>A13</Dynamic>
+        </Message>
+        <Message>
+            <ID>51001104</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>A13</Dynamic>
+        </Message>
+        <Message>
+            <ID>1103737</ID>
+            <Severity>Warning</Severity>
+            <Dynamic></Dynamic>
+            <Dynamic>LOCATE COMP &quot;wifi_fem_chl&quot; SITE &quot;A13&quot; ;
+</Dynamic>
+            <Dynamic>LOCATE COMP &quot;subg_fem_csd&quot; SITE &quot;A13&quot; ;
+</Dynamic>
+        </Message>
+        <Message>
+            <ID>1103737</ID>
+            <Severity>Warning</Severity>
+            <Dynamic></Dynamic>
+            <Dynamic>LOCATE COMP &quot;subg_fem_cps&quot; SITE &quot;A13&quot; ;
+</Dynamic>
+            <Dynamic>LOCATE COMP &quot;subg_fem_csd&quot; SITE &quot;A13&quot; ;
+</Dynamic>
+        </Message>
+        <Message>
+            <ID>1103737</ID>
+            <Severity>Warning</Severity>
+            <Dynamic></Dynamic>
+            <Dynamic>LOCATE COMP &quot;subg_fem_ctx&quot; SITE &quot;A13&quot; ;
+</Dynamic>
+            <Dynamic>LOCATE COMP &quot;subg_fem_csd&quot; SITE &quot;A13&quot; ;
+</Dynamic>
+        </Message>
+    </Task>
+    <Task name="Lattice_Synthesis">
+        <Message>
+            <ID>35002000</ID>
+            <Severity>Info</Severity>
+        </Message>
+        <Message>
+            <ID>35001781</ID>
+            <Severity>Info</Severity>
+        </Message>
+        <Message>
+            <ID>35901199</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(189): </Dynamic>
+            <Dynamic>i2c_slave_wbm</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v</Navigation>
+            <Navigation>189</Navigation>
+        </Message>
+        <Message>
+            <ID>35901199</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(191): </Dynamic>
+            <Dynamic>i2c_slave_wbm</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v</Navigation>
+            <Navigation>191</Navigation>
+        </Message>
+        <Message>
+            <ID>35901199</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(193): </Dynamic>
+            <Dynamic>i2c_slave_wbm</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v</Navigation>
+            <Navigation>193</Navigation>
+        </Message>
+        <Message>
+            <ID>35901199</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(195): </Dynamic>
+            <Dynamic>i2c_slave_wbm</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v</Navigation>
+            <Navigation>195</Navigation>
+        </Message>
+        <Message>
+            <ID>35901199</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(197): </Dynamic>
+            <Dynamic>i2c_slave_wbm</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v</Navigation>
+            <Navigation>197</Navigation>
+        </Message>
+        <Message>
+            <ID>35901199</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(199): </Dynamic>
+            <Dynamic>i2c_slave_wbm</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v</Navigation>
+            <Navigation>199</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(1): </Dynamic>
+            <Dynamic>top</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v</Navigation>
+            <Navigation>1</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(1746): </Dynamic>
+            <Dynamic>OSCG(DIV=32)</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>1746</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/internal_pll/internal_pll.v(8): </Dynamic>
+            <Dynamic>internal_pll</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/internal_pll/internal_pll.v</Navigation>
+            <Navigation>8</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(757): </Dynamic>
+            <Dynamic>VHI</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>757</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(761): </Dynamic>
+            <Dynamic>VLO</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>761</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(1696): </Dynamic>
+            <Dynamic>EHXPLLL_renamed_due_excessive_length_1</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>1696</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/pll_10mhzinput/pll_10mhzinput.v(8): </Dynamic>
+            <Dynamic>pll_10MHzInput</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/pll_10mhzinput/pll_10mhzinput.v</Navigation>
+            <Navigation>8</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(1696): </Dynamic>
+            <Dynamic>EHXPLLL(CLKFB_DIV=20,CLKOP_DIV=3,CLKOS_DIV=1,CLKOS2_DIV=1,CLKOS3_DIV=1,CLKOP_CPHASE=2,CLKOP_TRIM_POL=&quot;FALLING&quot;,CLKOS_TRIM_POL=&quot;FALLING&quot;,PLLRST_ENA=&quot;ENABLED&quot;)</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>1696</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/myled.v(1): </Dynamic>
+            <Dynamic>led_toggle</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/myled.v</Navigation>
+            <Navigation>1</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/myled.v(20): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>26</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/myled.v</Navigation>
+            <Navigation>20</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(55): </Dynamic>
+            <Dynamic>BB</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>55</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(32): </Dynamic>
+            <Dynamic>i2c_slave_wbm(WB_DATA_WIDTH=8,WB_ADDR_WIDTH=16,WB_SELECT_WIDTH=1)</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v</Navigation>
+            <Navigation>32</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(302): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>8</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v</Navigation>
+            <Navigation>302</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(340): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>16</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v</Navigation>
+            <Navigation>340</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(358): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>8</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v</Navigation>
+            <Navigation>358</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(377): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>8</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v</Navigation>
+            <Navigation>377</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(401): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>16</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v</Navigation>
+            <Navigation>401</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave.v(32): </Dynamic>
+            <Dynamic>i2c_slave</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave.v</Navigation>
+            <Navigation>32</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave.v(295): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>4</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave.v</Navigation>
+            <Navigation>295</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave.v(362): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>4</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave.v</Navigation>
+            <Navigation>362</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave.v(398): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>4</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave.v</Navigation>
+            <Navigation>398</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(388): </Dynamic>
+            <Dynamic>8</Dynamic>
+            <Dynamic>4</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v</Navigation>
+            <Navigation>388</Navigation>
+        </Message>
+        <Message>
+            <ID>35901209</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(476): </Dynamic>
+            <Dynamic>32</Dynamic>
+            <Dynamic>8</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v</Navigation>
+            <Navigation>476</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(1646): </Dynamic>
+            <Dynamic>ODDRX1F</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>1646</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(1621): </Dynamic>
+            <Dynamic>IDDRX1F</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>1621</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/my_lvds_rx.v(3): </Dynamic>
+            <Dynamic>word_align_3state</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/my_lvds_rx.v</Navigation>
+            <Navigation>3</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(8): </Dynamic>
+            <Dynamic>fifo_dc_16in_16out</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v</Navigation>
+            <Navigation>8</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(25): </Dynamic>
+            <Dynamic>AND2</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>25</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(367): </Dynamic>
+            <Dynamic>INV</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>367</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(656): </Dynamic>
+            <Dynamic>OR2</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>656</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(810): </Dynamic>
+            <Dynamic>XOR2</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>810</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(710): </Dynamic>
+            <Dynamic>ROM16X1A(initval=16'b0110100110010110)</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>710</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(710): </Dynamic>
+            <Dynamic>ROM16X1A(initval=16'b010000010000)</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>710</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(710): </Dynamic>
+            <Dynamic>ROM16X1A(initval=16'b01000000000100)</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>710</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(710): </Dynamic>
+            <Dynamic>ROM16X1A(initval=16'b0101000000)</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>710</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(710): </Dynamic>
+            <Dynamic>ROM16X1A(initval=16'b0100000000000001)</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>710</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(866): </Dynamic>
+            <Dynamic>DP16KD(RESETMODE=&quot;ASYNC&quot;)</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>866</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(110): </Dynamic>
+            <Dynamic>FD1P3BX</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>110</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(119): </Dynamic>
+            <Dynamic>FD1P3DX</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>119</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(168): </Dynamic>
+            <Dynamic>FD1S3DX</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>168</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(160): </Dynamic>
+            <Dynamic>FD1S3BX</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>160</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(76): </Dynamic>
+            <Dynamic>CCU2C(INIT0=16'b0110011010101010,INIT1=16'b0110011010101010,INJECT1_0=&quot;NO&quot;,INJECT1_1=&quot;NO&quot;)</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>76</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(76): </Dynamic>
+            <Dynamic>CCU2C(INIT0=16'b1001100110101010,INIT1=16'b1001100110101010,INJECT1_0=&quot;NO&quot;,INJECT1_1=&quot;NO&quot;)</Dynamic>
+            <Navigation>C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v</Navigation>
+            <Navigation>76</Navigation>
+        </Message>
+        <Message>
+            <ID>35931013</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(300): </Dynamic>
+            <Dynamic>CIN</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v</Navigation>
+            <Navigation>300</Navigation>
+        </Message>
+        <Message>
+            <ID>35931013</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(324): </Dynamic>
+            <Dynamic>CIN</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v</Navigation>
+            <Navigation>324</Navigation>
+        </Message>
+        <Message>
+            <ID>35931013</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(348): </Dynamic>
+            <Dynamic>CIN</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v</Navigation>
+            <Navigation>348</Navigation>
+        </Message>
+        <Message>
+            <ID>35931013</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(380): </Dynamic>
+            <Dynamic>CIN</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v</Navigation>
+            <Navigation>380</Navigation>
+        </Message>
+        <Message>
+            <ID>35901018</ID>
+            <Severity>Info</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/myspi.v(373): </Dynamic>
+            <Dynamic>ecp5_spi_master_top</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/myspi.v</Navigation>
+            <Navigation>373</Navigation>
+        </Message>
+        <Message>
+            <ID>35931002</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(195): </Dynamic>
+            <Dynamic>wb_err_i</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v</Navigation>
+            <Navigation>195</Navigation>
+        </Message>
+        <Message>
+            <ID>35931002</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(332): </Dynamic>
+            <Dynamic>subg_delay_cflag</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v</Navigation>
+            <Navigation>332</Navigation>
+        </Message>
+        <Message>
+            <ID>35935034</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(174): </Dynamic>
+            <Dynamic>_293</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v</Navigation>
+            <Navigation>174</Navigation>
+        </Message>
+        <Message>
+            <ID>35935034</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(183): </Dynamic>
+            <Dynamic>_294</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v</Navigation>
+            <Navigation>183</Navigation>
+        </Message>
+        <Message>
+            <ID>35931013</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(300): </Dynamic>
+            <Dynamic>CIN</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v</Navigation>
+            <Navigation>300</Navigation>
+        </Message>
+        <Message>
+            <ID>35931013</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(324): </Dynamic>
+            <Dynamic>CIN</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v</Navigation>
+            <Navigation>324</Navigation>
+        </Message>
+        <Message>
+            <ID>35931013</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(348): </Dynamic>
+            <Dynamic>CIN</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v</Navigation>
+            <Navigation>348</Navigation>
+        </Message>
+        <Message>
+            <ID>35931013</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(380): </Dynamic>
+            <Dynamic>CIN</Dynamic>
+            <Navigation>c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v</Navigation>
+            <Navigation>380</Navigation>
+        </Message>
+        <Message>
+            <ID>35002005</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>fpga_neopixel</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001774</ID>
+            <Severity>Info</Severity>
+            <Dynamic>\i2c_slave/state_reg</Dynamic>
+            <Dynamic>one-hot</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001774</ID>
+            <Severity>Info</Severity>
+            <Dynamic>\lvds_rx_09_inst/r_state</Dynamic>
+            <Dynamic>gray</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001774</ID>
+            <Severity>Info</Severity>
+            <Dynamic>\lvds_rx_24_inst/r_state</Dynamic>
+            <Dynamic>gray</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>4</Dynamic>
+            <Dynamic>\i2c_slave/i2c_slave_inst/state_reg</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001747</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>3</Dynamic>
+            <Dynamic>\i2c_slave/i2c_slave_inst/state_reg</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001263</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>fpga_sda</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001263</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>fpga_scl</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001779</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>\i2c_slave/i2c_slave_inst/m_axis_data_tlast_reg_225</Dynamic>
+        </Message>
+        <Message>
+            <ID>35001611</ID>
+            <Severity>Warning</Severity>
+        </Message>
+        <Message>
+            <ID>50001000</ID>
+            <Severity>Warning</Severity>
+            <Dynamic>CLKOS</Dynamic>
+            <Dynamic>FREQUENCY_PIN_CLKOS</Dynamic>
+            <Dynamic>PLLInst_0</Dynamic>
+        </Message>
+    </Task>
+</BaliMessageLog>

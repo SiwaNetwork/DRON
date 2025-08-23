@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BuildStatus>
+    <Strategy name="Strategy1">
+        <Milestone name="Export" build_result="0" build_time="0">
+            <Task name="IBIS" build_result="0" update_result="3" update_time="0"/>
+            <Task name="TimingSimFileVlg" build_result="0" update_result="3" update_time="0"/>
+            <Task name="TimingSimFileVHD" build_result="0" update_result="3" update_time="0"/>
+            <Task name="Bitgen" build_result="2" update_result="0" update_time="1733856190"/>
+            <Task name="Promgen" build_result="2" update_result="0" update_time="1733856193"/>
+        </Milestone>
+        <Milestone name="Map" build_result="2" build_time="1733856169">
+            <Task name="Map" build_result="2" update_result="0" update_time="1733856169"/>
+            <Task name="MapTrace" build_result="2" update_result="0" update_time="1733856170"/>
+            <Task name="MapVerilogSimFile" build_result="2" update_result="0" update_time="1733856172"/>
+            <Task name="MapVHDLSimFile" build_result="2" update_result="0" update_time="1733856174"/>
+        </Milestone>
+        <Milestone name="PAR" build_result="2" build_time="1733856184">
+            <Task name="PAR" build_result="2" update_result="0" update_time="1733856184"/>
+            <Task name="PARTrace" build_result="2" update_result="0" update_time="1733856185"/>
+            <Task name="IOTiming" build_result="2" update_result="0" update_time="1733856188"/>
+        </Milestone>
+        <Milestone name="Synthesis" build_result="2" build_time="1733856167">
+            <Task name="Lattice_Synthesis" build_result="2" update_result="0" update_time="1733856167"/>
+            <Task name="LSE_Compile" build_result="2" update_result="0" update_time="1733856166"/>
+        </Milestone>
+        <Milestone name="TOOL_Report" build_result="0" build_time="0">
+            <Task name="HDLE" build_result="2" update_result="0" update_time="1733797072"/>
+            <Task name="BKM" build_result="0" update_result="2" update_time="1733797072"/>
+            <Task name="SSO" build_result="0" update_result="3" update_time="0"/>
+            <Task name="PIODRC" build_result="0" update_result="3" update_time="0"/>
+            <Task name="DEC" build_result="0" update_result="3" update_time="0"/>
+        </Milestone>
+        <Report name=".vdbs/wiwisdr_ecp5_test_impl1_map.vdb" last_build_time="1733856169" last_build_size="201049"/>
+        <Report name="wiwisdr_ecp5_test_impl1.bgn" last_build_time="1733856190" last_build_size="4771"/>
+        <Report name="wiwisdr_ecp5_test_impl1.bit" last_build_time="1733856190" last_build_size="582683"/>
+        <Report name="wiwisdr_ecp5_test_impl1.ior" last_build_time="1733856188" last_build_size="3630"/>
+        <Report name="wiwisdr_ecp5_test_impl1.lsedata" last_build_time="1733856166" last_build_size="582913"/>
+        <Report name="wiwisdr_ecp5_test_impl1.mcs" last_build_time="1733856193" last_build_size="1638947"/>
+        <Report name="wiwisdr_ecp5_test_impl1.ncd" last_build_time="1733856184" last_build_size="529557"/>
+        <Report name="wiwisdr_ecp5_test_impl1.ngd" last_build_time="1733856167" last_build_size="420834"/>
+        <Report name="wiwisdr_ecp5_test_impl1.tw1" last_build_time="1733856170" last_build_size="30062"/>
+        <Report name="wiwisdr_ecp5_test_impl1.twr" last_build_time="1733856185" last_build_size="195830"/>
+        <Report name="wiwisdr_ecp5_test_impl1_map.ncd" last_build_time="1733856168" last_build_size="378501"/>
+        <Report name="wiwisdr_ecp5_test_impl1_mapvho.sdf" last_build_time="1733856174" last_build_size="364044"/>
+        <Report name="wiwisdr_ecp5_test_impl1_mapvho.vho" last_build_time="1733856174" last_build_size="405164"/>
+        <Report name="wiwisdr_ecp5_test_impl1_mapvo.sdf" last_build_time="1733856172" last_build_size="363368"/>
+        <Report name="wiwisdr_ecp5_test_impl1_mapvo.vo" last_build_time="1733856172" last_build_size="240620"/>
+    </Strategy>
+</BuildStatus>

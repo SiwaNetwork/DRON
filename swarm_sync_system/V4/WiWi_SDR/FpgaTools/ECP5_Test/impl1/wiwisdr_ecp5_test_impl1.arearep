@@ -1,0 +1,218 @@
+----------------------------------------------------------------------
+Report for cell top.TECH
+Register bits:  322 of 24879 (1.294%)
+I/O cells:      22
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               AND2         4          100.0
+                              CCU2C        50          100.0
+                             DP16KD         2          100.0
+                            EHXPLLL         2          100.0
+                            FD1P3AX       172          100.0
+                            FD1P3AY         8          100.0
+                            FD1P3BX         2          100.0
+                            FD1P3DX        28          100.0
+                            FD1P3IX        18          100.0
+                            FD1S3AX        34          100.0
+                            FD1S3BX         2          100.0
+                            FD1S3DX        20          100.0
+                            FD1S3IX        38          100.0
+                                GSR         1          100.0
+                                 IB         8          100.0
+                                INV         4          100.0
+                               LUT4       260          100.0
+                                 OB        14          100.0
+                                OR2         1          100.0
+                               OSCG         1          100.0
+                              PFUMX         6          100.0
+                           ROM16X1A        24          100.0
+                               XOR2        16          100.0
+SUB MODULES
+                  ddr_data_recovery         1
+               ddr_data_recovery_U3         1
+                   fifo_dc_2in_2out         1
+                fifo_dc_2in_2out_U0         1
+                       internal_pll         1
+                         led_toggle         1
+                            lvds_rx         1
+                         lvds_rx_U5         1
+                     pll_10MHzInput         1
+                      spi_generator         1
+                   spi_generator_U1         1
+                   spi_generator_U2         1
+                   spi_generator_U4         1
+                              TOTAL       728
+----------------------------------------------------------------------
+Report for cell led_toggle.v1
+Instance Path : my_led
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                              CCU2C        14           28.0
+                            FD1S3AX         1            2.9
+                            FD1S3IX        26           68.4
+                               LUT4        12            4.6
+                              TOTAL        53
+----------------------------------------------------------------------
+Report for cell internal_pll.v1
+Instance Path : my_pll
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            EHXPLLL         1           50.0
+                              TOTAL         1
+----------------------------------------------------------------------
+Report for cell spi_generator.v1
+Instance Path : wifi_q_spi
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX        17            9.9
+                            FD1P3IX         4           22.2
+                            FD1S3AX         2            5.9
+                            FD1S3IX         2            5.3
+                               LUT4        14            5.4
+                              TOTAL        39
+----------------------------------------------------------------------
+Report for cell ddr_data_recovery_U3.v1
+Instance Path : subg_iddr
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               AND2         2           50.0
+                              CCU2C        18           36.0
+                             DP16KD         1           50.0
+                            FD1P3AX        19           11.0
+                            FD1P3AY         1           12.5
+                            FD1P3BX         1           50.0
+                            FD1P3DX        14           50.0
+                            FD1S3AX        13           38.2
+                            FD1S3BX         1           50.0
+                            FD1S3DX        10           50.0
+                            FD1S3IX         3            7.9
+                                INV         2           50.0
+                               LUT4         4            1.5
+                                OR2         1          100.0
+                           ROM16X1A        12           50.0
+                               XOR2         8           50.0
+SUB MODULES
+                fifo_dc_2in_2out_U0         1
+                              TOTAL       111
+----------------------------------------------------------------------
+Report for cell fifo_dc_2in_2out_U0.v1
+Instance Path : subg_iddr.fifo_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               AND2         2           50.0
+                              CCU2C        18           36.0
+                             DP16KD         1           50.0
+                            FD1P3AX        14            8.1
+                            FD1P3AY         1           12.5
+                            FD1P3BX         1           50.0
+                            FD1P3DX        14           50.0
+                            FD1S3AX        11           32.4
+                            FD1S3BX         1           50.0
+                            FD1S3DX        10           50.0
+                                INV         2           50.0
+                                OR2         1          100.0
+                           ROM16X1A        12           50.0
+                               XOR2         8           50.0
+                              TOTAL        96
+----------------------------------------------------------------------
+Report for cell pll_10MHzInput.v1
+Instance Path : second_pll
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            EHXPLLL         1           50.0
+                              TOTAL         1
+----------------------------------------------------------------------
+Report for cell lvds_rx.v1
+Instance Path : lvds_rx_24_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX        32           18.6
+                            FD1P3AY         3           37.5
+                            FD1P3IX         1            5.6
+                               LUT4        20            7.7
+                              TOTAL        56
+----------------------------------------------------------------------
+Report for cell spi_generator_U4.v1
+Instance Path : subg_i_spi
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX        17            9.9
+                            FD1P3IX         4           22.2
+                            FD1S3AX         2            5.9
+                            FD1S3IX         2            5.3
+                               LUT4        14            5.4
+                              TOTAL        39
+----------------------------------------------------------------------
+Report for cell ddr_data_recovery.v1
+Instance Path : wifi_iddr
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               AND2         2           50.0
+                              CCU2C        18           36.0
+                             DP16KD         1           50.0
+                            FD1P3AX        19           11.0
+                            FD1P3AY         1           12.5
+                            FD1P3BX         1           50.0
+                            FD1P3DX        14           50.0
+                            FD1S3AX        12           35.3
+                            FD1S3BX         1           50.0
+                            FD1S3DX        10           50.0
+                            FD1S3IX         1            2.6
+                                INV         2           50.0
+                               LUT4         3            1.2
+                           ROM16X1A        12           50.0
+                               XOR2         8           50.0
+SUB MODULES
+                   fifo_dc_2in_2out         1
+                              TOTAL       106
+----------------------------------------------------------------------
+Report for cell fifo_dc_2in_2out.v1
+Instance Path : wifi_iddr.fifo_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                               AND2         2           50.0
+                              CCU2C        18           36.0
+                             DP16KD         1           50.0
+                            FD1P3AX        14            8.1
+                            FD1P3AY         1           12.5
+                            FD1P3BX         1           50.0
+                            FD1P3DX        14           50.0
+                            FD1S3AX        11           32.4
+                            FD1S3BX         1           50.0
+                            FD1S3DX        10           50.0
+                                INV         2           50.0
+                           ROM16X1A        12           50.0
+                               XOR2         8           50.0
+                              TOTAL        95
+----------------------------------------------------------------------
+Report for cell spi_generator_U2.v1
+Instance Path : subg_q_spi
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX        17            9.9
+                            FD1P3IX         4           22.2
+                            FD1S3AX         2            5.9
+                            FD1S3IX         2            5.3
+                               LUT4        14            5.4
+                              TOTAL        39
+----------------------------------------------------------------------
+Report for cell lvds_rx_U5.v1
+Instance Path : lvds_rx_09_inst
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX        34           19.8
+                            FD1P3AY         3           37.5
+                            FD1P3IX         1            5.6
+                               LUT4        19            7.3
+                              TOTAL        57
+----------------------------------------------------------------------
+Report for cell spi_generator_U1.v1
+Instance Path : wifi_i_spi
+                                  Cell usage:
+                               cell     count   Res Usage(%)
+                            FD1P3AX        17            9.9
+                            FD1P3IX         4           22.2
+                            FD1S3AX         2            5.9
+                            FD1S3IX         2            5.3
+                               LUT4        14            5.4
+                              TOTAL        39

@@ -1,0 +1,124 @@
+[ START MERGED ]
+wifi_q_spi/n1927 wifi_q_spi/spi_clk_enable
+subg_iddr/fifo_inst/invout_1 subg_iddr/fifo_full
+subg_iddr/fifo_inst/invout_0 subg_iddr/fifo_empty
+n805 data_falling
+rRst main_reset_n_N_4
+subg_i_spi/n1925 subg_i_spi/spi_clk_enable
+wifi_iddr/fifo_inst/invout_1 wifi_iddr/fifo_full
+wifi_iddr/fifo_inst/invout_0 wifi_iddr/fifo_empty
+subg_q_spi/n1923 subg_q_spi/spi_clk_enable
+wifi_i_spi/n1928 wifi_i_spi/spi_clk_enable
+[ END MERGED ]
+[ START CLIPPED ]
+VCC_net
+wifi_iddr/fifo_inst/a1/S1
+wifi_iddr/fifo_inst/a1/CO
+wifi_iddr/fifo_inst/full_cmp_2/S1
+wifi_iddr/fifo_inst/full_cmp_2/S0
+wifi_iddr/fifo_inst/full_cmp_1/S1
+wifi_iddr/fifo_inst/full_cmp_1/S0
+wifi_iddr/fifo_inst/full_cmp_0/S1
+wifi_iddr/fifo_inst/full_cmp_0/S0
+wifi_iddr/fifo_inst/full_cmp_ci_a/S1
+wifi_iddr/fifo_inst/full_cmp_ci_a/S0
+wifi_iddr/fifo_inst/full_cmp_ci_a/CI
+wifi_iddr/fifo_inst/a0/S1
+wifi_iddr/fifo_inst/a0/CO
+wifi_iddr/fifo_inst/empty_cmp_2/S1
+wifi_iddr/fifo_inst/empty_cmp_2/S0
+wifi_iddr/fifo_inst/empty_cmp_1/S1
+wifi_iddr/fifo_inst/empty_cmp_1/S0
+wifi_iddr/fifo_inst/empty_cmp_0/S1
+wifi_iddr/fifo_inst/empty_cmp_0/S0
+wifi_iddr/fifo_inst/empty_cmp_ci_a/S1
+wifi_iddr/fifo_inst/empty_cmp_ci_a/S0
+wifi_iddr/fifo_inst/empty_cmp_ci_a/CI
+wifi_iddr/fifo_inst/r_gctr_2/S1
+wifi_iddr/fifo_inst/r_gctr_2/CO
+wifi_iddr/fifo_inst/r_gctr_cia/S1
+wifi_iddr/fifo_inst/r_gctr_cia/S0
+wifi_iddr/fifo_inst/r_gctr_cia/CI
+wifi_iddr/fifo_inst/w_gctr_2/S1
+wifi_iddr/fifo_inst/w_gctr_2/CO
+wifi_iddr/fifo_inst/w_gctr_cia/S1
+wifi_iddr/fifo_inst/w_gctr_cia/S0
+wifi_iddr/fifo_inst/w_gctr_cia/CI
+subg_iddr/fifo_inst/a1/S1
+subg_iddr/fifo_inst/a1/CO
+subg_iddr/fifo_inst/full_cmp_2/S1
+subg_iddr/fifo_inst/full_cmp_2/S0
+subg_iddr/fifo_inst/full_cmp_1/S1
+subg_iddr/fifo_inst/full_cmp_1/S0
+subg_iddr/fifo_inst/full_cmp_0/S1
+subg_iddr/fifo_inst/full_cmp_0/S0
+subg_iddr/fifo_inst/full_cmp_ci_a/S1
+subg_iddr/fifo_inst/full_cmp_ci_a/S0
+subg_iddr/fifo_inst/full_cmp_ci_a/CI
+subg_iddr/fifo_inst/a0/S1
+subg_iddr/fifo_inst/a0/CO
+subg_iddr/fifo_inst/empty_cmp_2/S1
+subg_iddr/fifo_inst/empty_cmp_2/S0
+subg_iddr/fifo_inst/empty_cmp_1/S1
+subg_iddr/fifo_inst/empty_cmp_1/S0
+subg_iddr/fifo_inst/empty_cmp_0/S1
+subg_iddr/fifo_inst/empty_cmp_0/S0
+subg_iddr/fifo_inst/empty_cmp_ci_a/S1
+subg_iddr/fifo_inst/empty_cmp_ci_a/S0
+subg_iddr/fifo_inst/empty_cmp_ci_a/CI
+subg_iddr/fifo_inst/r_gctr_2/S1
+subg_iddr/fifo_inst/r_gctr_2/CO
+subg_iddr/fifo_inst/r_gctr_cia/S1
+subg_iddr/fifo_inst/r_gctr_cia/S0
+subg_iddr/fifo_inst/r_gctr_cia/CI
+subg_iddr/fifo_inst/w_gctr_2/S1
+subg_iddr/fifo_inst/w_gctr_2/CO
+subg_iddr/fifo_inst/w_gctr_cia/S1
+subg_iddr/fifo_inst/w_gctr_cia/S0
+subg_iddr/fifo_inst/w_gctr_cia/CI
+my_led/counter_257_add_4_1/S0
+my_led/counter_257_add_4_1/CI
+my_led/counter_257_add_4_27/S1
+my_led/counter_257_add_4_27/CO
+[ END CLIPPED ]
+[ START OSC ]
+int_clk_out
+[ END OSC ]
+[ START DESIGN PREFS ]
+SCHEMATIC START ;
+# map:  version Diamond (64-bit) 3.14.0.75.2 -- WARNING: Map write only section -- Tue Dec 10 10:42:48 2024
+
+SYSCONFIG SLAVE_SPI_PORT=DISABLE MASTER_SPI_PORT=ENABLE SLAVE_PARALLEL_PORT=DISABLE BACKGROUND_RECONFIG=OFF DONE_EX=OFF DONE_OD=ON DONE_PULL=ON MCCLK_FREQ=2.4 TRANSFR=OFF CONFIG_IOVOLTAGE=3.3 CONFIG_SECURE=OFF WAKE_UP=21 COMPRESS_CONFIG=OFF CONFIG_MODE=SPI_SERIAL INBUF=OFF ;
+LOCATE COMP "fpga_led" SITE "B5" ;
+LOCATE COMP "fpga_neopixel" SITE "A5" ;
+LOCATE COMP "sdr_txclk" SITE "N1" ;
+LOCATE COMP "sdr_txdata" SITE "L1" ;
+LOCATE COMP "spi1_sck" SITE "E4" ;
+LOCATE COMP "spi1_mosi" SITE "C6" ;
+LOCATE COMP "spi2_sck" SITE "B3" ;
+LOCATE COMP "spi2_mosi" SITE "E7" ;
+LOCATE COMP "spi3_sck" SITE "A6" ;
+LOCATE COMP "spi3_mosi" SITE "D7" ;
+LOCATE COMP "spi4_sck" SITE "A2" ;
+LOCATE COMP "spi4_mosi" SITE "D6" ;
+LOCATE COMP "fpga_ufl_p7" SITE "B11" ;
+LOCATE COMP "fpga_ufl_p8" SITE "B12" ;
+LOCATE COMP "dpll_clkout2" SITE "C8" ;
+LOCATE COMP "dpll_clkout0" SITE "E8" ;
+LOCATE COMP "sdr_rx_wifi" SITE "C1" ;
+LOCATE COMP "sdr_rx_subg" SITE "F1" ;
+LOCATE COMP "sdr_rxclk" SITE "D1" ;
+LOCATE COMP "stm_fpga_spare1" SITE "D4" ;
+LOCATE COMP "stm_fpga_spare2" SITE "C4" ;
+LOCATE COMP "stm_fpga_spare5" SITE "B7" ;
+FREQUENCY NET "int_clk_out" 2.400000 MHz ;
+FREQUENCY NET "dpll_clkout2_c" 8.000000 MHz ;
+FREQUENCY NET "my_pll/CLKOP" 64.000000 MHz ;
+FREQUENCY NET "dpll_clkout0_c" 10.000000 MHz ;
+FREQUENCY PORT "dpll_clkout2" 8.000000 MHz ;
+FREQUENCY PORT "dpll_clkout0" 10.000000 MHz ;
+FREQUENCY NET "internal_160MHz" 160.000000 MHz ;
+FREQUENCY NET "internal_80MHz" 80.000000 MHz ;
+FREQUENCY NET "internal_200MHz" 200.000000 MHz ;
+SCHEMATIC END ;
+[ END DESIGN PREFS ]

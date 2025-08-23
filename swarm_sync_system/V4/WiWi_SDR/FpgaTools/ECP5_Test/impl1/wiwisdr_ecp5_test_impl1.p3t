@@ -1,0 +1,5 @@
+-rem
+-distrce
+-log "wiwisdr_ecp5_test_impl1.log"
+-o "wiwisdr_ecp5_test_impl1.csv"
+-pr "wiwisdr_ecp5_test_impl1.prf"

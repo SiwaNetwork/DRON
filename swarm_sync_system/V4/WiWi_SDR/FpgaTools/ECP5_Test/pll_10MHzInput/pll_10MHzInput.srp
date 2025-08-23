@@ -1,0 +1,26 @@
+SCUBA, Version Diamond (64-bit) 3.14.0.75.2
+Sun Dec 08 09:09:50 2024
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+
+    Issued command   : C:\lscc\diamond\3.14\ispfpga\bin\nt64\scuba.exe -w -n pll_10MHzInput -lang verilog -synth lse -bus_exp 7 -bb -arch sa5p00 -type pll -fin 10 -fclkop 200 -fclkop_tol 0.0 -phase_cntl STATIC -rst -lock -fb_mode 1 -fdc C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/pll_10MHzInput/pll_10MHzInput.fdc 
+    Circuit name     : pll_10MHzInput
+    Module type      : pll
+    Module Version   : 5.7
+    Ports            : 
+	Inputs       : CLKI, RST
+	Outputs      : CLKOP, LOCK
+    I/O buffer       : not inserted
+    EDIF output      : pll_10MHzInput.edn
+    Verilog output   : pll_10MHzInput.v
+    Verilog template : pll_10MHzInput_tmpl.v
+    Verilog purpose  : for synthesis and simulation
+    Bus notation     : big endian
+    Report output    : pll_10MHzInput.srp
+    Element Usage    :
+        EHXPLLL : 1
+    Estimated Resource Usage:

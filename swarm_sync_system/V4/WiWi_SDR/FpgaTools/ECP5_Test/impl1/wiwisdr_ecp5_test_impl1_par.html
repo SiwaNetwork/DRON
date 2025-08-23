@@ -1,0 +1,387 @@
+<HTML>
+<HEAD><TITLE>Place & Route Report</TITLE>
+<STYLE TYPE="text/css">
+<!--
+ body,pre{    font-family:'Courier New', monospace;    color: #000000;    font-size:88%;    background-color: #ffffff;}h1 {    font-weight: bold;    margin-top: 24px;    margin-bottom: 10px;    border-bottom: 3px solid #000;    font-size: 1em;}h2 {    font-weight: bold;    margin-top: 18px;    margin-bottom: 5px;    font-size: 0.90em;}h3 {    font-weight: bold;    margin-top: 12px;    margin-bottom: 5px;    font-size: 0.80em;}p {    font-size:78%;}P.Table {    margin-top: 4px;    margin-bottom: 4px;    margin-right: 4px;    margin-left: 4px;}table{    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    border-collapse: collapse;}th {    font-weight:bold;    padding: 4px;    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    vertical-align:top;    text-align:left;    font-size:78%;}td {    padding: 4px;    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    vertical-align:top;    font-size:78%;}a {    color:#013C9A;    text-decoration:none;}a:visited {    color:#013C9A;}a:hover, a:active {    text-decoration:underline;    color:#5BAFD4;}.pass{background-color: #00ff00;}.fail{background-color: #ff0000;}.comment{    font-size: 90%;    font-style: italic;}
+-->
+</STYLE>
+</HEAD>
+<PRE><A name="Par"></A>PAR: Place And Route Diamond (64-bit) 3.14.0.75.2.
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&amp;T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+Tue Dec 10 10:42:54 2024
+
+C:/lscc/diamond/3.14/ispfpga\bin\nt64\par -f wiwisdr_ecp5_test_impl1.p2t
+wiwisdr_ecp5_test_impl1_map.ncd wiwisdr_ecp5_test_impl1.dir
+wiwisdr_ecp5_test_impl1.prf -gui -msgset
+C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/promote.xml
+
+
+Preference file: wiwisdr_ecp5_test_impl1.prf.
+
+<A name="par_cts"></A><B><U><big>Cost Table Summary</big></U></B>
+Level/       Number       Worst        Timing       Worst        Timing       Run          NCD
+Cost [ncd]   Unrouted     Slack        Score        Slack(hold)  Score(hold)  Time         Status
+----------   --------     -----        ------       -----------  -----------  ----         ------
+5_1   *      0            0.264        0            0.174        0            10           Completed
+* : Design saved.
+
+Total (real) run time for 1-seed: 10 secs 
+
+par done!
+
+Note: user must run &apos;Trace&apos; for timing closure signoff.
+
+Lattice Place and Route Report for Design &quot;wiwisdr_ecp5_test_impl1_map.ncd&quot;
+Tue Dec 10 10:42:54 2024
+
+
+<A name="par_best"></A><B><U><big>Best Par Run</big></U></B>
+PAR: Place And Route Diamond (64-bit) 3.14.0.75.2.
+Command Line: par -w -l 5 -i 6 -t 1 -c 0 -e 0 -gui -msgset C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/promote.xml -exp parUseNBR=1:parCDP=auto:parCDR=1:parPathBased=OFF:parASE=1:par_low_skew_clock_net=0 wiwisdr_ecp5_test_impl1_map.ncd wiwisdr_ecp5_test_impl1.dir/5_1.ncd wiwisdr_ecp5_test_impl1.prf
+Preference file: wiwisdr_ecp5_test_impl1.prf.
+Placement level-cost: 5-1.
+Routing Iterations: 6
+
+Loading design for application par from file wiwisdr_ecp5_test_impl1_map.ncd.
+Design name: top
+NCD version: 3.3
+Vendor:      LATTICE
+Device:      LFE5U-25F
+Package:     CABGA256
+Performance: 6
+Loading device for application par from file &apos;sa5p25.nph&apos; in environment: C:/lscc/diamond/3.14/ispfpga.
+Package Status:                     Final          Version 1.44.
+Performance Hardware Data Status:   Final          Version 55.1.
+License checked out.
+
+
+Ignore Preference Error(s):  True
+
+<A name="par_dus"></A><B><U><big>Device utilization summary:</big></U></B>
+
+   PIO (prelim)      27/197          13% used
+                     27/197          13% bonded
+
+   SLICE            280/12144         2% used
+
+   GSR                1/1           100% used
+   OSC                1/1           100% used
+   EBR                2/56            3% used
+   PLL                2/2           100% used
+
+
+Number of Signals: 726
+Number of Connections: 1922
+
+Pin Constraint Summary:
+   22 out of 22 pins locked (100% locked).
+
+INFO: CLKI &apos;dpll_clkout2&apos; at C8 driving &apos;my_pll/PLLInst_0&apos; must use PCLK.
+INFO: CLKI &apos;dpll_clkout0&apos; at E8 driving &apos;second_pll/PLLInst_0&apos; must use PCLK.
+The following 16 signals are selected to use the primary clock routing resources:
+    my_pll/CLKOP (driver: my_pll/PLLInst_0, clk/ce/sr load #: 1/0/0)
+    internal_200MHz (driver: second_pll/PLLInst_0, clk/ce/sr load #: 42/0/0)
+    int_clk_out (driver: osch_inst, clk/ce/sr load #: 15/0/0)
+    internal_160MHz (driver: my_pll/PLLInst_0, clk/ce/sr load #: 88/0/0)
+    internal_80MHz (driver: my_pll/PLLInst_0, clk/ce/sr load #: 79/0/0)
+    main_reset_n_N_4 (driver: SLICE_271, clk/ce/sr load #: 0/0/34)
+    internal_160MHz_enable_81 (driver: SLICE_259, clk/ce/sr load #: 0/17/0)
+    internal_160MHz_enable_82 (driver: SLICE_245, clk/ce/sr load #: 0/17/0)
+    internal_160MHz_enable_83 (driver: SLICE_249, clk/ce/sr load #: 0/17/0)
+    lvds_rx_09_inst/internal_80MHz_enable_68 (driver: SLICE_248, clk/ce/sr load #: 0/16/0)
+    lvds_rx_24_inst/internal_80MHz_enable_56 (driver: SLICE_247, clk/ce/sr load #: 0/15/0)
+    my_led/n1943 (driver: my_led/SLICE_52, clk/ce/sr load #: 0/0/14)
+    subg_iddr/fifo_inst/wren_i (driver: subg_iddr/fifo_inst/SLICE_278, clk/ce/sr load #: 0/11/0)
+    subg_iddr/fifo_inst/rden_i (driver: subg_iddr/fifo_inst/SLICE_279, clk/ce/sr load #: 0/11/0)
+    dpll_clkout2_c (driver: dpll_clkout2, clk/ce/sr load #: 1/0/0)
+    dpll_clkout0_c (driver: dpll_clkout0, clk/ce/sr load #: 1/0/0)
+
+
+Signal n2955 is selected as Global Set/Reset.
+Starting Placer Phase 0.
+...........
+Finished Placer Phase 0.  REAL time: 0 secs 
+
+Starting Placer Phase 1.
+.....................
+Placer score = 102867.
+Finished Placer Phase 1.  REAL time: 4 secs 
+
+Starting Placer Phase 2.
+.
+Placer score =  102448
+Finished Placer Phase 2.  REAL time: 4 secs 
+
+
+
+<A name="par_clk"></A><B><U><big>Clock Report</big></U></B>
+
+Global Clock Resources:
+  CLK_PIN    : 2 out of 12 (16%)
+  GR_PCLK    : 0 out of 12 (0%)
+  PLL        : 2 out of 2 (100%)
+  DCS        : 0 out of 2 (0%)
+  DCC        : 0 out of 60 (0%)
+  CLKDIV     : 0 out of 4 (0%)
+
+Quadrant TL Clocks:
+  PRIMARY &quot;internal_200MHz&quot; from CLKOP on comp &quot;second_pll/PLLInst_0&quot; on PLL site &quot;PLL_BR0&quot;, CLK/CE/SR load = 1
+  PRIMARY &quot;internal_160MHz&quot; from CLKOS on comp &quot;my_pll/PLLInst_0&quot; on PLL site &quot;PLL_BL0&quot;, CLK/CE/SR load = 13
+  PRIMARY &quot;internal_80MHz&quot; from CLKOS2 on comp &quot;my_pll/PLLInst_0&quot; on PLL site &quot;PLL_BL0&quot;, CLK/CE/SR load = 1
+  PRIMARY &quot;main_reset_n_N_4&quot; from F1 on comp &quot;SLICE_271&quot; on site &quot;R31C17B&quot;, CLK/CE/SR load = 2
+  PRIMARY &quot;internal_160MHz_enable_82&quot; from F0 on comp &quot;SLICE_245&quot; on site &quot;R24C20C&quot;, CLK/CE/SR load = 1
+  PRIMARY &quot;internal_160MHz_enable_83&quot; from F0 on comp &quot;SLICE_249&quot; on site &quot;R24C24C&quot;, CLK/CE/SR load = 1
+  PRIMARY &quot;subg_iddr/fifo_inst/wren_i&quot; from F0 on comp &quot;subg_iddr/fifo_inst/SLICE_278&quot; on site &quot;R31C23C&quot;, CLK/CE/SR load = 2
+  PRIMARY &quot;subg_iddr/fifo_inst/rden_i&quot; from F0 on comp &quot;subg_iddr/fifo_inst/SLICE_279&quot; on site &quot;R28C28C&quot;, CLK/CE/SR load = 2
+
+  PRIMARY  : 8 out of 16 (50%)
+
+Quadrant TR Clocks:
+
+  PRIMARY  : 0 out of 16 (0%)
+
+Quadrant BL Clocks:
+  PRIMARY &quot;my_pll/CLKOP&quot; from CLKOP on comp &quot;my_pll/PLLInst_0&quot; on PLL site &quot;PLL_BL0&quot;, CLK/CE/SR load = 1
+  PRIMARY &quot;internal_200MHz&quot; from CLKOP on comp &quot;second_pll/PLLInst_0&quot; on PLL site &quot;PLL_BR0&quot;, CLK/CE/SR load = 40
+  PRIMARY &quot;internal_160MHz&quot; from CLKOS on comp &quot;my_pll/PLLInst_0&quot; on PLL site &quot;PLL_BL0&quot;, CLK/CE/SR load = 75
+  PRIMARY &quot;internal_80MHz&quot; from CLKOS2 on comp &quot;my_pll/PLLInst_0&quot; on PLL site &quot;PLL_BL0&quot;, CLK/CE/SR load = 78
+  PRIMARY &quot;main_reset_n_N_4&quot; from F1 on comp &quot;SLICE_271&quot; on site &quot;R31C17B&quot;, CLK/CE/SR load = 32
+  PRIMARY &quot;internal_160MHz_enable_81&quot; from F1 on comp &quot;SLICE_259&quot; on site &quot;R28C19A&quot;, CLK/CE/SR load = 17
+  PRIMARY &quot;internal_160MHz_enable_82&quot; from F0 on comp &quot;SLICE_245&quot; on site &quot;R24C20C&quot;, CLK/CE/SR load = 16
+  PRIMARY &quot;internal_160MHz_enable_83&quot; from F0 on comp &quot;SLICE_249&quot; on site &quot;R24C24C&quot;, CLK/CE/SR load = 16
+  PRIMARY &quot;lvds_rx_09_inst/internal_80MHz_enable_68&quot; from F1 on comp &quot;SLICE_248&quot; on site &quot;R31C27C&quot;, CLK/CE/SR load = 16
+  PRIMARY &quot;lvds_rx_24_inst/internal_80MHz_enable_56&quot; from F1 on comp &quot;SLICE_247&quot; on site &quot;R33C18B&quot;, CLK/CE/SR load = 15
+  PRIMARY &quot;subg_iddr/fifo_inst/wren_i&quot; from F0 on comp &quot;subg_iddr/fifo_inst/SLICE_278&quot; on site &quot;R31C23C&quot;, CLK/CE/SR load = 9
+  PRIMARY &quot;subg_iddr/fifo_inst/rden_i&quot; from F0 on comp &quot;subg_iddr/fifo_inst/SLICE_279&quot; on site &quot;R28C28C&quot;, CLK/CE/SR load = 9
+  PRIMARY &quot;dpll_clkout2_c&quot; from comp &quot;dpll_clkout2&quot; on CLK_PIN site &quot;C8 (PT35A)&quot;, CLK/CE/SR load = 1
+
+  PRIMARY  : 13 out of 16 (81%)
+
+Quadrant BR Clocks:
+  PRIMARY &quot;internal_200MHz&quot; from CLKOP on comp &quot;second_pll/PLLInst_0&quot; on PLL site &quot;PLL_BR0&quot;, CLK/CE/SR load = 1
+  PRIMARY &quot;int_clk_out&quot; from OSC on comp &quot;osch_inst&quot; on site &quot;OSC&quot;, CLK/CE/SR load = 15
+  PRIMARY &quot;my_led/n1943&quot; from F1 on comp &quot;my_led/SLICE_52&quot; on site &quot;R28C50B&quot;, CLK/CE/SR load = 14
+  PRIMARY &quot;dpll_clkout0_c&quot; from comp &quot;dpll_clkout0&quot; on CLK_PIN site &quot;E8 (PT33A)&quot;, CLK/CE/SR load = 1
+
+  PRIMARY  : 4 out of 16 (25%)
+
+Edge Clocks:
+
+  No edge clock selected.
+
+
+
+
+
++
+I/O Usage Summary (final):
+   27 out of 197 (13.7%) PIO sites used.
+   27 out of 197 (13.7%) bonded PIO sites used.
+   Number of PIO comps: 22; differential: 5.
+   Number of Vref pins used: 0.
+
+I/O Bank Usage Summary:
++----------+----------------+------------+------------+------------+
+| I/O Bank | Usage          | Bank Vccio | Bank Vref1 | Bank Vref2 |
++----------+----------------+------------+------------+------------+
+| 0        | 13 / 24 ( 54%) | 3.3V       | -          | -          |
+| 1        | 4 / 32 ( 12%)  | 3.3V       | -          | -          |
+| 2        | 0 / 32 (  0%)  | 3.3V       | -          | -          |
+| 3        | 0 / 32 (  0%)  | 3.3V       | -          | -          |
+| 6        | 4 / 32 ( 12%)  | 2.5V       | -          | -          |
+| 7        | 6 / 32 ( 18%)  | 1.8V       | -          | -          |
+| 8        | 0 / 13 (  0%)  | 3.3V       | -          | -          |
++----------+----------------+------------+------------+------------+
+
+Total placer CPU time: 0 secs 
+
+Dumping design to file wiwisdr_ecp5_test_impl1.dir/5_1.ncd.
+
+0 connections routed; 1922 unrouted.
+Starting router resource preassignment
+
+Completed router resource preassignment. Real time: 7 secs 
+
+Start NBR router at 10:43:01 12/10/24
+
+*****************************************************************
+Info: NBR allows conflicts(one node used by more than one signal)
+      in the earlier iterations. In each iteration, it tries to  
+      solve the conflicts while keeping the critical connections 
+      routed as short as possible. The routing process is said to
+      be completed when no conflicts exist and all connections   
+      are routed.                                                
+Note: NBR uses a different method to calculate timing slacks. The
+      worst slack and total negative slack may not be the same as
+      that in TRCE report. You should always run TRCE to verify  
+      your design.                                               
+*****************************************************************
+
+Start NBR special constraint process at 10:43:02 12/10/24
+
+Start NBR section for initial routing at 10:43:02 12/10/24
+Level 1, iteration 1
+4(0.00%) conflicts; 1253(65.19%) untouched conns; 12282 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: -1.214ns/-12.282ns; real time: 8 secs 
+Level 2, iteration 1
+5(0.00%) conflicts; 1196(62.23%) untouched conns; 12486 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: -1.231ns/-12.486ns; real time: 8 secs 
+Level 3, iteration 1
+5(0.00%) conflicts; 778(40.48%) untouched conns; 0 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: 0.087ns/0.000ns; real time: 8 secs 
+Level 4, iteration 1
+17(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: 0.211ns/0.000ns; real time: 8 secs 
+
+Info: Initial congestion level at 75% usage is 0
+Info: Initial congestion area  at 75% usage is 0 (0.00%)
+
+Start NBR section for normal routing at 10:43:03 12/10/24
+Level 1, iteration 1
+4(0.00%) conflicts; 24(1.25%) untouched conns; 0 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: 0.400ns/0.000ns; real time: 9 secs 
+Level 2, iteration 1
+5(0.00%) conflicts; 25(1.30%) untouched conns; 0 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: 0.400ns/0.000ns; real time: 9 secs 
+Level 3, iteration 1
+4(0.00%) conflicts; 24(1.25%) untouched conns; 0 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: 0.400ns/0.000ns; real time: 9 secs 
+Level 4, iteration 1
+9(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: 0.400ns/0.000ns; real time: 9 secs 
+Level 4, iteration 2
+4(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: 0.400ns/0.000ns; real time: 9 secs 
+Level 4, iteration 3
+3(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: 0.400ns/0.000ns; real time: 9 secs 
+Level 4, iteration 4
+2(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: 0.400ns/0.000ns; real time: 9 secs 
+Level 4, iteration 5
+2(0.00%) conflicts; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: 0.264ns/0.000ns; real time: 9 secs 
+Level 4, iteration 6
+1(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: 0.264ns/0.000ns; real time: 9 secs 
+Level 4, iteration 7
+0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: 0.264ns/0.000ns; real time: 9 secs 
+
+Start NBR section for setup/hold timing optimization with effort level 3 at 10:43:03 12/10/24
+
+Start NBR section for re-routing at 10:43:03 12/10/24
+Level 4, iteration 1
+0(0.00%) conflict; 0(0.00%) untouched conn; 0 (nbr) score; 
+Estimated worst slack/total negative slack&lt;setup&gt;: 0.264ns/0.000ns; real time: 9 secs 
+
+Start NBR section for post-routing at 10:43:03 12/10/24
+
+End NBR router with 0 unrouted connection
+
+NBR Summary
+-----------
+  Number of unrouted connections : 0 (0.00%)
+  Number of connections with timing violations : 0 (0.00%)
+  Estimated worst slack&lt;setup&gt; : 0.264ns
+  Timing score&lt;setup&gt; : 0
+-----------
+Notes: The timing info is calculated for SETUP only and all PAR_ADJs are ignored.
+
+
+
+Total CPU time 1 secs 
+Total REAL time: 10 secs 
+Completely routed.
+End of route.  1922 routed (100.00%); 0 unrouted.
+
+Hold time timing score: 0, hold timing errors: 0
+
+Timing score: 0 
+
+Dumping design to file wiwisdr_ecp5_test_impl1.dir/5_1.ncd.
+
+
+All signals are completely routed.
+
+
+PAR_SUMMARY::Run status = Completed
+PAR_SUMMARY::Number of unrouted conns = 0
+PAR_SUMMARY::Worst  slack&lt;setup/&lt;ns&gt;&gt; = 0.264
+PAR_SUMMARY::Timing score&lt;setup/&lt;ns&gt;&gt; = 0.000
+PAR_SUMMARY::Worst  slack&lt;hold /&lt;ns&gt;&gt; = 0.174
+PAR_SUMMARY::Timing score&lt;hold /&lt;ns&gt;&gt; = 0.000
+PAR_SUMMARY::Number of errors = 0
+
+Total CPU  time to completion: 1 secs 
+Total REAL time to completion: 10 secs 
+
+par done!
+
+Note: user must run &apos;Trace&apos; for timing closure signoff.
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&amp;T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+
+
+
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+</PRE></FONT>
+</BODY>
+</HTML>

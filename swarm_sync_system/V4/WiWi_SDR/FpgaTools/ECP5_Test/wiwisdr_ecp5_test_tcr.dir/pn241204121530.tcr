@@ -1,0 +1,113 @@
+#Start recording tcl command: 12/4/2024 08:29:49
+#Project Location: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test; Project name: wiwisdr_ecp5_test
+prj_project open "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.ldf"
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+sbp_design open -dsgn "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/systempll/systempll.sbx"
+set currentPath [pwd];set tmp_autopath $auto_path
+cd "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/systempll"
+source "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/systempll/generate_core.tcl"
+set auto_path $tmp_autopath;cd $currentPath
+sbp_design open -dsgn "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/systempll/systempll.sbx"
+set currentPath [pwd];set tmp_autopath $auto_path
+cd "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/systempll"
+source "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/systempll/generate_core.tcl"
+set auto_path $tmp_autopath;cd $currentPath
+prj_src add "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/systempll/systempll.v"
+prj_run Map -impl impl1 -forceOne
+prj_src remove "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/systempll/systempll.v"
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_src remove "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/systempll/systempll.sbx"
+set currentPath [pwd];set tmp_autopath $auto_path
+cd "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/internal_pll"
+source "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/internal_pll/generate_core.tcl"
+set auto_path $tmp_autopath;cd $currentPath
+prj_src add "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/internal_pll/internal_pll.sbx"
+sbp_design open -dsgn "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/internal_pll/internal_pll.sbx"
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+sbp_design open -dsgn "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/internal_pll/internal_pll.sbx"
+sbp_design open -dsgn "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/internal_pll/internal_pll.sbx"
+set currentPath [pwd];set tmp_autopath $auto_path
+cd "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/internal_pll"
+source "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/internal_pll/generate_core.tcl"
+set auto_path $tmp_autopath;cd $currentPath
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceAll
+set currentPath [pwd];set tmp_autopath $auto_path
+cd "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/test_fifo_dc"
+source "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/test_fifo_dc/generate_core.tcl"
+set auto_path $tmp_autopath;cd $currentPath
+prj_src add "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/test_fifo_dc/test_fifo_dc.sbx"
+prj_src remove "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/dcfifo/dcfifo.sbx"
+prj_src remove "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/impl1/impl1.xcf"
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run PAR -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run PAR -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run PAR -impl impl1 -forceOne
+prj_run Map -impl impl1 -forceOne
+prj_run PAR -impl impl1 -forceOne
+#Stop recording: 12/4/2024 12:15:30

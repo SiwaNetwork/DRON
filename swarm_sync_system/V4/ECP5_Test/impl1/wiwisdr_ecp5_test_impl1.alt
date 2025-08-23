@@ -1,0 +1,51 @@
+NOTE Copyright (C), 1992-2010, Lattice Semiconductor Corporation *
+NOTE All Rights Reserved *
+NOTE DATE CREATED: Tue Jan 28 18:14:19 2025 *
+NOTE DESIGN NAME: top *
+NOTE DEVICE NAME: LFE5U-25F-6CABGA256 *
+NOTE PIN ASSIGNMENTS *
+NOTE PINS fpga_scl : C5 : inout *
+NOTE PINS sdr_txclk : N1 : out *
+NOTE PINS fpga_sda : D5 : inout *
+NOTE PINS fpga_neopixel : A5 : out *
+NOTE PINS fpga_led : B5 : out *
+NOTE PINS sdr_txdata : D1 : out *
+NOTE PINS rf_sel_0 : L16 : out *
+NOTE PINS rf_sel_1 : N16 : out *
+NOTE PINS rf_sel_2 : M16 : out *
+NOTE PINS rf_sel_3 : K16 : out *
+NOTE PINS subg_fem_sel0 : D11 : out *
+NOTE PINS subg_fem_sel1 : F16 : out *
+NOTE PINS wifi_fem_sel0 : B15 : out *
+NOTE PINS wifi_fem_sel1 : B16 : out *
+NOTE PINS wifi_fem_csd : E13 : out *
+NOTE PINS wifi_fem_cps : B13 : out *
+NOTE PINS wifi_fem_crx : D16 : out *
+NOTE PINS wifi_fem_ctx : D13 : out *
+NOTE PINS wifi_fem_chl : K13 : out *
+NOTE PINS subg_fem_cps : G15 : out *
+NOTE PINS subg_fem_ctx : H13 : out *
+NOTE PINS subg_fem_csd : A13 : out *
+NOTE PINS spi1_sck : E4 : out *
+NOTE PINS spi1_mosi : C6 : out *
+NOTE PINS spi2_sck : B3 : out *
+NOTE PINS spi2_mosi : E7 : out *
+NOTE PINS spi3_sck : A6 : out *
+NOTE PINS spi3_mosi : D7 : out *
+NOTE PINS spi4_sck : A2 : out *
+NOTE PINS spi4_mosi : D6 : out *
+NOTE PINS fpga_ufl_p7 : G16 : out *
+NOTE PINS fpga_ufl_p8 : B12 : out *
+NOTE PINS dpll_clkout2 : C8 : in *
+NOTE PINS dpll_clkout0 : E8 : in *
+NOTE PINS sdr_rx_wifi : C1 : in *
+NOTE PINS sdr_rx_subg : F1 : in *
+NOTE PINS sdr_rxclk : L1 : in *
+NOTE PINS stm_fpga_spare1 : D4 : in *
+NOTE PINS stm_fpga_spare2 : C4 : in *
+NOTE PINS stm_fpga_spare5 : B7 : in *
+NOTE PINS SYSCONFIG_PIN_D1 : T7 : inout *
+NOTE PINS SYSCONFIG_PIN_D0 : T8 : inout *
+NOTE PINS SYSCONFIG_PIN_HOLDN : N8 : inout *
+NOTE CONFIGURATION MODE: SPI_SERIAL *
+NOTE COMPRESSION: off *

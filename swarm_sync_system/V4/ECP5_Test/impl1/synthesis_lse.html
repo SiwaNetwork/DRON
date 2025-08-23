@@ -1,0 +1,949 @@
+<HTML>
+<HEAD><TITLE>Synthesis and Ngdbuild Report</TITLE>
+<STYLE TYPE="text/css">
+<!--
+ body,pre{    font-family:'Courier New', monospace;    color: #000000;    font-size:88%;    background-color: #ffffff;}h1 {    font-weight: bold;    margin-top: 24px;    margin-bottom: 10px;    border-bottom: 3px solid #000;    font-size: 1em;}h2 {    font-weight: bold;    margin-top: 18px;    margin-bottom: 5px;    font-size: 0.90em;}h3 {    font-weight: bold;    margin-top: 12px;    margin-bottom: 5px;    font-size: 0.80em;}p {    font-size:78%;}P.Table {    margin-top: 4px;    margin-bottom: 4px;    margin-right: 4px;    margin-left: 4px;}table{    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    border-collapse: collapse;}th {    font-weight:bold;    padding: 4px;    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    vertical-align:top;    text-align:left;    font-size:78%;}td {    padding: 4px;    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    vertical-align:top;    font-size:78%;}a {    color:#013C9A;    text-decoration:none;}a:visited {    color:#013C9A;}a:hover, a:active {    text-decoration:underline;    color:#5BAFD4;}.pass{background-color: #00ff00;}.fail{background-color: #ff0000;}.comment{    font-size: 90%;    font-style: italic;}
+-->
+</STYLE>
+</HEAD>
+<PRE><A name="Syn"></A><B><U><big>Synthesis and Ngdbuild  Report</big></U></B>
+synthesis:  version Diamond (64-bit) 3.14.0.75.2
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+Tue Jan 28 18:13:52 2025
+
+
+Command Line:  synthesis -f wiwisdr_ecp5_test_impl1_lattice.synproj -gui -msgset C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/promote.xml 
+
+Synthesis options:
+The -a option is ECP5U.
+The -s option is 6.
+The -t option is CABGA256.
+The -d option is LFE5U-25F.
+Using package CABGA256.
+Using performance grade 6.
+                                                          
+
+##########################################################
+
+### Lattice Family : ECP5U
+
+### Device  : LFE5U-25F
+
+### Package : CABGA256
+
+### Speed   : 6
+
+##########################################################
+
+                                                          
+
+INFO - synthesis: User-Selected Strategy Settings
+Optimization goal = Timing
+Top-level module name = top.
+Target frequency = 200.000000 MHz.
+Maximum fanout = 1000.
+Timing path count = 3
+BRAM utilization = 100.000000 %
+DSP usage = true
+DSP utilization = 100.000000 %
+fsm_encoding_style = auto
+resolve_mixed_drivers = 0
+fix_gated_clocks = 1
+
+Mux style = Auto
+Use Carry Chain = true
+carry_chain_length = 0
+Loop Limit = 1950.
+Use IO Insertion = TRUE
+Use IO Reg = AUTO
+
+Resource Sharing = TRUE
+Propagate Constants = TRUE
+Remove Duplicate Registers = TRUE
+force_gsr = auto
+ROM style = auto
+RAM style = auto
+The -comp option is FALSE.
+The -syn option is FALSE.
+-p C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test (searchpath added)
+-p C:/lscc/diamond/3.14/ispfpga/sa5p00/data (searchpath added)
+-p C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/impl1 (searchpath added)
+-p C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test (searchpath added)
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/top.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/lvds_rx.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/myled.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/myspi.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/filter.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/i2cslave_controller.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/i2cslave_controller_top.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/internal_pll/internal_pll.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_16in_16out/fifo_dc_16in_16out.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_2in_2out/fifo_dc_2in_2out.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/ddr_workaround.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/fifo_dc_32in_1out/fifo_dc_32in_1out.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/pll_10MHzInput/pll_10MHzInput.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/i2c_slave_wbm.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/i2c_slave.v
+Verilog design file = C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/my_lvds_rx.v
+NGD file = wiwisdr_ecp5_test_impl1.ngd
+-sdc option: SDC file input not used.
+-lpf option: Output file option is ON.
+Hardtimer checking is enabled (default). The -dt option is not used.
+The -r option is OFF. [ Remove LOC Properties is OFF. ]
+Technology check ok...
+
+Analyzing Verilog file C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v. VERI-1482
+Compile design.
+Compile Design Begin
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/lvds_rx.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/myled.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/myspi.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/filter.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2cslave_controller.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2cslave_controller_top.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/internal_pll/internal_pll.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_2in_2out/fifo_dc_2in_2out.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/ddr_workaround.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_32in_1out/fifo_dc_32in_1out.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/pll_10mhzinput/pll_10mhzinput.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v. VERI-1482
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(189): parameter declaration becomes local in i2c_slave_wbm with formal parameter declaration list. VERI-1199
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(191): parameter declaration becomes local in i2c_slave_wbm with formal parameter declaration list. VERI-1199
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(193): parameter declaration becomes local in i2c_slave_wbm with formal parameter declaration list. VERI-1199
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(195): parameter declaration becomes local in i2c_slave_wbm with formal parameter declaration list. VERI-1199
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(197): parameter declaration becomes local in i2c_slave_wbm with formal parameter declaration list. VERI-1199
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(199): parameter declaration becomes local in i2c_slave_wbm with formal parameter declaration list. VERI-1199
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave.v. VERI-1482
+Analyzing Verilog file c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/my_lvds_rx.v. VERI-1482
+Analyzing Verilog file C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v. VERI-1482
+Top module name (Verilog): top
+INFO - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(1): compiling module top. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(1746): compiling module OSCG(DIV=32). VERI-1018
+INFO - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/internal_pll/internal_pll.v(8): compiling module internal_pll. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(757): compiling module VHI. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(761): compiling module VLO. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(1696): compiling module EHXPLLL_renamed_due_excessive_length_1. VERI-1018
+INFO - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/pll_10mhzinput/pll_10mhzinput.v(8): compiling module pll_10MHzInput. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(1696): compiling module EHXPLLL(CLKFB_DIV=20,CLKOP_DIV=3,CLKOS_DIV=1,CLKOS2_DIV=1,CLKOS3_DIV=1,CLKOP_CPHASE=2,CLKOP_TRIM_POL="FALLING",CLKOS_TRIM_POL="FALLING",PLLRST_ENA="ENABLED"). VERI-1018
+INFO - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/myled.v(1): compiling module led_toggle. VERI-1018
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/myled.v(20): expression size 32 truncated to fit in target size 26. VERI-1209
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(55): compiling module BB. VERI-1018
+INFO - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(32): compiling module i2c_slave_wbm(WB_DATA_WIDTH=8,WB_ADDR_WIDTH=16,WB_SELECT_WIDTH=1). VERI-1018
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(302): expression size 32 truncated to fit in target size 8. VERI-1209
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(340): expression size 32 truncated to fit in target size 16. VERI-1209
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(358): expression size 32 truncated to fit in target size 8. VERI-1209
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(377): expression size 32 truncated to fit in target size 8. VERI-1209
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave_wbm.v(401): expression size 32 truncated to fit in target size 16. VERI-1209
+INFO - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave.v(32): compiling module i2c_slave. VERI-1018
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave.v(295): expression size 32 truncated to fit in target size 4. VERI-1209
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave.v(362): expression size 32 truncated to fit in target size 4. VERI-1209
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/i2c_slave.v(398): expression size 32 truncated to fit in target size 4. VERI-1209
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(388): expression size 8 truncated to fit in target size 4. VERI-1209
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(476): expression size 32 truncated to fit in target size 8. VERI-1209
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(1646): compiling module ODDRX1F. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(1621): compiling module IDDRX1F. VERI-1018
+INFO - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/my_lvds_rx.v(3): compiling module word_align_3state. VERI-1018
+INFO - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(8): compiling module fifo_dc_16in_16out. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(25): compiling module AND2. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(367): compiling module INV. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(656): compiling module OR2. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(810): compiling module XOR2. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(710): compiling module ROM16X1A(initval=16'b0110100110010110). VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(710): compiling module ROM16X1A(initval=16'b010000010000). VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(710): compiling module ROM16X1A(initval=16'b01000000000100). VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(710): compiling module ROM16X1A(initval=16'b0101000000). VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(710): compiling module ROM16X1A(initval=16'b0100000000000001). VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(866): compiling module DP16KD(RESETMODE="ASYNC"). VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(110): compiling module FD1P3BX. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(119): compiling module FD1P3DX. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(168): compiling module FD1S3DX. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(160): compiling module FD1S3BX. VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(76): compiling module CCU2C(INIT0=16'b0110011010101010,INIT1=16'b0110011010101010,INJECT1_0="NO",INJECT1_1="NO"). VERI-1018
+INFO - synthesis: C:/lscc/diamond/3.14/ispfpga/userware/NT/SYNTHESIS_HEADERS/ecp5u.v(76): compiling module CCU2C(INIT0=16'b1001100110101010,INIT1=16'b1001100110101010,INJECT1_0="NO",INJECT1_1="NO"). VERI-1018
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(300): input port CIN is not connected on this instance. VDB-1013
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(324): input port CIN is not connected on this instance. VDB-1013
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(348): input port CIN is not connected on this instance. VDB-1013
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(380): input port CIN is not connected on this instance. VDB-1013
+INFO - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/myspi.v(373): compiling module ecp5_spi_master_top. VERI-1018
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(195): net wb_err_i does not have a driver. VDB-1002
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(332): net subg_delay_cflag does not have a driver. VDB-1002
+Loading NGL library 'C:/lscc/diamond/3.14/ispfpga/sa5p00/data/sa5plib.ngl'...
+Loading NGL library 'C:/lscc/diamond/3.14/ispfpga/xo2c00/data/xo2clib.ngl'...
+Loading NGL library 'C:/lscc/diamond/3.14/ispfpga/mg5g00/data/mg5glib.ngl'...
+Loading NGL library 'C:/lscc/diamond/3.14/ispfpga/or5g00/data/orc5glib.ngl'...
+Loading device for application map from file 'sa5p25.nph' in environment: C:/lscc/diamond/3.14/ispfpga.
+Package Status:                     Final          Version 1.44.
+Top-level module name = top.
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(174): Removing unused instance _293. VDB-5034
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/top.v(183): Removing unused instance _294. VDB-5034
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(300): input port CIN is not connected on this instance. VDB-1013
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(324): input port CIN is not connected on this instance. VDB-1013
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(348): input port CIN is not connected on this instance. VDB-1013
+WARNING - synthesis: c:/users/julianstj/desktop/worknotes/projects/ptp/wiwi/sdr/software/ecp5_test/fifo_dc_16in_16out/fifo_dc_16in_16out.v(380): input port CIN is not connected on this instance. VDB-1013
+WARNING - synthesis: I/O Port fpga_neopixel 's net has no driver and is unused.
+######## Missing driver on net fpga_neopixel. Patching with GND.
+######## Missing driver on net n1400. Patching with GND.
+######## Missing driver on net n1411. Patching with GND.
+######## Missing driver on net wb_err_i. Patching with GND.
+######## Missing driver on net subg_delay_cflag. Patching with GND.
+######## Missing driver on net n1414. Patching with GND.
+######## Missing driver on net n1413. Patching with GND.
+######## Missing driver on net n1412. Patching with GND.
+######## Missing driver on net n1410. Patching with GND.
+######## Missing driver on net n1409. Patching with GND.
+######## Missing driver on net n1408. Patching with GND.
+######## Missing driver on net n1407. Patching with GND.
+######## Missing driver on net n1406. Patching with GND.
+######## Missing driver on net n1405. Patching with GND.
+######## Missing driver on net n1404. Patching with GND.
+######## Missing driver on net n1403. Patching with GND.
+######## Missing driver on net n1402. Patching with GND.
+######## Missing driver on net n1415. Patching with GND.
+######## Missing driver on net n1401. Patching with GND.
+INFO - synthesis: Extracted state machine for register '\i2c_slave/state_reg' with one-hot encoding
+original encoding -> new encoding (one-hot encoding)
+
+ 000 -> 000001
+
+ 001 -> 000010
+
+ 010 -> 000100
+
+ 011 -> 001000
+
+ 100 -> 010000
+
+ 101 -> 100000
+
+INFO - synthesis: Extracted state machine for register '\lvds_rx_09_inst/r_state' with gray encoding
+original encoding -> new encoding (gray encoding)
+
+ 00 -> 00
+
+ 01 -> 01
+
+ 10 -> 11
+
+INFO - synthesis: Extracted state machine for register '\lvds_rx_24_inst/r_state' with gray encoding
+original encoding -> new encoding (gray encoding)
+
+ 00 -> 00
+
+ 01 -> 01
+
+ 10 -> 11
+
+
+
+
+WARNING - synthesis: Bit 4 of Register \i2c_slave/i2c_slave_inst/state_reg is stuck at Zero
+WARNING - synthesis: Bit 3 of Register \i2c_slave/i2c_slave_inst/state_reg is stuck at Zero
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+WARNING - synthesis: Skipping pad insertion on fpga_sda due to black_box_pad_pin attribute.
+WARNING - synthesis: Skipping pad insertion on fpga_scl due to black_box_pad_pin attribute.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+GSR instance connected to net main_reset_n.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_30 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_29 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_28 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_27 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_26 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_25 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_24 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_23 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_13 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_12 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_11 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_7 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_6 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_5 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_0 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_i_fifo_dc/FF_31 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_30 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_29 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_28 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_27 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_26 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_25 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_24 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_23 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_13 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_12 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_11 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_7 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_6 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_5 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_0 due to shared LSR/GSR.
+######## Converted FF type for instance \subg_q_fifo_dc/FF_31 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_30 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_29 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_28 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_27 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_26 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_25 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_24 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_23 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_13 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_12 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_11 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_7 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_6 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_5 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_0 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_i_fifo_dc/FF_31 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_30 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_29 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_28 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_27 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_26 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_25 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_24 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_23 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_13 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_12 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_11 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_7 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_6 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_5 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_0 due to shared LSR/GSR.
+######## Converted FF type for instance \wifi_q_fifo_dc/FF_31 due to shared LSR/GSR.
+WARNING - synthesis: Initial value found on instance \i2c_slave/i2c_slave_inst/m_axis_data_tlast_reg_225 will be ignored.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Applying 200.000000 MHz constraint to all clocks
+
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \lvds_rx_09_inst/match_count_i2 is a one-to-one match with \lvds_rx_09_inst/match_count_i3.
+Duplicate register/latch removal. \lvds_rx_24_inst/match_count_i2 is a one-to-one match with \lvds_rx_24_inst/match_count_i3.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_26 is a one-to-one match with \subg_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_i_fifo_dc/FF_17 is a one-to-one match with \subg_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_26 is a one-to-one match with \subg_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \subg_q_fifo_dc/FF_17 is a one-to-one match with \subg_q_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_26 is a one-to-one match with \wifi_i_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_i_fifo_dc/FF_17 is a one-to-one match with \wifi_i_fifo_dc/FF_14.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_26 is a one-to-one match with \wifi_q_fifo_dc/FF_23.
+Duplicate register/latch removal. \wifi_q_fifo_dc/FF_17 is a one-to-one match with \wifi_q_fifo_dc/FF_14.
+WARNING - synthesis: No user .sdc file.
+Results of NGD DRC are available in top_drc.log.
+Loading NGL library 'C:/lscc/diamond/3.14/ispfpga/sa5p00/data/sa5plib.ngl'...
+Loading NGL library 'C:/lscc/diamond/3.14/ispfpga/xo2c00/data/xo2clib.ngl'...
+WARNING - synthesis: Port 'CLKOS' has no signal connected to it. Property 'FREQUENCY_PIN_CLKOS' is ignored for instance 'PLLInst_0'.
+Loading NGL library 'C:/lscc/diamond/3.14/ispfpga/mg5g00/data/mg5glib.ngl'...
+Loading NGL library 'C:/lscc/diamond/3.14/ispfpga/or5g00/data/orc5glib.ngl'...
+All blocks are expanded and NGD expansion is successful.
+Writing NGD file wiwisdr_ecp5_test_impl1.ngd.
+
+################### Begin Area Report (top)######################
+Number of register bits => 697 of 24879 (2 % )
+AND2 => 8
+BB => 2
+CCU2C => 84
+DP16KD => 4
+EHXPLLL => 2
+FD1P3AX => 315
+FD1P3AY => 6
+FD1P3BX => 4
+FD1P3DX => 32
+FD1P3IX => 94
+FD1P3JX => 5
+FD1S3AX => 126
+FD1S3AY => 10
+FD1S3BX => 4
+FD1S3DX => 51
+FD1S3IX => 48
+FD1S3JX => 2
+GSR => 1
+IB => 8
+IDDRX1F => 2
+INV => 8
+L6MUX21 => 15
+LUT4 => 931
+OB => 30
+ODDRX1F => 9
+OR2 => 1
+OSCG => 1
+PFUMX => 65
+ROM16X1A => 32
+XOR2 => 16
+################### End Area Report ##################
+
+################### Begin Clock Report ######################
+Clock Nets
+Number of Clocks: 7
+  Net : int_clk_out, loads : 281
+  Net : sdr_rxclk_c, loads : 231
+  Net : my_pll/internal_80MHz, loads : 164
+  Net : my_pll/internal_64MHz, loads : 42
+  Net : my_pll/sdr_txclk_c, loads : 1
+  Net : dpll_clkout2_c, loads : 1
+  Net : dpll_clkout0_c, loads : 1
+Clock Enable Nets
+Number of Clock Enables: 81
+Top 10 highest fanout Clock Enables:
+  Net : lvds_rx_09_inst/sdr_rxclk_c_enable_40, loads : 32
+  Net : lvds_rx_24_inst/sdr_rxclk_c_enable_73, loads : 32
+  Net : subg_q_spi/shift_reg_15__N_1175, loads : 24
+  Net : wifi_q_spi/shift_reg_15__N_1175, loads : 24
+  Net : wifi_i_spi/shift_reg_15__N_1175, loads : 24
+  Net : subg_i_spi/shift_reg_15__N_1175, loads : 23
+  Net : subg_q_fifo_dc/wren_i, loads : 13
+  Net : wifi_i_fifo_dc/rden_i, loads : 13
+  Net : wifi_q_fifo_dc/wren_i, loads : 13
+  Net : wifi_q_fifo_dc/rden_i, loads : 13
+Highest fanout non-clock nets
+Top 10 highest fanout non-clock nets:
+  Net : i2c_slave/wb_adr_o_0, loads : 109
+  Net : i2c_slave/i2c_slave_inst/n14343, loads : 96
+  Net : wifi_q_fifo_dc/rRst, loads : 63
+  Net : i2c_slave/wb_adr_o_1, loads : 60
+  Net : i2c_slave/wb_adr_o_2, loads : 58
+  Net : lvds_rx_24_inst/r_candidate_offset, loads : 44
+  Net : stm_fpga_spare5_c, loads : 39
+  Net : i2c_slave/i2c_slave_inst/state_reg_0, loads : 37
+  Net : i2c_slave/n1527, loads : 37
+  Net : lvds_rx_09_inst/r_candidate_offset, loads : 36
+################### End Clock Report ##################
+
+<A name="lse_trs"></A><B><U><big>Timing Report Summary</big></U></B>
+--------------
+--------------------------------------------------------------------------------
+Constraint                              |   Constraint|       Actual|Levels
+--------------------------------------------------------------------------------
+                                        |             |             |
+create_clock -period 5.000000 -name     |             |             |
+clk3 [get_nets internal_64MHz]          |  200.000 MHz|  142.389 MHz|     5 *
+                                        |             |             |
+create_clock -period 5.000000 -name     |             |             |
+clk2 [get_nets int_clk_out]             |  200.000 MHz|  117.440 MHz|     7 *
+                                        |             |             |
+create_clock -period 5.000000 -name     |             |             |
+clk1 [get_nets internal_80MHz]          |  200.000 MHz|  134.898 MHz|     5 *
+                                        |             |             |
+create_clock -period 5.000000 -name     |             |             |
+clk0 [get_nets sdr_rxclk_c]             |  200.000 MHz|  101.482 MHz|     7 *
+                                        |             |             |
+--------------------------------------------------------------------------------
+
+
+4 constraints not met.
+
+
+Peak Memory Usage: 97.191  MB
+
+--------------------------------------------------------------
+Elapsed CPU time for LSE flow : 1.125  secs
+--------------------------------------------------------------
+
+
+
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+</PRE></FONT>
+</BODY>
+</HTML>

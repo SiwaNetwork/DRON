@@ -1,0 +1,137 @@
+---------------------------------------------------
+Report for cell top
+   Instance path: top
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	     280.00        100.0
+                                  LUT4	     300.00        100.0
+                                 IOBUF	         22        100.0
+                                PFUREG	        322        100.0
+                                RIPPLE	         50        100.0
+                                   EBR	          2        100.0
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                         spi_generator	          1         6.1
+                      spi_generator_U2	          1         6.0
+                      spi_generator_U4	          1         4.9
+                      spi_generator_U1	          1         6.0
+                        pll_10MHzInput	          1         0.0
+                            lvds_rx_U5	          1         6.3
+                            led_toggle	          1         7.5
+                               lvds_rx	          1         6.3
+                          internal_pll	          1         0.0
+                     ddr_data_recovery	          1        18.3
+                  ddr_data_recovery_U3	          1        19.2
+---------------------------------------------------
+Report for cell led_toggle
+   Instance path: top/my_led
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      21.00         7.5
+                                  LUT4	      12.00         4.0
+                                PFUREG	         27         8.4
+                                RIPPLE	         14        28.0
+---------------------------------------------------
+Report for cell internal_pll
+   Instance path: top/my_pll
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+---------------------------------------------------
+Report for cell spi_generator
+   Instance path: top/wifi_q_spi
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      17.00         6.1
+                                  LUT4	      13.00         4.3
+                                PFUREG	         25         7.8
+---------------------------------------------------
+Report for cell ddr_data_recovery_U3
+   Instance path: top/subg_iddr
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      53.83        19.2
+                                  LUT4	      25.00         8.3
+                                PFUREG	         62        19.3
+                                RIPPLE	         18        36.0
+                                   EBR	          1        50.0
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                   fifo_dc_2in_2out_U0	          1        16.4
+---------------------------------------------------
+Report for cell fifo_dc_2in_2out_U0
+   Instance path: top/subg_iddr/fifo_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      46.00        16.4
+                                  LUT4	      22.00         7.3
+                                PFUREG	         52        16.1
+                                RIPPLE	         18        36.0
+                                   EBR	          1        50.0
+---------------------------------------------------
+Report for cell pll_10MHzInput
+   Instance path: top/second_pll
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+---------------------------------------------------
+Report for cell lvds_rx
+   Instance path: top/lvds_rx_24_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      17.75         6.3
+                                  LUT4	      18.67         6.2
+                                PFUREG	         36        11.2
+---------------------------------------------------
+Report for cell spi_generator_U4
+   Instance path: top/subg_i_spi
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      13.83         4.9
+                                  LUT4	      13.00         4.3
+                                PFUREG	         25         7.8
+---------------------------------------------------
+Report for cell ddr_data_recovery
+   Instance path: top/wifi_iddr
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      51.33        18.3
+                                  LUT4	      25.00         8.3
+                                PFUREG	         59        18.3
+                                RIPPLE	         18        36.0
+                                   EBR	          1        50.0
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                      fifo_dc_2in_2out	          1        16.4
+---------------------------------------------------
+Report for cell fifo_dc_2in_2out
+   Instance path: top/wifi_iddr/fifo_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      46.00        16.4
+                                  LUT4	      22.00         7.3
+                                PFUREG	         52        16.1
+                                RIPPLE	         18        36.0
+                                   EBR	          1        50.0
+---------------------------------------------------
+Report for cell spi_generator_U2
+   Instance path: top/subg_q_spi
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      16.75         6.0
+                                  LUT4	      13.00         4.3
+                                PFUREG	         25         7.8
+---------------------------------------------------
+Report for cell lvds_rx_U5
+   Instance path: top/lvds_rx_09_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      17.75         6.3
+                                  LUT4	      17.67         5.9
+                                PFUREG	         38        11.8
+---------------------------------------------------
+Report for cell spi_generator_U1
+   Instance path: top/wifi_i_spi
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      16.92         6.0
+                                  LUT4	      13.00         4.3
+                                PFUREG	         25         7.8

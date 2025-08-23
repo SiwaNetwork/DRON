@@ -1,0 +1,9 @@
+#Start recording tcl command: 1/24/2025 09:02:58
+#Project Location: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test; Project name: wiwisdr_ecp5_test
+prj_project open "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.ldf"
+prj_run Export -impl impl1 -task Promgen -forceAll
+prj_run Export -impl impl1 -task Promgen -forceAll
+prj_run Export -impl impl1 -task Promgen -forceAll
+prj_run Export -impl impl1 -task Promgen -forceAll
+prj_run Export -impl impl1 -task Promgen -forceAll
+#Stop recording: 1/24/2025 11:11:45

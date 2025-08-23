@@ -1,0 +1,989 @@
+<HTML>
+<HEAD><TITLE>Lattice Map TRACE Report</TITLE>
+<STYLE TYPE="text/css">
+<!--
+ body,pre{    font-family:'Courier New', monospace;    color: #000000;    font-size:88%;    background-color: #ffffff;}h1 {    font-weight: bold;    margin-top: 24px;    margin-bottom: 10px;    border-bottom: 3px solid #000;    font-size: 1em;}h2 {    font-weight: bold;    margin-top: 18px;    margin-bottom: 5px;    font-size: 0.90em;}h3 {    font-weight: bold;    margin-top: 12px;    margin-bottom: 5px;    font-size: 0.80em;}p {    font-size:78%;}P.Table {    margin-top: 4px;    margin-bottom: 4px;    margin-right: 4px;    margin-left: 4px;}table{    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    border-collapse: collapse;}th {    font-weight:bold;    padding: 4px;    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    vertical-align:top;    text-align:left;    font-size:78%;}td {    padding: 4px;    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    vertical-align:top;    font-size:78%;}a {    color:#013C9A;    text-decoration:none;}a:visited {    color:#013C9A;}a:hover, a:active {    text-decoration:underline;    color:#5BAFD4;}.pass{background-color: #00ff00;}.fail{background-color: #ff0000;}.comment{    font-size: 90%;    font-style: italic;}
+-->
+</STYLE>
+</HEAD>
+<PRE><A name="Map_Twr"></A><B><U><big>Map TRACE Report</big></U></B>
+
+Loading design for application trce from file wiwisdr_ecp5_test_impl1_map.ncd.
+Design name: top
+NCD version: 3.3
+Vendor:      LATTICE
+Device:      LFE5U-25F
+Package:     CABGA256
+Performance: 6
+Loading device for application trce from file 'sa5p25.nph' in environment: C:/lscc/diamond/3.14/ispfpga.
+Package Status:                     Final          Version 1.44.
+Performance Hardware Data Status:   Final          Version 55.1.
+Setup and Hold Report
+
+--------------------------------------------------------------------------------
+<A name="Map_Twr_setup"></A><B><U><big>Lattice TRACE Report - Setup, Version Diamond (64-bit) 3.14.0.75.2</big></U></B>
+Tue Jan 28 18:13:59 2025
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+
+<A name="mtw1_set_ri"></A><B><U><big>Report Information</big></U></B>
+------------------
+Command line:    trce -v 1 -gt -mapchkpnt 0 -sethld -o wiwisdr_ecp5_test_impl1.tw1 -gui -msgset C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/promote.xml wiwisdr_ecp5_test_impl1_map.ncd wiwisdr_ecp5_test_impl1.prf 
+Design file:     wiwisdr_ecp5_test_impl1_map.ncd
+Preference file: wiwisdr_ecp5_test_impl1.prf
+Device,speed:    LFE5U-25F,6
+Report level:    verbose report, limited to 1 item per preference
+--------------------------------------------------------------------------------
+
+<A name="mtw1_set_ps"></A><B><U><big>Preference Summary</big></U></B>
+
+<LI><A href='#map_twr_pref_0_0' Target='right'>FREQUENCY NET "dpll_clkout2_c" 8.000000 MHz (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_0_1' Target='right'>FREQUENCY NET "sdr_txclk_c" 64.000000 MHz (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_0_2' Target='right'>FREQUENCY NET "int_clk_out" 9.700000 MHz (0 errors)</A></LI>            4096 items scored, 0 timing errors detected.
+Report:  223.414MHz is the maximum frequency for this preference.
+
+<LI><A href='#map_twr_pref_0_3' Target='right'>FREQUENCY NET "dpll_clkout0_c" 10.000000 MHz (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_0_4' Target='right'>FREQUENCY NET "second_pll/CLKOP" 200.000000 MHz (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_0_5' Target='right'>FREQUENCY PORT "dpll_clkout2" 8.000000 MHz (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+Report:  200.000MHz is the maximum frequency for this preference.
+
+<LI><A href='#map_twr_pref_0_6' Target='right'>FREQUENCY PORT "dpll_clkout0" 10.000000 MHz (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+Report:  200.000MHz is the maximum frequency for this preference.
+
+<LI><A href='#map_twr_pref_0_7' Target='right'>FREQUENCY NET "internal_80MHz" 80.000000 MHz (0 errors)</A></LI>            1332 items scored, 0 timing errors detected.
+Report:  139.101MHz is the maximum frequency for this preference.
+
+<LI><A href='#map_twr_pref_0_8' Target='right'>FREQUENCY NET "internal_64MHz" 64.000000 MHz (0 errors)</A></LI>            356 items scored, 0 timing errors detected.
+Report:  250.000MHz is the maximum frequency for this preference.
+
+<LI><A href='#map_twr_pref_0_9' Target='right'>FREQUENCY PORT "sdr_rxclk" 64.000000 MHz (0 errors)</A></LI>            2502 items scored, 0 timing errors detected.
+Report:  183.150MHz is the maximum frequency for this preference.
+
+<LI><A href='#map_twr_pref_0_10' Target='right'>CLOCK_TO_OUT ALLPORTS OUTPUT_DELAY 0.000000 ns MIN 0.000000 ns CLKNET "sdr_txclk_c" CLKOUT PORT "sdr_txdata" (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_0_11' Target='right'>INPUT_SETUP PORT "sdr_rx_subg" INPUT_DELAY 0.000000 ns HOLD -3.000000 ns CLKPORT "sdr_rxclk" SS ; Setup Analysis.(0 errors)</A></LI>            1 item scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_0_12' Target='right'>CLOCK_TO_OUT PORT "fpga_ufl_p7" 4.000000 ns MIN 4.000000 ns CLKPORT "sdr_rxclk" ; Setup Analysis.(0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_0_13' Target='right'>CLOCK_TO_OUT PORT "fpga_ufl_p8" 4.000000 ns MIN 4.000000 ns CLKPORT "sdr_rxclk" ; Setup Analysis.(0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+BLOCK ASYNCPATHS
+BLOCK RESETPATHS
+--------------------------------------------------------------------------------
+
+
+Derating parameters
+-------------------
+VCCIO Voltage:
+                   3.300 V (Bank 0, defined by PAR)
+                   3.300 V (Bank 1, defined by PAR)
+                   3.300 V (Bank 2, defined by PAR)
+                   3.300 V (Bank 3, defined by PAR)
+                   2.500 V (Bank 6, defined by PAR)
+                   2.500 V (Bank 7, defined by PAR)
+
+
+
+================================================================================
+<A name="map_twr_pref_0_0"></A>Preference: FREQUENCY NET "dpll_clkout2_c" 8.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_0_1"></A>Preference: FREQUENCY NET "sdr_txclk_c" 64.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_0_2"></A>Preference: FREQUENCY NET "int_clk_out" 9.700000 MHz ;
+            4096 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 98.617ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              i2c_slave/i2c_slave_inst/bit_count_reg_i0  (from int_clk_out +)
+   Destination:    FF         Data in        i2c_slave/i2c_slave_inst/state_reg__i1  (to int_clk_out +)
+
+   Delay:               4.736ns  (39.5% logic, 60.5% route), 6 logic levels.
+
+ Constraint Details:
+
+      4.736ns physical path delay i2c_slave/i2c_slave_inst/SLICE_113 to i2c_slave/i2c_slave_inst/SLICE_277 meets
+    103.093ns delay constraint less
+     -0.260ns DIN_SET requirement (totaling 103.353ns) by 98.617ns
+
+ Physical Path Details:
+
+      Data path i2c_slave/i2c_slave_inst/SLICE_113 to i2c_slave/i2c_slave_inst/SLICE_277:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+REG_DEL     ---     0.525 *SLICE_113.CLK to */SLICE_113.Q0 i2c_slave/i2c_slave_inst/SLICE_113 (from int_clk_out)
+ROUTE         4   e 0.573 */SLICE_113.Q0 to */SLICE_625.C0 i2c_slave/i2c_slave_inst/bit_count_reg_0
+CTOF_DEL    ---     0.236 */SLICE_625.C0 to */SLICE_625.F0 i2c_slave/i2c_slave_inst/SLICE_625
+ROUTE        20   e 0.573 */SLICE_625.F0 to */SLICE_628.A1 i2c_slave/i2c_slave_inst/n14370
+CTOF_DEL    ---     0.236 */SLICE_628.A1 to */SLICE_628.F1 i2c_slave/i2c_slave_inst/SLICE_628
+ROUTE         3   e 0.573 */SLICE_628.F1 to */SLICE_862.D0 i2c_slave/i2c_slave_inst/n14323
+CTOF_DEL    ---     0.236 */SLICE_862.D0 to */SLICE_862.F0 i2c_slave/i2c_slave_inst/SLICE_862
+ROUTE         1   e 0.573 */SLICE_862.F0 to */SLICE_527.D1 i2c_slave/i2c_slave_inst/n8344
+CTOOFX_DEL  ---     0.401 */SLICE_527.D1 to *LICE_527.OFX0 i2c_slave/i2c_slave_inst/mux_1078_i1/SLICE_527
+ROUTE         1   e 0.573 *LICE_527.OFX0 to */SLICE_277.C0 i2c_slave/i2c_slave_inst/n3800
+CTOF_DEL    ---     0.236 */SLICE_277.C0 to */SLICE_277.F0 i2c_slave/i2c_slave_inst/SLICE_277
+ROUTE         1   e 0.001 */SLICE_277.F0 to *SLICE_277.DI0 i2c_slave/i2c_slave_inst/state_next_0 (to int_clk_out)
+                  --------
+                    4.736   (39.5% logic, 60.5% route), 6 logic levels.
+
+Report:  223.414MHz is the maximum frequency for this preference.
+
+
+================================================================================
+<A name="map_twr_pref_0_3"></A>Preference: FREQUENCY NET "dpll_clkout0_c" 10.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_0_4"></A>Preference: FREQUENCY NET "second_pll/CLKOP" 200.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_0_5"></A>Preference: FREQUENCY PORT "dpll_clkout2" 8.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed:  The following path meets requirements by 120.000ns
+         The internal maximum frequency of the following component is 200.000 MHz
+
+ Logical Details:  Cell type  Pin name       Component name
+
+   Destination:    PIO        PAD            dpll_clkout2
+
+   Delay:               5.000ns -- based on Minimum Pulse Width
+
+Report:  200.000MHz is the maximum frequency for this preference.
+
+
+================================================================================
+<A name="map_twr_pref_0_6"></A>Preference: FREQUENCY PORT "dpll_clkout0" 10.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed:  The following path meets requirements by 95.000ns
+         The internal maximum frequency of the following component is 200.000 MHz
+
+ Logical Details:  Cell type  Pin name       Component name
+
+   Destination:    PIO        PAD            dpll_clkout0
+
+   Delay:               5.000ns -- based on Minimum Pulse Width
+
+Report:  200.000MHz is the maximum frequency for this preference.
+
+
+================================================================================
+<A name="map_twr_pref_0_7"></A>Preference: FREQUENCY NET "internal_80MHz" 80.000000 MHz ;
+            1332 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 5.311ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         DP16KD     Port           subg_i_fifo_dc/pdp_ram_0_0_0(ASIC)  (from internal_80MHz +)
+   Destination:    FF         Data in        subg_i_spi/shift_reg_i10  (to internal_80MHz +)
+
+   Delay:               7.449ns  (84.6% logic, 15.4% route), 3 logic levels.
+
+ Constraint Details:
+
+      7.449ns physical path delay subg_i_fifo_dc/pdp_ram_0_0_0 to subg_i_spi/SLICE_305 meets
+     12.500ns delay constraint less
+     -0.260ns DIN_SET requirement (totaling 12.760ns) by 5.311ns
+
+ Physical Path Details:
+
+      Data path subg_i_fifo_dc/pdp_ram_0_0_0 to subg_i_spi/SLICE_305:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+C2Q_DEL     ---     5.830 *am_0_0_0.CLKB to *m_0_0_0.DOB10 subg_i_fifo_dc/pdp_ram_0_0_0 (from internal_80MHz)
+ROUTE         1   e 0.573 *m_0_0_0.DOB10 to   SLICE_716.A0 subg_i_fifo_data_out_10
+CTOF_DEL    ---     0.236   SLICE_716.A0 to   SLICE_716.F0 SLICE_716
+ROUTE         1   e 0.573   SLICE_716.F0 to */SLICE_305.A0 spi1_sck_N_394_10
+CTOF_DEL    ---     0.236 */SLICE_305.A0 to */SLICE_305.F0 subg_i_spi/SLICE_305
+ROUTE         1   e 0.001 */SLICE_305.F0 to *SLICE_305.DI0 subg_i_spi/shift_reg_15_N_1126_10 (to internal_80MHz)
+                  --------
+                    7.449   (84.6% logic, 15.4% route), 3 logic levels.
+
+Report:  139.101MHz is the maximum frequency for this preference.
+
+
+================================================================================
+<A name="map_twr_pref_0_8"></A>Preference: FREQUENCY NET "internal_64MHz" 64.000000 MHz ;
+            356 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed:  The following path meets requirements by 11.625ns
+         The internal maximum frequency of the following component is 250.000 MHz
+
+ Logical Details:  Cell type  Pin name       Component name
+
+   Destination:    SIOLOGIC   CLK            sdr_txdata_MGIOL
+
+   Delay:               4.000ns -- based on Minimum Pulse Width
+
+
+Passed: The following path meets requirements by 11.679ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              tx_counter_1302__i6  (from internal_64MHz +)
+   Destination:    FF         Data in        tx_ddr_data_i1  (to internal_64MHz +)
+                   FF                        tx_ddr_data_i0
+
+   Delay:               3.522ns  (34.9% logic, 65.1% route), 4 logic levels.
+
+ Constraint Details:
+
+      3.522ns physical path delay SLICE_16 to SLICE_339 meets
+     15.625ns delay constraint less
+      0.424ns LSR_SET requirement (totaling 15.201ns) by 11.679ns
+
+ Physical Path Details:
+
+      Data path SLICE_16 to SLICE_339:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+REG_DEL     ---     0.522   SLICE_16.CLK to    SLICE_16.Q1 SLICE_16 (from internal_64MHz)
+ROUTE         2   e 0.573    SLICE_16.Q1 to   SLICE_668.B0 tx_counter_6
+CTOF_DEL    ---     0.236   SLICE_668.B0 to   SLICE_668.F0 SLICE_668
+ROUTE         1   e 0.573   SLICE_668.F0 to   SLICE_554.C0 n13230
+CTOF_DEL    ---     0.236   SLICE_554.C0 to   SLICE_554.F0 SLICE_554
+ROUTE         2   e 0.573   SLICE_554.F0 to   SLICE_668.B1 n13234
+CTOF_DEL    ---     0.236   SLICE_668.B1 to   SLICE_668.F1 SLICE_668
+ROUTE        31   e 0.573   SLICE_668.F1 to  SLICE_339.LSR n14293 (to internal_64MHz)
+                  --------
+                    3.522   (34.9% logic, 65.1% route), 4 logic levels.
+
+Report:  250.000MHz is the maximum frequency for this preference.
+
+
+================================================================================
+<A name="map_twr_pref_0_9"></A>Preference: FREQUENCY PORT "sdr_rxclk" 64.000000 MHz ;
+            2502 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 10.165ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              lvds_rx_24_inst/sr_i18  (from sdr_rxclk_c +)
+   Destination:    FF         Data in        lvds_rx_24_inst/match_count_i1  (to sdr_rxclk_c +)
+                   FF                        lvds_rx_24_inst/match_count_i0
+
+   Delay:               5.587ns  (34.7% logic, 65.3% route), 7 logic levels.
+
+ Constraint Details:
+
+      5.587ns physical path delay lvds_rx_24_inst/SLICE_172 to lvds_rx_24_inst/SLICE_159 meets
+     15.625ns delay constraint less
+     -0.127ns CE_SET requirement (totaling 15.752ns) by 10.165ns
+
+ Physical Path Details:
+
+      Data path lvds_rx_24_inst/SLICE_172 to lvds_rx_24_inst/SLICE_159:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+REG_DEL     ---     0.525 *SLICE_172.CLK to */SLICE_172.Q0 lvds_rx_24_inst/SLICE_172 (from sdr_rxclk_c)
+ROUTE         4   e 0.573 */SLICE_172.Q0 to */SLICE_663.C1 lvds_rx_24_inst/sr_18
+CTOF_DEL    ---     0.236 */SLICE_663.C1 to */SLICE_663.F1 lvds_rx_24_inst/SLICE_663
+ROUTE         1   e 0.573 */SLICE_663.F1 to */SLICE_633.A1 lvds_rx_24_inst/n12390
+CTOF_DEL    ---     0.236 */SLICE_633.A1 to */SLICE_633.F1 lvds_rx_24_inst/SLICE_633
+ROUTE         1   e 0.573 */SLICE_633.F1 to */SLICE_540.B0 lvds_rx_24_inst/n42
+CTOF_DEL    ---     0.236 */SLICE_540.B0 to */SLICE_540.F0 lvds_rx_24_inst/SLICE_540
+ROUTE         1   e 0.573 */SLICE_540.F0 to */SLICE_634.A0 lvds_rx_24_inst/n12434
+CTOF_DEL    ---     0.236 */SLICE_634.A0 to */SLICE_634.F0 lvds_rx_24_inst/SLICE_634
+ROUTE         2   e 0.573 */SLICE_634.F0 to */SLICE_637.B1 lvds_rx_24_inst/n12436
+CTOF_DEL    ---     0.236 */SLICE_637.B1 to */SLICE_637.F1 lvds_rx_24_inst/SLICE_637
+ROUTE         1   e 0.208 */SLICE_637.F1 to */SLICE_637.B0 lvds_rx_24_inst/n25
+CTOF_DEL    ---     0.236 */SLICE_637.B0 to */SLICE_637.F0 lvds_rx_24_inst/SLICE_637
+ROUTE         2   e 0.573 */SLICE_637.F0 to */SLICE_159.CE lvds_rx_24_inst/sdr_rxclk_c_enable_82 (to sdr_rxclk_c)
+                  --------
+                    5.587   (34.7% logic, 65.3% route), 7 logic levels.
+
+Report:  183.150MHz is the maximum frequency for this preference.
+
+
+================================================================================
+<A name="map_twr_pref_0_10"></A>Preference: CLOCK_TO_OUT ALLPORTS OUTPUT_DELAY 0.000000 ns MIN 0.000000 ns CLKNET "sdr_txclk_c" CLKOUT PORT "sdr_txdata" ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_0_11"></A>Preference: INPUT_SETUP PORT "sdr_rx_subg" INPUT_DELAY 0.000000 ns HOLD -3.000000 ns CLKPORT "sdr_rxclk" SS ; Setup Analysis.
+            1 item scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed:  The following path meets requirements by 15.216ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         Port       Pad            sdr_rx_subg
+   Destination:    FF         Data in        subg_iddr  (to sdr_rxclk_c +)
+                   FF                        subg_iddr
+
+   Max Data Path Delay:     1.007ns  (43.1% logic, 56.9% route), 1 logic levels.
+
+   Min Clock Path Delay:    0.999ns  (42.6% logic, 57.4% route), 1 logic levels.
+
+ Constraint Details:
+
+      1.007ns delay sdr_rx_subg to sdr_rx_subg_MGIOL less
+     15.625ns offset sdr_rx_subg to sdr_rxclk (totaling -14.618ns) meets
+      0.999ns delay sdr_rxclk to sdr_rx_subg_MGIOL less
+      0.401ns DI_SET requirement (totaling 0.598ns) by 15.216ns
+
+ Physical Path Details:
+
+      Data path sdr_rx_subg to sdr_rx_subg_MGIOL:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     0.434         F1.PAD to       F1.PADDI sdr_rx_subg
+ROUTE         2   e 0.573       F1.PADDI to *subg_MGIOL.DI fpga_ufl_p8_c_c (to sdr_rxclk_c)
+                  --------
+                    1.007   (43.1% logic, 56.9% route), 1 logic levels.
+
+      Clock path sdr_rxclk to sdr_rx_subg_MGIOL:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     0.426         L1.PAD to       L1.PADDI sdr_rxclk
+ROUTE       136   e 0.573       L1.PADDI to *ubg_MGIOL.CLK sdr_rxclk_c
+                  --------
+                    0.999   (42.6% logic, 57.4% route), 1 logic levels.
+
+Report:   15.216ns is the maximum offset for this preference.
+
+
+================================================================================
+<A name="map_twr_pref_0_12"></A>Preference: CLOCK_TO_OUT PORT "fpga_ufl_p7" 4.000000 ns MIN 4.000000 ns CLKPORT "sdr_rxclk" ; Setup Analysis.
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_0_13"></A>Preference: CLOCK_TO_OUT PORT "fpga_ufl_p8" 4.000000 ns MIN 4.000000 ns CLKPORT "sdr_rxclk" ; Setup Analysis.
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+<A name="mtw1_set_rs"></A><B><U><big>Report Summary</big></U></B>
+--------------
+----------------------------------------------------------------------------
+Preference                              |   Constraint|       Actual|Levels
+----------------------------------------------------------------------------
+                                        |             |             |
+FREQUENCY NET "dpll_clkout2_c" 8.000000 |             |             |
+MHz ;                                   |            -|            -|   0  
+                                        |             |             |
+FREQUENCY NET "sdr_txclk_c" 64.000000   |             |             |
+MHz ;                                   |            -|            -|   0  
+                                        |             |             |
+FREQUENCY NET "int_clk_out" 9.700000    |             |             |
+MHz ;                                   |    9.700 MHz|  223.414 MHz|   6  
+                                        |             |             |
+FREQUENCY NET "dpll_clkout0_c"          |             |             |
+10.000000 MHz ;                         |            -|            -|   0  
+                                        |             |             |
+FREQUENCY NET "second_pll/CLKOP"        |             |             |
+200.000000 MHz ;                        |            -|            -|   0  
+                                        |             |             |
+FREQUENCY PORT "dpll_clkout2" 8.000000  |             |             |
+MHz ;                                   |    8.000 MHz|  200.000 MHz|   0  
+                                        |             |             |
+FREQUENCY PORT "dpll_clkout0" 10.000000 |             |             |
+MHz ;                                   |   10.000 MHz|  200.000 MHz|   0  
+                                        |             |             |
+FREQUENCY NET "internal_80MHz"          |             |             |
+80.000000 MHz ;                         |   80.000 MHz|  139.101 MHz|   3  
+                                        |             |             |
+FREQUENCY NET "internal_64MHz"          |             |             |
+64.000000 MHz ;                         |   64.000 MHz|  250.000 MHz|   0  
+                                        |             |             |
+FREQUENCY PORT "sdr_rxclk" 64.000000    |             |             |
+MHz ;                                   |   64.000 MHz|  183.150 MHz|   7  
+                                        |             |             |
+CLOCK_TO_OUT ALLPORTS OUTPUT_DELAY      |             |             |
+0.000000 ns MIN 0.000000 ns CLKNET      |             |             |
+"sdr_txclk_c" CLKOUT PORT "sdr_txdata"  |             |             |
+;                                       |            -|            -|   0  
+                                        |             |             |
+INPUT_SETUP PORT "sdr_rx_subg"          |             |             |
+INPUT_DELAY 0.000000 ns HOLD -3.000000  |             |             |
+ns CLKPORT "sdr_rxclk" SS ; Setup       |             |             |
+Analysis.                               |     0.000 ns|    15.216 ns|   1  
+                                        |             |             |
+CLOCK_TO_OUT PORT "fpga_ufl_p7"         |             |             |
+4.000000 ns MIN 4.000000 ns CLKPORT     |             |             |
+"sdr_rxclk" ; Setup Analysis.           |            -|            -|   0  
+                                        |             |             |
+CLOCK_TO_OUT PORT "fpga_ufl_p8"         |             |             |
+4.000000 ns MIN 4.000000 ns CLKPORT     |             |             |
+"sdr_rxclk" ; Setup Analysis.           |            -|            -|   0  
+                                        |             |             |
+----------------------------------------------------------------------------
+
+
+All preferences were met.
+
+
+<A name="mtw1_set_clkda"></A><B><U><big>Clock Domains Analysis</big></U></B>
+------------------------
+
+Found 7 clocks:
+
+Clock Domain: second_pll/CLKOP   Source: second_pll/PLLInst_0.CLKOP   Loads: 1
+   No transfer within this clock domain is found
+
+Clock Domain: sdr_rxclk_c   Source: sdr_rxclk.PAD   Loads: 136
+   Covered under: FREQUENCY PORT "sdr_rxclk" 64.000000 MHz ;
+
+   Data transfers from:
+   Clock Domain: internal_80MHz   Source: my_pll/PLLInst_0.CLKOS2
+      Not reported because source and destination domains are unrelated.
+
+   Clock Domain: int_clk_out   Source: osch_inst.OSC
+      Not reported because source and destination domains are unrelated.
+
+Clock Domain: internal_80MHz   Source: my_pll/PLLInst_0.CLKOS2   Loads: 108
+   Covered under: FREQUENCY NET "internal_80MHz" 80.000000 MHz ;
+
+   Data transfers from:
+   Clock Domain: sdr_rxclk_c   Source: sdr_rxclk.PAD
+      Not reported because source and destination domains are unrelated.
+
+   Clock Domain: int_clk_out   Source: osch_inst.OSC
+      Not reported because source and destination domains are unrelated.
+
+Clock Domain: internal_64MHz   Source: my_pll/PLLInst_0.CLKOP   Loads: 23
+   Covered under: FREQUENCY NET "internal_64MHz" 64.000000 MHz ;
+
+   Data transfers from:
+   Clock Domain: int_clk_out   Source: osch_inst.OSC
+      Not reported because source and destination domains are unrelated.
+
+Clock Domain: int_clk_out   Source: osch_inst.OSC   Loads: 195
+   Covered under: FREQUENCY NET "int_clk_out" 9.700000 MHz ;
+
+Clock Domain: dpll_clkout2_c   Source: dpll_clkout2.PAD   Loads: 1
+   No transfer within this clock domain is found
+
+Clock Domain: dpll_clkout0_c   Source: dpll_clkout0.PAD   Loads: 1
+   No transfer within this clock domain is found
+
+
+<A name="mtw1_set_ts"></A><B><U><big>Timing summary (Setup):</big></U></B>
+---------------
+
+Timing errors: 0  Score: 0
+Cumulative negative slack: 0
+
+Constraints cover 10258 paths, 8 nets, and 4962 connections (96.05% coverage)
+
+--------------------------------------------------------------------------------
+<A name="Map_Twr_hold"></A><B><U><big>Lattice TRACE Report - Hold, Version Diamond (64-bit) 3.14.0.75.2</big></U></B>
+Tue Jan 28 18:13:59 2025
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+
+<A name="mtw1_hold_ri"></A><B><U><big>Report Information</big></U></B>
+------------------
+Command line:    trce -v 1 -gt -mapchkpnt 0 -sethld -o wiwisdr_ecp5_test_impl1.tw1 -gui -msgset C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/promote.xml wiwisdr_ecp5_test_impl1_map.ncd wiwisdr_ecp5_test_impl1.prf 
+Design file:     wiwisdr_ecp5_test_impl1_map.ncd
+Preference file: wiwisdr_ecp5_test_impl1.prf
+Device,speed:    LFE5U-25F,M
+Report level:    verbose report, limited to 1 item per preference
+--------------------------------------------------------------------------------
+
+<A name="mtw1_hold_ps"></A><B><U><big>Preference Summary</big></U></B>
+
+<LI><A href='#map_twr_pref_1_0' Target='right'>FREQUENCY NET "dpll_clkout2_c" 8.000000 MHz (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_1_1' Target='right'>FREQUENCY NET "sdr_txclk_c" 64.000000 MHz (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_1_2' Target='right'>FREQUENCY NET "int_clk_out" 9.700000 MHz (0 errors)</A></LI>            4096 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_1_3' Target='right'>FREQUENCY NET "dpll_clkout0_c" 10.000000 MHz (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_1_4' Target='right'>FREQUENCY NET "second_pll/CLKOP" 200.000000 MHz (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_1_5' Target='right'>FREQUENCY PORT "dpll_clkout2" 8.000000 MHz (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_1_6' Target='right'>FREQUENCY PORT "dpll_clkout0" 10.000000 MHz (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_1_7' Target='right'>FREQUENCY NET "internal_80MHz" 80.000000 MHz (0 errors)</A></LI>            1332 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_1_8' Target='right'>FREQUENCY NET "internal_64MHz" 64.000000 MHz (0 errors)</A></LI>            356 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_1_9' Target='right'>FREQUENCY PORT "sdr_rxclk" 64.000000 MHz (0 errors)</A></LI>            2502 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_1_10' Target='right'>CLOCK_TO_OUT ALLPORTS OUTPUT_DELAY 0.000000 ns MIN 0.000000 ns CLKNET "sdr_txclk_c" CLKOUT PORT "sdr_txdata" (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_1_11' Target='right'>INPUT_SETUP PORT "sdr_rx_subg" INPUT_DELAY 0.000000 ns HOLD -3.000000 ns CLKPORT "sdr_rxclk" SS (0 errors)</A></LI>            1 item scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_1_12' Target='right'>CLOCK_TO_OUT PORT "fpga_ufl_p7" 4.000000 ns MIN 4.000000 ns CLKPORT "sdr_rxclk" (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+<LI><A href='#map_twr_pref_1_13' Target='right'>CLOCK_TO_OUT PORT "fpga_ufl_p8" 4.000000 ns MIN 4.000000 ns CLKPORT "sdr_rxclk" (0 errors)</A></LI>            0 items scored, 0 timing errors detected.
+
+BLOCK ASYNCPATHS
+BLOCK RESETPATHS
+--------------------------------------------------------------------------------
+
+
+Derating parameters
+-------------------
+VCCIO Voltage:
+                   3.300 V (Bank 0, defined by PAR)
+                   3.300 V (Bank 1, defined by PAR)
+                   3.300 V (Bank 2, defined by PAR)
+                   3.300 V (Bank 3, defined by PAR)
+                   2.500 V (Bank 6, defined by PAR)
+                   2.500 V (Bank 7, defined by PAR)
+
+
+
+================================================================================
+<A name="map_twr_pref_1_0"></A>Preference: FREQUENCY NET "dpll_clkout2_c" 8.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_1_1"></A>Preference: FREQUENCY NET "sdr_txclk_c" 64.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_1_2"></A>Preference: FREQUENCY NET "int_clk_out" 9.700000 MHz ;
+            4096 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 0.104ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              i2c_slave/i2c_slave_inst/scl_i_filter_i0  (from int_clk_out +)
+   Destination:    FF         Data in        i2c_slave/i2c_slave_inst/scl_i_filter_i1  (to int_clk_out +)
+
+   Delay:               0.222ns  (73.9% logic, 26.1% route), 1 logic levels.
+
+ Constraint Details:
+
+      0.222ns physical path delay i2c_slave/i2c_slave_inst/SLICE_128 to i2c_slave/i2c_slave_inst/SLICE_128 meets
+      0.118ns M_HLD and
+      0.000ns delay constraint requirement (totaling 0.118ns) by 0.104ns
+
+ Physical Path Details:
+
+      Data path i2c_slave/i2c_slave_inst/SLICE_128 to i2c_slave/i2c_slave_inst/SLICE_128:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+REG_DEL     ---     0.164 *SLICE_128.CLK to */SLICE_128.Q0 i2c_slave/i2c_slave_inst/SLICE_128 (from int_clk_out)
+ROUTE         3   e 0.058 */SLICE_128.Q0 to */SLICE_128.M1 i2c_slave/i2c_slave_inst/scl_i_filter_0 (to int_clk_out)
+                  --------
+                    0.222   (73.9% logic, 26.1% route), 1 logic levels.
+
+
+================================================================================
+<A name="map_twr_pref_1_3"></A>Preference: FREQUENCY NET "dpll_clkout0_c" 10.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_1_4"></A>Preference: FREQUENCY NET "second_pll/CLKOP" 200.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_1_5"></A>Preference: FREQUENCY PORT "dpll_clkout2" 8.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_1_6"></A>Preference: FREQUENCY PORT "dpll_clkout0" 10.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_1_7"></A>Preference: FREQUENCY NET "internal_80MHz" 80.000000 MHz ;
+            1332 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 0.179ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              subg_i_spi/shift_reg_i1  (from internal_80MHz +)
+   Destination:    FF         Data in        subg_i_spi/shift_reg_i0  (to internal_80MHz +)
+
+   Delay:               0.298ns  (80.2% logic, 19.8% route), 2 logic levels.
+
+ Constraint Details:
+
+      0.298ns physical path delay subg_i_spi/SLICE_300 to subg_i_spi/SLICE_300 meets
+      0.119ns DIN_HLD and
+      0.000ns delay constraint requirement (totaling 0.119ns) by 0.179ns
+
+ Physical Path Details:
+
+      Data path subg_i_spi/SLICE_300 to subg_i_spi/SLICE_300:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+REG_DEL     ---     0.163 *SLICE_300.CLK to */SLICE_300.Q1 subg_i_spi/SLICE_300 (from internal_80MHz)
+ROUTE         1   e 0.058 */SLICE_300.Q1 to */SLICE_300.B0 subg_i_spi/shift_reg_1
+CTOF_DEL    ---     0.076 */SLICE_300.B0 to */SLICE_300.F0 subg_i_spi/SLICE_300
+ROUTE         1   e 0.001 */SLICE_300.F0 to *SLICE_300.DI0 subg_i_spi/shift_reg_15_N_1126_0 (to internal_80MHz)
+                  --------
+                    0.298   (80.2% logic, 19.8% route), 2 logic levels.
+
+
+================================================================================
+<A name="map_twr_pref_1_8"></A>Preference: FREQUENCY NET "internal_64MHz" 64.000000 MHz ;
+            356 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 0.179ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              tx_counter_1302__i2  (from internal_64MHz +)
+   Destination:    FF         Data in        tx_counter_1302__i2  (to internal_64MHz +)
+
+   Delay:               0.298ns  (80.2% logic, 19.8% route), 2 logic levels.
+
+ Constraint Details:
+
+      0.298ns physical path delay SLICE_15 to SLICE_15 meets
+      0.119ns DIN_HLD and
+      0.000ns delay constraint requirement (totaling 0.119ns) by 0.179ns
+
+ Physical Path Details:
+
+      Data path SLICE_15 to SLICE_15:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+REG_DEL     ---     0.163   SLICE_15.CLK to    SLICE_15.Q1 SLICE_15 (from internal_64MHz)
+ROUTE         3   e 0.058    SLICE_15.Q1 to    SLICE_15.A1 tx_counter_2
+CTOF_DEL    ---     0.076    SLICE_15.A1 to    SLICE_15.F1 SLICE_15
+ROUTE         1   e 0.001    SLICE_15.F1 to   SLICE_15.DI1 n43 (to internal_64MHz)
+                  --------
+                    0.298   (80.2% logic, 19.8% route), 2 logic levels.
+
+
+================================================================================
+<A name="map_twr_pref_1_9"></A>Preference: FREQUENCY PORT "sdr_rxclk" 64.000000 MHz ;
+            2502 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 0.081ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              subg_iddr  (from sdr_rxclk_c +)
+   Destination:    FF         Data in        lvds_rx_09_inst/sr_i0  (to sdr_rxclk_c +)
+
+   Delay:               0.199ns  (0.0% logic, 100.0% route), 1 logic levels.
+
+ Constraint Details:
+
+      0.199ns physical path delay sdr_rx_subg_MGIOL to lvds_rx_09_inst/SLICE_143 meets
+      0.118ns M_HLD and
+      0.000ns delay constraint requirement (totaling 0.118ns) by 0.081ns
+
+ Physical Path Details:
+
+      Data path sdr_rx_subg_MGIOL to lvds_rx_09_inst/SLICE_143:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+C2INP_DEL   ---     0.000 *ubg_MGIOL.CLK to *MGIOL.RXDATA1 sdr_rx_subg_MGIOL (from sdr_rxclk_c)
+ROUTE         1   e 0.199 *MGIOL.RXDATA1 to */SLICE_143.M0 w_lvds_rx_09_d1 (to sdr_rxclk_c)
+                  --------
+                    0.199   (0.0% logic, 100.0% route), 1 logic levels.
+
+
+================================================================================
+<A name="map_twr_pref_1_10"></A>Preference: CLOCK_TO_OUT ALLPORTS OUTPUT_DELAY 0.000000 ns MIN 0.000000 ns CLKNET "sdr_txclk_c" CLKOUT PORT "sdr_txdata" ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_1_11"></A>Preference: INPUT_SETUP PORT "sdr_rx_subg" INPUT_DELAY 0.000000 ns HOLD -3.000000 ns CLKPORT "sdr_rxclk" SS ;
+            1 item scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+NOTE:  Assuming preference to be OFFSET IN ... BEFORE for hold analysis 
+
+
+Passed:  The following path meets requirements by 2.808ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         Port       Pad            sdr_rx_subg
+   Destination:    FF         Data in        subg_iddr  (to sdr_rxclk_c +)
+                   FF                        subg_iddr
+
+   Min Data Path Delay:     0.488ns  (59.2% logic, 40.8% route), 1 logic levels.
+
+   Max Clock Path Delay:    0.489ns  (59.3% logic, 40.7% route), 1 logic levels.
+
+ Constraint Details:
+
+      0.488ns delay sdr_rx_subg to sdr_rx_subg_MGIOL plus
+      3.000ns hold offset sdr_rx_subg to sdr_rxclk (totaling 3.488ns) meets
+      0.489ns delay sdr_rxclk to sdr_rx_subg_MGIOL plus
+      0.191ns DI_HLD requirement (totaling 0.680ns) by 2.808ns
+
+ Physical Path Details:
+
+      Data path sdr_rx_subg to sdr_rx_subg_MGIOL:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     0.289         F1.PAD to       F1.PADDI sdr_rx_subg
+ROUTE         2   e 0.199       F1.PADDI to *subg_MGIOL.DI fpga_ufl_p8_c_c (to sdr_rxclk_c)
+                  --------
+                    0.488   (59.2% logic, 40.8% route), 1 logic levels.
+
+      Clock path sdr_rxclk to sdr_rx_subg_MGIOL:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     0.290         L1.PAD to       L1.PADDI sdr_rxclk
+ROUTE       136   e 0.199       L1.PADDI to *ubg_MGIOL.CLK sdr_rxclk_c
+                  --------
+                    0.489   (59.3% logic, 40.7% route), 1 logic levels.
+
+Report:    0.192ns is the minimum offset for this preference.
+
+
+================================================================================
+<A name="map_twr_pref_1_12"></A>Preference: CLOCK_TO_OUT PORT "fpga_ufl_p7" 4.000000 ns MIN 4.000000 ns CLKPORT "sdr_rxclk" ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+<A name="map_twr_pref_1_13"></A>Preference: CLOCK_TO_OUT PORT "fpga_ufl_p8" 4.000000 ns MIN 4.000000 ns CLKPORT "sdr_rxclk" ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+<A name="mtw1_hold_rs"></A><B><U><big>Report Summary</big></U></B>
+--------------
+----------------------------------------------------------------------------
+Preference(MIN Delays)                  |   Constraint|       Actual|Levels
+----------------------------------------------------------------------------
+                                        |             |             |
+FREQUENCY NET "dpll_clkout2_c" 8.000000 |             |             |
+MHz ;                                   |            -|            -|   0  
+                                        |             |             |
+FREQUENCY NET "sdr_txclk_c" 64.000000   |             |             |
+MHz ;                                   |            -|            -|   0  
+                                        |             |             |
+FREQUENCY NET "int_clk_out" 9.700000    |             |             |
+MHz ;                                   |     0.000 ns|     0.104 ns|   1  
+                                        |             |             |
+FREQUENCY NET "dpll_clkout0_c"          |             |             |
+10.000000 MHz ;                         |            -|            -|   0  
+                                        |             |             |
+FREQUENCY NET "second_pll/CLKOP"        |             |             |
+200.000000 MHz ;                        |            -|            -|   0  
+                                        |             |             |
+FREQUENCY PORT "dpll_clkout2" 8.000000  |             |             |
+MHz ;                                   |            -|            -|   0  
+                                        |             |             |
+FREQUENCY PORT "dpll_clkout0" 10.000000 |             |             |
+MHz ;                                   |            -|            -|   0  
+                                        |             |             |
+FREQUENCY NET "internal_80MHz"          |             |             |
+80.000000 MHz ;                         |     0.000 ns|     0.179 ns|   2  
+                                        |             |             |
+FREQUENCY NET "internal_64MHz"          |             |             |
+64.000000 MHz ;                         |     0.000 ns|     0.179 ns|   2  
+                                        |             |             |
+FREQUENCY PORT "sdr_rxclk" 64.000000    |             |             |
+MHz ;                                   |            -|            -|   1  
+                                        |             |             |
+CLOCK_TO_OUT ALLPORTS OUTPUT_DELAY      |             |             |
+0.000000 ns MIN 0.000000 ns CLKNET      |             |             |
+"sdr_txclk_c" CLKOUT PORT "sdr_txdata"  |             |             |
+;                                       |            -|            -|   0  
+                                        |             |             |
+INPUT_SETUP PORT "sdr_rx_subg"          |             |             |
+INPUT_DELAY 0.000000 ns HOLD -3.000000  |             |             |
+ns CLKPORT "sdr_rxclk" SS ;             |     3.000 ns|     0.192 ns|   1  
+                                        |             |             |
+CLOCK_TO_OUT PORT "fpga_ufl_p7"         |             |             |
+4.000000 ns MIN 4.000000 ns CLKPORT     |             |             |
+"sdr_rxclk" ;                           |            -|            -|   0  
+                                        |             |             |
+CLOCK_TO_OUT PORT "fpga_ufl_p8"         |             |             |
+4.000000 ns MIN 4.000000 ns CLKPORT     |             |             |
+"sdr_rxclk" ;                           |            -|            -|   0  
+                                        |             |             |
+----------------------------------------------------------------------------
+
+
+All preferences were met.
+
+
+<A name="mtw1_hold_clkda"></A><B><U><big>Clock Domains Analysis</big></U></B>
+------------------------
+
+Found 7 clocks:
+
+Clock Domain: second_pll/CLKOP   Source: second_pll/PLLInst_0.CLKOP   Loads: 1
+   No transfer within this clock domain is found
+
+Clock Domain: sdr_rxclk_c   Source: sdr_rxclk.PAD   Loads: 136
+   Covered under: FREQUENCY PORT "sdr_rxclk" 64.000000 MHz ;
+
+   Data transfers from:
+   Clock Domain: internal_80MHz   Source: my_pll/PLLInst_0.CLKOS2
+      Not reported because source and destination domains are unrelated.
+
+   Clock Domain: int_clk_out   Source: osch_inst.OSC
+      Not reported because source and destination domains are unrelated.
+
+Clock Domain: internal_80MHz   Source: my_pll/PLLInst_0.CLKOS2   Loads: 108
+   Covered under: FREQUENCY NET "internal_80MHz" 80.000000 MHz ;
+
+   Data transfers from:
+   Clock Domain: sdr_rxclk_c   Source: sdr_rxclk.PAD
+      Not reported because source and destination domains are unrelated.
+
+   Clock Domain: int_clk_out   Source: osch_inst.OSC
+      Not reported because source and destination domains are unrelated.
+
+Clock Domain: internal_64MHz   Source: my_pll/PLLInst_0.CLKOP   Loads: 23
+   Covered under: FREQUENCY NET "internal_64MHz" 64.000000 MHz ;
+
+   Data transfers from:
+   Clock Domain: int_clk_out   Source: osch_inst.OSC
+      Not reported because source and destination domains are unrelated.
+
+Clock Domain: int_clk_out   Source: osch_inst.OSC   Loads: 195
+   Covered under: FREQUENCY NET "int_clk_out" 9.700000 MHz ;
+
+Clock Domain: dpll_clkout2_c   Source: dpll_clkout2.PAD   Loads: 1
+   No transfer within this clock domain is found
+
+Clock Domain: dpll_clkout0_c   Source: dpll_clkout0.PAD   Loads: 1
+   No transfer within this clock domain is found
+
+
+<A name="mtw1_hold_ts"></A><B><U><big>Timing summary (Hold):</big></U></B>
+---------------
+
+Timing errors: 0  Score: 0
+Cumulative negative slack: 0
+
+Constraints cover 10258 paths, 8 nets, and 4962 connections (96.05% coverage)
+
+
+
+<A name="mtw1_ts"></A><B><U><big>Timing summary (Setup and Hold):</big></U></B>
+---------------
+
+Timing errors: 0 (setup), 0 (hold)
+Score: 0 (setup), 0 (hold)
+Cumulative negative slack: 0 (0+0)
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+
+
+
+
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+</PRE></FONT>
+</BODY>
+</HTML>

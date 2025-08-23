@@ -1,0 +1,1344 @@
+<HTML>
+<HEAD><TITLE>Project Summary</TITLE>
+<STYLE TYPE="text/css">
+<!--
+ body,pre{    font-family:'Courier New', monospace;    color: #000000;    font-size:88%;    background-color: #ffffff;}h1 {    font-weight: bold;    margin-top: 24px;    margin-bottom: 10px;    border-bottom: 3px solid #000;    font-size: 1em;}h2 {    font-weight: bold;    margin-top: 18px;    margin-bottom: 5px;    font-size: 0.90em;}h3 {    font-weight: bold;    margin-top: 12px;    margin-bottom: 5px;    font-size: 0.80em;}p {    font-size:78%;}P.Table {    margin-top: 4px;    margin-bottom: 4px;    margin-right: 4px;    margin-left: 4px;}table{    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    border-collapse: collapse;}th {    font-weight:bold;    padding: 4px;    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    vertical-align:top;    text-align:left;    font-size:78%;}td {    padding: 4px;    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    vertical-align:top;    font-size:78%;}a {    color:#013C9A;    text-decoration:none;}a:visited {    color:#013C9A;}a:hover, a:active {    text-decoration:underline;    color:#5BAFD4;}.pass{background-color: #00ff00;}.fail{background-color: #ff0000;}.comment{    font-size: 90%;    font-style: italic;}
+-->
+</STYLE>
+</HEAD>
+<PRE><A name="Mrp"></A>
+             Lattice Mapping Report File for Design Module 'top'
+
+
+
+<A name="mrp_di"></A><B><U><big>Design Information</big></U></B>
+
+Command line:   map -a ECP5U -p LFE5U-25F -t CABGA256 -s 6 -oc Commercial
+     wiwisdr_ecp5_test_impl1.ngd -o wiwisdr_ecp5_test_impl1_map.ncd -pr
+     wiwisdr_ecp5_test_impl1.prf -mp wiwisdr_ecp5_test_impl1.mrp -lpf C:/Users/j
+     ulianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/impl1/w
+     iwisdr_ecp5_test_impl1.lpf -lpf C:/Users/julianstj/Desktop/WorkNotes/Projec
+     ts/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.lpf -gui -msgset C:/Us
+     ers/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/pr
+     omote.xml 
+Target Vendor:  LATTICE
+Target Device:  LFE5U-25FCABGA256
+Target Performance:   6
+Mapper:  sa5p00,  version:  Diamond (64-bit) 3.14.0.75.2
+Mapped on:  01/28/25  18:13:56
+
+
+<A name="mrp_ds"></A><B><U><big>Design Summary</big></U></B>
+   Number of registers:    697 out of 24879 (3%)
+      PFU registers:          697 out of 24288 (3%)
+      PIO registers:            0 out of   591 (0%)
+   Number of SLICEs:       828 out of 12144 (7%)
+      SLICEs as Logic/ROM:    828 out of 12144 (7%)
+      SLICEs as RAM:            0 out of  9108 (0%)
+      SLICEs as Carry:         84 out of 12144 (1%)
+   Number of LUT4s:        1143 out of 24288 (5%)
+      Number used as logic LUTs:        975
+      Number used as distributed RAM:     0
+      Number used as ripple logic:      168
+      Number used as shift registers:     0
+   Number of PIO sites used: 45 out of 197 (23%)
+      Number of PIO sites used for single ended IOs: 35
+      Number of PIO sites used for differential IOs: 10 (represented by 5 PIO
+     comps in NCD)
+   Number of IDDR/ODDR/TDDR cells used: 11 out of 591 (2%)
+      Number of IDDR cells:   2
+      Number of ODDR cells:   9
+      Number of TDDR cells:   0
+   Number of PIO using at least one IDDR/ODDR/TDDR: 11 (3 differential)
+      Number of PIO using IDDR only:        2 (2 differential)
+      Number of PIO using ODDR only:        9 (1 differential)
+      Number of PIO using TDDR only:        0 (0 differential)
+      Number of PIO using IDDR/ODDR:        0 (0 differential)
+      Number of PIO using IDDR/TDDR:        0 (0 differential)
+      Number of PIO using ODDR/TDDR:        0 (0 differential)
+      Number of PIO using IDDR/ODDR/TDDR:   0 (0 differential)
+   Number of block RAMs:  4 out of 56 (7%)
+   Number of GSRs:  1 out of 1 (100%)
+   JTAG used :      No
+   Readback used :  No
+   Oscillator used :  Yes
+   Startup used :   No
+   DTR used :   No
+   Number of Dynamic Bank Controller (BCINRD):  0 out of 4 (0%)
+   Number of Dynamic Bank Controller (BCLVDSOB):  0 out of 4 (0%)
+   Number of DCC:  0 out of 60 (0%)
+
+   Number of DCS:  0 out of 2 (0%)
+   Number of PLLs:  2 out of 2 (100%)
+   Number of DDRDLLs:  0 out of 4 (0%)
+   Number of CLKDIV:  0 out of 4 (0%)
+   Number of ECLKSYNC:  0 out of 10 (0%)
+   Number of ECLKBRIDGECS:  0 out of 2 (0%)
+   Notes:-
+      1. Total number of LUT4s = (Number of logic LUT4s) + 2*(Number of
+     distributed RAMs) + 2*(Number of ripple logic)
+      2. Number of logic LUT4s does not include count of distributed RAM and
+     ripple logic.
+
+        Number Of Mapped DSP Components:
+   --------------------------------
+   MULT18X18D          0
+   MULT9X9D            0
+   ALU54B              0
+   ALU24B              0
+   PRADD18A            0
+   PRADD9A             0
+   --------------------------------
+   Number of Used DSP MULT Sites:  0 out of 56 (0 %)
+   Number of Used DSP ALU Sites:  0 out of 28 (0 %)
+   Number of Used DSP PRADD Sites:  0 out of 56 (0 %)
+   Number of clocks:  6
+     Net dpll_clkout2_c: 1 loads, 1 rising, 0 falling (Driver: PIO dpll_clkout2
+     )
+     Net internal_64MHz: 23 loads, 23 rising, 0 falling (Driver:
+     my_pll/PLLInst_0 )
+     Net internal_80MHz: 108 loads, 108 rising, 0 falling (Driver:
+     my_pll/PLLInst_0 )
+     Net int_clk_out: 195 loads, 195 rising, 0 falling (Driver: osch_inst )
+     Net sdr_rxclk_c: 135 loads, 135 rising, 0 falling (Driver: PIO sdr_rxclk )
+     Net dpll_clkout0_c: 1 loads, 1 rising, 0 falling (Driver: PIO dpll_clkout0
+     )
+   Number of Clock Enables:  81
+     Net wifi_i_empty: 8 loads, 6 LSLICEs
+     Net shift_reg_15__N_1175_adj_1194: 3 loads, 3 LSLICEs
+     Net internal_80MHz_enable_51: 9 loads, 9 LSLICEs
+     Net int_clk_out_enable_15: 2 loads, 2 LSLICEs
+     Net int_clk_out_enable_150: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_143: 2 loads, 2 LSLICEs
+     Net int_clk_out_enable_136: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_128: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_114: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_98: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_83: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_69: 4 loads, 4 LSLICEs
+     Net sdr_rxclk_c_enable_88: 4 loads, 4 LSLICEs
+     Net subg_q_empty: 8 loads, 6 LSLICEs
+     Net internal_80MHz_enable_36: 1 loads, 1 LSLICEs
+     Net shift_reg_15__N_1175_adj_1193: 3 loads, 3 LSLICEs
+     Net internal_80MHz_enable_35: 9 loads, 9 LSLICEs
+     Net subg_i_empty: 8 loads, 6 LSLICEs
+     Net internal_80MHz_enable_20: 1 loads, 1 LSLICEs
+     Net shift_reg_15__N_1175: 3 loads, 3 LSLICEs
+
+     Net internal_80MHz_enable_19: 9 loads, 9 LSLICEs
+     Net internal_80MHz_enable_52: 1 loads, 1 LSLICEs
+     Net int_clk_out_enable_27: 2 loads, 2 LSLICEs
+     Net int_clk_out_enable_32: 3 loads, 3 LSLICEs
+     Net int_clk_out_enable_91: 3 loads, 3 LSLICEs
+     Net int_clk_out_enable_92: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_164: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_171: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_212: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_28: 1 loads, 1 LSLICEs
+     Net int_clk_out_enable_46: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_39: 1 loads, 1 LSLICEs
+     Net int_clk_out_enable_53: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_54: 1 loads, 1 LSLICEs
+     Net int_clk_out_enable_55: 1 loads, 1 LSLICEs
+     Net int_clk_out_enable_62: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_77: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_76: 3 loads, 3 LSLICEs
+     Net int_clk_out_enable_84: 3 loads, 3 LSLICEs
+     Net int_clk_out_enable_99: 3 loads, 3 LSLICEs
+     Net int_clk_out_enable_106: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_107: 2 loads, 2 LSLICEs
+     Net int_clk_out_enable_111: 1 loads, 1 LSLICEs
+     Net int_clk_out_enable_121: 4 loads, 4 LSLICEs
+     Net int_clk_out_enable_122: 2 loads, 2 LSLICEs
+     Net int_clk_out_enable_129: 3 loads, 3 LSLICEs
+     Net int_clk_out_enable_134: 1 loads, 1 LSLICEs
+     Net int_clk_out_enable_141: 3 loads, 3 LSLICEs
+     Net subg_i_fifo_dc/wren_i: 8 loads, 6 LSLICEs
+     Net lvds_rx_09_inst/sdr_rxclk_c_enable_2: 1 loads, 1 LSLICEs
+     Net lvds_rx_09_inst/sdr_rxclk_c_enable_40: 16 loads, 16 LSLICEs
+     Net lvds_rx_09_inst/sdr_rxclk_c_enable_86: 2 loads, 2 LSLICEs
+     Net wifi_i_fifo_dc/wren_i: 8 loads, 6 LSLICEs
+     Net subg_q_fifo_dc/wren_i: 8 loads, 6 LSLICEs
+     Net wifi_q_empty: 8 loads, 6 LSLICEs
+     Net internal_80MHz_enable_68: 1 loads, 1 LSLICEs
+     Net shift_reg_15__N_1175_adj_1195: 3 loads, 3 LSLICEs
+     Net internal_80MHz_enable_67: 9 loads, 9 LSLICEs
+     Net i2c_slave/int_clk_out_enable_157: 8 loads, 8 LSLICEs
+     Net i2c_slave/int_clk_out_enable_12: 1 loads, 1 LSLICEs
+     Net i2c_slave/int_clk_out_enable_178: 4 loads, 4 LSLICEs
+     Net i2c_slave/int_clk_out_enable_202: 4 loads, 4 LSLICEs
+     Net i2c_slave/int_clk_out_enable_38: 1 loads, 1 LSLICEs
+     Net i2c_slave/int_clk_out_enable_210: 4 loads, 4 LSLICEs
+     Net i2c_slave/i2c_slave_inst/int_clk_out_enable_1: 1 loads, 1 LSLICEs
+     Net i2c_slave/i2c_slave_inst/int_clk_out_enable_25: 1 loads, 1 LSLICEs
+     Net i2c_slave/i2c_slave_inst/int_clk_out_enable_180: 2 loads, 2 LSLICEs
+     Net i2c_slave/i2c_slave_inst/int_clk_out_enable_21: 1 loads, 1 LSLICEs
+     Net i2c_slave/i2c_slave_inst/int_clk_out_enable_22: 1 loads, 1 LSLICEs
+     Net i2c_slave/i2c_slave_inst/int_clk_out_enable_29: 1 loads, 1 LSLICEs
+     Net i2c_slave/i2c_slave_inst/int_clk_out_enable_188: 8 loads, 8 LSLICEs
+     Net i2c_slave/i2c_slave_inst/int_clk_out_enable_36: 1 loads, 1 LSLICEs
+     Net i2c_slave/i2c_slave_inst/int_clk_out_enable_195: 4 loads, 4 LSLICEs
+     Net i2c_slave/i2c_slave_inst/int_clk_out_enable_34: 1 loads, 1 LSLICEs
+     Net i2c_slave/i2c_slave_inst/int_clk_out_enable_35: 1 loads, 1 LSLICEs
+     Net i2c_slave/i2c_slave_inst/int_clk_out_enable_181: 1 loads, 1 LSLICEs
+
+     Net lvds_rx_24_inst/sdr_rxclk_c_enable_80: 7 loads, 7 LSLICEs
+     Net lvds_rx_24_inst/sdr_rxclk_c_enable_5: 1 loads, 1 LSLICEs
+     Net lvds_rx_24_inst/sdr_rxclk_c_enable_73: 16 loads, 16 LSLICEs
+     Net lvds_rx_24_inst/sdr_rxclk_c_enable_82: 2 loads, 2 LSLICEs
+     Net wifi_q_fifo_dc/wren_i: 8 loads, 6 LSLICEs
+   Number of LSRs:  32
+     Net n14343: 2 loads, 0 LSLICEs
+     Net fpga_led_N_383: 14 loads, 14 LSLICEs
+     Net shift_reg_15__N_1175_adj_1194: 1 loads, 1 LSLICEs
+     Net wb_dat_o_1: 1 loads, 1 LSLICEs
+     Net wb_dat_o_0: 1 loads, 1 LSLICEs
+     Net sdr_txdata_N_388: 1 loads, 0 LSLICEs
+     Net n14293: 1 loads, 1 LSLICEs
+     Net main_reset_n_N_208: 58 loads, 40 LSLICEs
+     Net r_state_0: 1 loads, 1 LSLICEs
+     Net r_state_0_adj_1181: 1 loads, 1 LSLICEs
+     Net shift_reg_15__N_1175_adj_1193: 1 loads, 1 LSLICEs
+     Net n14288: 4 loads, 4 LSLICEs
+     Net shift_reg_15__N_1175: 1 loads, 1 LSLICEs
+     Net shift_reg_15__N_1166: 4 loads, 4 LSLICEs
+     Net n11591: 1 loads, 1 LSLICEs
+     Net n14287: 4 loads, 4 LSLICEs
+     Net stm_fpga_spare5_c: 68 loads, 68 LSLICEs
+     Net wb_dat_o_2: 1 loads, 1 LSLICEs
+     Net wb_dat_o_3: 1 loads, 1 LSLICEs
+     Net wb_dat_o_6: 1 loads, 1 LSLICEs
+     Net wb_dat_o_7: 1 loads, 1 LSLICEs
+     Net wb_dat_o_5: 1 loads, 1 LSLICEs
+     Net wb_dat_o_4: 1 loads, 1 LSLICEs
+     Net n7334: 5 loads, 5 LSLICEs
+     Net n14324: 1 loads, 1 LSLICEs
+     Net shift_reg_15__N_1175_adj_1195: 1 loads, 1 LSLICEs
+     Net n14285: 4 loads, 4 LSLICEs
+     Net i2c_slave/n12324: 1 loads, 1 LSLICEs
+     Net i2c_slave/i2c_slave_inst/n6297: 2 loads, 2 LSLICEs
+     Net i2c_slave/i2c_slave_inst/n12184: 2 loads, 2 LSLICEs
+     Net i2c_slave/i2c_slave_inst/start_bit: 1 loads, 1 LSLICEs
+     Net lvds_rx_24_inst/n12244: 1 loads, 1 LSLICEs
+   Number of nets driven by tri-state buffers:  0
+   Top 10 highest fanout non-clock nets:
+     Net wb_adr_o_0: 110 loads
+     Net stm_fpga_spare5_c: 107 loads
+     Net wb_adr_o_1: 61 loads
+     Net wb_adr_o_2: 59 loads
+     Net main_reset_n_N_208: 58 loads
+     Net lvds_rx_24_inst/r_candidate_offset: 44 loads
+     Net state_reg_0: 39 loads
+     Net i2c_slave/n1527: 37 loads
+     Net r_candidate_offset: 37 loads
+     Net i2c_slave/i2c_slave_inst/state_reg_1: 31 loads
+
+
+
+
+   Number of warnings:  22
+   Number of errors:    0
+
+
+     
+
+
+
+<A name="mrp_dwe"></A><B><U><big>Design Errors/Warnings</big></U></B>
+
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(11): Semantic error in "FREQUENCY NET
+     "internal_160MHz" 160.000000 MHz ;": internal_160MHz matches no clock nets
+     in the design.  This preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(14): Semantic error in "FREQUENCY NET
+     "internal_64MHz_90deg" 64.000000 MHz ;": internal_64MHz_90deg matches no
+     clock nets in the design.  This preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(15): Semantic error in "FREQUENCY NET
+     "internal_200MHz" 200.000000 MHz ;": internal_200MHz matches no clock nets
+     in the design.  This preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(54): Semantic error in "LOCATE COMP
+     "stm_fpga_spare3" SITE "B4" ;": COMP "stm_fpga_spare3" cannot be found in
+     design. This preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(55): Semantic error in "IOBUF PORT
+     "stm_fpga_spare3" IO_TYPE=LVCMOS33 ;": Port "stm_fpga_spare3" does not
+     exist in the design. This preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(56): Semantic error in "LOCATE COMP
+     "stm_fpga_spare4" SITE "C7" ;": COMP "stm_fpga_spare4" cannot be found in
+     design. This preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(57): Semantic error in "IOBUF PORT
+     "stm_fpga_spare4" IO_TYPE=LVCMOS33 ;": Port "stm_fpga_spare4" does not
+     exist in the design. This preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(68): Semantic error in "IOBUF PORT
+     "spi1_miso" IO_TYPE=LVCMOS33 ;": Port "spi1_miso" does not exist in the
+     design. This preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(69): Semantic error in "LOCATE COMP
+     "spi1_miso" SITE "B6" ;": COMP "spi1_miso" cannot be found in design. This
+     preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(74): Semantic error in "IOBUF PORT
+     "spi2_miso" IO_TYPE=LVCMOS33 ;": Port "spi2_miso" does not exist in the
+     design. This preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(75): Semantic error in "LOCATE COMP
+     "spi2_miso" SITE "A4" ;": COMP "spi2_miso" cannot be found in design. This
+     preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(80): Semantic error in "IOBUF PORT
+     "spi3_miso" IO_TYPE=LVCMOS33 ;": Port "spi3_miso" does not exist in the
+     design. This preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(81): Semantic error in "LOCATE COMP
+     "spi3_miso" SITE "E6" ;": COMP "spi3_miso" cannot be found in design. This
+
+     preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(86): Semantic error in "IOBUF PORT
+     "spi4_miso" IO_TYPE=LVCMOS33 ;": Port "spi4_miso" does not exist in the
+     design. This preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(87): Semantic error in "LOCATE COMP
+     "spi4_miso" SITE "A3" ;": COMP "spi4_miso" cannot be found in design. This
+     preference has been disabled.
+WARNING - map: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Softwa
+     re/ECP5_Test/wiwisdr_ecp5_test.lpf(103): Semantic error in "FREQUENCY PORT
+     "sdr_txclk" 64.000000 MHz ;": Unable to find clock port "sdr_txclk" in the
+     design. This preference has been disabled.
+WARNING - map: Multiple comps assigned to site "A13". Only one comp will be
+     assigned to this location.
+WARNING - map: Multiple comps assigned to site "A13". Only one comp will be
+     assigned to this location.
+WARNING - map: Multiple comps assigned to site "A13". Only one comp will be
+     assigned to this location.
+WARNING - map: Pref conflict: Multi-locate on site. Ignoring LOCATE COMP
+     "wifi_fem_chl" SITE "A13" ;
+        Keeping LOCATE COMP "subg_fem_csd" SITE "A13" ;
+     .
+WARNING - map: Pref conflict: Multi-locate on site. Ignoring LOCATE COMP
+     "subg_fem_cps" SITE "A13" ;
+        Keeping LOCATE COMP "subg_fem_csd" SITE "A13" ;
+     .
+WARNING - map: Pref conflict: Multi-locate on site. Ignoring LOCATE COMP
+     "subg_fem_ctx" SITE "A13" ;
+        Keeping LOCATE COMP "subg_fem_csd" SITE "A13" ;
+     .
+
+
+
+<A name="mrp_ioa"></A><B><U><big>IO (PIO) Attributes</big></U></B>
+
++---------------------+-----------+-----------+------------+
+| IO Name             | Direction | Levelmode | IO         |
+|                     |           |  IO_TYPE  | Register   |
++---------------------+-----------+-----------+------------+
+| fpga_scl            | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| sdr_txclk           | OUTPUT    | LVDS      |            |
++---------------------+-----------+-----------+------------+
+| fpga_sda            | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| fpga_neopixel       | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| fpga_led            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| sdr_txdata          | OUTPUT    | LVDS      |            |
++---------------------+-----------+-----------+------------+
+| rf_sel_0            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| rf_sel_1            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| rf_sel_2            | OUTPUT    | LVCMOS33  |            |
+
++---------------------+-----------+-----------+------------+
+| rf_sel_3            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| subg_fem_sel0       | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| subg_fem_sel1       | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| wifi_fem_sel0       | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| wifi_fem_sel1       | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| wifi_fem_csd        | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| wifi_fem_cps        | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| wifi_fem_crx        | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| wifi_fem_ctx        | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| wifi_fem_chl        | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| subg_fem_cps        | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| subg_fem_ctx        | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| subg_fem_csd        | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi1_sck            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi1_mosi           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi2_sck            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi2_mosi           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi3_sck            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi3_mosi           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi4_sck            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi4_mosi           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| fpga_ufl_p7         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| fpga_ufl_p8         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| dpll_clkout2        | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| dpll_clkout0        | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| sdr_rx_wifi         | INPUT     | SLVS      |            |
++---------------------+-----------+-----------+------------+
+| sdr_rx_subg         | INPUT     | SLVS      |            |
++---------------------+-----------+-----------+------------+
+| sdr_rxclk           | INPUT     | SLVS      |            |
+
++---------------------+-----------+-----------+------------+
+| stm_fpga_spare1     | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| stm_fpga_spare2     | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| stm_fpga_spare5     | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+
+
+
+<A name="mrp_rm"></A><B><U><big>Removed logic</big></U></B>
+
+Block wifi_q_fifo_dc/INV_0 undriven or does not drive anything - clipped.
+Block subg_q_fifo_dc/INV_0 undriven or does not drive anything - clipped.
+Block wifi_i_fifo_dc/INV_0 undriven or does not drive anything - clipped.
+Block subg_i_fifo_dc/INV_0 undriven or does not drive anything - clipped.
+Signal wifi_q_fifo_dc/invout_1 was merged into signal wifi_q_fifo_dc/Full
+Signal rRst was merged into signal main_reset_n_N_208
+Signal i2c_slave/n7339 was merged into signal wb_dat_o_4
+Signal i2c_slave/n7340 was merged into signal wb_dat_o_5
+Signal i2c_slave/n7341 was merged into signal wb_dat_o_6
+Signal i2c_slave/n7336 was merged into signal wb_dat_o_1
+Signal i2c_slave/n7337 was merged into signal wb_dat_o_2
+Signal i2c_slave/n7338 was merged into signal wb_dat_o_3
+Signal i2c_slave/n7320 was merged into signal wb_dat_o_0
+Signal i2c_slave/n7342 was merged into signal wb_dat_o_7
+Signal n14346 was merged into signal wifi_q_empty
+Signal subg_q_fifo_dc/invout_1 was merged into signal subg_q_fifo_dc/Full
+Signal wifi_i_fifo_dc/rden_i was merged into signal n14347
+Signal wifi_i_fifo_dc/invout_1 was merged into signal wifi_i_fifo_dc/Full
+Signal lvds_rx_09_inst/n14358 was merged into signal r_state_0
+Signal subg_i_fifo_dc/invout_1 was merged into signal subg_i_fifo_dc/Full
+Signal subg_i_empty_N_227 was merged into signal subg_i_empty
+Signal n1 was merged into signal r_state_0_adj_1181
+Signal n14348 was merged into signal subg_q_empty
+Signal wifi_q_fifo_dc/invout_0 undriven or does not drive anything - clipped.
+Signal subg_q_fifo_dc/invout_0 undriven or does not drive anything - clipped.
+Signal wifi_i_fifo_dc/invout_0 undriven or does not drive anything - clipped.
+Signal subg_i_fifo_dc/invout_0 undriven or does not drive anything - clipped.
+Signal VCC_net undriven or does not drive anything - clipped.
+Signal wifi_q_fifo_dc/a1/S1 undriven or does not drive anything - clipped.
+Signal wifi_q_fifo_dc/a1/CO undriven or does not drive anything - clipped.
+Signal wifi_q_fifo_dc/full_cmp_1/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/full_cmp_1/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/full_cmp_0/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/full_cmp_0/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/full_cmp_ci_a/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/full_cmp_ci_a/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/full_cmp_ci_a/CI undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/a0/S1 undriven or does not drive anything - clipped.
+
+Signal wifi_q_fifo_dc/a0/CO undriven or does not drive anything - clipped.
+Signal wifi_q_fifo_dc/empty_cmp_1/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/empty_cmp_1/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/empty_cmp_0/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/empty_cmp_0/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/empty_cmp_ci_a/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/empty_cmp_ci_a/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/empty_cmp_ci_a/CI undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/r_gctr_1/S1 undriven or does not drive anything - clipped.
+     
+Signal wifi_q_fifo_dc/r_gctr_1/CO undriven or does not drive anything - clipped.
+     
+Signal wifi_q_fifo_dc/r_gctr_cia/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/r_gctr_cia/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/r_gctr_cia/CI undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/w_gctr_1/S1 undriven or does not drive anything - clipped.
+     
+Signal wifi_q_fifo_dc/w_gctr_1/CO undriven or does not drive anything - clipped.
+     
+Signal wifi_q_fifo_dc/w_gctr_cia/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/w_gctr_cia/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_q_fifo_dc/w_gctr_cia/CI undriven or does not drive anything -
+     clipped.
+Signal i2c_slave/addr_reg_1305_add_4_1/S1 undriven or does not drive anything -
+     clipped.
+Signal i2c_slave/addr_reg_1305_add_4_1/S0 undriven or does not drive anything -
+     clipped.
+Signal i2c_slave/addr_reg_1305_add_4_1/CI undriven or does not drive anything -
+     clipped.
+Signal i2c_slave/addr_reg_1305_add_4_17/CO undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/a1/S1 undriven or does not drive anything - clipped.
+Signal subg_q_fifo_dc/a1/CO undriven or does not drive anything - clipped.
+Signal subg_q_fifo_dc/full_cmp_1/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/full_cmp_1/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/full_cmp_0/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/full_cmp_0/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/full_cmp_ci_a/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/full_cmp_ci_a/S0 undriven or does not drive anything -
+
+     clipped.
+Signal subg_q_fifo_dc/full_cmp_ci_a/CI undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/a0/S1 undriven or does not drive anything - clipped.
+Signal subg_q_fifo_dc/a0/CO undriven or does not drive anything - clipped.
+Signal subg_q_fifo_dc/empty_cmp_1/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/empty_cmp_1/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/empty_cmp_0/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/empty_cmp_0/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/empty_cmp_ci_a/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/empty_cmp_ci_a/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/empty_cmp_ci_a/CI undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/r_gctr_1/S1 undriven or does not drive anything - clipped.
+     
+Signal subg_q_fifo_dc/r_gctr_1/CO undriven or does not drive anything - clipped.
+     
+Signal subg_q_fifo_dc/r_gctr_cia/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/r_gctr_cia/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/r_gctr_cia/CI undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/w_gctr_1/S1 undriven or does not drive anything - clipped.
+     
+Signal subg_q_fifo_dc/w_gctr_1/CO undriven or does not drive anything - clipped.
+     
+Signal subg_q_fifo_dc/w_gctr_cia/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/w_gctr_cia/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_q_fifo_dc/w_gctr_cia/CI undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/a1/S1 undriven or does not drive anything - clipped.
+Signal wifi_i_fifo_dc/a1/CO undriven or does not drive anything - clipped.
+Signal wifi_i_fifo_dc/full_cmp_1/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/full_cmp_1/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/full_cmp_0/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/full_cmp_0/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/full_cmp_ci_a/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/full_cmp_ci_a/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/full_cmp_ci_a/CI undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/a0/S1 undriven or does not drive anything - clipped.
+
+Signal wifi_i_fifo_dc/a0/CO undriven or does not drive anything - clipped.
+Signal wifi_i_fifo_dc/empty_cmp_1/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/empty_cmp_1/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/empty_cmp_0/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/empty_cmp_0/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/empty_cmp_ci_a/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/empty_cmp_ci_a/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/empty_cmp_ci_a/CI undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/r_gctr_1/S1 undriven or does not drive anything - clipped.
+     
+Signal wifi_i_fifo_dc/r_gctr_1/CO undriven or does not drive anything - clipped.
+     
+Signal wifi_i_fifo_dc/r_gctr_cia/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/r_gctr_cia/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/r_gctr_cia/CI undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/w_gctr_1/S1 undriven or does not drive anything - clipped.
+     
+Signal wifi_i_fifo_dc/w_gctr_1/CO undriven or does not drive anything - clipped.
+     
+Signal wifi_i_fifo_dc/w_gctr_cia/S1 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/w_gctr_cia/S0 undriven or does not drive anything -
+     clipped.
+Signal wifi_i_fifo_dc/w_gctr_cia/CI undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/a1/S1 undriven or does not drive anything - clipped.
+Signal subg_i_fifo_dc/a1/CO undriven or does not drive anything - clipped.
+Signal subg_i_fifo_dc/full_cmp_1/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/full_cmp_1/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/full_cmp_0/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/full_cmp_0/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/full_cmp_ci_a/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/full_cmp_ci_a/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/full_cmp_ci_a/CI undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/a0/S1 undriven or does not drive anything - clipped.
+Signal subg_i_fifo_dc/a0/CO undriven or does not drive anything - clipped.
+Signal subg_i_fifo_dc/empty_cmp_1/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/empty_cmp_1/S0 undriven or does not drive anything -
+
+     clipped.
+Signal subg_i_fifo_dc/empty_cmp_0/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/empty_cmp_0/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/empty_cmp_ci_a/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/empty_cmp_ci_a/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/empty_cmp_ci_a/CI undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/r_gctr_1/S1 undriven or does not drive anything - clipped.
+     
+Signal subg_i_fifo_dc/r_gctr_1/CO undriven or does not drive anything - clipped.
+     
+Signal subg_i_fifo_dc/r_gctr_cia/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/r_gctr_cia/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/r_gctr_cia/CI undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/w_gctr_1/S1 undriven or does not drive anything - clipped.
+     
+Signal subg_i_fifo_dc/w_gctr_1/CO undriven or does not drive anything - clipped.
+     
+Signal subg_i_fifo_dc/w_gctr_cia/S1 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/w_gctr_cia/S0 undriven or does not drive anything -
+     clipped.
+Signal subg_i_fifo_dc/w_gctr_cia/CI undriven or does not drive anything -
+     clipped.
+Signal tx_counter_1302_add_4_1/S0 undriven or does not drive anything - clipped.
+     
+Signal tx_counter_1302_add_4_1/CI undriven or does not drive anything - clipped.
+     
+Signal tx_counter_1302_add_4_9/S1 undriven or does not drive anything - clipped.
+     
+Signal tx_counter_1302_add_4_9/CO undriven or does not drive anything - clipped.
+     
+Signal my_led/counter_1303_add_4_27/S1 undriven or does not drive anything -
+     clipped.
+Signal my_led/counter_1303_add_4_27/CO undriven or does not drive anything -
+     clipped.
+Signal my_led/counter_1303_add_4_1/S0 undriven or does not drive anything -
+     clipped.
+Signal my_led/counter_1303_add_4_1/CI undriven or does not drive anything -
+     clipped.
+Block wifi_q_fifo_dc/INV_1 was optimized away.
+Block wifi_q_fifo_dc/OR2_t4 was optimized away.
+Block i2c_slave/i4375_1_lut was optimized away.
+Block i2c_slave/i4376_1_lut was optimized away.
+Block i2c_slave/i4377_1_lut was optimized away.
+Block i2c_slave/i4372_1_lut was optimized away.
+Block i2c_slave/i4373_1_lut was optimized away.
+Block i2c_slave/i4374_1_lut was optimized away.
+Block i2c_slave/i4356_1_lut was optimized away.
+
+Block i2c_slave/i4378_1_lut was optimized away.
+Block wifi_q_empty_I_0_1_lut_rep_262 was optimized away.
+Block subg_q_fifo_dc/INV_1 was optimized away.
+Block wifi_i_fifo_dc/AND2_t5 was optimized away.
+Block wifi_i_fifo_dc/INV_1 was optimized away.
+Block lvds_rx_09_inst/i1_1_lut_rep_274 was optimized away.
+Block subg_i_fifo_dc/INV_1 was optimized away.
+Block subg_i_empty_I_0_1_lut was optimized away.
+Block i2006_1_lut was optimized away.
+Block subg_q_empty_I_0_1_lut_rep_264 was optimized away.
+Block i2 was optimized away.
+
+
+
+<A name="mrp_mem"></A><B><U><big>Memory Usage</big></U></B>
+
+    
+         
+    INFO: Design contains EBR with GSR enabled. The GSR is only applicable for
+         output registers except FIFO. 
+    /subg_i_fifo_dc:
+    EBRs: 1
+    RAM SLICEs: 0
+    Logic SLICEs: 34
+    PFU Registers: 32
+    -Contains EBR pdp_ram_0_0_0:  TYPE= DP16KD,  Width_B= 16,  Depth_A= 4,
+         Depth_B= 4,  REGMODE_A= NOREG,  REGMODE_B= NOREG,  RESETMODE= ASYNC,
+         ASYNC_RESET_RELEASE= SYNC,  WRITEMODE_A= NORMAL,  WRITEMODE_B= NORMAL,
+         GSR= ENABLED,  MEM_INIT_FILE= ,  MEM_LPC_FILE= fifo_dc_16in_16out.lpc
+/subg_q_fifo_dc:
+    EBRs: 1
+    RAM SLICEs: 0
+    Logic SLICEs: 33
+    PFU Registers: 32
+    -Contains EBR pdp_ram_0_0_0:  TYPE= DP16KD,  Width_B= 16,  Depth_A= 4,
+         Depth_B= 4,  REGMODE_A= NOREG,  REGMODE_B= NOREG,  RESETMODE= ASYNC,
+         ASYNC_RESET_RELEASE= SYNC,  WRITEMODE_A= NORMAL,  WRITEMODE_B= NORMAL,
+         GSR= ENABLED,  MEM_INIT_FILE= ,  MEM_LPC_FILE= fifo_dc_16in_16out.lpc
+/wifi_i_fifo_dc:
+    EBRs: 1
+    RAM SLICEs: 0
+    Logic SLICEs: 33
+    PFU Registers: 32
+    -Contains EBR pdp_ram_0_0_0:  TYPE= DP16KD,  Width_B= 16,  Depth_A= 4,
+         Depth_B= 4,  REGMODE_A= NOREG,  REGMODE_B= NOREG,  RESETMODE= ASYNC,
+         ASYNC_RESET_RELEASE= SYNC,  WRITEMODE_A= NORMAL,  WRITEMODE_B= NORMAL,
+         GSR= ENABLED,  MEM_INIT_FILE= ,  MEM_LPC_FILE= fifo_dc_16in_16out.lpc
+/wifi_q_fifo_dc:
+    EBRs: 1
+    RAM SLICEs: 0
+    Logic SLICEs: 33
+    PFU Registers: 32
+    -Contains EBR pdp_ram_0_0_0:  TYPE= DP16KD,  Width_B= 16,  Depth_A= 4,
+         Depth_B= 4,  REGMODE_A= NOREG,  REGMODE_B= NOREG,  RESETMODE= ASYNC,
+         ASYNC_RESET_RELEASE= SYNC,  WRITEMODE_A= NORMAL,  WRITEMODE_B= NORMAL,
+         GSR= ENABLED,  MEM_INIT_FILE= ,  MEM_LPC_FILE= fifo_dc_16in_16out.lpc
+
+
+     
+
+
+
+<A name="mrp_pll"></A><B><U><big>PLL/DLL Summary</big></U></B>
+---------------
+
+PLL 1:                                     Pin/Node Value
+  PLL Instance Name:                                my_pll/PLLInst_0
+  PLL Type:                                         EHXPLLL
+  Input Clock:                             PIN      dpll_clkout2_c
+  Input Clock2:                                     NONE
+  Input Clock select:                               NONE
+  Output Clock(P):                         NODE     internal_64MHz
+  Output Clock(S2):                        NODE     internal_80MHz
+  Output Clock(S3):                        PIN      sdr_txclk_c
+  Feedback Signal:                         NODE     internal_64MHz
+  Reset Signal:                            NODE     n14343
+  Standby Signal:                          NODE     GND_net
+  PLL LOCK signal:                         NODE     pll_lock
+  Input Clock Frequency (MHz):                       8.0000
+  Output Clock(P) Frequency (MHz):                  64.0000
+  Output Clock(S2) Frequency (MHz):                 80.0000
+  Output Clock(S3) Frequency (MHz):                 64.0000
+  CLKOP Post Divider A Input:                       DIVA
+  CLKOS Post Divider B Input:                       DIVB
+  CLKOS2 Post Divider C Input:                      DIVC
+  CLKOS3 Post Divider D Input:                      DIVD
+  Pre Divider A Input:                              NONE
+  Pre Divider B Input:                              NONE
+  Pre Divider C Input:                              NONE
+  Pre Divider D Input:                              NONE
+  FB_MODE:                                          CLKOP
+  CLKI Divider:                                     1
+  CLKFB Divider:                                    8
+  CLKOP Divider:                                    10
+  CLKOS Divider:                                    4
+  CLKOS2 Divider:                                   8
+  CLKOS3 Divider:                                   10
+  Fractional N Divider:                             NONE
+  CLKOP Desired Phase Shift(degree):                0
+  CLKOP Trim Option Rising/Falling:                 FALLING
+  CLKOP Trim Option Delay:                          0
+  CLKOS Desired Phase Shift(degree):                0
+  CLKOS Trim Option Rising/Falling:                 FALLING
+  CLKOS Trim Option Delay:                          0
+  CLKOS2 Desired Phase Shift(degree):               0
+  CLKOS2 Trim Option Rising/Falling:                NONE
+  CLKOS2 Trim Option Delay:                         NONE
+  CLKOS3 Desired Phase Shift(degree):               121
+  CLKOS3 Trim Option Rising/Falling:                NONE
+  CLKOS3 Trim Option Delay:                         NONE
+PLL 2:                                     Pin/Node Value
+  PLL Instance Name:                                second_pll/PLLInst_0
+  PLL Type:                                         EHXPLLL
+  Input Clock:                             PIN      dpll_clkout0_c
+  Input Clock2:                                     NONE
+  Input Clock select:                               NONE
+
+  Output Clock(P):                         NODE     second_pll/CLKOP
+  Feedback Signal:                         NODE     second_pll/CLKOP
+  Reset Signal:                            NODE     n14343
+  Standby Signal:                          NODE     GND_net
+  PLL LOCK signal:                         NODE     second_pll_lock
+  Input Clock Frequency (MHz):                      10.0000
+  Output Clock(P) Frequency (MHz):                  200.0000
+  CLKOP Post Divider A Input:                       DIVA
+  CLKOS Post Divider B Input:                       DIVB
+  CLKOS2 Post Divider C Input:                      DIVC
+  CLKOS3 Post Divider D Input:                      DIVD
+  Pre Divider A Input:                              NONE
+  Pre Divider B Input:                              NONE
+  Pre Divider C Input:                              NONE
+  Pre Divider D Input:                              NONE
+  FB_MODE:                                          CLKOP
+  CLKI Divider:                                     1
+  CLKFB Divider:                                    20
+  CLKOP Divider:                                    3
+  CLKOS Divider:                                    1
+  CLKOS2 Divider:                                   1
+  CLKOS3 Divider:                                   1
+  Fractional N Divider:                             NONE
+  CLKOP Desired Phase Shift(degree):                0
+  CLKOP Trim Option Rising/Falling:                 FALLING
+  CLKOP Trim Option Delay:                          0
+  CLKOS Desired Phase Shift(degree):                0
+  CLKOS Trim Option Rising/Falling:                 FALLING
+  CLKOS Trim Option Delay:                          0
+  CLKOS2 Desired Phase Shift(degree):               0
+  CLKOS2 Trim Option Rising/Falling:                NONE
+  CLKOS2 Trim Option Delay:                         NONE
+  CLKOS3 Desired Phase Shift(degree):               0
+  CLKOS3 Trim Option Rising/Falling:                NONE
+  CLKOS3 Trim Option Delay:                         NONE
+
+OSC Summary
+-----------
+
+OSC 1:                                     Pin/Node Value
+  OSC Instance Name:                                osch_inst
+  OSC Type:                                         OSCG
+  OSC Output:                              NODE     int_clk_out
+  OSC Divider Ratio:                                32
+
+
+
+<A name="mrp_asic"></A><B><U><big>ASIC Components</big></U></B>
+---------------
+
+Instance Name: my_pll/PLLInst_0
+         Type: EHXPLLL
+Instance Name: osch_inst
+         Type: OSCG
+Instance Name: subg_i_fifo_dc/pdp_ram_0_0_0
+         Type: DP16KD
+Instance Name: wifi_i_fifo_dc/pdp_ram_0_0_0
+         Type: DP16KD
+
+Instance Name: subg_q_fifo_dc/pdp_ram_0_0_0
+         Type: DP16KD
+Instance Name: second_pll/PLLInst_0
+         Type: EHXPLLL
+Instance Name: wifi_q_fifo_dc/pdp_ram_0_0_0
+         Type: DP16KD
+
+
+
+<A name="mrp_gsr"></A><B><U><big>GSR Usage</big></U></B>
+---------
+
+GSR Component:
+   The Global Set Reset (GSR) resource has been used to implement a global reset
+        of the design. The reset signal used for GSR control is 'n14366'.
+        
+
+     GSR Property:
+   The design components with GSR property set to ENABLED will respond to global
+        set reset while the components with GSR property set to DISABLED will
+        not.
+        
+
+     Components with disabled GSR Property
+-------------------------------------
+
+     These components have the GSR property set to DISABLED. The components will
+     not respond to the reset signal 'n14366' via the GSR component.
+
+     Type and number of components of the type: 
+   Register = 281 
+
+     Type and instance name of component: 
+   Register : my_led/led_12
+   Register : my_led/counter_1303__i0
+   Register : my_led/counter_1303__i1
+   Register : my_led/counter_1303__i2
+   Register : my_led/counter_1303__i3
+   Register : my_led/counter_1303__i4
+   Register : my_led/counter_1303__i5
+   Register : my_led/counter_1303__i6
+   Register : my_led/counter_1303__i7
+   Register : my_led/counter_1303__i8
+   Register : my_led/counter_1303__i9
+   Register : my_led/counter_1303__i10
+   Register : my_led/counter_1303__i11
+   Register : my_led/counter_1303__i12
+   Register : my_led/counter_1303__i13
+   Register : my_led/counter_1303__i14
+   Register : my_led/counter_1303__i15
+   Register : my_led/counter_1303__i16
+   Register : my_led/counter_1303__i17
+   Register : my_led/counter_1303__i18
+   Register : my_led/counter_1303__i19
+   Register : my_led/counter_1303__i20
+   Register : my_led/counter_1303__i21
+   Register : my_led/counter_1303__i22
+   Register : my_led/counter_1303__i23
+
+   Register : my_led/counter_1303__i24
+   Register : my_led/counter_1303__i25
+   Register : led_rst_219
+   Register : wb_dat_i__i0
+   Register : reg0__i0
+   Register : ufl_p7_sel_i0
+   Register : ufl_p8_sel_i0
+   Register : spi1_test_pattern_i0
+   Register : spi2_test_pattern_i0
+   Register : spi3_test_pattern_i0
+   Register : spi4_test_pattern_i0
+   Register : tx_lvds_test_pattern_i0
+   Register : spi_test_pattern_enable__i0
+   Register : subg_delay_move_234
+   Register : internal_rst_218
+   Register : reg1__i0
+   Register : subg_delay_direction_235
+   Register : reg2__i0
+   Register : subg_rx_invert_222
+   Register : spi_test_pattern_enable__i3
+   Register : spi_test_pattern_enable__i2
+   Register : spi_test_pattern_enable__i1
+   Register : tx_lvds_test_pattern_enable_230
+   Register : wb_ack_i_237
+   Register : wifi_sync_check_enable_232
+   Register : subg_delay_loadn_233
+   Register : tx_lvds_test_pattern_i31
+   Register : tx_lvds_test_pattern_i30
+   Register : tx_lvds_test_pattern_i29
+   Register : tx_lvds_test_pattern_i28
+   Register : tx_lvds_test_pattern_i27
+   Register : tx_lvds_test_pattern_i26
+   Register : tx_lvds_test_pattern_i25
+   Register : tx_lvds_test_pattern_i24
+   Register : tx_lvds_test_pattern_i23
+   Register : tx_lvds_test_pattern_i22
+   Register : tx_lvds_test_pattern_i21
+   Register : tx_lvds_test_pattern_i20
+   Register : tx_lvds_test_pattern_i19
+   Register : tx_lvds_test_pattern_i18
+   Register : tx_lvds_test_pattern_i17
+   Register : tx_lvds_test_pattern_i16
+   Register : tx_lvds_test_pattern_i15
+   Register : tx_lvds_test_pattern_i14
+   Register : tx_lvds_test_pattern_i13
+   Register : tx_lvds_test_pattern_i12
+   Register : tx_lvds_test_pattern_i11
+   Register : tx_lvds_test_pattern_i10
+   Register : tx_lvds_test_pattern_i9
+   Register : tx_lvds_test_pattern_i8
+   Register : tx_lvds_test_pattern_i7
+   Register : tx_lvds_test_pattern_i6
+   Register : tx_lvds_test_pattern_i5
+   Register : tx_lvds_test_pattern_i4
+   Register : tx_lvds_test_pattern_i3
+   Register : tx_lvds_test_pattern_i2
+
+   Register : tx_lvds_test_pattern_i1
+   Register : spi4_test_pattern_i15
+   Register : spi4_test_pattern_i14
+   Register : spi4_test_pattern_i13
+   Register : spi4_test_pattern_i12
+   Register : spi4_test_pattern_i11
+   Register : spi4_test_pattern_i10
+   Register : spi4_test_pattern_i9
+   Register : spi4_test_pattern_i8
+   Register : spi4_test_pattern_i7
+   Register : spi4_test_pattern_i6
+   Register : spi4_test_pattern_i5
+   Register : spi4_test_pattern_i4
+   Register : spi4_test_pattern_i3
+   Register : spi4_test_pattern_i2
+   Register : spi4_test_pattern_i1
+   Register : spi3_test_pattern_i15
+   Register : spi3_test_pattern_i14
+   Register : spi3_test_pattern_i13
+   Register : spi3_test_pattern_i12
+   Register : spi3_test_pattern_i11
+   Register : spi3_test_pattern_i10
+   Register : spi3_test_pattern_i9
+   Register : spi3_test_pattern_i8
+   Register : spi3_test_pattern_i7
+   Register : spi3_test_pattern_i6
+   Register : spi3_test_pattern_i5
+   Register : spi3_test_pattern_i4
+   Register : spi3_test_pattern_i3
+   Register : spi3_test_pattern_i2
+   Register : spi3_test_pattern_i1
+   Register : spi2_test_pattern_i15
+   Register : spi2_test_pattern_i14
+   Register : spi2_test_pattern_i13
+   Register : spi2_test_pattern_i12
+   Register : spi2_test_pattern_i11
+   Register : spi2_test_pattern_i10
+   Register : spi2_test_pattern_i9
+   Register : spi2_test_pattern_i8
+   Register : spi2_test_pattern_i7
+   Register : spi2_test_pattern_i6
+   Register : spi2_test_pattern_i5
+   Register : spi2_test_pattern_i4
+   Register : spi2_test_pattern_i3
+   Register : spi2_test_pattern_i2
+   Register : spi2_test_pattern_i1
+   Register : spi1_test_pattern_i15
+   Register : spi1_test_pattern_i14
+   Register : spi1_test_pattern_i13
+   Register : spi1_test_pattern_i12
+   Register : spi1_test_pattern_i11
+   Register : spi1_test_pattern_i10
+   Register : spi1_test_pattern_i9
+   Register : spi1_test_pattern_i8
+   Register : spi1_test_pattern_i7
+   Register : spi1_test_pattern_i6
+
+   Register : spi1_test_pattern_i5
+   Register : spi1_test_pattern_i4
+   Register : spi1_test_pattern_i3
+   Register : spi1_test_pattern_i2
+   Register : spi1_test_pattern_i1
+   Register : ufl_p8_sel_i7
+   Register : ufl_p8_sel_i6
+   Register : ufl_p8_sel_i5
+   Register : ufl_p8_sel_i4
+   Register : ufl_p8_sel_i3
+   Register : ufl_p8_sel_i2
+   Register : ufl_p8_sel_i1
+   Register : ufl_p7_sel_i7
+   Register : ufl_p7_sel_i6
+   Register : ufl_p7_sel_i5
+   Register : ufl_p7_sel_i4
+   Register : ufl_p7_sel_i3
+   Register : ufl_p7_sel_i2
+   Register : ufl_p7_sel_i1
+   Register : reg0__i7
+   Register : reg0__i6
+   Register : reg0__i5
+   Register : reg0__i4
+   Register : reg0__i3
+   Register : reg0__i2
+   Register : reg0__i1
+   Register : wb_dat_i__i7
+   Register : wb_dat_i__i6
+   Register : wb_dat_i__i5
+   Register : wb_dat_i__i4
+   Register : wb_dat_i__i3
+   Register : wb_dat_i__i2
+   Register : wb_dat_i__i1
+   Register : reg1__i1
+   Register : reg1__i2
+   Register : reg1__i3
+   Register : reg1__i4
+   Register : reg1__i5
+   Register : reg1__i6
+   Register : reg1__i7
+   Register : reg2__i1
+   Register : reg2__i2
+   Register : reg2__i3
+   Register : reg2__i4
+   Register : reg2__i5
+   Register : reg2__i6
+   Register : reg2__i7
+   Register : wifi_rx_invert_223
+   Register : subg_sync_check_enable_231
+   Register : i2c_slave/count_reg_i0_i0
+   Register : i2c_slave/last_cycle_reg_137
+   Register : i2c_slave/data_reg_i0_i0
+   Register : i2c_slave/state_reg_FSM_i1
+   Register : i2c_slave/data_in_valid_reg_146
+   Register : i2c_slave/data_out_ready_reg_147
+   Register : i2c_slave/wb_stb_o_reg_142
+
+   Register : i2c_slave/data_in_reg__i7
+   Register : i2c_slave/data_in_reg__i0
+   Register : i2c_slave/wb_we_o_reg_140
+   Register : i2c_slave/addr_reg_1305__i0
+   Register : i2c_slave/count_reg_i0_i7
+   Register : i2c_slave/count_reg_i0_i6
+   Register : i2c_slave/count_reg_i0_i5
+   Register : i2c_slave/count_reg_i0_i4
+   Register : i2c_slave/count_reg_i0_i3
+   Register : i2c_slave/count_reg_i0_i2
+   Register : i2c_slave/count_reg_i0_i1
+   Register : i2c_slave/data_reg_i0_i1
+   Register : i2c_slave/data_reg_i0_i2
+   Register : i2c_slave/data_reg_i0_i3
+   Register : i2c_slave/data_reg_i0_i4
+   Register : i2c_slave/data_reg_i0_i5
+   Register : i2c_slave/data_reg_i0_i6
+   Register : i2c_slave/data_reg_i0_i7
+   Register : i2c_slave/state_reg_FSM_i2
+   Register : i2c_slave/state_reg_FSM_i3
+   Register : i2c_slave/state_reg_FSM_i4
+   Register : i2c_slave/state_reg_FSM_i5
+   Register : i2c_slave/state_reg_FSM_i6
+   Register : i2c_slave/addr_reg_1305__i1
+   Register : i2c_slave/addr_reg_1305__i2
+   Register : i2c_slave/addr_reg_1305__i3
+   Register : i2c_slave/addr_reg_1305__i4
+   Register : i2c_slave/addr_reg_1305__i5
+   Register : i2c_slave/addr_reg_1305__i6
+   Register : i2c_slave/addr_reg_1305__i7
+   Register : i2c_slave/addr_reg_1305__i8
+   Register : i2c_slave/addr_reg_1305__i9
+   Register : i2c_slave/addr_reg_1305__i10
+   Register : i2c_slave/addr_reg_1305__i11
+   Register : i2c_slave/addr_reg_1305__i12
+   Register : i2c_slave/addr_reg_1305__i13
+   Register : i2c_slave/addr_reg_1305__i14
+   Register : i2c_slave/addr_reg_1305__i15
+   Register : i2c_slave/data_in_reg__i6
+   Register : i2c_slave/data_in_reg__i5
+   Register : i2c_slave/data_in_reg__i4
+   Register : i2c_slave/data_in_reg__i3
+   Register : i2c_slave/data_in_reg__i2
+   Register : i2c_slave/data_in_reg__i1
+   Register : i2c_slave/i2c_slave_inst/state_reg__i1
+   Register : i2c_slave/i2c_slave_inst/bus_addressed_reg_236
+   Register : i2c_slave/i2c_slave_inst/s_axis_data_tready_reg_222
+   Register : i2c_slave/i2c_slave_inst/bit_count_reg_i0
+   Register : i2c_slave/i2c_slave_inst/scl_i_filter_i0
+   Register : i2c_slave/i2c_slave_inst/m_axis_data_tlast_reg_225
+   Register : i2c_slave/i2c_slave_inst/sda_i_filter_i0
+   Register : i2c_slave/i2c_slave_inst/scl_i_reg_228
+   Register : i2c_slave/i2c_slave_inst/sda_i_reg_229
+   Register : i2c_slave/i2c_slave_inst/last_scl_i_reg_232
+   Register : i2c_slave/i2c_slave_inst/last_sda_i_reg_233
+   Register : i2c_slave/i2c_slave_inst/m_axis_data_tvalid_reg_224
+
+   Register : i2c_slave/i2c_slave_inst/data_out_reg_valid_reg_218
+   Register : i2c_slave/i2c_slave_inst/mode_read_reg_220
+   Register : i2c_slave/i2c_slave_inst/data_reg_i0_i0
+   Register : i2c_slave/i2c_slave_inst/m_axis_data_tdata_reg_i0_i0
+   Register : i2c_slave/i2c_slave_inst/scl_o_reg_230
+   Register : i2c_slave/i2c_slave_inst/sda_o_reg_231
+   Register : i2c_slave/i2c_slave_inst/data_valid_reg_217
+   Register : i2c_slave/i2c_slave_inst/state_reg__i2
+   Register : i2c_slave/i2c_slave_inst/bit_count_reg_i1
+   Register : i2c_slave/i2c_slave_inst/bit_count_reg_i2
+   Register : i2c_slave/i2c_slave_inst/bit_count_reg_i3
+   Register : i2c_slave/i2c_slave_inst/scl_i_filter_i1
+   Register : i2c_slave/i2c_slave_inst/scl_i_filter_i2
+   Register : i2c_slave/i2c_slave_inst/scl_i_filter_i3
+   Register : i2c_slave/i2c_slave_inst/sda_i_filter_i1
+   Register : i2c_slave/i2c_slave_inst/sda_i_filter_i2
+   Register : i2c_slave/i2c_slave_inst/sda_i_filter_i3
+   Register : i2c_slave/i2c_slave_inst/data_reg_i0_i1
+   Register : i2c_slave/i2c_slave_inst/data_reg_i0_i2
+   Register : i2c_slave/i2c_slave_inst/data_reg_i0_i3
+   Register : i2c_slave/i2c_slave_inst/data_reg_i0_i4
+   Register : i2c_slave/i2c_slave_inst/data_reg_i0_i5
+   Register : i2c_slave/i2c_slave_inst/data_reg_i0_i6
+   Register : i2c_slave/i2c_slave_inst/data_reg_i0_i7
+   Register : i2c_slave/i2c_slave_inst/m_axis_data_tdata_reg_i0_i1
+   Register : i2c_slave/i2c_slave_inst/m_axis_data_tdata_reg_i0_i2
+   Register : i2c_slave/i2c_slave_inst/m_axis_data_tdata_reg_i0_i3
+   Register : i2c_slave/i2c_slave_inst/m_axis_data_tdata_reg_i0_i4
+   Register : i2c_slave/i2c_slave_inst/m_axis_data_tdata_reg_i0_i5
+   Register : i2c_slave/i2c_slave_inst/m_axis_data_tdata_reg_i0_i6
+   Register : i2c_slave/i2c_slave_inst/m_axis_data_tdata_reg_i0_i7
+   Register : i2c_slave/i2c_slave_inst/state_reg__i3
+
+     Components with synchronous local reset also reset by asynchronous GSR
+----------------------------------------------------------------------
+
+     These components have the GSR property set to ENABLED and the local reset
+     is synchronous. The components will respond to the synchronous local reset
+     and to the unrelated asynchronous reset signal 'n14366' via the GSR
+     component.
+
+     Type and number of components of the type: 
+   Register = 38 
+
+     Type and instance name of component: 
+   Register : tx_ddr_data_i0
+   Register : subg_i_spi/bit_counter_i0
+   Register : subg_i_spi/bit_counter_i1
+   Register : subg_i_spi/bit_counter_i2
+   Register : subg_i_spi/bit_counter_i3
+   Register : subg_i_spi/bit_counter_i5
+   Register : subg_i_spi/shift_reg_i15
+   Register : subg_q_spi/bit_counter_i0
+   Register : subg_q_spi/bit_counter_i1
+   Register : subg_q_spi/bit_counter_i2
+   Register : subg_q_spi/bit_counter_i3
+
+   Register : subg_q_spi/bit_counter_i5
+   Register : subg_q_spi/shift_reg_i15
+   Register : wifi_i_spi/bit_counter_i0
+   Register : wifi_i_spi/bit_counter_i1
+   Register : wifi_i_spi/bit_counter_i2
+   Register : wifi_i_spi/bit_counter_i3
+   Register : wifi_i_spi/bit_counter_i5
+   Register : wifi_i_spi/shift_reg_i15
+   Register : tx_ddr_data_i1
+   Register : tx_counter_1302__i1
+   Register : tx_counter_1302__i2
+   Register : tx_counter_1302__i3
+   Register : tx_counter_1302__i4
+   Register : tx_counter_1302__i5
+   Register : tx_counter_1302__i6
+   Register : tx_counter_1302__i7
+   Register : lvds_rx_09_inst/r_state_i1
+   Register : lvds_rx_09_inst/o_fifo_push_102
+   Register : tx_counter_1302__i0
+   Register : wifi_q_spi/bit_counter_i0
+   Register : wifi_q_spi/bit_counter_i1
+   Register : wifi_q_spi/bit_counter_i2
+   Register : wifi_q_spi/bit_counter_i3
+   Register : wifi_q_spi/bit_counter_i5
+   Register : wifi_q_spi/shift_reg_i15
+   Register : lvds_rx_24_inst/r_state_i1
+   Register : lvds_rx_24_inst/o_fifo_push_102
+
+     EBR components with enabled GSR
+-------------------------------
+
+     These EBR components have the GSR property set to ENABLED. The components
+     will respond to the asynchronous reset signal 'n14366' via the GSR
+     component.
+
+     Type and number of components of the type: 
+   DP16KD = 4
+
+     Type and instance name of component: 
+   DP16KD : subg_i_fifo_dc/pdp_ram_0_0_0
+   DP16KD : wifi_i_fifo_dc/pdp_ram_0_0_0
+   DP16KD : subg_q_fifo_dc/pdp_ram_0_0_0
+   DP16KD : wifi_q_fifo_dc/pdp_ram_0_0_0
+
+
+
+<A name="mrp_runtime"></A><B><U><big>Run Time and Memory Usage</big></U></B>
+-------------------------
+
+   Total CPU Time: 0 secs  
+   Total REAL Time: 0 secs  
+   Peak Memory Usage: 121 MB
+        
+
+
+
+
+
+
+
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+     Copyright (c) 1995 AT&T Corp.   All rights reserved.
+     Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+     Copyright (c) 2001 Agere Systems   All rights reserved.
+     Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights
+     reserved.
+
+
+
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+</PRE></FONT>
+</BODY>
+</HTML>

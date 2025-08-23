@@ -1,0 +1,84 @@
+Loading design for application iotiming from file wiwisdr_ecp5_test_impl1.ncd.
+Design name: top
+NCD version: 3.3
+Vendor:      LATTICE
+Device:      LFE5U-25F
+Package:     CABGA256
+Performance: 7
+Package Status:                     Final          Version 1.44.
+Performance Hardware Data Status:   Final          Version 55.1.
+Loading design for application iotiming from file wiwisdr_ecp5_test_impl1.ncd.
+Design name: top
+NCD version: 3.3
+Vendor:      LATTICE
+Device:      LFE5U-25F
+Package:     CABGA256
+Performance: 8
+Package Status:                     Final          Version 1.44.
+Performance Hardware Data Status:   Final          Version 55.1.
+Loading design for application iotiming from file wiwisdr_ecp5_test_impl1.ncd.
+Design name: top
+NCD version: 3.3
+Vendor:      LATTICE
+Device:      LFE5U-25F
+Package:     CABGA256
+Performance: 9
+Package Status:                     Final          Version 1.44.
+Performance Hardware Data Status:   Final          Version 55.1.
+Loading design for application iotiming from file wiwisdr_ecp5_test_impl1.ncd.
+Design name: top
+NCD version: 3.3
+Vendor:      LATTICE
+Device:      LFE5U-25F
+Package:     CABGA256
+Performance: M
+Package Status:                     Final          Version 1.44.
+Performance Hardware Data Status:   Final          Version 55.1.
+// Design: top
+// Package: CABGA256
+// ncd File: wiwisdr_ecp5_test_impl1.ncd
+// Version: Diamond (64-bit) 3.14.0.75.2
+// Written on Tue Dec 10 10:43:08 2024
+// M: Minimum Performance Grade
+// iotiming wiwisdr_ecp5_test_impl1.ncd wiwisdr_ecp5_test_impl1.prf -gui -msgset C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/promote.xml
+
+I/O Timing Report (All units are in ns)
+
+Worst Case Results across Performance Grades (M, 9, 8, 7, 6):
+
+// Input Setup and Hold Times
+
+Port            Clock        Edge  Setup Performance_Grade  Hold Performance_Grade
+----------------------------------------------------------------------
+sdr_rx_subg     dpll_clkout0 R    -0.040      M       1.671     6
+sdr_rx_wifi     dpll_clkout0 R     0.374      M       0.902     6
+sdr_rxclk       dpll_clkout0 R     0.685      6       1.064     6
+stm_fpga_spare1 dpll_clkout2 R     5.927      6      -0.050     6
+stm_fpga_spare2 dpll_clkout2 R     5.184      6       0.145     6
+stm_fpga_spare5 dpll_clkout2 R     5.872      6       1.184     6
+stm_fpga_spare5 dpll_clkout0 R     5.189      6       1.032     6
+
+
+// Clock to Output Delay
+
+Port        Clock        Edge  Max_Delay Performance_Grade  Min_Delay Performance_Grade
+------------------------------------------------------------------------
+fpga_ufl_p7 dpll_clkout2 R    10.558         6        4.095          M
+fpga_ufl_p8 dpll_clkout2 R     8.804         6        3.435          M
+spi1_mosi   dpll_clkout2 R     7.376         6        2.870          M
+spi1_sck    dpll_clkout2 R     8.413         6        3.274          M
+spi2_mosi   dpll_clkout2 R     7.464         6        2.913          M
+spi2_sck    dpll_clkout2 R     8.449         6        3.284          M
+spi3_mosi   dpll_clkout2 R     7.597         6        2.958          M
+spi3_sck    dpll_clkout2 R     7.490         6        2.917          M
+spi4_mosi   dpll_clkout2 R     7.794         6        3.021          M
+spi4_sck    dpll_clkout2 R     9.249         6        3.774          M
+
+
+// Internal_Clock to Output
+
+Port     Internal_Clock
+--------------------------------------------------------
+fpga_led int_clk_out   
+WARNING: you must also run trce with hold speed: 6
+WARNING: you must also run trce with setup speed: M

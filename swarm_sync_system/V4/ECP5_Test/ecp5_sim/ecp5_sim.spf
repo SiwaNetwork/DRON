@@ -1,0 +1,23 @@
+<BaliSimProject version="1.3" path="." stage="0" language="-1" name="ecp5_sim" simType="QuestaSim">
+    <Source worklib="work" path="myspi.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="fifo_dc_16in_16out/fifo_dc_16in_16out.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="my_lvds_rx.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="i2c_slave.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="i2c_slave_wbm.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="myled.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="pll_10MHzInput/pll_10MHzInput.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="internal_pll/internal_pll.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="top.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="lvds_rx.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="i2cslave_controller.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="filter.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="i2cslave_controller_top.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="fifo_dc_2in_2out/fifo_dc_2in_2out.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="ddr_workaround.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="fifo_dc_32in_1out/fifo_dc_32in_1out.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <Source worklib="work" path="testbench.v" type="VERILOG" langstandard="Verilog 2001" include="none"/>
+    <SimLib value="pmi_work ovi_ecp5u"/>
+    <GlbInc value=""/>
+    <Macro value=""/>
+    <TopModule instance="" language="VERILOG" name="tb_word_align"/>
+</BaliSimProject>

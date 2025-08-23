@@ -1,0 +1,6 @@
+#Start recording tcl command: 12/15/2024 08:47:47
+#Project Location: C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test; Project name: wiwisdr_ecp5_test
+prj_project open "C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/wiwisdr_ecp5_test.ldf"
+prj_run PAR -impl impl1 -forceAll
+prj_run PAR -impl impl1 -forceAll
+#Stop recording: 12/15/2024 08:51:00

@@ -1,0 +1,659 @@
+
+Loading design for application trce from file wiwisdr_ecp5_test_impl1_map.ncd.
+Design name: top
+NCD version: 3.3
+Vendor:      LATTICE
+Device:      LFE5U-25F
+Package:     CABGA256
+Performance: 6
+Loading device for application trce from file 'sa5p25.nph' in environment: C:/lscc/diamond/3.14/ispfpga.
+Package Status:                     Final          Version 1.44.
+Performance Hardware Data Status:   Final          Version 55.1.
+Setup and Hold Report
+
+--------------------------------------------------------------------------------
+Lattice TRACE Report - Setup, Version Diamond (64-bit) 3.14.0.75.2
+Tue Dec 10 10:42:50 2024
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+
+Report Information
+------------------
+Command line:    trce -v 1 -gt -mapchkpnt 0 -sethld -o wiwisdr_ecp5_test_impl1.tw1 -gui -msgset C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/promote.xml wiwisdr_ecp5_test_impl1_map.ncd wiwisdr_ecp5_test_impl1.prf 
+Design file:     wiwisdr_ecp5_test_impl1_map.ncd
+Preference file: wiwisdr_ecp5_test_impl1.prf
+Device,speed:    LFE5U-25F,6
+Report level:    verbose report, limited to 1 item per preference
+--------------------------------------------------------------------------------
+
+BLOCK ASYNCPATHS
+BLOCK RESETPATHS
+--------------------------------------------------------------------------------
+
+
+Derating parameters
+-------------------
+VCCIO Voltage:
+                   3.300 V (Bank 0, defined by PAR)
+                   3.300 V (Bank 1, defined by PAR)
+                   3.300 V (Bank 2)
+                   3.300 V (Bank 3)
+                   2.500 V (Bank 6, defined by PAR)
+                   1.800 V (Bank 7, defined by PAR)
+
+
+
+================================================================================
+Preference: FREQUENCY NET "int_clk_out" 2.400000 MHz ;
+            742 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 412.274ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              my_led/counter_257__i21  (from int_clk_out +)
+   Destination:    FF         Data in        my_led/counter_257__i0  (to int_clk_out +)
+
+   Delay:               3.969ns  (37.0% logic, 63.0% route), 5 logic levels.
+
+ Constraint Details:
+
+      3.969ns physical path delay my_led/SLICE_3 to my_led/SLICE_12 meets
+    416.667ns delay constraint less
+      0.424ns LSR_SET requirement (totaling 416.243ns) by 412.274ns
+
+ Physical Path Details:
+
+      Data path my_led/SLICE_3 to my_led/SLICE_12:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+REG_DEL     ---     0.525 *d/SLICE_3.CLK to *ed/SLICE_3.Q0 my_led/SLICE_3 (from int_clk_out)
+ROUTE         2   e 0.573 *ed/SLICE_3.Q0 to */SLICE_242.A1 my_led/counter_21
+CTOF_DEL    ---     0.236 */SLICE_242.A1 to */SLICE_242.F1 my_led/SLICE_242
+ROUTE         1   e 0.208 */SLICE_242.F1 to */SLICE_242.C0 my_led/n2705
+CTOF_DEL    ---     0.236 */SLICE_242.C0 to */SLICE_242.F0 my_led/SLICE_242
+ROUTE         1   e 0.573 */SLICE_242.F0 to */SLICE_240.B0 my_led/n2725
+CTOF_DEL    ---     0.236 */SLICE_240.B0 to */SLICE_240.F0 my_led/SLICE_240
+ROUTE         1   e 0.573 */SLICE_240.F0 to *d/SLICE_52.B1 my_led/n2739
+CTOF_DEL    ---     0.236 *d/SLICE_52.B1 to *d/SLICE_52.F1 my_led/SLICE_52
+ROUTE        15   e 0.573 *d/SLICE_52.F1 to */SLICE_12.LSR my_led/n1943 (to int_clk_out)
+                  --------
+                    3.969   (37.0% logic, 63.0% route), 5 logic levels.
+
+Report:  227.635MHz is the maximum frequency for this preference.
+
+
+================================================================================
+Preference: FREQUENCY NET "dpll_clkout2_c" 8.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Preference: FREQUENCY NET "my_pll/CLKOP" 64.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Preference: FREQUENCY NET "dpll_clkout0_c" 10.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Preference: FREQUENCY PORT "dpll_clkout2" 8.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed:  The following path meets requirements by 120.000ns
+         The internal maximum frequency of the following component is 200.000 MHz
+
+ Logical Details:  Cell type  Pin name       Component name
+
+   Destination:    PIO        PAD            dpll_clkout2
+
+   Delay:               5.000ns -- based on Minimum Pulse Width
+
+Report:  200.000MHz is the maximum frequency for this preference.
+
+
+================================================================================
+Preference: FREQUENCY PORT "dpll_clkout0" 10.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed:  The following path meets requirements by 95.000ns
+         The internal maximum frequency of the following component is 200.000 MHz
+
+ Logical Details:  Cell type  Pin name       Component name
+
+   Destination:    PIO        PAD            dpll_clkout0
+
+   Delay:               5.000ns -- based on Minimum Pulse Width
+
+Report:  200.000MHz is the maximum frequency for this preference.
+
+
+================================================================================
+Preference: FREQUENCY NET "internal_160MHz" 160.000000 MHz ;
+            732 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 3.557ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              subg_q_spi/bit_count_i4  (from internal_160MHz +)
+   Destination:    FF         Data in        subg_q_spi/spi_busy_42  (to internal_160MHz +)
+
+   Delay:               2.953ns  (41.8% logic, 58.2% route), 4 logic levels.
+
+ Constraint Details:
+
+      2.953ns physical path delay SLICE_165 to SLICE_127 meets
+      6.250ns delay constraint less
+     -0.260ns DIN_SET requirement (totaling 6.510ns) by 3.557ns
+
+ Physical Path Details:
+
+      Data path SLICE_165 to SLICE_127:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+REG_DEL     ---     0.525  SLICE_165.CLK to   SLICE_165.Q0 SLICE_165 (from internal_160MHz)
+ROUTE         2   e 0.573   SLICE_165.Q0 to */SLICE_256.C1 subg_q_spi/bit_count_4
+CTOF_DEL    ---     0.236 */SLICE_256.C1 to */SLICE_256.F1 subg_q_spi/SLICE_256
+ROUTE         2   e 0.573 */SLICE_256.F1 to */SLICE_162.B1 subg_q_spi/n8
+CTOF_DEL    ---     0.236 */SLICE_162.B1 to */SLICE_162.F1 subg_q_spi/SLICE_162
+ROUTE         1   e 0.573 */SLICE_162.F1 to   SLICE_127.D0 n2681
+CTOF_DEL    ---     0.236   SLICE_127.D0 to   SLICE_127.F0 SLICE_127
+ROUTE         1   e 0.001   SLICE_127.F0 to  SLICE_127.DI0 n1220 (to internal_160MHz)
+                  --------
+                    2.953   (41.8% logic, 58.2% route), 4 logic levels.
+
+Report:  371.333MHz is the maximum frequency for this preference.
+
+
+================================================================================
+Preference: FREQUENCY NET "internal_80MHz" 80.000000 MHz ;
+            701 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 6.259ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         DP16KD     Port           subg_iddr/fifo_inst/pdp_ram_0_0_0(ASIC)  (from internal_80MHz +)
+   Destination:    FF         Data in        subg_iddr/data_out_i0_i1  (to internal_80MHz +)
+
+   Delay:               6.403ns  (91.1% logic, 8.9% route), 1 logic levels.
+
+ Constraint Details:
+
+      6.403ns physical path delay subg_iddr/fifo_inst/pdp_ram_0_0_0 to subg_iddr/SLICE_168 meets
+     12.500ns delay constraint less
+     -0.162ns M_SET requirement (totaling 12.662ns) by 6.259ns
+
+ Physical Path Details:
+
+      Data path subg_iddr/fifo_inst/pdp_ram_0_0_0 to subg_iddr/SLICE_168:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+C2Q_DEL     ---     5.830 *am_0_0_0.CLKB to *am_0_0_0.DOB1 subg_iddr/fifo_inst/pdp_ram_0_0_0 (from internal_80MHz)
+ROUTE         1   e 0.573 *am_0_0_0.DOB1 to */SLICE_168.M0 subg_iddr/fifo_out_1 (to internal_80MHz)
+                  --------
+                    6.403   (91.1% logic, 8.9% route), 1 logic levels.
+
+Report:  160.231MHz is the maximum frequency for this preference.
+
+
+================================================================================
+Preference: FREQUENCY NET "internal_200MHz" 200.000000 MHz ;
+            194 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed:  The following path meets requirements by 0.282ns
+         The internal maximum frequency of the following component is 211.954 MHz
+
+ Logical Details:  Cell type  Pin name       Component name
+
+   Destination:    DP16KD     CLKA           subg_iddr/fifo_inst/pdp_ram_0_0_0
+
+   Delay:               4.718ns -- based on Minimum Pulse Width
+
+
+Passed: The following path meets requirements by 1.873ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              subg_iddr/fifo_inst/FF_3  (from internal_200MHz +)
+   Destination:    FF         Data in        subg_iddr/fifo_inst/FF_0  (to internal_200MHz +)
+
+   Delay:               3.387ns  (59.9% logic, 40.1% route), 7 logic levels.
+
+ Constraint Details:
+
+      3.387ns physical path delay subg_iddr/fifo_inst/SLICE_145 to subg_iddr/fifo_inst/SLICE_31 meets
+      5.000ns delay constraint less
+     -0.260ns DIN_SET requirement (totaling 5.260ns) by 1.873ns
+
+ Physical Path Details:
+
+      Data path subg_iddr/fifo_inst/SLICE_145 to subg_iddr/fifo_inst/SLICE_31:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+REG_DEL     ---     0.525 *SLICE_145.CLK to */SLICE_145.Q0 subg_iddr/fifo_inst/SLICE_145 (from internal_200MHz)
+ROUTE         3   e 0.573 */SLICE_145.Q0 to */SLICE_252.B0 subg_iddr/fifo_inst/r_gcount_w23
+CTOF_DEL    ---     0.236 */SLICE_252.B0 to */SLICE_252.F0 subg_iddr/fifo_inst/SLICE_252
+ROUTE         2   e 0.208 */SLICE_252.F0 to */SLICE_252.A1 subg_iddr/fifo_inst/rcount_w3
+CTOF_DEL    ---     0.236 */SLICE_252.A1 to */SLICE_252.F1 subg_iddr/fifo_inst/SLICE_252
+ROUTE         1   e 0.573 */SLICE_252.F1 to *t/SLICE_28.B0 subg_iddr/fifo_inst/rcount_w0
+C0TOFCO_DE  ---     0.447 *t/SLICE_28.B0 to */SLICE_28.FCO subg_iddr/fifo_inst/SLICE_28
+ROUTE         1   e 0.001 */SLICE_28.FCO to */SLICE_29.FCI subg_iddr/fifo_inst/co0_3
+FCITOFCO_D  ---     0.071 */SLICE_29.FCI to */SLICE_29.FCO subg_iddr/fifo_inst/SLICE_29
+ROUTE         1   e 0.001 */SLICE_29.FCO to */SLICE_30.FCI subg_iddr/fifo_inst/co1_3
+FCITOFCO_D  ---     0.071 */SLICE_30.FCI to */SLICE_30.FCO subg_iddr/fifo_inst/SLICE_30
+ROUTE         1   e 0.001 */SLICE_30.FCO to */SLICE_31.FCI subg_iddr/fifo_inst/full_d_c
+FCITOF0_DE  ---     0.443 */SLICE_31.FCI to *t/SLICE_31.F0 subg_iddr/fifo_inst/SLICE_31
+ROUTE         1   e 0.001 *t/SLICE_31.F0 to */SLICE_31.DI0 subg_iddr/fifo_inst/full_d (to internal_200MHz)
+                  --------
+                    3.387   (59.9% logic, 40.1% route), 7 logic levels.
+
+Report:  211.954MHz is the maximum frequency for this preference.
+
+Report Summary
+--------------
+----------------------------------------------------------------------------
+Preference                              |   Constraint|       Actual|Levels
+----------------------------------------------------------------------------
+                                        |             |             |
+FREQUENCY NET "int_clk_out" 2.400000    |             |             |
+MHz ;                                   |    2.400 MHz|  227.635 MHz|   5  
+                                        |             |             |
+FREQUENCY NET "dpll_clkout2_c" 8.000000 |             |             |
+MHz ;                                   |            -|            -|   0  
+                                        |             |             |
+FREQUENCY NET "my_pll/CLKOP" 64.000000  |             |             |
+MHz ;                                   |            -|            -|   0  
+                                        |             |             |
+FREQUENCY NET "dpll_clkout0_c"          |             |             |
+10.000000 MHz ;                         |            -|            -|   0  
+                                        |             |             |
+FREQUENCY PORT "dpll_clkout2" 8.000000  |             |             |
+MHz ;                                   |    8.000 MHz|  200.000 MHz|   0  
+                                        |             |             |
+FREQUENCY PORT "dpll_clkout0" 10.000000 |             |             |
+MHz ;                                   |   10.000 MHz|  200.000 MHz|   0  
+                                        |             |             |
+FREQUENCY NET "internal_160MHz"         |             |             |
+160.000000 MHz ;                        |  160.000 MHz|  371.333 MHz|   4  
+                                        |             |             |
+FREQUENCY NET "internal_80MHz"          |             |             |
+80.000000 MHz ;                         |   80.000 MHz|  160.231 MHz|   1  
+                                        |             |             |
+FREQUENCY NET "internal_200MHz"         |             |             |
+200.000000 MHz ;                        |  200.000 MHz|  211.954 MHz|   0  
+                                        |             |             |
+----------------------------------------------------------------------------
+
+
+All preferences were met.
+
+
+Clock Domains Analysis
+------------------------
+
+Found 7 clocks:
+
+Clock Domain: my_pll/CLKOP   Source: my_pll/PLLInst_0.CLKOP   Loads: 1
+   No transfer within this clock domain is found
+
+Clock Domain: internal_80MHz   Source: my_pll/PLLInst_0.CLKOS2   Loads: 79
+   Covered under: FREQUENCY NET "internal_80MHz" 80.000000 MHz ;
+
+   Data transfers from:
+   Clock Domain: internal_200MHz   Source: second_pll/PLLInst_0.CLKOP
+      Not reported because source and destination domains are unrelated.
+
+Clock Domain: internal_200MHz   Source: second_pll/PLLInst_0.CLKOP   Loads: 42
+   Covered under: FREQUENCY NET "internal_200MHz" 200.000000 MHz ;
+
+   Data transfers from:
+   Clock Domain: internal_80MHz   Source: my_pll/PLLInst_0.CLKOS2
+      Not reported because source and destination domains are unrelated.
+
+Clock Domain: internal_160MHz   Source: my_pll/PLLInst_0.CLKOS   Loads: 88
+   Covered under: FREQUENCY NET "internal_160MHz" 160.000000 MHz ;
+
+   Data transfers from:
+   Clock Domain: internal_80MHz   Source: my_pll/PLLInst_0.CLKOS2
+      Covered under: FREQUENCY NET "internal_160MHz" 160.000000 MHz ;   Transfers: 60
+
+Clock Domain: int_clk_out   Source: osch_inst.OSC   Loads: 15
+   Covered under: FREQUENCY NET "int_clk_out" 2.400000 MHz ;
+
+Clock Domain: dpll_clkout2_c   Source: dpll_clkout2.PAD   Loads: 1
+   No transfer within this clock domain is found
+
+Clock Domain: dpll_clkout0_c   Source: dpll_clkout0.PAD   Loads: 1
+   No transfer within this clock domain is found
+
+
+Timing summary (Setup):
+---------------
+
+Timing errors: 0  Score: 0
+Cumulative negative slack: 0
+
+Constraints cover 2369 paths, 7 nets, and 1835 connections (95.47% coverage)
+
+--------------------------------------------------------------------------------
+Lattice TRACE Report - Hold, Version Diamond (64-bit) 3.14.0.75.2
+Tue Dec 10 10:42:50 2024
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+
+Report Information
+------------------
+Command line:    trce -v 1 -gt -mapchkpnt 0 -sethld -o wiwisdr_ecp5_test_impl1.tw1 -gui -msgset C:/Users/julianstj/Desktop/WorkNotes/Projects/PTP/WiWi/SDR/Software/ECP5_Test/promote.xml wiwisdr_ecp5_test_impl1_map.ncd wiwisdr_ecp5_test_impl1.prf 
+Design file:     wiwisdr_ecp5_test_impl1_map.ncd
+Preference file: wiwisdr_ecp5_test_impl1.prf
+Device,speed:    LFE5U-25F,M
+Report level:    verbose report, limited to 1 item per preference
+--------------------------------------------------------------------------------
+
+BLOCK ASYNCPATHS
+BLOCK RESETPATHS
+--------------------------------------------------------------------------------
+
+
+Derating parameters
+-------------------
+VCCIO Voltage:
+                   3.300 V (Bank 0, defined by PAR)
+                   3.300 V (Bank 1, defined by PAR)
+                   3.300 V (Bank 2)
+                   3.300 V (Bank 3)
+                   2.500 V (Bank 6, defined by PAR)
+                   1.800 V (Bank 7, defined by PAR)
+
+
+
+================================================================================
+Preference: FREQUENCY NET "int_clk_out" 2.400000 MHz ;
+            742 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 0.179ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              my_led/counter_257__i8  (from int_clk_out +)
+   Destination:    FF         Data in        my_led/counter_257__i8  (to int_clk_out +)
+
+   Delay:               0.298ns  (80.2% logic, 19.8% route), 2 logic levels.
+
+ Constraint Details:
+
+      0.298ns physical path delay my_led/SLICE_11 to my_led/SLICE_11 meets
+      0.119ns DIN_HLD and
+      0.000ns delay constraint requirement (totaling 0.119ns) by 0.179ns
+
+ Physical Path Details:
+
+      Data path my_led/SLICE_11 to my_led/SLICE_11:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+REG_DEL     ---     0.163 */SLICE_11.CLK to *d/SLICE_11.Q1 my_led/SLICE_11 (from int_clk_out)
+ROUTE         2   e 0.058 *d/SLICE_11.Q1 to *d/SLICE_11.A1 my_led/counter_8
+CTOF_DEL    ---     0.076 *d/SLICE_11.A1 to *d/SLICE_11.F1 my_led/SLICE_11
+ROUTE         1   e 0.001 *d/SLICE_11.F1 to */SLICE_11.DI1 my_led/n127 (to int_clk_out)
+                  --------
+                    0.298   (80.2% logic, 19.8% route), 2 logic levels.
+
+
+================================================================================
+Preference: FREQUENCY NET "dpll_clkout2_c" 8.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Preference: FREQUENCY NET "my_pll/CLKOP" 64.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Preference: FREQUENCY NET "dpll_clkout0_c" 10.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Preference: FREQUENCY PORT "dpll_clkout2" 8.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Preference: FREQUENCY PORT "dpll_clkout0" 10.000000 MHz ;
+            0 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+================================================================================
+Preference: FREQUENCY NET "internal_160MHz" 160.000000 MHz ;
+            732 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 0.179ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              wifi_i_spi/spi_busy_42  (from internal_160MHz +)
+   Destination:    FF         Data in        wifi_i_spi/spi_busy_42  (to internal_160MHz +)
+
+   Delay:               0.298ns  (80.2% logic, 19.8% route), 2 logic levels.
+
+ Constraint Details:
+
+      0.298ns physical path delay SLICE_127 to SLICE_127 meets
+      0.119ns DIN_HLD and
+      0.000ns delay constraint requirement (totaling 0.119ns) by 0.179ns
+
+ Physical Path Details:
+
+      Data path SLICE_127 to SLICE_127:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+REG_DEL     ---     0.163  SLICE_127.CLK to   SLICE_127.Q1 SLICE_127 (from internal_160MHz)
+ROUTE        20   e 0.058   SLICE_127.Q1 to   SLICE_127.A1 spi_busy_adj_268
+CTOF_DEL    ---     0.076   SLICE_127.A1 to   SLICE_127.F1 SLICE_127
+ROUTE         1   e 0.001   SLICE_127.F1 to  SLICE_127.DI1 n1251 (to internal_160MHz)
+                  --------
+                    0.298   (80.2% logic, 19.8% route), 2 logic levels.
+
+
+================================================================================
+Preference: FREQUENCY NET "internal_80MHz" 80.000000 MHz ;
+            701 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 0.178ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              lvds_rx_09_inst/r_phase_count_i0_i0  (from internal_80MHz +)
+   Destination:    FF         Data in        lvds_rx_09_inst/r_phase_count_i0_i0  (to internal_80MHz +)
+
+   Delay:               0.297ns  (80.1% logic, 19.9% route), 2 logic levels.
+
+ Constraint Details:
+
+      0.297ns physical path delay SLICE_61 to SLICE_61 meets
+      0.119ns DIN_HLD and
+      0.000ns delay constraint requirement (totaling 0.119ns) by 0.178ns
+
+ Physical Path Details:
+
+      Data path SLICE_61 to SLICE_61:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+REG_DEL     ---     0.164   SLICE_61.CLK to    SLICE_61.Q0 SLICE_61 (from internal_80MHz)
+ROUTE         7   e 0.058    SLICE_61.Q0 to    SLICE_61.M0 r_phase_count_0
+MTOF_DEL    ---     0.074    SLICE_61.M0 to  SLICE_61.OFX0 SLICE_61
+ROUTE         1   e 0.001  SLICE_61.OFX0 to   SLICE_61.DI0 n2960 (to internal_80MHz)
+                  --------
+                    0.297   (80.1% logic, 19.9% route), 2 logic levels.
+
+
+================================================================================
+Preference: FREQUENCY NET "internal_200MHz" 200.000000 MHz ;
+            194 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+
+Passed: The following path meets requirements by 0.179ns
+
+ Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
+
+   Source:         FF         Q              subg_iddr/fifo_inst/FF_50  (from internal_200MHz +)
+   Destination:    FF         Data in        subg_iddr/fifo_inst/FF_50  (to internal_200MHz +)
+
+   Delay:               0.298ns  (80.2% logic, 19.8% route), 2 logic levels.
+
+ Constraint Details:
+
+      0.298ns physical path delay subg_iddr/fifo_inst/SLICE_15 to subg_iddr/fifo_inst/SLICE_15 meets
+      0.119ns DIN_HLD and
+      0.000ns delay constraint requirement (totaling 0.119ns) by 0.179ns
+
+ Physical Path Details:
+
+      Data path subg_iddr/fifo_inst/SLICE_15 to subg_iddr/fifo_inst/SLICE_15:
+
+   Name    Fanout   Delay (ns)          Site               Resource
+REG_DEL     ---     0.163 */SLICE_15.CLK to *t/SLICE_15.Q1 subg_iddr/fifo_inst/SLICE_15 (from internal_200MHz)
+ROUTE         5   e 0.058 *t/SLICE_15.Q1 to *t/SLICE_15.A1 subg_iddr/fifo_inst/wcount_1
+CTOF_DEL    ---     0.076 *t/SLICE_15.A1 to *t/SLICE_15.F1 subg_iddr/fifo_inst/SLICE_15
+ROUTE         1   e 0.001 *t/SLICE_15.F1 to */SLICE_15.DI1 subg_iddr/fifo_inst/iwcount_1 (to internal_200MHz)
+                  --------
+                    0.298   (80.2% logic, 19.8% route), 2 logic levels.
+
+Report Summary
+--------------
+----------------------------------------------------------------------------
+Preference(MIN Delays)                  |   Constraint|       Actual|Levels
+----------------------------------------------------------------------------
+                                        |             |             |
+FREQUENCY NET "int_clk_out" 2.400000    |             |             |
+MHz ;                                   |     0.000 ns|     0.179 ns|   2  
+                                        |             |             |
+FREQUENCY NET "dpll_clkout2_c" 8.000000 |             |             |
+MHz ;                                   |            -|            -|   0  
+                                        |             |             |
+FREQUENCY NET "my_pll/CLKOP" 64.000000  |             |             |
+MHz ;                                   |            -|            -|   0  
+                                        |             |             |
+FREQUENCY NET "dpll_clkout0_c"          |             |             |
+10.000000 MHz ;                         |            -|            -|   0  
+                                        |             |             |
+FREQUENCY PORT "dpll_clkout2" 8.000000  |             |             |
+MHz ;                                   |            -|            -|   0  
+                                        |             |             |
+FREQUENCY PORT "dpll_clkout0" 10.000000 |             |             |
+MHz ;                                   |            -|            -|   0  
+                                        |             |             |
+FREQUENCY NET "internal_160MHz"         |             |             |
+160.000000 MHz ;                        |     0.000 ns|     0.179 ns|   2  
+                                        |             |             |
+FREQUENCY NET "internal_80MHz"          |             |             |
+80.000000 MHz ;                         |     0.000 ns|     0.178 ns|   2  
+                                        |             |             |
+FREQUENCY NET "internal_200MHz"         |             |             |
+200.000000 MHz ;                        |     0.000 ns|     0.179 ns|   2  
+                                        |             |             |
+----------------------------------------------------------------------------
+
+
+All preferences were met.
+
+
+Clock Domains Analysis
+------------------------
+
+Found 7 clocks:
+
+Clock Domain: my_pll/CLKOP   Source: my_pll/PLLInst_0.CLKOP   Loads: 1
+   No transfer within this clock domain is found
+
+Clock Domain: internal_80MHz   Source: my_pll/PLLInst_0.CLKOS2   Loads: 79
+   Covered under: FREQUENCY NET "internal_80MHz" 80.000000 MHz ;
+
+   Data transfers from:
+   Clock Domain: internal_200MHz   Source: second_pll/PLLInst_0.CLKOP
+      Not reported because source and destination domains are unrelated.
+
+Clock Domain: internal_200MHz   Source: second_pll/PLLInst_0.CLKOP   Loads: 42
+   Covered under: FREQUENCY NET "internal_200MHz" 200.000000 MHz ;
+
+   Data transfers from:
+   Clock Domain: internal_80MHz   Source: my_pll/PLLInst_0.CLKOS2
+      Not reported because source and destination domains are unrelated.
+
+Clock Domain: internal_160MHz   Source: my_pll/PLLInst_0.CLKOS   Loads: 88
+   Covered under: FREQUENCY NET "internal_160MHz" 160.000000 MHz ;
+
+   Data transfers from:
+   Clock Domain: internal_80MHz   Source: my_pll/PLLInst_0.CLKOS2
+      Covered under: FREQUENCY NET "internal_160MHz" 160.000000 MHz ;   Transfers: 60
+
+Clock Domain: int_clk_out   Source: osch_inst.OSC   Loads: 15
+   Covered under: FREQUENCY NET "int_clk_out" 2.400000 MHz ;
+
+Clock Domain: dpll_clkout2_c   Source: dpll_clkout2.PAD   Loads: 1
+   No transfer within this clock domain is found
+
+Clock Domain: dpll_clkout0_c   Source: dpll_clkout0.PAD   Loads: 1
+   No transfer within this clock domain is found
+
+
+Timing summary (Hold):
+---------------
+
+Timing errors: 0  Score: 0
+Cumulative negative slack: 0
+
+Constraints cover 2369 paths, 7 nets, and 1835 connections (95.47% coverage)
+
+
+
+Timing summary (Setup and Hold):
+---------------
+
+Timing errors: 0 (setup), 0 (hold)
+Score: 0 (setup), 0 (hold)
+Cumulative negative slack: 0 (0+0)
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+

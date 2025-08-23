@@ -1,0 +1,154 @@
+---------------------------------------------------
+Report for cell top
+   Instance path: top
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	     828.00        100.0
+                                  LUT4	     975.00        100.0
+                                 IOBUF	         40        100.0
+                                PFUREG	        697        100.0
+                                RIPPLE	         84        100.0
+                                   EBR	          4        100.0
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                          internal_pll	          1         0.0
+                     word_align_3state	          1         8.2
+                  word_align_3state_U6	          1         7.4
+                        pll_10MHzInput	          1         0.0
+                            led_toggle	          1         4.2
+                ecp5_spi_master_top_U2	          1         1.7
+                 fifo_dc_16in_16out_U1	          1         4.0
+                 fifo_dc_16in_16out_U3	          1         4.0
+                 fifo_dc_16in_16out_U5	          1         4.1
+                    fifo_dc_16in_16out	          1         4.0
+                ecp5_spi_master_top_U4	          1         1.7
+                   ecp5_spi_master_top	          1         1.7
+                ecp5_spi_master_top_U0	          1         1.8
+i2c_slave_wbm(WB_DATA_WIDTH=8,WB_ADDR_WIDTH=16,WB_SELECT_WIDTH=1)	          1        26.5
+---------------------------------------------------
+Report for cell internal_pll
+   Instance path: top/my_pll
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+---------------------------------------------------
+Report for cell led_toggle
+   Instance path: top/my_led
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      35.00         4.2
+                                  LUT4	      40.00         4.1
+                                PFUREG	         27         3.9
+                                RIPPLE	         14        16.7
+---------------------------------------------------
+Report for cell ecp5_spi_master_top_U4
+   Instance path: top/subg_i_spi
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      14.33         1.7
+                                  LUT4	      26.00         2.7
+                                PFUREG	         22         3.2
+---------------------------------------------------
+Report for cell ecp5_spi_master_top_U2
+   Instance path: top/subg_q_spi
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      14.17         1.7
+                                  LUT4	      27.00         2.8
+                                PFUREG	         22         3.2
+---------------------------------------------------
+Report for cell ecp5_spi_master_top_U0
+   Instance path: top/wifi_i_spi
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      14.67         1.8
+                                  LUT4	      27.00         2.8
+                                PFUREG	         22         3.2
+---------------------------------------------------
+Report for cell fifo_dc_16in_16out_U5
+   Instance path: top/subg_i_fifo_dc
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      34.00         4.1
+                                  LUT4	      14.00         1.4
+                                PFUREG	         32         4.6
+                                RIPPLE	         14        16.7
+                                   EBR	          1        25.0
+---------------------------------------------------
+Report for cell word_align_3state_U6
+   Instance path: top/lvds_rx_09_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      61.58         7.4
+                                  LUT4	      82.00         8.4
+                                PFUREG	         80        11.5
+---------------------------------------------------
+Report for cell fifo_dc_16in_16out_U1
+   Instance path: top/wifi_i_fifo_dc
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      33.00         4.0
+                                  LUT4	      13.00         1.3
+                                PFUREG	         32         4.6
+                                RIPPLE	         14        16.7
+                                   EBR	          1        25.0
+---------------------------------------------------
+Report for cell fifo_dc_16in_16out_U3
+   Instance path: top/subg_q_fifo_dc
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      33.50         4.0
+                                  LUT4	      14.00         1.4
+                                PFUREG	         32         4.6
+                                RIPPLE	         14        16.7
+                                   EBR	          1        25.0
+---------------------------------------------------
+Report for cell pll_10MHzInput
+   Instance path: top/second_pll
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+---------------------------------------------------
+Report for cell ecp5_spi_master_top
+   Instance path: top/wifi_q_spi
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      14.17         1.7
+                                  LUT4	      27.00         2.8
+                                PFUREG	         22         3.2
+---------------------------------------------------
+Report for cell i2c_slave_wbm(WB_DATA_WIDTH=8,WB_ADDR_WIDTH=16,WB_SELECT_WIDTH=1)
+   Instance path: top/i2c_slave
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	     219.17        26.5
+                                  LUT4	     330.33        33.9
+                                PFUREG	         95        13.6
+                                RIPPLE	          9        10.7
+SUB MODULES
+                                  cell	      count    SLC Usage(%)
+                             i2c_slave	          1        10.4
+---------------------------------------------------
+Report for cell i2c_slave
+   Instance path: top/i2c_slave/i2c_slave_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      86.50        10.4
+                                  LUT4	     144.00        14.8
+                                PFUREG	         44         6.3
+---------------------------------------------------
+Report for cell word_align_3state
+   Instance path: top/lvds_rx_24_inst
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      67.50         8.2
+                                  LUT4	      89.00         9.1
+                                PFUREG	         80        11.5
+---------------------------------------------------
+Report for cell fifo_dc_16in_16out
+   Instance path: top/wifi_q_fifo_dc
+                     Cell usage:
+                                  cell	      count    Res Usage(%)
+                                  SLIC	      33.50         4.0
+                                  LUT4	      14.00         1.4
+                                PFUREG	         32         4.6
+                                RIPPLE	         14        16.7
+                                   EBR	          1        25.0
