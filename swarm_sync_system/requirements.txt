@@ -6,3 +6,6 @@ pygame==2.5.2
 pyyaml==6.0.1
 dataclasses==0.6
 typing-extensions==4.8.0
+fastapi==0.115.0
+uvicorn==0.30.5
+websockets==12.0

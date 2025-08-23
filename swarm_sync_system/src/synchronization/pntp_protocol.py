@@ -176,6 +176,11 @@ class ClockDiscipline:
             self.clock_state.stability = 1e-6  # 1 ppm
             self.aging_rate = 1e-7  # 100 ppb/день
             self.temperature_coefficient = 1e-7  # 100 ppb/°C
+        elif self.clock_type == "RB":
+            # Рубидиевый стандарт частоты
+            self.clock_state.stability = 1e-11  # 10^-11 относительная нестабильность
+            self.aging_rate = 1e-12  # медленное старение
+            self.temperature_coefficient = 1e-11  # высокая стабильность к температуре
         else:  # QUARTZ
             # Обычный кварцевый генератор
             self.clock_state.stability = 1e-5  # 10 ppm
@@ -231,6 +236,8 @@ class ClockDiscipline:
             return min(base_error, 2000)  # 2 мс/час максимум
         elif self.clock_type == "TCXO":
             return min(base_error, 5000)  # 5 мс/час максимум
+        elif self.clock_type == "RB":
+            return min(base_error, 200)   # 0.2 мс/час максимум
         else:
             return min(base_error, 50000)  # 50 мс/час максимум
 
