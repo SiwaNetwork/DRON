@@ -22,8 +22,9 @@ from src.synchronization.pntp_protocol import (
 class PNTPDroneSwarm:
     """Рой дронов с PNTP синхронизацией"""
     
-    def __init__(self, num_drones: int = 50):
+    def __init__(self, num_drones: int = 50, master_clock_type: str = "RB"):
         self.num_drones = num_drones
+        self.master_clock_type = master_clock_type
         self.swarm = Swarm()
         self.pntp_ensemble = PNTPEnsemble("drone_swarm_ensemble")
         self.telemetry = PNTPTelemetry()
@@ -54,7 +55,7 @@ class PNTPDroneSwarm:
             sync_mode=SyncMode.MASTER,
             radio_domains=[RadioDomain.WIFI_6, RadioDomain.LORA_SUBGHZ]
         )
-        master_pntp.clock_discipline = master_pntp.clock_discipline.__class__("master_drone", "OCXO")
+        master_pntp.clock_discipline = master_pntp.clock_discipline.__class__("master_drone", self.master_clock_type)
         master_pntp.packet_loss_rate = 0.01  # 1% потерь
         master_pntp.signal_strength = -30.0  # dBm
         self.pntp_ensemble.add_node(master_pntp)

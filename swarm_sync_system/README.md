@@ -31,6 +31,10 @@ swarm_sync_system/
 │       └── simulator.py       # 3D визуализация
 ├── tests/
 ├── examples/
+├── web/
+│   ├── server.py              # FastAPI WebSocket сервер
+│   └── static/
+│       └── index.html         # Минимальный веб UI
 └── requirements.txt
 ```
 
@@ -63,3 +67,13 @@ pip install -r requirements.txt
 
 ## Использование
 См. примеры в папке `examples/`
+
+### Веб-симулятор PNTP роя (реальное время)
+```bash
+# из каталога swarm_sync_system/
+uvicorn web.server:app --host 0.0.0.0 --port 8000
+```
+- Откройте браузер: `http://localhost:8000`
+- Задайте число узлов, тип часов мастера (RB/OCXO/TCXO/QUARTZ), dt и интервал телеметрии
+- Нажмите «Старт» для запуска/«Стоп» для остановки
+- Телеметрия: покрытие синхронизации, среднее смещение (мкс), живучесть, а также поток узловых метрик по WebSocket
