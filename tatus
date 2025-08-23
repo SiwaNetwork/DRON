@@ -1,0 +1,5 @@
+[33m4a66df5[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m  Добавлено управление с клавиатуры для симуляции дронов
+[33mab0fdeb[m Initial commit: Drone Swarm Simulation v2.0.0 with multi-altitude flight support
+[33mda16c46[m Add web simulator for PNTP swarm with real-time WebSocket telemetry (#5)
+[33m60e8877[m Update Проект ТЗ Изделие БАС-Синх_v0.docx
+[33m7906030[m Добавлена полная система симуляции роя дронов с PNTP синхронизацией
