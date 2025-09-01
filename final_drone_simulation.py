@@ -402,6 +402,65 @@ class SyncQualityMonitor:
         }
 
 
+class GNSSSimulation:
+    """Упрощенная симуляция GNSS для каждого дрона"""
+    def __init__(self, drone_id: int, x: float, y: float, z: float):
+        self.drone_id = drone_id
+        self.x, self.y, self.z = x, y, z
+        
+        # Простые GNSS метрики
+        self.visible_satellites = random.randint(8, 12)
+        self.hdop = 1.0 + random.uniform(-0.2, 0.2)
+        self.vdop = 1.0 + random.uniform(-0.2, 0.2)
+        self.pdop = math.sqrt(self.hdop**2 + self.vdop**2)
+        self.gdop = math.sqrt(self.pdop**2 + 1.0**2)
+        
+        # Атмосферные эффекты
+        self.ionospheric_delay = random.uniform(1e-9, 10e-9)
+        self.tropospheric_delay = random.uniform(1e-9, 5e-9)
+        self.multipath_delay = random.uniform(1e-9, 20e-9)
+        self.signal_strength = random.uniform(-130, -120)
+        
+    def update(self, dt: float, drone_x: float, drone_y: float, drone_z: float):
+        """Обновление GNSS симуляции"""
+        self.x, self.y, self.z = drone_x, drone_y, drone_z
+        
+        # Обновляем метрики с небольшими изменениями
+        self.visible_satellites = max(4, min(15, self.visible_satellites + random.randint(-1, 1)))
+        self.hdop += random.uniform(-0.1, 0.1) * dt
+        self.vdop += random.uniform(-0.1, 0.1) * dt
+        self.pdop = math.sqrt(self.hdop**2 + self.vdop**2)
+        self.gdop = math.sqrt(self.pdop**2 + 1.0**2)
+        
+        # Обновляем атмосферные эффекты
+        self.ionospheric_delay += random.uniform(-0.1e-9, 0.1e-9) * dt
+        self.tropospheric_delay += random.uniform(-0.05e-9, 0.05e-9) * dt
+        self.multipath_delay += random.uniform(-0.5e-9, 0.5e-9) * dt
+        self.signal_strength += random.uniform(-1, 1) * dt
+        
+        # Ограничиваем значения
+        self.hdop = max(0.5, min(5.0, self.hdop))
+        self.vdop = max(0.5, min(5.0, self.vdop))
+        self.ionospheric_delay = max(0, min(50e-9, self.ionospheric_delay))
+        self.tropospheric_delay = max(0, min(20e-9, self.tropospheric_delay))
+        self.multipath_delay = max(0, min(50e-9, self.multipath_delay))
+        self.signal_strength = max(-140, min(-110, self.signal_strength))
+    
+    def get_status(self) -> dict:
+        """Получение статуса GNSS"""
+        return {
+            'visible_satellites': self.visible_satellites,
+            'hdop': self.hdop,
+            'vdop': self.vdop,
+            'pdop': self.pdop,
+            'gdop': self.gdop,
+            'ionospheric_delay_ns': self.ionospheric_delay * 1e9,
+            'tropospheric_delay_ns': self.tropospheric_delay * 1e9,
+            'multipath_delay_ns': self.multipath_delay * 1e9,
+            'avg_signal_strength': self.signal_strength
+        }
+
+
 # ===== КОНСТАНТЫ И ТИПЫ =====
 
 class ClockType(Enum):
@@ -481,6 +540,9 @@ class FinalDrone:
         
         # Атомные часы и GPS
         self.atomic_clock = AtomicClockSimulation()
+        
+        # Детальная GNSS симуляция для каждого дрона
+        self.gnss_simulation = GNSSSimulation(self.id, self.x, self.y, self.z)
         
         # Анализ стабильности
         self.allan_variance = AllanVariance()
@@ -721,6 +783,26 @@ class FinalDrone:
         self.atomic_clock.update_gps_conditions(elevation_angle, frequency)
         self.gps_accuracy = self.atomic_clock.calculate_gps_accuracy()
         
+        # === ДЕТАЛЬНАЯ GNSS СИМУЛЯЦИЯ ===
+        # Обновление GNSS для каждого дрона
+        if hasattr(self, 'gnss_simulation'):
+            self.gnss_simulation.update(dt, self.x, self.y, self.z)
+            gnss_status = self.gnss_simulation.get_status()
+            
+            # Обновляем GNSS метрики
+            self.gps_accuracy = gnss_status['position_accuracy_m'] * 1e-9  # в наносекундах
+            self.tropospheric_delay_ns = gnss_status['tropospheric_delay_ns']
+            self.ionospheric_delay_ns = gnss_status['ionospheric_delay_ns']
+            self.multipath_jitter_ns = gnss_status['multipath_delay_ns']
+            
+            # Добавляем новые GNSS метрики
+            self.visible_satellites = gnss_status['visible_satellites']
+            self.gnss_hdop = gnss_status['hdop']
+            self.gnss_vdop = gnss_status['vdop']
+            self.gnss_pdop = gnss_status['pdop']
+            self.gnss_gdop = gnss_status['gdop']
+            self.gnss_signal_strength = gnss_status['avg_signal_strength']
+        
         # === АНАЛИЗ СТАБИЛЬНОСТИ ===
         # Добавление нового измерения частоты
         self.allan_variance.add_sample(self.frequency_offset)
@@ -932,6 +1014,14 @@ class FinalDrone:
             
             # Атомные часы и GPS
             'gps_accuracy_ns': self.gps_accuracy * 1e9,  # в наносекундах
+            
+            # Детальные GNSS метрики
+            'visible_satellites': getattr(self, 'visible_satellites', 0),
+            'gnss_hdop': getattr(self, 'gnss_hdop', 1.0),
+            'gnss_vdop': getattr(self, 'gnss_vdop', 1.0),
+            'gnss_pdop': getattr(self, 'gnss_pdop', 1.0),
+            'gnss_gdop': getattr(self, 'gnss_gdop', 1.0),
+            'gnss_signal_strength': getattr(self, 'gnss_signal_strength', -130),
             
             # Атмосферные эффекты
             'tropospheric_delay_ns': self.tropospheric_delay_ns * 1e9,
@@ -2528,6 +2618,31 @@ class FinalWebHandler(BaseHTTPRequestHandler):
         </div>
         
         <div class="metric">
+            <div class="metric-label">🛰️ Видимые спутники</div>
+            <div class="metric-value" id="visibleSatellites">-</div>
+        </div>
+        
+        <div class="metric">
+            <div class="metric-label">📐 HDOP</div>
+            <div class="metric-value" id="gnssHdop">-</div>
+        </div>
+        
+        <div class="metric">
+            <div class="metric-label">📏 VDOP</div>
+            <div class="metric-value" id="gnssVdop">-</div>
+        </div>
+        
+        <div class="metric">
+            <div class="metric-label">📊 PDOP</div>
+            <div class="metric-value" id="gnssPdop">-</div>
+        </div>
+        
+        <div class="metric">
+            <div class="metric-label">📡 GNSS сигнал</div>
+            <div class="metric-value" id="gnssSignalStrength">-</div>
+        </div>
+        
+        <div class="metric">
             <div class="metric-label">📊 Дисперсия Аллана (1с)</div>
             <div class="metric-value" id="allanVariance1s">-</div>
         </div>
@@ -4010,6 +4125,31 @@ class FinalWebHandler(BaseHTTPRequestHandler):
                         const liftForces = window.lastDronesData.map(d => d.lift_force || 0);
                         const avgLiftForce = (liftForces.reduce((a, b) => a + b, 0) / liftForces.length).toFixed(2);
                         document.getElementById('liftForce').textContent = avgLiftForce + ' Н';
+                        
+                        // === НОВЫЕ GNSS МЕТРИКИ ===
+                        
+                        // Видимые спутники
+                        const visibleSats = window.lastDronesData.map(d => d.visible_satellites || 0);
+                        const avgVisibleSats = Math.round(visibleSats.reduce((a, b) => a + b, 0) / visibleSats.length);
+                        document.getElementById('visibleSatellites').textContent = avgVisibleSats;
+                        
+                        // DOP метрики
+                        const hdops = window.lastDronesData.map(d => d.gnss_hdop || 1.0);
+                        const avgHdop = (hdops.reduce((a, b) => a + b, 0) / hdops.length).toFixed(2);
+                        document.getElementById('gnssHdop').textContent = avgHdop;
+                        
+                        const vdops = window.lastDronesData.map(d => d.gnss_vdop || 1.0);
+                        const avgVdop = (vdops.reduce((a, b) => a + b, 0) / vdops.length).toFixed(2);
+                        document.getElementById('gnssVdop').textContent = avgVdop;
+                        
+                        const pdops = window.lastDronesData.map(d => d.gnss_pdop || 1.0);
+                        const avgPdop = (pdops.reduce((a, b) => a + b, 0) / pdops.length).toFixed(2);
+                        document.getElementById('gnssPdop').textContent = avgPdop;
+                        
+                        // GNSS сигнал
+                        const gnssSignals = window.lastDronesData.map(d => d.gnss_signal_strength || -130);
+                        const avgGnssSignal = Math.round(gnssSignals.reduce((a, b) => a + b, 0) / gnssSignals.length);
+                        document.getElementById('gnssSignalStrength').textContent = avgGnssSignal + ' дБм';
                     }
                 }
             } catch (error) {
@@ -4628,6 +4768,32 @@ class FinalWebHandler(BaseHTTPRequestHandler):
                     <div class="tooltip-row">
                         <span class="tooltip-label">Многолучевость:</span>
                         <span class="tooltip-value">${(droneData.multipath_jitter_ns || 0).toFixed(2)} нс</span>
+                    </div>
+                `;
+            }
+            
+            // Добавляем детальные GNSS метрики если доступны
+            if (droneData.visible_satellites !== undefined) {
+                content += `
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">🛰️ Видимые спутники:</span>
+                        <span class="tooltip-value">${droneData.visible_satellites || 0}</span>
+                    </div>
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">📐 HDOP:</span>
+                        <span class="tooltip-value">${(droneData.gnss_hdop || 1.0).toFixed(2)}</span>
+                    </div>
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">📏 VDOP:</span>
+                        <span class="tooltip-value">${(droneData.gnss_vdop || 1.0).toFixed(2)}</span>
+                    </div>
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">📊 PDOP:</span>
+                        <span class="tooltip-value">${(droneData.gnss_pdop || 1.0).toFixed(2)}</span>
+                    </div>
+                    <div class="tooltip-row">
+                        <span class="tooltip-label">📡 GNSS сигнал:</span>
+                        <span class="tooltip-value">${Math.round(droneData.gnss_signal_strength || -130)} дБм</span>
                     </div>
                 `;
             }
