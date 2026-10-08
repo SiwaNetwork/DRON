@@ -106,6 +106,8 @@ module corr_engine #(
     reg [W:0]    m_kr3 [0:NMUX-1];      // 3 × шаг кода (33 бит)
     reg [W-1:0]  m_cf  [0:NMUX-1];      // дробная фаза кода
     reg [CB-1:0] m_ci  [0:NMUX-1];      // целая фаза кода
+    reg [WBITS-1:0] m_wn [0:NMUX-1];     // адрес следующего слова кода: ci[CB-1:2] + 1
+    reg [15:0]   m_nm  [0:NMUX-1];      // {max(n_int − 1, 0), max(n_int − 2, 0)} (из CTRL)
     reg [CB:0]   m_D   [0:NMUX-1];      // L − ci (≥ 1)
     reg [8:0]    m_ep  [0:NMUX-1];      // {последняя эпоха интервала, счётчик эпох}
     reg [15:0]   m_ctl [0:NMUX-1];      // запись с шины
@@ -114,7 +116,7 @@ module corr_engine #(
     reg [W-1:0]  m_krn [0:NMUX-1];      // шаг кода (новый)
     reg [15:0]   m_sp  [0:NMUX-1];
     reg [NMUX-1:0] pend;                 // записан новый шаг, ещё не применён
-    initial for (i = 0; i < NMUX; i = i + 1) m_ctl[i] = 16'd0;
+    initial for (i = 0; i < NMUX; i = i + 1) begin m_ctl[i] = 16'd0; m_nm[i] = 16'd0; end
 
     // включение слотов: сразу (CTRL[0]) или с заданного отсчёта (START_T, START_MASK).
     // Совпадение номера следующей группы (cnt_l + 4) с START_T вычисляется заранее (за обход).
@@ -222,19 +224,23 @@ module corr_engine #(
     reg            u_fi, u_fs, u_fz;
     // признак «ep + 1 ≥ n_int» для трёх вариантов нового ep (ep + 1, ep, 0) — вычисляется тактом раньше
     wire [7:0]  e1_0 = ep0[7:0] + 1'b1;
+    wire [15:0] nm0  = m_nm[slot_c];
     always @(posedge clk) begin
         u_slot <= slot; u_v <= act0; u_en <= en0; u_wrap <= wrap0; u_dump <= dump0;
         u_pend <= pend[slot]; u_pw <= pw_now; u_pwr <= pw_reg; u_pwd <= pw_data;
         u_cp <= ph4; u_cf <= f4[W-1:0]; u_o4 <= f4[33:32]; u_ci <= ci0; u_D <= D0; u_L <= L0; u_ep <= ep0[7:0];
         u_e1 <= e1_0;
-        u_fi <= ({1'b0, e1_0} + 9'd1 >= {1'b0, c0[15:8]});
-        u_fs <= ({1'b0, ep0[7:0]} + 9'd1 >= {1'b0, c0[15:8]});
-        u_fz <= (c0[15:8] <= 8'd1);
+        // ep + 2 ≥ n_int, ep + 1 ≥ n_int, n_int ≤ 1 (ep ≤ 254 — счётчик сбрасывается на сбросе)
+        u_fi <= (ep0[7:0] >= nm0[7:0]);
+        u_fs <= (ep0[7:0] >= nm0[15:8]);
+        u_fz <= (nm0[15:8] == 8'd0);
     end
     // новые шаги NCO: при сбросе (канал включён) или сразу (канал выключен)
     wire        u_apply = u_pend && (!u_en || (u_v && u_dump));
     // при переходе через конец кода: ci + o4 − L = o4 − D
     wire [CB:0] u_ni = u_wrap ? ({{(CB-1){1'b0}}, u_o4} - u_D) : ({1'b0, u_ci} + u_o4);
+    // то же + 4 чипа (следующее слово кода) — параллельно, без удлинения цепочки
+    wire [CB:0] u_ni4 = u_wrap ? ({{(CB-2){1'b0}}, 1'b1, u_o4} - u_D) : ({1'b0, u_ci} + {1'b1, u_o4});
     // новое расстояние до конца кода: при переходе L − (o4 − D), иначе D − o4
     wire [CB:0] u_Dn = u_wrap ? (u_L - u_ni) : (u_D - u_o4);
     // счётчик эпох и признак «следующая эпоха завершает интервал» (ep + 1 ≥ n_int)
@@ -246,13 +252,17 @@ module corr_engine #(
             m_cp[u_slot] <= u_cp;
             m_cf[u_slot] <= u_cf;
             m_ci[u_slot] <= u_ni[CB-1:0];
+            m_wn[u_slot] <= u_ni4[CB-1:2];
             m_D[u_slot]  <= u_Dn;
             m_ep[u_slot] <= u_epw;
         end else if (!u_en) begin
             m_ep[u_slot] <= u_epw;
             m_D[u_slot]  <= u_L - {1'b0, u_ci};          // пересчёт после записи CODE_INT / LEN
             if (u_pw && u_pwr == 2'd0) m_cp[u_slot] <= u_pwd;
-            if (u_pw && u_pwr == 2'd1) m_ci[u_slot] <= u_pwd[CB-1:0];
+            if (u_pw && u_pwr == 2'd1) begin
+                m_ci[u_slot] <= u_pwd[CB-1:0];
+                m_wn[u_slot] <= u_pwd[CB-1:2] + 1'b1;
+            end
             if (u_pw && u_pwr == 2'd2) m_cf[u_slot] <= u_pwd;
         end
         if (u_apply) begin
@@ -268,7 +278,11 @@ module corr_engine #(
     wire [CLOG-1:0] bs = b_addr[4 +: CLOG];
     always @(posedge clk) begin
         if (bus_ch) case (b_addr[3:0])
-            4'd0: m_ctl[bs] <= b_wdata[15:0];
+            4'd0: begin
+                m_ctl[bs] <= b_wdata[15:0];
+                m_nm[bs]  <= {(b_wdata[15:8] > 8'd1) ? b_wdata[15:8] - 8'd1 : 8'd0,
+                              (b_wdata[15:8] > 8'd2) ? b_wdata[15:8] - 8'd2 : 8'd0};
+            end
             4'd1: m_len[bs] <= b_wdata[CB:0];
             4'd2: m_crn[bs] <= b_wdata;
             4'd3: m_krn[bs] <= b_wdata;
@@ -298,7 +312,7 @@ module corr_engine #(
     reg [2:0]       w_cnt;
     wire w_now = (w_cnt != 0) && (slot == w_slot);
     wire [WBITS-1:0] wa0 = ci0[CB-1:2];
-    wire [WBITS-1:0] wa1 = w_now ? w_word : wa0 + 1'b1;
+    wire [WBITS-1:0] wa1 = w_now ? w_word : m_wn[slot_b];
     wire [3:0] cm_a [0:NMUX-1];
     wire [3:0] cm_b [0:NMUX-1];
     genvar m;

@@ -191,10 +191,17 @@ module mgp8_core #(
     // ------------------------------------------------------------ снимок
     wire        snap_busy, snap_done;
     wire [31:0] snap_t0, snap_rdata;
-    wire        s_raw = notch_ctl[8];
+    // источник снимка (до или после фильтра) — через регистр
+    reg         s_stb;
+    reg  [31:0] s_data;
+    reg  [63:0] s_count;
+    always @(posedge clk) begin
+        s_stb   <= notch_ctl[8] ? smp_stb : f_stb;
+        s_data  <= notch_ctl[8] ? smp_data : f_data;
+        s_count <= notch_ctl[8] ? smp_count : {32'd0, f_count};
+    end
     snapshot u_snap (
-        .clk(clk), .rst(rst), .smp_stb(s_raw ? smp_stb : f_stb), .smp_data(s_raw ? smp_data : f_data),
-        .smp_count(s_raw ? smp_count : {32'd0, f_count}),
+        .clk(clk), .rst(rst), .smp_stb(s_stb), .smp_data(s_data), .smp_count(s_count),
         .arm(snap_arm), .ch(snap_ctrl[2:0]), .at_time(snap_ctrl[3]), .t_start(snap_t),
         .len(snap_len[16:0]), .busy(snap_busy), .done(snap_done), .t0(snap_t0),
         .rd_addr(bus_addr[12:0]), .rd_data(snap_rdata));

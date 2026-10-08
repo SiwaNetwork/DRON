@@ -19,6 +19,10 @@ typedef struct {
      * long_cn0 петли обновляются раз в бит (20 периодов, когерентно), полосы — *_long */
     double long_cn0;         /* дБГц; 0 — не применять, > 60 — всегда после синхронизации */
     double pll_bw_long, dll_bw_long;
+    /* повторный захват: при срыве в режиме длительного накопления канал до coast_time с
+     * ведёт NCO по прогнозу (частота и её скорость изменения) и обнаруживает появление сигнала */
+    double coast_time;       /* с */
+    double reacq_thr;        /* порог мощности интервала относительно шума */
 } trk_cfg_t;
 
 typedef struct {
@@ -61,6 +65,16 @@ typedef struct {
     uint8_t  sec[SEC_MAX_LEN];
     int      sec_len, sec_sync, sec_pos, sec_sgn, sec_n;
     double   sec_hist[SEC_MAX_LEN];
+    /* прогноз и повторный захват */
+    double   coast_time, reacq_thr;
+    double   noise1;         /* мощность шума результата одного периода (оценка) */
+    double   f_lp, f_rate;   /* сглаженная частота NCO (τ ≈ 1 с) и её скорость, Гц/с */
+    double   f_1s, t_1s;     /* для оценки скорости */
+    double   f_coast, t_coast;
+    unsigned det_hist;       /* обнаружения сигнала в последних 8 интервалах */
+    int      n_reacq;        /* число повторных захватов */
+    int      low_cnt;        /* интервалов подряд с индикатором захвата ниже порога */
+    double   t_pull;         /* начало повторного втягивания */
 } trk_t;
 
 void trk_default_cfg(trk_cfg_t *c);

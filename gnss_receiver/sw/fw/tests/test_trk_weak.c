@@ -1,10 +1,12 @@
-/* Слежение за слабыми сигналами (ТЗ п. 5.2.3, ПМ 7.2.3 в) на модели ПЛИС.
+/* Слежение за слабыми сигналами и повторный захват (ТЗ п. 5.2.3, ПМ 7.2.3 б, в) на модели ПЛИС.
  * Сценарии: GPS L1 C/A (данные, Костас) до 24 дБГц и Galileo E1C (пилот, BOC(1,1), вторичный
  * код CS25) до 21 дБГц — уровень ТЗ −150 дБм ≈ 20,8 дБГц. C/N0 40 дБГц в течение 3 с (втягивание,
  * синхронизация по битам / вторичному коду, переход к длительному накоплению), затем снижение
  * на 4 дБ/с и удержание до конца прогона. Доплер меняется со скоростью 0,5 Гц/с.
  * Проверка на последних 5 с: канал не освобождён, доля интервалов в захвате, ошибки частоты
- * и фазы кода; для L1 C/A — ошибки в битах и полуцикловые срывы (по блокам 1 с). */
+ * и фазы кода; для L1 C/A — ошибки в битах и полуцикловые срывы (по блокам 1 с).
+ * Третий сценарий — перерыв сигнала 30 с на уровне 24 дБГц (≈ −147 дБм): канал ведётся по
+ * прогнозу и должен восстановить захват не позднее чем через 30 с после появления сигнала. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,7 +18,7 @@
 #include "corr_sim.h"
 #include "track.h"
 
-#define T_END 16.0
+static double T_END = 16.0, T_OUT0 = 1e9, T_OUT1 = 1e9;     /* перерыв сигнала [T_OUT0, T_OUT1) */
 static const double D0 = 1250.0, DD = 0.5;          /* доплер, Гц; скорость, Гц/с */
 static const double CP0 = 377.3, PH0 = 1.1;
 static int SIG, L, PRN;
@@ -46,7 +48,10 @@ static uint32_t src(uint64_t i)
 {
     double t = (double)i / FS_HZ;
     long ms = (long)(t * 1e3);
-    if (ms != a_ms) { a_ms = ms; A_cur = sqrt(pow(10, cn0_at(t) / 10) / FS_HZ); }
+    if (ms != a_ms) {
+        a_ms = ms;
+        A_cur = (t >= T_OUT0 && t < T_OUT1) ? 0 : sqrt(pow(10, cn0_at(t) / 10) / FS_HZ);
+    }
     double cp = cp_true(t);
     long ci = (long)floor(cp), ep = ci / L;
     int v = code_bit(CODE, (int)(ci % L)) ? -1 : 1;
@@ -77,9 +82,10 @@ static void on_bit(void *ctx, int bit, uint64_t n_end)
     }
 }
 
-static int run(int sig, int prn, double cn_low)
+static int run(int sig, int prn, double cn_low, double t_end, double t_out0, double t_out1)
 {
     SIG = sig; PRN = prn; CN_LOW = cn_low;
+    T_END = t_end; T_OUT0 = t_out0; T_OUT1 = t_out1;
     L = code_gen(sig, prn, CODE);
     SECL = sec_code(sig, prn, SEC);
     RATE = SIGS[sig].chip_rate;
@@ -98,7 +104,7 @@ static int run(int sig, int prn, double cn_low)
     k.on_bit = on_bit;
     int chs[1] = {ch};
     corr_start(chs, 1, t0);
-    double sf = 0, sc = 0, maxc = 0, t_long = -1;
+    double sf = 0, sc = 0, maxc = 0, t_long = -1, t_lost = -1, t_back = -1;
     int nm = 0, idle = 0, nlock = 0;
     corr_dump_t d;
     while (corr_sim_nsmp() < (uint64_t)(T_END * FS_HZ)) {
@@ -108,6 +114,8 @@ static int run(int sig, int prn, double cn_low)
             double t = (double)d.n / FS_HZ;
             if (k.ncoh > 1 && t_long < 0) t_long = t;
             if (k.state == TRK_IDLE) idle = 1;
+            if (t >= T_OUT0 && k.state == TRK_LOST && t_lost < 0) t_lost = t;
+            if (t >= T_OUT1 && k.state == TRK_LOCK && t_back < 0) t_back = t;
             if (t > T_END - 5) {
                 double fe = trk_doppler(&k) - dop_at(t), cp;
                 corr_phase_at(ch, d.n + 1, &cp, NULL);
@@ -128,7 +136,12 @@ static int run(int sig, int prn, double cn_low)
            "(макс. %.3f), оценка C/N0 %.1f дБГц", pl, rf, rc, maxc, k.cn0);
     if (sig == SIG_L1CA) printf(", ошибок в битах %d из %d, полуцикловых срывов %d", nerr, nb, nslip);
     printf("\n");
+    if (T_OUT0 < T_END)
+        printf("  перерыв сигнала %.0f…%.0f с: срыв обнаружен через %.2f с, повторный захват через %.2f с "
+               "после появления сигнала (повторных захватов %d)\n", T_OUT0, T_OUT1, t_lost - T_OUT0,
+               t_back - T_OUT1, k.n_reacq);
     int ok = !idle && t_long > 0 && rf < 3.0 && rc < 0.1;
+    if (T_OUT0 < T_END) ok = ok && t_back > 0 && t_back - T_OUT1 < 30.0;
     if (sig == SIG_L1CA) ok = ok && pl > 90 && nb >= 200 && nerr < 0.05 * nb;
     else ok = ok && pl > 95 && k.sec_sync;
     return ok;
@@ -142,8 +155,10 @@ int main(void)
         GN[i + 1] = (float)(sqrt(-2 * log(u1)) * sin(2 * GPI * u2));
     }
     for (int i = 0; i < 1024; i++) BITS[i] = xs() & 1;
-    int ok = run(SIG_L1CA, 7, 24.0);
-    ok &= run(SIG_E1C, 11, 21.0);
+    int ok = run(SIG_L1CA, 7, 24.0, 16.0, 1e9, 1e9);
+    ok &= run(SIG_E1C, 11, 21.0, 16.0, 1e9, 1e9);
+    /* повторный захват (ТЗ п. 5.2.3, ПМ 7.2.3 б): 24 дБГц, перерыв 30 с */
+    ok &= run(SIG_L1CA, 7, 24.0, 52.0, 9.0, 39.0);
     printf("ИТОГ: %s\n", ok ? "ПРОЙДЕН" : "НЕ ПРОЙДЕН");
     return !ok;
 }

@@ -28,6 +28,8 @@ void trk_default_cfg(trk_cfg_t *c)
     c->long_cn0 = 32.0;
     c->pll_bw_long = 5.0;
     c->dll_bw_long = 0.2;
+    c->coast_time = 30.0;
+    c->reacq_thr = 4.5;      /* шум: P(max(E,P,L) > 4,5·среднее) ≈ 0,033; 5 из 8 — ≈ 2·10^−6 на интервал */
 }
 
 void trk_start(trk_t *k, int ch, int sig, int prn, int fcn, double doppler, double code_phase,
@@ -59,6 +61,8 @@ void trk_start(trk_t *k, int ch, int sig, int prn, int fcn, double doppler, doub
     k->dll_bw_long = cfg->dll_bw_long;
     k->ncoh = 1;
     k->sec_len = sec_code(sig, prn, k->sec);
+    k->coast_time = cfg->coast_time;
+    k->reacq_thr = cfg->reacq_thr;
     corr_config(ch, sig, prn, fcn, 1, k->spacing, k->f_carr, k->f_code, code_phase, 0.0, t_start);
 }
 
@@ -90,9 +94,45 @@ static void bit_sync(trk_t *k, double I, const corr_dump_t *d)
 }
 
 /* петли по результатам интервала Tl (один период или накопление ncoh периодов) */
+/* срыв в режиме длительного накопления: NCO по прогнозу, обнаружение сигнала по мощности
+ * интервала (наибольшей из E, P, L) относительно шума: 5 обнаружений из 8 интервалов —
+ * повторное втягивание; дольше coast_time — канал освобождается */
+static void coast(trk_t *k, double EI, double EQ, double I, double Q, double LI, double LQ)
+{
+    const sig_info_t *si = &SIGS[k->sig];
+    double f = k->f_coast + k->f_rate * (k->t - k->t_coast);
+    k->f_carr = f;
+    k->f_code = si->chip_rate * (1 + (f - k->f_if) / k->fc);
+    corr_set_rates(k->ch, k->f_carr, k->f_code);
+    double pe = EI * EI + EQ * EQ, pp = I * I + Q * Q, pl = LI * LI + LQ * LQ;
+    double pm = pp > pe ? (pp > pl ? pp : pl) : (pe > pl ? pe : pl);
+    int det = k->noise1 > 0 && pm > k->reacq_thr * k->ncoh * k->noise1;
+    k->det_hist = ((k->det_hist << 1) | (unsigned)det) & 0xFFu;
+    int cnt = 0;
+    for (unsigned h = k->det_hist; h; h >>= 1) cnt += (int)(h & 1);
+    if (cnt >= 5) {
+        k->state = TRK_PULLIN;
+        k->int_f = f - k->f0;            /* интегратор ФАП — на прогнозную частоту */
+        k->lock = 0;
+        k->have_prev = 0;
+        k->n_reacq++;
+        k->t_pull = k->t;
+    } else if (k->t - k->t_lost > k->coast_time) {
+        k->state = TRK_IDLE;
+    }
+}
+
 static void loops(trk_t *k, double EI, double EQ, double I, double Q, double LI, double LQ, double Tl)
 {
     const sig_info_t *si = &SIGS[k->sig];
+    if (k->state == TRK_LOST && k->ncoh > 1) { coast(k, EI, EQ, I, Q, LI, LQ); return; }
+    /* повторное втягивание без захвата за 1 с — ложное обнаружение: снова прогноз */
+    if (k->state == TRK_PULLIN && k->ncoh > 1 && k->n_reacq && k->t - k->t_pull > 1.0) {
+        k->state = TRK_LOST;
+        k->det_hist = 0;
+        coast(k, EI, EQ, I, Q, LI, LQ);
+        return;
+    }
     /* четырёхквадрантные дискриминаторы — только для пилота со снятым вторичным кодом */
     int pil = si->pilot && k->sec_sync;
     double e = hypot(EI, EQ), l = hypot(LI, LQ);
@@ -135,17 +175,26 @@ static void loops(trk_t *k, double EI, double EQ, double I, double Q, double LI,
      * захват по индикатору; более 1 с в срыве — канал освобождается для повторного поиска */
     if (k->state == TRK_PULLIN && k->t > k->fll_time + 0.05 && k->lock > 0.4) {
         k->state = TRK_LOCK;
-        double wn = k->pll_bw_lock / 0.53;
-        k->a2 = 1.414 * wn;
-        k->w2 = wn * wn;
-        k->wf = k->fll_bw_lock / 0.25;
-    } else if (k->state == TRK_LOCK && k->lock < 0.1) {
+        if (k->ncoh == 1) {
+            double wn = k->pll_bw_lock / 0.53;
+            k->a2 = 1.414 * wn;
+            k->w2 = wn * wn;
+            k->wf = k->fll_bw_lock / 0.25;
+        }
+    } else if (k->state == TRK_LOCK && k->lock < 0.1 && (k->ncoh == 1 || ++k->low_cnt >= 10)) {
+        /* при длительном накоплении срыв — 10 интервалов (200 мс) подряд ниже порога */
         k->state = TRK_LOST;
         k->t_lost = k->t;
-    } else if (k->state == TRK_LOST) {
+        if (k->ncoh > 1) {               /* прогноз: сглаженная частота, приведённая к моменту срыва */
+            k->f_coast = k->f_lp + k->f_rate * 1.0;
+            k->t_coast = k->t;
+            k->det_hist = 0;
+        }
+    } else if (k->state == TRK_LOST && k->ncoh == 1) {
         if (k->lock > 0.5) k->state = TRK_LOCK;
         else if (k->t - k->t_lost > 1.0) k->state = TRK_IDLE;
     }
+    if (k->lock >= 0.1) k->low_cnt = 0;
     k->last_perr = perr;
 }
 
@@ -221,6 +270,17 @@ void trk_update(trk_t *k, const corr_dump_t *d)
         int n = (int)lround(0.020 / k->T);
         if (n > 1) go_long(k, n);
     }
+    /* сглаженная частота и её скорость — для прогноза при срыве */
+    if (k->state == TRK_LOCK) {
+        k->f_lp = k->f_lp != 0 ? k->f_lp + (k->T / 1.0) * (k->f_carr - k->f_lp) : k->f_carr;
+        if (k->t - k->t_1s >= 1.0) {
+            if (k->t_1s > 0) {
+                double r = (k->f_lp - k->f_1s) / (k->t - k->t_1s);
+                k->f_rate = k->f_rate != 0 ? k->f_rate + 0.3 * (r - k->f_rate) : r;
+            }
+            k->f_1s = k->f_lp; k->t_1s = k->t;
+        }
+    }
     /* C/N0 (метод NWPR, 20 периодов): до синхронизации по битам — по |I| (смещение при слабом
      * сигнале), после — когерентная сумма внутри бита */
     int coh = (k->bit_len == 20 && k->bit_sync) || k->sec_sync;
@@ -236,6 +296,10 @@ void trk_update(trk_t *k, const corr_dump_t *d)
             double c = 10 * log10((nm - 1) / (20 - nm) / k->T);
             k->cn0 = k->cn0 > 0 ? k->cn0 + 0.2 * (c - k->cn0) : c;
         }
+        /* мощность шума одного периода (при когерентном окне): N = (M·WBP − NBP) / (M(M − 1)) */
+        double ne = (20 * k->wbp - nbp) / 380.0;
+        if (coh && k->state == TRK_LOCK && ne > 0)
+            k->noise1 = k->noise1 > 0 ? k->noise1 + 0.1 * (ne - k->noise1) : ne;
         k->nb_i = k->nb_q = k->wbp = 0;
         k->nbn = 0;
     }
