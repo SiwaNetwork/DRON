@@ -1,10 +1,10 @@
 // =============================================================================
-// МГП-8. Блок корреляторов: NENG движков по 16 каналов (80 каналов при NENG = 5).
+// МГП-8. Блок корреляторов: NENG ≤ 7 движков по 16 каналов (80 каналов при NENG = 5).
 // Группирует поток отсчётов (1 отсчёт за 4 такта clk) в группы по 4 отсчёта (группа начинается
 // с отсчёта, номер которого кратен 4) и раздаёт их движкам.
 //
-// Адрес шины (слово 32 бит): {engine[3:0], addr[8:0]} — см. карту регистров corr_engine.v.
-// Регистр блока (engine = 15, addr = 0): чтение — маска движков с запросом прерывания.
+// Адрес шины (слово 32 бит): {engine[2:0], addr[8:0]} — см. карту регистров corr_engine.v.
+// Регистр блока (engine = 7, addr = 0): чтение — маска движков с запросом прерывания.
 // Задержка чтения — 3 такта (регистр шины движка, регистр данных движка, мультиплексор блока).
 // =============================================================================
 `default_nettype none
@@ -19,7 +19,7 @@ module corr_bank #(
     input  wire [31:0] smp_count,        // номер отсчёта
     input  wire        bus_we,
     input  wire        bus_re,
-    input  wire [12:0] bus_addr,
+    input  wire [11:0] bus_addr,
     input  wire [31:0] bus_wdata,
     output reg  [31:0] bus_rdata,
     output wire        irq
@@ -50,11 +50,11 @@ module corr_bank #(
     // ------------------------------------------------------------ движки
     wire [31:0]     e_rdata [0:NENG-1];
     wire [NENG-1:0] e_irq;
-    reg  [3:0]      ra1, ra2;            // номер движка для выбора данных чтения
+    reg  [2:0]      ra1, ra2;            // номер движка для выбора данных чтения
     genvar e;
     generate
         for (e = 0; e < NENG; e = e + 1) begin : g_eng
-            wire sel = (bus_addr[12:9] == e);
+            wire sel = (bus_addr[11:9] == e);
             corr_engine u_eng (
                 .clk(clk), .rst(rst),
                 .grp_stb(grp_stb), .grp_data(grp_data), .grp_count(grp_count),
@@ -64,14 +64,14 @@ module corr_bank #(
     endgenerate
     assign irq = |e_irq;
 
-    reg [3:0] ra0;
+    reg [2:0] ra0;
     reg [NENG-1:0] irq_r;
     integer k;
     always @(posedge clk) begin
-        ra0 <= bus_addr[12:9]; ra1 <= ra0; ra2 <= ra1;
+        ra0 <= bus_addr[11:9]; ra1 <= ra0; ra2 <= ra1;
         irq_r <= e_irq;
         bus_rdata <= 32'd0;
-        if (ra1 == 4'hF)
+        if (ra1 == 3'd7)
             bus_rdata <= {{(32-NENG){1'b0}}, irq_r};
         else
             for (k = 0; k < NENG; k = k + 1)

@@ -3,7 +3,7 @@
 //
 // Адресное пространство шины FMC (слова 32 бит, адрес слова = HADDR[16:2]):
 //   0x0000–0x00FF  системные регистры (таблица ниже)
-//   0x1000–0x1FFF  корреляторы: {engine[3:0], reg[8:0]} — см. corr_bank.v, corr_engine.v
+//   0x1000–0x1FFF  корреляторы: 0x1000 + {engine[2:0], reg[8:0]} — см. corr_bank.v, corr_engine.v
 //   0x2000–0x3FFF  буфер снимка (8K слов по 8 отсчётов)
 // Системные регистры:
 //   0x00 ID = 0x4D475038 («MGP8»)            0x01 VERSION {NENG[7:0], 8'h00, версия[15:0]}
@@ -133,7 +133,7 @@ module mgp8_core #(
     corr_bank #(.NENG(NENG)) u_corr (
         .clk(clk), .rst(rst | corr_rst), .smp_stb(smp_stb), .smp_data(smp_data),
         .smp_count(smp_count[31:0]),
-        .bus_we(bus_we && sel_corr), .bus_re(bus_re && sel_corr), .bus_addr(bus_addr[12:0]),
+        .bus_we(bus_we && sel_corr), .bus_re(bus_re && sel_corr), .bus_addr(bus_addr[11:0]),
         .bus_wdata(bus_wdata), .bus_rdata(corr_rdata), .irq(corr_irq));
 
     // ------------------------------------------------------------ шкала времени

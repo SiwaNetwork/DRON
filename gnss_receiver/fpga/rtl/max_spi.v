@@ -6,8 +6,8 @@
 // спада SCLK, следующего за заголовком. (Так же работает ПО FX3 PocketSDR FE 8CH.)
 //
 // Режимы: passthru = 0 — ведущий — МК (через регистры ПЛИС); passthru = 1 — ведущий — FX3
-// (программа PocketSDR pocket_conf по USB): SCLK и CSN передаются с выводов FX3 напрямую,
-// направление SDATA переключается по заголовку кадра (чтение — от MAX2771 к FX3).
+// (программа PocketSDR pocket_conf по USB): SCLK, CSN и SDATA передаются с выводов FX3 через
+// синхронизатор, направление SDATA переключается по заголовку кадра (чтение — от MAX2771 к FX3).
 // =============================================================================
 `default_nettype none
 
@@ -78,28 +78,34 @@ module max_spi (
     end
 
     // ------------------------------------------------------------ транзит FX3
-    (* async_reg = "true" *) reg [1:0] fs_s, fc_s;
+    // Сигналы FX3 и данные MAX2771 проходят двухтриггерный синхронизатор (FX3 формирует SPI
+    // программно, такт — единицы микросекунд); все сигналы задерживаются одинаково.
+    (* async_reg = "true" *) reg [1:0] fs_s, fd_s, md_s;
+    (* async_reg = "true" *) reg [7:0] fc_1, fc_2;
+    reg       fs_3;
     reg [4:0] fcnt;
     reg       fmode, fread;
-    wire      fsel = ~&fx3_csn;
     always @(posedge clk) begin
         fs_s <= {fs_s[0], fx3_sclk};
-        fc_s <= {fc_s[0], fsel};
-        if (rst || !passthru || !fc_s[1]) begin
+        fd_s <= {fd_s[0], fx3_sdata_i};
+        md_s <= {md_s[0], max_sdata_i};
+        fc_1 <= fx3_csn; fc_2 <= fc_1;
+        fs_3 <= fs_s[1];
+        if (rst || !passthru || &fc_2) begin
             fcnt <= 0; fmode <= 1'b0; fread <= 1'b0;
-        end else if (!fs_s[1] && fs_s[0]) begin      // фронт SCLK от FX3
+        end else if (!fs_3 && fs_s[1]) begin         // фронт SCLK от FX3
             if (fcnt != 5'd31) fcnt <= fcnt + 1'b1;
-            if (fcnt == 5'd12) fmode <= fx3_sdata_i;  // 13-й бит — R/W
-        end else if (fs_s[1] && !fs_s[0]) begin      // спад
+            if (fcnt == 5'd12) fmode <= fd_s[1];      // 13-й бит — R/W
+        end else if (fs_3 && !fs_s[1]) begin         // спад
             if (fcnt == 5'd16 && fmode) fread <= 1'b1;
         end
     end
 
-    assign max_sclk     = passthru ? fx3_sclk : sclk_r;
-    assign max_csn      = passthru ? fx3_csn  : csn_r;
-    assign max_sdata_o  = passthru ? fx3_sdata_i : sh[47];
+    assign max_sclk     = passthru ? fs_s[1] : sclk_r;
+    assign max_csn      = passthru ? fc_2 : csn_r;
+    assign max_sdata_o  = passthru ? fd_s[1] : sh[47];
     assign max_sdata_oe = passthru ? !fread : oe_r;
-    assign fx3_sdata_o  = max_sdata_i;
+    assign fx3_sdata_o  = md_s[1];
     assign fx3_sdata_oe = passthru && fread;
 endmodule
 `default_nettype wire
