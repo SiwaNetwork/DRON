@@ -222,6 +222,16 @@ void lnav_encode(const eph_t *e, int sfid, int tow, int d29, int d30, uint8_t bi
         setbits(b, 192, 24, (int32_t)lround(e->OMGd / SC2RAD / P2(-43)));
         setbitu(b, 216, 8, (uint32_t)e->iode);
         setbits(b, 224, 14, (int32_t)lround(e->idot / SC2RAD / P2(-43)));
+    } else {
+        /* подкадры 4, 5: в имитаторе — псевдослучайные данные (как альманах; число переходов
+         * бит важно для синхронизации), номер страницы (SV ID) — не 56 (не ионосферная) */
+        uint32_t r = (uint32_t)tow * 2654435761u + (uint32_t)sfid;
+        for (int k = 2; k < 10; k++) {
+            r ^= r << 13; r ^= r >> 17; r ^= r << 5;
+            setbitu(b, 24 * k, 24, r & 0xFFFFFF);
+        }
+        setbitu(b, 48, 2, 1);
+        setbitu(b, 50, 6, (uint32_t)(25 + tow % 25));
     }
     /* слова 2 и 10: биты 23, 24 подбираются так, чтобы D29 = D30 = 0 (IS-GPS-200, 20.3.5.2) */
     for (int k = 0; k < 10; k++) {

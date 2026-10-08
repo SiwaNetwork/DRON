@@ -7,7 +7,7 @@
 // 4 шага коррелятора сразу. Конвейер:
 //   S0 — чтение состояния (LUTRAM, адрес = slot), положения кода и фазы несущей 4 отсчётов,
 //        эпоха кода, адреса памяти кода; запись нового состояния — в следующем такте (U);
-//   S1a — регистр выхода памяти кода;
+//   S1a, S1b — выход памяти кода (EBR с выходным регистром), выбор блока слота;
 //   S1 — окно из 8 чипов памяти кода, индексы и значения чипов E/P/L, таблица несущей;
 //   S2 — перенос на нулевую частоту;
 //   S3 — произведения на чипы, попарные суммы отсчётов до и после эпохи кода; S3b — суммы;
@@ -218,12 +218,18 @@ module corr_engine #(
     reg [1:0]      u_o4, u_pwr;
     reg [CB-1:0]   u_ci;
     reg [CB:0]     u_D, u_L;
-    reg [7:0]      u_ep, u_nint;
+    reg [7:0]      u_ep, u_e1;
+    reg            u_fi, u_fs, u_fz;
+    // признак «ep + 1 ≥ n_int» для трёх вариантов нового ep (ep + 1, ep, 0) — вычисляется тактом раньше
+    wire [7:0]  e1_0 = ep0[7:0] + 1'b1;
     always @(posedge clk) begin
         u_slot <= slot; u_v <= act0; u_en <= en0; u_wrap <= wrap0; u_dump <= dump0;
         u_pend <= pend[slot]; u_pw <= pw_now; u_pwr <= pw_reg; u_pwd <= pw_data;
         u_cp <= ph4; u_cf <= f4[W-1:0]; u_o4 <= f4[33:32]; u_ci <= ci0; u_D <= D0; u_L <= L0; u_ep <= ep0[7:0];
-        u_nint <= c0[15:8];
+        u_e1 <= e1_0;
+        u_fi <= ({1'b0, e1_0} + 9'd1 >= {1'b0, c0[15:8]});
+        u_fs <= ({1'b0, ep0[7:0]} + 9'd1 >= {1'b0, c0[15:8]});
+        u_fz <= (c0[15:8] <= 8'd1);
     end
     // новые шаги NCO: при сбросе (канал включён) или сразу (канал выключен)
     wire        u_apply = u_pend && (!u_en || (u_v && u_dump));
@@ -232,8 +238,9 @@ module corr_engine #(
     // новое расстояние до конца кода: при переходе L − (o4 − D), иначе D − o4
     wire [CB:0] u_Dn = u_wrap ? (u_L - u_ni) : (u_D - u_o4);
     // счётчик эпох и признак «следующая эпоха завершает интервал» (ep + 1 ≥ n_int)
-    wire [7:0]  u_epn = (u_v && u_wrap) ? (u_dump ? 8'd0 : u_ep + 1'b1) : (u_v ? u_ep : 8'd0);
-    wire [8:0]  u_epw = {({1'b0, u_epn} + 9'd1 >= {1'b0, u_nint}), u_epn};
+    wire [7:0]  u_epn = (u_v && u_wrap) ? (u_dump ? 8'd0 : u_e1) : (u_v ? u_ep : 8'd0);
+    wire        u_epf = (u_v && u_wrap) ? (u_dump ? u_fz : u_fi) : (u_v ? u_fs : u_fz);
+    wire [8:0]  u_epw = {u_epf, u_epn};
     always @(posedge clk) begin
         if (u_v) begin
             m_cp[u_slot] <= u_cp;
@@ -283,9 +290,8 @@ module corr_engine #(
     end
 
     // ------------------------------------------------------------ память кодов (EBR 4K×4 на слот)
-    // запись кода — только в выключенный слот, поведение при совпадении адресов не важно
-    (* no_rw_check *)
-    reg [3:0] codemem [0:(1<<(CLOG+WBITS))-1];
+    // 16 блоков читаются по одному адресу; выход выбирается по номеру слота через 2 такта
+    // (EBR с выходным регистром). Запись — только в блок текущего слота (w_slot).
     reg [CLOG-1:0]  w_slot;
     reg [WBITS-1:0] w_word;
     reg [15:0]      w_data;
@@ -293,13 +299,15 @@ module corr_engine #(
     wire w_now = (w_cnt != 0) && (slot == w_slot);
     wire [WBITS-1:0] wa0 = ci0[CB-1:2];
     wire [WBITS-1:0] wa1 = w_now ? w_word : wa0 + 1'b1;
-    reg [3:0] s1_m0, s1_m1;
-    always @(posedge clk)                // порт A: слово ci/4
-        s1_m0 <= codemem[{slot, wa0}];
-    always @(posedge clk) begin          // порт B: слово ci/4 + 1 или запись
-        if (w_now) codemem[{slot, wa1}] <= w_data[3:0];
-        s1_m1 <= codemem[{slot, wa1}];
-    end
+    wire [3:0] cm_a [0:NMUX-1];
+    wire [3:0] cm_b [0:NMUX-1];
+    genvar m;
+    generate
+        for (m = 0; m < NMUX; m = m + 1) begin : g_cmem
+            cmem_4kx4 u_cm (.clk(clk), .a_addr(wa0), .a_dout(cm_a[m]),
+                            .b_addr(wa1), .b_we(w_now && slot == m), .b_din(w_data[3:0]), .b_dout(cm_b[m]));
+        end
+    endgenerate
     always @(posedge clk) begin
         if (rst) w_cnt <= 0;
         else if (b_we && b_addr == 9'h100) begin
@@ -344,8 +352,23 @@ module corr_engine #(
         s1_t    <= cnt_l;
     end
 
-    // ------------------------------------------------------------ S1a: выход EBR -> регистр
-    // (время выборки DP16KD без выходного регистра велико, мультиплексор по слоту — после него)
+    // ------------------------------------------------------------ S1a, S1b: выход EBR -> регистр
+    // (данные памяти кода приходят через 2 такта после адреса; остальные сигналы задерживаются)
+    reg [CLOG-1:0] t0_slot;
+    reg        t0_v, t0_en, t0_dump, t0_boc, t0_tdm;
+    reg [1:0]  t0_cl;
+    reg [2:0]  t0_w;
+    reg [5:0]  t0_o;
+    reg [63:0] t0_F;
+    reg [15:0] t0_sp;
+    reg [23:0] t0_k;
+    reg [15:0] t0_x;
+    reg [31:0] t0_t;
+    always @(posedge clk) begin
+        t0_slot <= s1_slot; t0_v <= s1_v; t0_en <= s1_en; t0_dump <= s1_dump;
+        t0_boc <= s1_boc; t0_tdm <= s1_tdm; t0_cl <= s1_cl; t0_w <= s1_w; t0_o <= s1_o;
+        t0_F <= s1_F; t0_sp <= s1_sp; t0_k <= s1_k; t0_x <= s1_x; t0_t <= s1_t;
+    end
     reg [CLOG-1:0] t1_slot;
     reg        t1_v, t1_en, t1_dump, t1_boc, t1_tdm;
     reg [1:0]  t1_jw, t1_cl;
@@ -356,15 +379,15 @@ module corr_engine #(
     reg [15:0] t1_x;
     reg [31:0] t1_t;
     reg [7:0]  t1_win;
-    wire [1:0] s1_jw0 = s1_w[0] ? 2'd0 : s1_w[1] ? 2'd1 : s1_w[2] ? 2'd2 : 2'd3;
+    wire [1:0] t0_jw0 = t0_w[0] ? 2'd0 : t0_w[1] ? 2'd1 : t0_w[2] ? 2'd2 : 2'd3;
     always @(posedge clk) begin
-        t1_slot <= s1_slot; t1_v <= s1_v; t1_en <= s1_en; t1_dump <= s1_dump;
-        t1_boc <= s1_boc; t1_tdm <= s1_tdm; t1_cl <= s1_cl; t1_o <= s1_o;
-        t1_F <= s1_F; t1_sp <= s1_sp; t1_k <= s1_k; t1_x <= s1_x;
+        t1_slot <= t0_slot; t1_v <= t0_v; t1_en <= t0_en; t1_dump <= t0_dump;
+        t1_boc <= t0_boc; t1_tdm <= t0_tdm; t1_cl <= t0_cl; t1_o <= t0_o;
+        t1_F <= t0_F; t1_sp <= t0_sp; t1_k <= t0_k; t1_x <= t0_x;
         // последний отсчёт интервала: при сбросе — граница эпохи, иначе все 4 в накопитель
-        t1_jw <= s1_dump ? s1_jw0 : 2'd3;
-        t1_t  <= {s1_t[31:2], s1_jw0};
-        t1_win <= {s1_m1, s1_m0};
+        t1_jw <= t0_dump ? t0_jw0 : 2'd3;
+        t1_t  <= {t0_t[31:2], t0_jw0};
+        t1_win <= {cm_b[t0_slot], cm_a[t0_slot]};
     end
 
     // ------------------------------------------------------------ S1: чипы, таблица несущей

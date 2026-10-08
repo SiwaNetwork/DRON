@@ -35,6 +35,11 @@
 #define R_SNAP_LEN    0x0032u
 #define R_SNAP_T0     0x0033u
 #define R_DBG_SEL     0x0040u
+#define R_NOTCH_EN    0x0050u   /* [7:0] режекторный фильтр канала, [8] снимок до фильтра,
+                                 * [23:16] дизеринг */
+#define R_NOTCH_MU    0x0051u   /* 4 бита μ на канал */
+#define R_NOTCH_DPHI(k) (0x0058u + (uint32_t)(k))   /* f/Fд·2^32 */
+#define NOTCH_SNAP_RAW (1u << 8)
 #define R_SNAP_DATA   0x2000u   /* 8K слов, 8 отсчётов {sI,mI,sQ,mQ} в слове, первый — мл. */
 
 #define IRQ_CORR      (1u << 0)

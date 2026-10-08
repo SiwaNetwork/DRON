@@ -140,3 +140,20 @@ int nmea_zda(char *buf, int week, double tow, int dt_ls)
     int n = sprintf(buf, "$GNZDA,%02d%02d%06.3f,%02d,%02d,%04d,00,00", h, mi, sec, d, mo, y);
     return finish(buf, n);
 }
+
+/* GST: статистика погрешностей (σ по СКО невязок и матрице кофакторов ENU) */
+int nmea_gst(char *buf, const sol_t *s, int week, double tow, int dt_ls)
+{
+    int y, mo, d, h, mi;
+    double sec;
+    utc(week, tow, dt_ls, &y, &mo, &d, &h, &mi, &sec);
+    double s0 = s->rms, a = s->q_e, c = s->q_n, b = s->q_en;
+    double tr = (a + c) / 2, dd = sqrt((a - c) * (a - c) / 4 + b * b);
+    double l1 = tr + dd, l2 = tr - dd > 0 ? tr - dd : 0;
+    double ori = atan2(l1 - c, b) * 180 / GPI;          /* направление большой оси от севера */
+    if (fabs(b) < 1e-12) ori = a >= c ? 90 : 0;
+    if (ori < 0) ori += 180;
+    int n = sprintf(buf, "$GNGST,%02d%02d%06.3f,%.2f,%.2f,%.2f,%.1f,%.2f,%.2f,%.2f", h, mi, sec, s0,
+                    s0 * sqrt(l1), s0 * sqrt(l2), ori, s0 * sqrt(c), s0 * sqrt(a), s0 * sqrt(s->q_u));
+    return finish(buf, n);
+}

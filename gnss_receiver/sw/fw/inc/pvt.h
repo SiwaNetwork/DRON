@@ -33,6 +33,7 @@ typedef struct {
     double clk[SYS_N];       /* смещение шкалы приёмника относительно шкалы системы, м */
     double clkd;             /* дрейф часов приёмника, м/с */
     double gdop, pdop, hdop, vdop, tdop;
+    double q_e, q_n, q_u, q_en;      /* матрица кофакторов положения в осях ENU (без весов) */
     double rms;              /* СКО невязок, м */
 } sol_t;
 

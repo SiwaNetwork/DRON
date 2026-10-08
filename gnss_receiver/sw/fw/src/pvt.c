@@ -199,6 +199,7 @@ int pvt_solve(obs_t *obs, int n, double t_rx, const pvt_cfg_t *cfg, sol_t *sol)
             sol->pdop = sqrt(Qu[0] + Qu[nu + 1] + Qu[2 * nu + 2]);
             sol->tdop = sqrt(Qu[3 * nu + 3]);
             sol->gdop = sqrt(sol->pdop * sol->pdop + sol->tdop * sol->tdop);
+            sol->q_e = Qu[0]; sol->q_n = Qu[nu + 1]; sol->q_u = Qu[2 * nu + 2]; sol->q_en = Qu[1];
         }
     }
     /* скорость и дрейф часов по доплеру */

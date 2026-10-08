@@ -24,6 +24,12 @@
 //   0x30 SNAP_CTRL: [2:0] канал, [3] по времени (запись запускает), [31] занят (чт.)
 //   0x31 SNAP_T (номер отсчёта начала, мл. 32 бит), 0x32 SNAP_LEN, 0x33 SNAP_T0 (чт.)
 //   0x40 DBG_SEL — выбор сигналов на выводы отладки
+//   0x50 NOTCH_EN: [7:0] режекторный фильтр канала включён (запись обнуляет окно АРУ фильтра),
+//        [8] снимок — до фильтра (1) / после фильтра (0), [23:16] дизеринг перед повторным квантованием
+//   0x51 NOTCH_MU: 4 бита на канал (μ, постоянная сглаживания 2^μ отсчётов)
+//   0x58–0x5F NOTCH_DPHI[0..7]: приращение фазы NCO помехи за отсчёт (f/Fд·2^32, Fд = 24 МГц)
+// Корреляторы и снимок получают отсчёты после режекторного фильтра (задержка 15 тактов, номер
+// отсчёта сопровождает данные); FX3 и шкала времени — непосредственно с АЦП.
 // Задержка данных чтения — 4 такта (параметр RLAT ведомого FMC).
 // =============================================================================
 `default_nettype none
@@ -88,12 +94,16 @@ module mgp8_core #(
     reg [31:0] ctrl;
     reg [31:0] tic_period, irq_mask, pps_lo, pps_hi, pps_ctrl, ext_ctrl;
     reg [31:0] spi_wdata, spi_div, snap_ctrl, snap_t, snap_len, dbg_sel;
+    reg [31:0] notch_ctl, notch_mu;
+    reg [255:0] notch_dphi;
+    reg        notch_wr;
     reg        pps_arm, spi_start, snap_arm, corr_rst;
     always @(posedge clk) begin
-        pps_arm <= 1'b0; spi_start <= 1'b0; snap_arm <= 1'b0;
+        pps_arm <= 1'b0; spi_start <= 1'b0; snap_arm <= 1'b0; notch_wr <= 1'b0;
         if (rst) begin
             ctrl <= 32'h0000_FF00; tic_period <= 32'd0; irq_mask <= 32'd0; pps_ctrl <= 32'd9_600_000;
             ext_ctrl <= 32'd0; spi_div <= 32'd8; dbg_sel <= 32'd0; corr_rst <= 1'b1;
+            notch_ctl <= 32'd0; notch_mu <= 32'h8888_8888; notch_dphi <= 256'd0;
         end else begin
             corr_rst <= ctrl[16];
             if (bus_we && sel_sys) case (ra)
@@ -111,6 +121,10 @@ module mgp8_core #(
                 8'h31: snap_t <= bus_wdata;
                 8'h32: snap_len <= bus_wdata;
                 8'h40: dbg_sel <= bus_wdata;
+                8'h50: begin notch_ctl <= bus_wdata; notch_wr <= 1'b1; end
+                8'h51: notch_mu <= bus_wdata;
+                8'h58, 8'h59, 8'h5A, 8'h5B, 8'h5C, 8'h5D, 8'h5E, 8'h5F:
+                    notch_dphi[32*ra[2:0] +: 32] <= bus_wdata;
                 default: ;
             endcase
         end
@@ -127,12 +141,20 @@ module mgp8_core #(
         .pin_i1(max_i1), .pin_i0(max_i0), .pin_q1(max_q1), .pin_q0(max_q0),
         .smp_stb(smp_stb), .smp_data(smp_data), .smp_count(smp_count), .usb_word(usb_word), .t96(t96));
 
+    // ------------------------------------------------------------ режекторный фильтр
+    wire        f_stb;
+    wire [31:0] f_data, f_count;
+    notch u_notch (
+        .clk(clk), .rst(rst), .smp_stb(smp_stb), .smp_data(smp_data), .smp_count(smp_count[31:0]),
+        .en(notch_ctl[7:0]), .dith(notch_ctl[23:16]), .en_wr(notch_wr), .mu(notch_mu), .dphi(notch_dphi),
+        .out_stb(f_stb), .out_data(f_data), .out_count(f_count));
+
     // ------------------------------------------------------------ корреляторы
     wire [31:0] corr_rdata;
     wire        corr_irq;
     corr_bank #(.NENG(NENG)) u_corr (
-        .clk(clk), .rst(rst | corr_rst), .smp_stb(smp_stb), .smp_data(smp_data),
-        .smp_count(smp_count[31:0]),
+        .clk(clk), .rst(rst | corr_rst), .smp_stb(f_stb), .smp_data(f_data),
+        .smp_count(f_count),
         .bus_we(bus_we && sel_corr), .bus_re(bus_re && sel_corr), .bus_addr(bus_addr[11:0]),
         .bus_wdata(bus_wdata), .bus_rdata(corr_rdata), .irq(corr_irq));
 
@@ -165,8 +187,10 @@ module mgp8_core #(
     // ------------------------------------------------------------ снимок
     wire        snap_busy, snap_done;
     wire [31:0] snap_t0, snap_rdata;
+    wire        s_raw = notch_ctl[8];
     snapshot u_snap (
-        .clk(clk), .rst(rst), .smp_stb(smp_stb), .smp_data(smp_data), .smp_count(smp_count),
+        .clk(clk), .rst(rst), .smp_stb(s_raw ? smp_stb : f_stb), .smp_data(s_raw ? smp_data : f_data),
+        .smp_count(s_raw ? smp_count : {32'd0, f_count}),
         .arm(snap_arm), .ch(snap_ctrl[2:0]), .at_time(snap_ctrl[3]), .t_start(snap_t),
         .len(snap_len[16:0]), .busy(snap_busy), .done(snap_done), .t0(snap_t0),
         .rd_addr(bus_addr[12:0]), .rd_data(snap_rdata));
@@ -233,6 +257,10 @@ module mgp8_core #(
             8'h32: sys_rd <= snap_len;
             8'h33: sys_rd <= snap_t0;
             8'h40: sys_rd <= dbg_sel;
+            8'h50: sys_rd <= notch_ctl;
+            8'h51: sys_rd <= notch_mu;
+            8'h58, 8'h59, 8'h5A, 8'h5B, 8'h5C, 8'h5D, 8'h5E, 8'h5F:
+                   sys_rd <= notch_dphi[32*ra[2:0] +: 32];
             default: sys_rd <= 32'd0;
         endcase
     end
