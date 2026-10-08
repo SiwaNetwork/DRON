@@ -412,9 +412,18 @@ def build():
     # питание FX3 от VBUS
     s.add(ics.spx3819("3.3"), {"IN": "+5V_USB", "EN": "+5V_USB", "GND": GND, "OUT": "+3V3_FX3", "BP": "FX3_BP33"}, "ldo")
     s.add(C("10n"), {"1": "FX3_BP33", "2": GND}, "ldo")
-    s.add(ics.spx3819("1.2"), {"IN": "+5V_USB", "EN": "+5V_USB", "GND": GND, "OUT": "+1V2_FX3", "BP": "FX3_BP12"}, "ldo")
-    s.add(C("10n"), {"1": "FX3_BP12", "2": GND}, "ldo")
     s.add(C("10u"), {"1": "+5V_USB", "2": GND}, "ldo")
+    # ядро FX3 1,2 В — импульсный стабилизатор (линейный 5 -> 1,2 В рассеивал бы 0,8 Вт, ПЗ разд. 9);
+    # PG — признак готовности питания FX3 для ПЛИС (FX3_PWR_OK)
+    s.add(ics.tps62130(), {"VIN": "+5V_USB", "EN": "+5V_USB", "FSW": GND, "DEF": GND, "SS/TR": "SS_1V2_FX3",
+                           "GND": GND, "SW": "SW_1V2_FX3", "VOS": "+1V2_FX3", "FB": "FB_1V2_FX3",
+                           "PG": "FX3_PWR_OK"}, "dc3")
+    s.add(C("10u"), {"1": "+5V_USB", "2": GND}, "dc3")
+    s.add(C("100n"), {"1": "+5V_USB", "2": GND}, "dc3")
+    s.add(C("10n"), {"1": "SS_1V2_FX3", "2": GND}, "dc3")
+    s.add(P.inductor("2.2u"), {"1": "SW_1V2_FX3", "2": "+1V2_FX3"}, "dc3")
+    s.add(R("49.9k"), {"1": "+1V2_FX3", "2": "FB_1V2_FX3"}, "dc3")
+    s.add(R("100k"), {"1": "FB_1V2_FX3", "2": GND}, "dc3")
     for net in ("+3V3_FX3", "+1V2_FX3"):
         s.add(C("22u"), {"1": net, "2": GND}, f"dec{net}")
         for _ in range(6):

@@ -20,6 +20,7 @@ typedef struct {
     /* зеркало NCO */
     uint64_t t_ref;           /* отсчёт, к началу которого отнесено состояние */
     uint64_t code_fx;         /* фаза кода, чипы·2^32, в [0, L·2^32) */
+    uint64_t code_tot;        /* фаза кода без свёртки, чипы·2^32 (mod 2^64) — для времени излучения */
     int64_t  dop_fx;          /* доплеровская фаза несущей, циклы·2^32 (без номинальной ПЧ) */
     uint32_t code_rate, carr_rate;
     uint32_t if_rate;         /* шаг NCO номинальной ПЧ сигнала */
@@ -53,6 +54,8 @@ void     corr_set_rates(int ch, double f_carr_hz, double code_cps);
 int      corr_read(int ch, corr_dump_t *d, uint64_t n_now);
 /* фаза кода (чипы, по модулю L) и доплеровская фаза несущей (циклы) на начало отсчёта n ≥ t_ref */
 void     corr_phase_at(int ch, uint64_t n, double *code_chips, double *carr_cyc);
+/* фаза кода без свёртки на начало отсчёта n (чипы·2^32, mod 2^64) */
+uint64_t corr_code_total_at(int ch, uint64_t n);
 uint32_t corr_rate_carr(double f_hz);
 uint32_t corr_rate_code(double cps);
 uint64_t corr_time_now(void);                 /* текущий номер отсчёта (по T96) */

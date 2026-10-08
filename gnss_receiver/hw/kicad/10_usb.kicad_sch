@@ -3708,6 +3708,142 @@
         )
       )
     )
+    (symbol "mgp8:L"
+      (pin_numbers hide)
+      (pin_names
+        (offset 0) hide
+      )
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "L"
+        (at 3.2 1.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Value" "L"
+        (at 3.2 -1.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "L_0_1"
+        (arc
+          (start 0 5.08)
+          (mid 1.27 3.81)
+          (end 0 2.54)
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (arc
+          (start 0 2.54)
+          (mid 1.27 1.27)
+          (end 0 0)
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (arc
+          (start 0 0)
+          (mid 1.27 -1.27)
+          (end 0 -2.54)
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (arc
+          (start 0 -2.54)
+          (mid 1.27 -3.81)
+          (end 0 -5.08)
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+      )
+      (symbol "L_1_1"
+        (pin passive line
+          (at 0 7.62 270)
+          (length 2.54)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+        (pin passive line
+          (at 0 -7.62 90)
+          (length 2.54)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "2"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+      )
+    )
     (symbol "mgp8:LED"
       (pin_numbers hide)
       (pin_names
@@ -4499,206 +4635,6 @@
         )
       )
     )
-    (symbol "mgp8:SPX3819_1.2"
-      (pin_names
-        (offset 0.762)
-      )
-      (in_bom yes)
-      (on_board yes)
-      (property "Reference" "DA"
-        (at 0 22.82 0)
-        (effects
-          (font
-            (face "osifont")
-            (size 2.5 2.5)
-          )
-        )
-      )
-      (property "Value" "SPX3819M5-L-1-2/TR"
-        (at 0 25.82 0)
-        (effects
-          (font
-            (face "osifont")
-            (size 2.5 2.5)
-          ) hide
-        )
-      )
-      (property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
-        (at 0 0 0)
-        (effects
-          (font
-            (face "osifont")
-            (size 2.5 2.5)
-          ) hide
-        )
-      )
-      (property "Datasheet" ""
-        (at 0 0 0)
-        (effects
-          (font
-            (face "osifont")
-            (size 2.5 2.5)
-          ) hide
-        )
-      )
-      (symbol "SPX3819_1.2_1_1"
-        (rectangle
-          (start -12.7 -20.32)
-          (end 12.7 20.32)
-          (stroke
-            (width 0.35)
-            (type default)
-          )
-          (fill
-            (type none)
-          )
-        )
-        (polyline
-          (pts
-            (xy -6.15 20.32)
-            (xy -6.15 -20.32)
-          )
-          (stroke
-            (width 0.25)
-            (type default)
-          )
-          (fill
-            (type none)
-          )
-        )
-        (polyline
-          (pts
-            (xy 6.15 20.32)
-            (xy 6.15 -20.32)
-          )
-          (stroke
-            (width 0.25)
-            (type default)
-          )
-          (fill
-            (type none)
-          )
-        )
-        (text "LDO"
-          (at 0 17.32 0)
-          (effects
-            (font
-              (face "osifont")
-              (size 2.5 2.5)
-            )
-          )
-        )
-        (text "1.2 В"
-          (at 0 14.32 0)
-          (effects
-            (font
-              (face "osifont")
-              (size 2 2)
-            )
-          )
-        )
-        (pin power_in line
-          (at -17.78 10.16 0)
-          (length 5.08)
-          (name "IN"
-            (effects
-              (font
-                (face "osifont")
-                (size 2 2)
-              )
-            )
-          )
-          (number "1"
-            (effects
-              (font
-                (face "osifont")
-                (size 2 2)
-              )
-            )
-          )
-        )
-        (pin input line
-          (at -17.78 5.08 0)
-          (length 5.08)
-          (name "EN"
-            (effects
-              (font
-                (face "osifont")
-                (size 2 2)
-              )
-            )
-          )
-          (number "3"
-            (effects
-              (font
-                (face "osifont")
-                (size 2 2)
-              )
-            )
-          )
-        )
-        (pin power_in line
-          (at -17.78 -5.08 0)
-          (length 5.08)
-          (name "GND"
-            (effects
-              (font
-                (face "osifont")
-                (size 2 2)
-              )
-            )
-          )
-          (number "2"
-            (effects
-              (font
-                (face "osifont")
-                (size 2 2)
-              )
-            )
-          )
-        )
-        (pin power_out line
-          (at 17.78 10.16 180)
-          (length 5.08)
-          (name "OUT"
-            (effects
-              (font
-                (face "osifont")
-                (size 2 2)
-              )
-            )
-          )
-          (number "5"
-            (effects
-              (font
-                (face "osifont")
-                (size 2 2)
-              )
-            )
-          )
-        )
-        (pin input line
-          (at 17.78 5.08 180)
-          (length 5.08)
-          (name "BP"
-            (effects
-              (font
-                (face "osifont")
-                (size 2 2)
-              )
-            )
-          )
-          (number "4"
-            (effects
-              (font
-                (face "osifont")
-                (size 2 2)
-              )
-            )
-          )
-        )
-      )
-    )
     (symbol "mgp8:SPX3819_3.3"
       (pin_names
         (offset 0.762)
@@ -4881,6 +4817,446 @@
           (at 17.78 5.08 180)
           (length 5.08)
           (name "BP"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "4"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+      )
+    )
+    (symbol "mgp8:TPS62130"
+      (pin_names
+        (offset 0.762)
+      )
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "DA"
+        (at 0 32.98 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Value" "TPS62130RGTR"
+        (at 0 35.98 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Footprint" "Package_DFN_QFN:VQFN-16-1EP_3x3mm_P0.5mm_EP1.68x1.68mm_ThermalVias"
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "TPS62130_1_1"
+        (rectangle
+          (start -15.24 -30.48)
+          (end 15.24 30.48)
+          (stroke
+            (width 0.35)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy -5.99 30.48)
+            (xy -5.99 -30.48)
+          )
+          (stroke
+            (width 0.25)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy 8.69 30.48)
+            (xy 8.69 -30.48)
+          )
+          (stroke
+            (width 0.25)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (text "DC/DC"
+          (at 1.35 27.48 0)
+          (effects
+            (font
+              (face "osifont")
+              (size 2.5 2.5)
+            )
+          )
+        )
+        (text "3 А"
+          (at 1.35 24.48 0)
+          (effects
+            (font
+              (face "osifont")
+              (size 2 2)
+            )
+          )
+        )
+        (pin power_in line
+          (at -20.32 20.32 0)
+          (length 5.08)
+          (name "VIN"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "10"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin power_in line
+          (at -20.32 20.32 0)
+          (length 5.08)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+          (number "11"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+        )
+        (pin power_in line
+          (at -20.32 20.32 0)
+          (length 5.08)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+          (number "12"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+        )
+        (pin input line
+          (at -20.32 15.24 0)
+          (length 5.08)
+          (name "EN"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "13"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin input line
+          (at -20.32 5.08 0)
+          (length 5.08)
+          (name "FSW"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "7"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin input line
+          (at -20.32 0 0)
+          (length 5.08)
+          (name "DEF"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "8"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin input line
+          (at -20.32 -5.08 0)
+          (length 5.08)
+          (name "SS/TR"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "9"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin power_in line
+          (at -20.32 -15.24 0)
+          (length 5.08)
+          (name "GND"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "15"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin power_in line
+          (at -20.32 -15.24 0)
+          (length 5.08)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+          (number "16"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+        )
+        (pin power_in line
+          (at -20.32 -15.24 0)
+          (length 5.08)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+          (number "17"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+        )
+        (pin power_in line
+          (at -20.32 -15.24 0)
+          (length 5.08)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+          (number "6"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+        )
+        (pin power_in line
+          (at 20.32 20.32 180)
+          (length 5.08)
+          (name "SW"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin power_in line
+          (at 20.32 20.32 180)
+          (length 5.08)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+          (number "2"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+        )
+        (pin power_in line
+          (at 20.32 20.32 180)
+          (length 5.08)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+          (number "3"
+            (effects
+              (font
+                (face "osifont")
+                (size 0.01 0.01)
+              )
+            )
+          )
+        )
+        (pin input line
+          (at 20.32 15.24 180)
+          (length 5.08)
+          (name "VOS"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "14"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin input line
+          (at 20.32 10.16 180)
+          (length 5.08)
+          (name "FB"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "5"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin open_collector line
+          (at 20.32 5.08 180)
+          (length 5.08)
+          (name "PG"
             (effects
               (font
                 (face "osifont")
@@ -13394,8 +13770,8 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "605e4d7b-ffc7-5e3a-ae65-c39d11f9c1c5")
-    (property "Reference" "C228"
+    (uuid "1b9fa944-6959-5841-9733-ddb0070da3bf")
+    (property "Reference" "C225"
       (at 598.83 101.47 0)
       (effects
         (font
@@ -13470,15 +13846,15 @@
       )
     )
     (pin "1"
-      (uuid "f35a1e14-f70e-5122-854f-cf47ed35a910")
+      (uuid "8693fcd6-e18d-5bfd-857c-12f9e30352b0")
     )
     (pin "2"
-      (uuid "f9fb6f73-cc40-5f84-9850-26cb14ae652d")
+      (uuid "e29f13dd-7ece-57bd-9927-91667d434660")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "C228")
+          (reference "C225")
           (unit 1)
         )
       )
@@ -14443,8 +14819,8 @@
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "00e4033c-9a14-5381-8b3e-8043f694035f")
-    (property "Reference" "DA26"
+    (uuid "6a666db3-52d4-56bf-a5c3-657e77e29730")
+    (property "Reference" "DA27"
       (at 758.19 31.52 0)
       (effects
         (font
@@ -14519,27 +14895,27 @@
       )
     )
     (pin "1"
-      (uuid "ee108c68-635d-537f-805b-55d4eb5e0a6e")
+      (uuid "8a3e2131-6c31-566f-a4c5-ec0eae444fb9")
     )
     (pin "3"
-      (uuid "ffcf5c6c-a54a-51ae-a28c-3d3736e6da74")
+      (uuid "9f9575ab-91b3-5015-9eb7-3775b86bcab3")
     )
     (pin "5"
-      (uuid "3f02f7f1-cc4c-5480-bd9f-a7a8a072037f")
+      (uuid "d202ed8d-2d02-5d48-99bc-c7d08085bd93")
     )
     (pin "2"
-      (uuid "6bfcddb9-959e-54a4-82f7-425a6b532760")
+      (uuid "e30902f1-2e65-5418-a6c3-da564ff31a42")
     )
     (pin "6"
-      (uuid "7fc3298f-0917-554e-8a16-47a44d626e05")
+      (uuid "e44f1fe2-53a7-5fe1-933b-79c5746c2871")
     )
     (pin "4"
-      (uuid "c316af6b-ee23-5b9b-a15c-f2f34d55e5da")
+      (uuid "d821b3f9-c188-561b-b0dd-35edbf649798")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "DA26")
+          (reference "DA27")
           (unit 1)
         )
       )
@@ -16439,14 +16815,14 @@
   )
   (symbol
     (lib_id "mgp8:SPX3819_3.3")
-    (at 689.61 186.69 0)
+    (at 560.07 157.48 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
     (uuid "55b42dda-e6e9-5f9f-bf25-e82c07977948")
     (property "Reference" "DA25"
-      (at 676.91 164.87 0)
+      (at 547.37 135.66 0)
       (effects
         (font
           (face "osifont")
@@ -16456,7 +16832,7 @@
       )
     )
     (property "Value" "SPX3819M5-L-3-3/TR"
-      (at 676.91 164.87 0)
+      (at 547.37 135.66 0)
       (effects
         (font
           (face "osifont")
@@ -16466,7 +16842,7 @@
       )
     )
     (property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
-      (at 689.61 186.69 0)
+      (at 560.07 157.48 0)
       (effects
         (font
           (face "osifont")
@@ -16475,7 +16851,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 689.61 186.69 0)
+      (at 560.07 157.48 0)
       (effects
         (font
           (face "osifont")
@@ -16484,7 +16860,7 @@
       )
     )
     (property "Наименование" "Микросхема SPX3819M5-L-3-3/TR"
-      (at 689.61 186.69 0)
+      (at 560.07 157.48 0)
       (effects
         (font
           (face "osifont")
@@ -16493,7 +16869,7 @@
       )
     )
     (property "Изготовитель" "MaxLinear"
-      (at 689.61 186.69 0)
+      (at 560.07 157.48 0)
       (effects
         (font
           (face "osifont")
@@ -16502,7 +16878,7 @@
       )
     )
     (property "Артикул" "SPX3819M5-L-3-3/TR"
-      (at 689.61 186.69 0)
+      (at 560.07 157.48 0)
       (effects
         (font
           (face "osifont")
@@ -16511,7 +16887,7 @@
       )
     )
     (property "Примечание" ""
-      (at 689.61 186.69 0)
+      (at 560.07 157.48 0)
       (effects
         (font
           (face "osifont")
@@ -16545,8 +16921,8 @@
   )
   (wire
     (pts
-      (xy 671.83 176.53)
-      (xy 669.29 176.53)
+      (xy 542.29 147.32)
+      (xy 539.75 147.32)
     )
     (stroke
       (width 0)
@@ -16556,7 +16932,7 @@
   )
   (global_label "+5V_USB"
     (shape passive)
-    (at 669.29 176.53 180)
+    (at 539.75 147.32 180)
     (fields_autoplaced)
     (effects
       (font
@@ -16567,7 +16943,7 @@
     )
     (uuid "adad2ee8-cc7e-57b5-9f6b-191d25455c29")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 669.29 176.53 0)
+      (at 539.75 147.32 0)
       (effects
         (font
           (face "osifont")
@@ -16579,8 +16955,8 @@
   )
   (wire
     (pts
-      (xy 671.83 181.61)
-      (xy 669.29 181.61)
+      (xy 542.29 152.4)
+      (xy 539.75 152.4)
     )
     (stroke
       (width 0)
@@ -16590,7 +16966,7 @@
   )
   (global_label "+5V_USB"
     (shape passive)
-    (at 669.29 181.61 180)
+    (at 539.75 152.4 180)
     (fields_autoplaced)
     (effects
       (font
@@ -16601,7 +16977,7 @@
     )
     (uuid "6eff3687-774a-53eb-b090-cd62c22e1cbb")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 669.29 181.61 0)
+      (at 539.75 152.4 0)
       (effects
         (font
           (face "osifont")
@@ -16613,8 +16989,8 @@
   )
   (wire
     (pts
-      (xy 671.83 191.77)
-      (xy 669.29 191.77)
+      (xy 542.29 162.56)
+      (xy 539.75 162.56)
     )
     (stroke
       (width 0)
@@ -16624,14 +17000,14 @@
   )
   (symbol
     (lib_id "mgp8:GND")
-    (at 669.29 191.77 270)
+    (at 539.75 162.56 270)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
     (uuid "418ed1fc-074d-53cb-964c-ef5d08e79c52")
     (property "Reference" "#PWR10037"
-      (at 669.29 191.77 0)
+      (at 539.75 162.56 0)
       (effects
         (font
           (face "osifont")
@@ -16640,7 +17016,7 @@
       )
     )
     (property "Value" "GND"
-      (at 669.29 191.77 0)
+      (at 539.75 162.56 0)
       (effects
         (font
           (face "osifont")
@@ -16649,7 +17025,7 @@
       )
     )
     (property "Footprint" ""
-      (at 669.29 191.77 0)
+      (at 539.75 162.56 0)
       (effects
         (font
           (face "osifont")
@@ -16658,7 +17034,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 669.29 191.77 0)
+      (at 539.75 162.56 0)
       (effects
         (font
           (face "osifont")
@@ -16680,8 +17056,8 @@
   )
   (wire
     (pts
-      (xy 707.39 176.53)
-      (xy 709.93 176.53)
+      (xy 577.85 147.32)
+      (xy 580.39 147.32)
     )
     (stroke
       (width 0)
@@ -16691,7 +17067,7 @@
   )
   (global_label "+3V3_FX3"
     (shape passive)
-    (at 709.93 176.53 0)
+    (at 580.39 147.32 0)
     (fields_autoplaced)
     (effects
       (font
@@ -16702,7 +17078,7 @@
     )
     (uuid "5ae47c45-26f3-543c-a4ab-cefe05225a4c")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 709.93 176.53 0)
+      (at 580.39 147.32 0)
       (effects
         (font
           (face "osifont")
@@ -16714,8 +17090,8 @@
   )
   (wire
     (pts
-      (xy 707.39 181.61)
-      (xy 709.93 181.61)
+      (xy 577.85 152.4)
+      (xy 580.39 152.4)
     )
     (stroke
       (width 0)
@@ -16725,7 +17101,7 @@
   )
   (global_label "FX3_BP33"
     (shape passive)
-    (at 709.93 181.61 0)
+    (at 580.39 152.4 0)
     (fields_autoplaced)
     (effects
       (font
@@ -16736,316 +17112,7 @@
     )
     (uuid "7201aefb-540d-534d-947e-5996d2fe3cac")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 709.93 181.61 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.8 1.8)
-        )
-        (justify left) hide
-      )
-    )
-  )
-  (symbol
-    (lib_id "mgp8:SPX3819_1.2")
-    (at 769.62 186.69 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "6a666db3-52d4-56bf-a5c3-657e77e29730")
-    (property "Reference" "DA27"
-      (at 756.92 164.87 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        )
-        (justify left bottom)
-      )
-    )
-    (property "Value" "SPX3819M5-L-1-2/TR"
-      (at 756.92 164.87 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2 2)
-        )
-        (justify left top) hide
-      )
-    )
-    (property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
-      (at 769.62 186.69 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 769.62 186.69 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Наименование" "Микросхема SPX3819M5-L-1-2/TR"
-      (at 769.62 186.69 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Изготовитель" "MaxLinear"
-      (at 769.62 186.69 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Артикул" "SPX3819M5-L-1-2/TR"
-      (at 769.62 186.69 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Примечание" ""
-      (at 769.62 186.69 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "8a3e2131-6c31-566f-a4c5-ec0eae444fb9")
-    )
-    (pin "3"
-      (uuid "9f9575ab-91b3-5015-9eb7-3775b86bcab3")
-    )
-    (pin "2"
-      (uuid "5791d06d-8254-5b77-a10f-5c80748b4ffd")
-    )
-    (pin "5"
-      (uuid "342e5805-40d3-5157-8925-3f2433fbdbc3")
-    )
-    (pin "4"
-      (uuid "d821b3f9-c188-561b-b0dd-35edbf649798")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "DA27")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 751.84 176.53)
-      (xy 749.3 176.53)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "001bf1d6-8ac4-534b-8111-59f9004b822c")
-  )
-  (global_label "+5V_USB"
-    (shape passive)
-    (at 749.3 176.53 180)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify right)
-    )
-    (uuid "88189bf5-714a-5b84-b928-deee09b0c681")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 749.3 176.53 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.8 1.8)
-        )
-        (justify left) hide
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 751.84 181.61)
-      (xy 749.3 181.61)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "c07242a7-410e-5720-96ef-bc424067250e")
-  )
-  (global_label "+5V_USB"
-    (shape passive)
-    (at 749.3 181.61 180)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify right)
-    )
-    (uuid "fbd53f23-4c5e-584e-b427-e274198ae379")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 749.3 181.61 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.8 1.8)
-        )
-        (justify left) hide
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 751.84 191.77)
-      (xy 749.3 191.77)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "ece5413d-c3d5-56c7-a6aa-b58ed2778313")
-  )
-  (symbol
-    (lib_id "mgp8:GND")
-    (at 749.3 191.77 270)
-    (unit 1)
-    (in_bom no)
-    (on_board no)
-    (dnp no)
-    (uuid "d665c3a1-0cab-5623-9490-7ebaaf2f4b6b")
-    (property "Reference" "#PWR10038"
-      (at 749.3 191.77 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Value" "GND"
-      (at 749.3 191.77 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Footprint" ""
-      (at 749.3 191.77 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 749.3 191.77 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "880221ec-c34f-58a1-90c6-17d92a869cc6")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10038")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 787.4 176.53)
-      (xy 789.94 176.53)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "12cbb447-a354-56d9-bc40-3bec3e3c0562")
-  )
-  (global_label "+1V2_FX3"
-    (shape passive)
-    (at 789.94 176.53 0)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify left)
-    )
-    (uuid "9c1130d7-1bac-5642-90bf-22023abe1139")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 789.94 176.53 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.8 1.8)
-        )
-        (justify left) hide
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 787.4 181.61)
-      (xy 789.94 181.61)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "015737e1-b08e-5b44-9383-756903947e98")
-  )
-  (global_label "FX3_BP12"
-    (shape passive)
-    (at 789.94 181.61 0)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify left)
-    )
-    (uuid "68c2475f-1046-5f55-a00d-118386a0329b")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 789.94 181.61 0)
+      (at 580.39 152.4 0)
       (effects
         (font
           (face "osifont")
@@ -17057,619 +17124,14 @@
   )
   (symbol
     (lib_id "mgp8:C")
-    (at 656.59 232.41 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "b60f8795-5cba-5525-9810-a54ed7d05ea8")
-    (property "Reference" "C231"
-      (at 659.79 231.01 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        )
-        (justify left bottom)
-      )
-    )
-    (property "Value" "10нФ"
-      (at 659.79 235.01 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2 2)
-        )
-        (justify left top)
-      )
-    )
-    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-      (at 656.59 232.41 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 656.59 232.41 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Наименование" "Конденсатор 0402 X7R 50 В 10 нФ"
-      (at 656.59 232.41 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Изготовитель" "Murata"
-      (at 656.59 232.41 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Артикул" "GRM155R71H103KA88D"
-      (at 656.59 232.41 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Примечание" ""
-      (at 656.59 232.41 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "99d14396-4c08-5124-be73-cd0dbd3ef2d5")
-    )
-    (pin "2"
-      (uuid "838a6a7a-c2de-530e-9360-20bba7441b4d")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "C231")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 656.59 228.6)
-      (xy 656.59 226.06)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "d3eed03b-5698-55e1-b6e4-155e30b6a455")
-  )
-  (label "FX3_BP33"
-    (at 656.59 226.06 90)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify left bottom)
-    )
-    (uuid "1cfcae1d-fb87-5fb3-9049-519e98920995")
-  )
-  (wire
-    (pts
-      (xy 656.59 236.22)
-      (xy 656.59 238.76)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "69462c9c-73b3-5b0c-9412-83eff522918c")
-  )
-  (symbol
-    (lib_id "mgp8:GND")
-    (at 656.59 238.76 0)
-    (unit 1)
-    (in_bom no)
-    (on_board no)
-    (dnp no)
-    (uuid "c333bae4-2b75-51dc-82c6-8873e648cf9e")
-    (property "Reference" "#PWR10039"
-      (at 656.59 238.76 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Value" "GND"
-      (at 656.59 238.76 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Footprint" ""
-      (at 656.59 238.76 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 656.59 238.76 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "9e3e380e-438d-53d2-ab64-7816f7b88456")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10039")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (symbol
-    (lib_id "mgp8:C")
-    (at 674.37 232.41 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "711b69bd-cae6-5228-9d07-2ff109fbbe18")
-    (property "Reference" "C233"
-      (at 677.57 231.01 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        )
-        (justify left bottom)
-      )
-    )
-    (property "Value" "10нФ"
-      (at 677.57 235.01 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2 2)
-        )
-        (justify left top)
-      )
-    )
-    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-      (at 674.37 232.41 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 674.37 232.41 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Наименование" "Конденсатор 0402 X7R 50 В 10 нФ"
-      (at 674.37 232.41 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Изготовитель" "Murata"
-      (at 674.37 232.41 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Артикул" "GRM155R71H103KA88D"
-      (at 674.37 232.41 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Примечание" ""
-      (at 674.37 232.41 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "523dcd31-bee0-5a60-b698-535059d36275")
-    )
-    (pin "2"
-      (uuid "8292bb04-d290-5e1b-b79d-163978bfb085")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "C233")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 674.37 228.6)
-      (xy 674.37 226.06)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "c745dfce-0b0c-5052-af7d-f317afca1469")
-  )
-  (label "FX3_BP12"
-    (at 674.37 226.06 90)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify left bottom)
-    )
-    (uuid "2c848ad4-fe67-5f28-9407-9df8a507d122")
-  )
-  (wire
-    (pts
-      (xy 674.37 236.22)
-      (xy 674.37 238.76)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "cc10e911-e97a-5664-8b3b-22d0d8ef8b0b")
-  )
-  (symbol
-    (lib_id "mgp8:GND")
-    (at 674.37 238.76 0)
-    (unit 1)
-    (in_bom no)
-    (on_board no)
-    (dnp no)
-    (uuid "daf8f028-7605-5395-bb93-8644cb575ae4")
-    (property "Reference" "#PWR10040"
-      (at 674.37 238.76 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Value" "GND"
-      (at 674.37 238.76 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Footprint" ""
-      (at 674.37 238.76 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 674.37 238.76 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "b5b9e6a8-3c29-5b6d-bff0-64b3cc62983d")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10040")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (symbol
-    (lib_id "mgp8:C")
-    (at 694.69 227.33 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "8f97f809-0444-5518-80a1-5aec9178f22b")
-    (property "Reference" "C232"
-      (at 697.89 225.93 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        )
-        (justify left bottom)
-      )
-    )
-    (property "Value" "10мкФ"
-      (at 697.89 229.93 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2 2)
-        )
-        (justify left top)
-      )
-    )
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 694.69 227.33 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 694.69 227.33 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Наименование" "Конденсатор 0603 X5R 10 В 10 мкФ"
-      (at 694.69 227.33 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Изготовитель" "Murata"
-      (at 694.69 227.33 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Артикул" "GRM188R61A106KE69D"
-      (at 694.69 227.33 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Примечание" ""
-      (at 694.69 227.33 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "ae2fb2d3-8afa-5690-8e53-0c786dc53cb9")
-    )
-    (pin "2"
-      (uuid "36fa2484-8713-5da1-aec0-831fe207aade")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "C232")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 694.69 223.52)
-      (xy 694.69 220.98)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "8d61a95d-2f5f-5594-b11c-4f2b737a6961")
-  )
-  (symbol
-    (lib_id "mgp8:+5V_USB")
-    (at 694.69 220.98 0)
-    (unit 1)
-    (in_bom no)
-    (on_board no)
-    (dnp no)
-    (uuid "71a062e8-47ce-5440-b1b5-03f7d1057a9d")
-    (property "Reference" "#PWR10041"
-      (at 694.69 220.98 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Value" "+5V_USB"
-      (at 694.69 216.38 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        )
-      )
-    )
-    (property "Footprint" ""
-      (at 694.69 220.98 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 694.69 220.98 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "e54a89cc-f881-5309-a94a-3ed3b285ae32")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10041")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 694.69 231.14)
-      (xy 694.69 233.68)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "8a67e32c-a60d-5640-a71a-84a5099f6b35")
-  )
-  (symbol
-    (lib_id "mgp8:GND")
-    (at 694.69 233.68 0)
-    (unit 1)
-    (in_bom no)
-    (on_board no)
-    (dnp no)
-    (uuid "ade51825-12f6-5a89-8722-946ad49204b0")
-    (property "Reference" "#PWR10042"
-      (at 694.69 233.68 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Value" "GND"
-      (at 694.69 233.68 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Footprint" ""
-      (at 694.69 233.68 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 694.69 233.68 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "70183c94-2b00-52f3-80d6-83123c40eae5")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10042")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (symbol
-    (lib_id "mgp8:C")
-    (at 530.86 148.59 0)
+    (at 527.05 203.2 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
     (uuid "cdf8d81d-8872-54d3-8dc8-9a45971d05d4")
     (property "Reference" "C223"
-      (at 534.06 147.19 0)
+      (at 530.25 201.8 0)
       (effects
         (font
           (face "osifont")
@@ -17678,8 +17140,8 @@
         (justify left bottom)
       )
     )
-    (property "Value" "22мкФ"
-      (at 534.06 151.19 0)
+    (property "Value" "10нФ"
+      (at 530.25 205.8 0)
       (effects
         (font
           (face "osifont")
@@ -17688,8 +17150,8 @@
         (justify left top)
       )
     )
-    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-      (at 530.86 148.59 0)
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+      (at 527.05 203.2 0)
       (effects
         (font
           (face "osifont")
@@ -17698,7 +17160,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 530.86 148.59 0)
+      (at 527.05 203.2 0)
       (effects
         (font
           (face "osifont")
@@ -17706,8 +17168,8 @@
         ) hide
       )
     )
-    (property "Наименование" "Конденсатор 0603 X5R 10 В 22 мкФ"
-      (at 530.86 148.59 0)
+    (property "Наименование" "Конденсатор 0402 X7R 50 В 10 нФ"
+      (at 527.05 203.2 0)
       (effects
         (font
           (face "osifont")
@@ -17716,7 +17178,7 @@
       )
     )
     (property "Изготовитель" "Murata"
-      (at 530.86 148.59 0)
+      (at 527.05 203.2 0)
       (effects
         (font
           (face "osifont")
@@ -17724,8 +17186,8 @@
         ) hide
       )
     )
-    (property "Артикул" "GRM188R61A226ME15D"
-      (at 530.86 148.59 0)
+    (property "Артикул" "GRM155R71H103KA88D"
+      (at 527.05 203.2 0)
       (effects
         (font
           (face "osifont")
@@ -17734,7 +17196,7 @@
       )
     )
     (property "Примечание" ""
-      (at 530.86 148.59 0)
+      (at 527.05 203.2 0)
       (effects
         (font
           (face "osifont")
@@ -17759,92 +17221,48 @@
   )
   (wire
     (pts
-      (xy 530.86 144.78)
-      (xy 530.86 142.24)
+      (xy 527.05 199.39)
+      (xy 527.05 196.85)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "5574f878-f005-5590-9253-c7b91e72bf02")
+    (uuid "001bf1d6-8ac4-534b-8111-59f9004b822c")
   )
-  (symbol
-    (lib_id "mgp8:+3V3_FX3")
-    (at 530.86 142.24 0)
-    (unit 1)
-    (in_bom no)
-    (on_board no)
-    (dnp no)
-    (uuid "8b2f060b-0920-55a4-b2cb-cbc513574227")
-    (property "Reference" "#PWR10043"
-      (at 530.86 142.24 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
+  (label "FX3_BP33"
+    (at 527.05 196.85 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
       )
+      (justify left bottom)
     )
-    (property "Value" "+3V3_FX3"
-      (at 530.86 137.64 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        )
-      )
-    )
-    (property "Footprint" ""
-      (at 530.86 142.24 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 530.86 142.24 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "da8cd74d-a5c3-5be2-b712-8bac83752b1a")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10043")
-          (unit 1)
-        )
-      )
-    )
+    (uuid "2dcfb3ff-3cdd-5f61-a1d8-9d582b1b60dc")
   )
   (wire
     (pts
-      (xy 530.86 152.4)
-      (xy 530.86 154.94)
+      (xy 527.05 207.01)
+      (xy 527.05 209.55)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "d4a2149b-63d9-5025-bf56-5205f88dbdd7")
+    (uuid "c07242a7-410e-5720-96ef-bc424067250e")
   )
   (symbol
     (lib_id "mgp8:GND")
-    (at 530.86 154.94 0)
+    (at 527.05 209.55 0)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "6406047c-4761-57bc-b936-b74f6cf34cc2")
-    (property "Reference" "#PWR10044"
-      (at 530.86 154.94 0)
+    (uuid "d665c3a1-0cab-5623-9490-7ebaaf2f4b6b")
+    (property "Reference" "#PWR10038"
+      (at 527.05 209.55 0)
       (effects
         (font
           (face "osifont")
@@ -17853,7 +17271,7 @@
       )
     )
     (property "Value" "GND"
-      (at 530.86 154.94 0)
+      (at 527.05 209.55 0)
       (effects
         (font
           (face "osifont")
@@ -17862,7 +17280,7 @@
       )
     )
     (property "Footprint" ""
-      (at 530.86 154.94 0)
+      (at 527.05 209.55 0)
       (effects
         (font
           (face "osifont")
@@ -17871,7 +17289,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 530.86 154.94 0)
+      (at 527.05 209.55 0)
       (effects
         (font
           (face "osifont")
@@ -17880,12 +17298,12 @@
       )
     )
     (pin "1"
-      (uuid "1678c42d-9c9f-5b41-973c-29188ad6350e")
+      (uuid "880221ec-c34f-58a1-90c6-17d92a869cc6")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10044")
+          (reference "#PWR10038")
           (unit 1)
         )
       )
@@ -17893,476 +17311,14 @@
   )
   (symbol
     (lib_id "mgp8:C")
-    (at 557.53 148.59 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "e20d8b7e-070f-5837-8b54-fb34e0ee7c81")
-    (property "Reference" "C226"
-      (at 560.73 147.19 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        )
-        (justify left bottom)
-      )
-    )
-    (property "Value" "100нФ"
-      (at 560.73 151.19 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2 2)
-        )
-        (justify left top)
-      )
-    )
-    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-      (at 557.53 148.59 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 557.53 148.59 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Наименование" "Конденсатор 0402 X7R 16 В 100 нФ"
-      (at 557.53 148.59 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Изготовитель" "Murata"
-      (at 557.53 148.59 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Артикул" "GRM155R71C104KA88D"
-      (at 557.53 148.59 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Примечание" ""
-      (at 557.53 148.59 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "220b4166-4fab-5cfc-bf2b-80e4160e3a35")
-    )
-    (pin "2"
-      (uuid "6f262214-cb55-55f8-b2cb-2c0ccd884c69")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "C226")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 557.53 144.78)
-      (xy 557.53 142.24)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "f0b76db2-3d01-5845-b014-e51c33f7dc80")
-  )
-  (symbol
-    (lib_id "mgp8:+3V3_FX3")
-    (at 557.53 142.24 0)
-    (unit 1)
-    (in_bom no)
-    (on_board no)
-    (dnp no)
-    (uuid "be40c29e-4bda-57ca-9050-8042777a638c")
-    (property "Reference" "#PWR10045"
-      (at 557.53 142.24 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Value" "+3V3_FX3"
-      (at 557.53 137.64 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        )
-      )
-    )
-    (property "Footprint" ""
-      (at 557.53 142.24 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 557.53 142.24 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "2f3b2597-2c77-582c-89ef-2bbcb7b8c8df")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10045")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 557.53 152.4)
-      (xy 557.53 154.94)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "6caaada2-43cc-574f-8613-d1fb5c52505f")
-  )
-  (symbol
-    (lib_id "mgp8:GND")
-    (at 557.53 154.94 0)
-    (unit 1)
-    (in_bom no)
-    (on_board no)
-    (dnp no)
-    (uuid "84d3ef46-f67d-5018-8935-2dbf72f9f9b2")
-    (property "Reference" "#PWR10046"
-      (at 557.53 154.94 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Value" "GND"
-      (at 557.53 154.94 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Footprint" ""
-      (at 557.53 154.94 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 557.53 154.94 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "532b4d5e-3b16-50ed-94c1-7db5bf0ffd2b")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10046")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (symbol
-    (lib_id "mgp8:C")
-    (at 582.93 148.59 0)
-    (unit 1)
-    (in_bom yes)
-    (on_board yes)
-    (dnp no)
-    (uuid "92b448ca-c040-5bc0-a794-dd0ad2f493fd")
-    (property "Reference" "C229"
-      (at 586.13 147.19 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        )
-        (justify left bottom)
-      )
-    )
-    (property "Value" "100нФ"
-      (at 586.13 151.19 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2 2)
-        )
-        (justify left top)
-      )
-    )
-    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-      (at 582.93 148.59 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 582.93 148.59 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Наименование" "Конденсатор 0402 X7R 16 В 100 нФ"
-      (at 582.93 148.59 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Изготовитель" "Murata"
-      (at 582.93 148.59 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Артикул" "GRM155R71C104KA88D"
-      (at 582.93 148.59 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (property "Примечание" ""
-      (at 582.93 148.59 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.5 1.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "e29ff047-6398-5bbb-9545-13bbfc67c9b5")
-    )
-    (pin "2"
-      (uuid "12c8419b-5325-5be7-8068-1bd7650730aa")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "C229")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 582.93 144.78)
-      (xy 582.93 142.24)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "272bf12b-b443-58b6-9753-b7977f2684a2")
-  )
-  (symbol
-    (lib_id "mgp8:+3V3_FX3")
-    (at 582.93 142.24 0)
-    (unit 1)
-    (in_bom no)
-    (on_board no)
-    (dnp no)
-    (uuid "d4892845-d145-5b31-8368-4bf98045c736")
-    (property "Reference" "#PWR10047"
-      (at 582.93 142.24 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Value" "+3V3_FX3"
-      (at 582.93 137.64 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        )
-      )
-    )
-    (property "Footprint" ""
-      (at 582.93 142.24 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 582.93 142.24 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "e973f387-00b3-5789-bdb2-76b6fcd81bc6")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10047")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 582.93 152.4)
-      (xy 582.93 154.94)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "d365e796-132b-5bdc-9191-e3cff2157d92")
-  )
-  (symbol
-    (lib_id "mgp8:GND")
-    (at 582.93 154.94 0)
-    (unit 1)
-    (in_bom no)
-    (on_board no)
-    (dnp no)
-    (uuid "be5ed9c7-dc5c-5b3a-ab06-2c52d8a8f051")
-    (property "Reference" "#PWR10048"
-      (at 582.93 154.94 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Value" "GND"
-      (at 582.93 154.94 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Footprint" ""
-      (at 582.93 154.94 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (property "Datasheet" ""
-      (at 582.93 154.94 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 2.5 2.5)
-        ) hide
-      )
-    )
-    (pin "1"
-      (uuid "9333b7b6-cfe4-5dba-9de8-b4518029a34b")
-    )
-    (instances
-      (project "mgp8"
-        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10048")
-          (unit 1)
-        )
-      )
-    )
-  )
-  (symbol
-    (lib_id "mgp8:C")
-    (at 530.86 177.8 0)
+    (at 547.37 198.12 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
     (uuid "fc74c66b-4451-5822-8f14-594531dbdd82")
     (property "Reference" "C224"
-      (at 534.06 176.4 0)
+      (at 550.57 196.72 0)
       (effects
         (font
           (face "osifont")
@@ -18371,8 +17327,8 @@
         (justify left bottom)
       )
     )
-    (property "Value" "100нФ"
-      (at 534.06 180.4 0)
+    (property "Value" "10мкФ"
+      (at 550.57 200.72 0)
       (effects
         (font
           (face "osifont")
@@ -18381,8 +17337,8 @@
         (justify left top)
       )
     )
-    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-      (at 530.86 177.8 0)
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 547.37 198.12 0)
       (effects
         (font
           (face "osifont")
@@ -18391,7 +17347,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 530.86 177.8 0)
+      (at 547.37 198.12 0)
       (effects
         (font
           (face "osifont")
@@ -18399,8 +17355,8 @@
         ) hide
       )
     )
-    (property "Наименование" "Конденсатор 0402 X7R 16 В 100 нФ"
-      (at 530.86 177.8 0)
+    (property "Наименование" "Конденсатор 0603 X5R 10 В 10 мкФ"
+      (at 547.37 198.12 0)
       (effects
         (font
           (face "osifont")
@@ -18409,7 +17365,7 @@
       )
     )
     (property "Изготовитель" "Murata"
-      (at 530.86 177.8 0)
+      (at 547.37 198.12 0)
       (effects
         (font
           (face "osifont")
@@ -18417,8 +17373,8 @@
         ) hide
       )
     )
-    (property "Артикул" "GRM155R71C104KA88D"
-      (at 530.86 177.8 0)
+    (property "Артикул" "GRM188R61A106KE69D"
+      (at 547.37 198.12 0)
       (effects
         (font
           (face "osifont")
@@ -18427,7 +17383,7 @@
       )
     )
     (property "Примечание" ""
-      (at 530.86 177.8 0)
+      (at 547.37 198.12 0)
       (effects
         (font
           (face "osifont")
@@ -18452,25 +17408,25 @@
   )
   (wire
     (pts
-      (xy 530.86 173.99)
-      (xy 530.86 171.45)
+      (xy 547.37 194.31)
+      (xy 547.37 191.77)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "412b4dc9-ed95-5302-b69c-b9ba9b352e65")
+    (uuid "7bcdca1f-722c-5335-908e-28b1e2c8e9a7")
   )
   (symbol
-    (lib_id "mgp8:+3V3_FX3")
-    (at 530.86 171.45 0)
+    (lib_id "mgp8:+5V_USB")
+    (at 547.37 191.77 0)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "09ebeb9b-1ba0-5aac-a624-deb7a477751b")
-    (property "Reference" "#PWR10049"
-      (at 530.86 171.45 0)
+    (uuid "c333bae4-2b75-51dc-82c6-8873e648cf9e")
+    (property "Reference" "#PWR10039"
+      (at 547.37 191.77 0)
       (effects
         (font
           (face "osifont")
@@ -18478,8 +17434,8 @@
         ) hide
       )
     )
-    (property "Value" "+3V3_FX3"
-      (at 530.86 166.85 0)
+    (property "Value" "+5V_USB"
+      (at 547.37 187.17 0)
       (effects
         (font
           (face "osifont")
@@ -18488,7 +17444,7 @@
       )
     )
     (property "Footprint" ""
-      (at 530.86 171.45 0)
+      (at 547.37 191.77 0)
       (effects
         (font
           (face "osifont")
@@ -18497,7 +17453,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 530.86 171.45 0)
+      (at 547.37 191.77 0)
       (effects
         (font
           (face "osifont")
@@ -18506,12 +17462,12 @@
       )
     )
     (pin "1"
-      (uuid "289a1687-56cf-55c6-a67c-ce3ae7d723ef")
+      (uuid "9e3e380e-438d-53d2-ab64-7816f7b88456")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10049")
+          (reference "#PWR10039")
           (unit 1)
         )
       )
@@ -18519,25 +17475,25 @@
   )
   (wire
     (pts
-      (xy 530.86 181.61)
-      (xy 530.86 184.15)
+      (xy 547.37 201.93)
+      (xy 547.37 204.47)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "28bfdfe8-6b76-54cf-8898-74926e416f59")
+    (uuid "d68cd20c-4b76-5112-86c9-3fe9ba112884")
   )
   (symbol
     (lib_id "mgp8:GND")
-    (at 530.86 184.15 0)
+    (at 547.37 204.47 0)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "00780764-42a4-5f7f-be16-642ed275435d")
-    (property "Reference" "#PWR10050"
-      (at 530.86 184.15 0)
+    (uuid "daf8f028-7605-5395-bb93-8644cb575ae4")
+    (property "Reference" "#PWR10040"
+      (at 547.37 204.47 0)
       (effects
         (font
           (face "osifont")
@@ -18546,7 +17502,7 @@
       )
     )
     (property "Value" "GND"
-      (at 530.86 184.15 0)
+      (at 547.37 204.47 0)
       (effects
         (font
           (face "osifont")
@@ -18555,7 +17511,7 @@
       )
     )
     (property "Footprint" ""
-      (at 530.86 184.15 0)
+      (at 547.37 204.47 0)
       (effects
         (font
           (face "osifont")
@@ -18564,7 +17520,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 530.86 184.15 0)
+      (at 547.37 204.47 0)
       (effects
         (font
           (face "osifont")
@@ -18573,12 +17529,824 @@
       )
     )
     (pin "1"
-      (uuid "a0b8d18c-89aa-5d33-bb7a-44adff844de0")
+      (uuid "b5b9e6a8-3c29-5b6d-bff0-64b3cc62983d")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10050")
+          (reference "#PWR10040")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:TPS62130")
+    (at 695.96 196.85 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "00e4033c-9a14-5381-8b3e-8043f694035f")
+    (property "Reference" "DA26"
+      (at 680.72 164.87 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "TPS62130RGTR"
+      (at 680.72 164.87 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top) hide
+      )
+    )
+    (property "Footprint" "Package_DFN_QFN:VQFN-16-1EP_3x3mm_P0.5mm_EP1.68x1.68mm_ThermalVias"
+      (at 695.96 196.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 695.96 196.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Микросхема TPS62130RGTR"
+      (at 695.96 196.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Texas Instruments"
+      (at 695.96 196.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "TPS62130RGTR"
+      (at 695.96 196.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 695.96 196.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "10"
+      (uuid "9950a580-e029-55d5-b836-89030ebd6ef6")
+    )
+    (pin "11"
+      (uuid "0629d67b-3b55-505b-9700-61b89be162bc")
+    )
+    (pin "12"
+      (uuid "846d0660-2caf-594e-9314-fdd56e5f0f93")
+    )
+    (pin "13"
+      (uuid "726cc3ac-af94-5150-9f69-320e0cd8a147")
+    )
+    (pin "7"
+      (uuid "20268111-338a-52fe-8516-17007821dbd9")
+    )
+    (pin "8"
+      (uuid "c8320249-87ce-5003-ae1e-297ed03c6c32")
+    )
+    (pin "9"
+      (uuid "2e6ebeb4-57fb-5a74-959e-ae88f527db7e")
+    )
+    (pin "15"
+      (uuid "30e4bf14-cd5b-544c-94e9-e0b49005a538")
+    )
+    (pin "16"
+      (uuid "42f74fd7-47df-5542-b564-73a4842ad983")
+    )
+    (pin "17"
+      (uuid "e6609f79-f170-5408-b10e-208f442a9215")
+    )
+    (pin "6"
+      (uuid "e5b1351f-7d70-54d5-a5a9-6860563b1517")
+    )
+    (pin "1"
+      (uuid "3533afb4-0a19-5316-be6e-b0abf26bdab9")
+    )
+    (pin "2"
+      (uuid "cd02d8fb-3af3-5319-b2cc-e3f020415149")
+    )
+    (pin "3"
+      (uuid "59915f6b-bb59-581a-8dc6-9f0d1efe8d9b")
+    )
+    (pin "14"
+      (uuid "2a2a4a1d-0c8c-5638-a4c2-6656a495c3c7")
+    )
+    (pin "5"
+      (uuid "86dbf371-1976-5ac5-9c39-05443c33602f")
+    )
+    (pin "4"
+      (uuid "5077e5eb-561d-5821-af0c-8ec7e54def43")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "DA26")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 675.64 176.53)
+      (xy 673.1 176.53)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "4cf39ea9-bd59-579f-b7ef-02c3493d2e21")
+  )
+  (global_label "+5V_USB"
+    (shape passive)
+    (at 673.1 176.53 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "7a240886-7a6f-5106-9bf2-1d15f7827e80")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 673.1 176.53 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 675.64 181.61)
+      (xy 673.1 181.61)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "10ff1dd4-a50b-5bdd-9dcc-4cb23fe4eba9")
+  )
+  (global_label "+5V_USB"
+    (shape passive)
+    (at 673.1 181.61 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "4a914305-639b-542d-82a6-121d733998ab")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 673.1 181.61 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 675.64 191.77)
+      (xy 673.1 191.77)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "1b49f5ac-7c09-5424-8015-b49a45b222bf")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 673.1 191.77 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "71a062e8-47ce-5440-b1b5-03f7d1057a9d")
+    (property "Reference" "#PWR10041"
+      (at 673.1 191.77 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 673.1 191.77 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 673.1 191.77 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 673.1 191.77 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "e54a89cc-f881-5309-a94a-3ed3b285ae32")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10041")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 675.64 196.85)
+      (xy 673.1 196.85)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "c745dfce-0b0c-5052-af7d-f317afca1469")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 673.1 196.85 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "ade51825-12f6-5a89-8722-946ad49204b0")
+    (property "Reference" "#PWR10042"
+      (at 673.1 196.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 673.1 196.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 673.1 196.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 673.1 196.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "70183c94-2b00-52f3-80d6-83123c40eae5")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10042")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 675.64 201.93)
+      (xy 673.1 201.93)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "cc10e911-e97a-5664-8b3b-22d0d8ef8b0b")
+  )
+  (global_label "SS_1V2_FX3"
+    (shape passive)
+    (at 673.1 201.93 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "52ce80db-3b18-5de5-9c2f-894cd2b567ae")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 673.1 201.93 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 675.64 212.09)
+      (xy 673.1 212.09)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "355a8c89-f6da-5da0-978b-9b20ee7db99d")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 673.1 212.09 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "8b2f060b-0920-55a4-b2cb-cbc513574227")
+    (property "Reference" "#PWR10043"
+      (at 673.1 212.09 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 673.1 212.09 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 673.1 212.09 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 673.1 212.09 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "da8cd74d-a5c3-5be2-b712-8bac83752b1a")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10043")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 716.28 176.53)
+      (xy 718.82 176.53)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "660d986a-00cf-543a-857a-22463590c185")
+  )
+  (global_label "SW_1V2_FX3"
+    (shape passive)
+    (at 718.82 176.53 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "d25d8016-ebef-5839-a3e8-ad84d881e69f")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 718.82 176.53 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 716.28 181.61)
+      (xy 718.82 181.61)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "a83ba4ca-8b3f-59c5-b4e2-e96e0a65f0d4")
+  )
+  (global_label "+1V2_FX3"
+    (shape passive)
+    (at 718.82 181.61 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "ccecd5ba-cd4a-5a6f-9990-e30334029c2d")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 718.82 181.61 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 716.28 186.69)
+      (xy 718.82 186.69)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "5574f878-f005-5590-9253-c7b91e72bf02")
+  )
+  (global_label "FB_1V2_FX3"
+    (shape passive)
+    (at 718.82 186.69 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "ca0756a4-30c5-57c6-9dbb-af0dfd262df2")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 718.82 186.69 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 716.28 191.77)
+      (xy 718.82 191.77)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "d4a2149b-63d9-5025-bf56-5205f88dbdd7")
+  )
+  (global_label "FX3_PWR_OK"
+    (shape bidirectional)
+    (at 718.82 191.77 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "55f1486d-a60b-5f48-8026-fa32a4404bb4")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 718.82 191.77 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 659.13 247.65 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "e20d8b7e-070f-5837-8b54-fb34e0ee7c81")
+    (property "Reference" "C226"
+      (at 662.33 246.25 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "10мкФ"
+      (at 662.33 250.25 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 659.13 247.65 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 659.13 247.65 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0603 X5R 10 В 10 мкФ"
+      (at 659.13 247.65 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 659.13 247.65 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM188R61A106KE69D"
+      (at 659.13 247.65 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 659.13 247.65 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "220b4166-4fab-5cfc-bf2b-80e4160e3a35")
+    )
+    (pin "2"
+      (uuid "6f262214-cb55-55f8-b2cb-2c0ccd884c69")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "C226")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 659.13 243.84)
+      (xy 659.13 241.3)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "f0b76db2-3d01-5845-b014-e51c33f7dc80")
+  )
+  (symbol
+    (lib_id "mgp8:+5V_USB")
+    (at 659.13 241.3 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "6406047c-4761-57bc-b936-b74f6cf34cc2")
+    (property "Reference" "#PWR10044"
+      (at 659.13 241.3 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "+5V_USB"
+      (at 659.13 236.7 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 659.13 241.3 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 659.13 241.3 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "1678c42d-9c9f-5b41-973c-29188ad6350e")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10044")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 659.13 251.46)
+      (xy 659.13 254)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "6caaada2-43cc-574f-8613-d1fb5c52505f")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 659.13 254 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "be40c29e-4bda-57ca-9050-8042777a638c")
+    (property "Reference" "#PWR10045"
+      (at 659.13 254 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 659.13 254 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 659.13 254 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 659.13 254 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "2f3b2597-2c77-582c-89ef-2bbcb7b8c8df")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10045")
           (unit 1)
         )
       )
@@ -18586,14 +18354,14 @@
   )
   (symbol
     (lib_id "mgp8:C")
-    (at 557.53 177.8 0)
+    (at 683.26 247.65 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
     (uuid "6b53ec03-a7d1-53f7-82ed-bbbad38a5a80")
     (property "Reference" "C227"
-      (at 560.73 176.4 0)
+      (at 686.46 246.25 0)
       (effects
         (font
           (face "osifont")
@@ -18603,7 +18371,7 @@
       )
     )
     (property "Value" "100нФ"
-      (at 560.73 180.4 0)
+      (at 686.46 250.25 0)
       (effects
         (font
           (face "osifont")
@@ -18613,7 +18381,7 @@
       )
     )
     (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-      (at 557.53 177.8 0)
+      (at 683.26 247.65 0)
       (effects
         (font
           (face "osifont")
@@ -18622,7 +18390,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 557.53 177.8 0)
+      (at 683.26 247.65 0)
       (effects
         (font
           (face "osifont")
@@ -18631,7 +18399,7 @@
       )
     )
     (property "Наименование" "Конденсатор 0402 X7R 16 В 100 нФ"
-      (at 557.53 177.8 0)
+      (at 683.26 247.65 0)
       (effects
         (font
           (face "osifont")
@@ -18640,7 +18408,7 @@
       )
     )
     (property "Изготовитель" "Murata"
-      (at 557.53 177.8 0)
+      (at 683.26 247.65 0)
       (effects
         (font
           (face "osifont")
@@ -18649,7 +18417,7 @@
       )
     )
     (property "Артикул" "GRM155R71C104KA88D"
-      (at 557.53 177.8 0)
+      (at 683.26 247.65 0)
       (effects
         (font
           (face "osifont")
@@ -18658,7 +18426,7 @@
       )
     )
     (property "Примечание" ""
-      (at 557.53 177.8 0)
+      (at 683.26 247.65 0)
       (effects
         (font
           (face "osifont")
@@ -18683,25 +18451,25 @@
   )
   (wire
     (pts
-      (xy 557.53 173.99)
-      (xy 557.53 171.45)
+      (xy 683.26 243.84)
+      (xy 683.26 241.3)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "10f03cdb-1594-54b7-a26c-cd768c68dec9")
+    (uuid "272bf12b-b443-58b6-9753-b7977f2684a2")
   )
   (symbol
-    (lib_id "mgp8:+3V3_FX3")
-    (at 557.53 171.45 0)
+    (lib_id "mgp8:+5V_USB")
+    (at 683.26 241.3 0)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "c00346db-d125-555e-b89d-c33a21fe6652")
-    (property "Reference" "#PWR10051"
-      (at 557.53 171.45 0)
+    (uuid "84d3ef46-f67d-5018-8935-2dbf72f9f9b2")
+    (property "Reference" "#PWR10046"
+      (at 683.26 241.3 0)
       (effects
         (font
           (face "osifont")
@@ -18709,8 +18477,8 @@
         ) hide
       )
     )
-    (property "Value" "+3V3_FX3"
-      (at 557.53 166.85 0)
+    (property "Value" "+5V_USB"
+      (at 683.26 236.7 0)
       (effects
         (font
           (face "osifont")
@@ -18719,7 +18487,7 @@
       )
     )
     (property "Footprint" ""
-      (at 557.53 171.45 0)
+      (at 683.26 241.3 0)
       (effects
         (font
           (face "osifont")
@@ -18728,7 +18496,822 @@
       )
     )
     (property "Datasheet" ""
-      (at 557.53 171.45 0)
+      (at 683.26 241.3 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "532b4d5e-3b16-50ed-94c1-7db5bf0ffd2b")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10046")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 683.26 251.46)
+      (xy 683.26 254)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "d365e796-132b-5bdc-9191-e3cff2157d92")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 683.26 254 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "d4892845-d145-5b31-8368-4bf98045c736")
+    (property "Reference" "#PWR10047"
+      (at 683.26 254 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 683.26 254 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 683.26 254 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 683.26 254 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "e973f387-00b3-5789-bdb2-76b6fcd81bc6")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10047")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 704.85 256.54 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "605e4d7b-ffc7-5e3a-ae65-c39d11f9c1c5")
+    (property "Reference" "C228"
+      (at 708.05 255.14 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "10нФ"
+      (at 708.05 259.14 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+      (at 704.85 256.54 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 704.85 256.54 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0402 X7R 50 В 10 нФ"
+      (at 704.85 256.54 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 704.85 256.54 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM155R71H103KA88D"
+      (at 704.85 256.54 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 704.85 256.54 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "f35a1e14-f70e-5122-854f-cf47ed35a910")
+    )
+    (pin "2"
+      (uuid "f9fb6f73-cc40-5f84-9850-26cb14ae652d")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "C228")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 704.85 252.73)
+      (xy 704.85 250.19)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "412b4dc9-ed95-5302-b69c-b9ba9b352e65")
+  )
+  (label "SS_1V2_FX3"
+    (at 704.85 250.19 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "885bee0f-9deb-5d7a-baef-f82ba770dee1")
+  )
+  (wire
+    (pts
+      (xy 704.85 260.35)
+      (xy 704.85 262.89)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "28bfdfe8-6b76-54cf-8898-74926e416f59")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 704.85 262.89 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "be5ed9c7-dc5c-5b3a-ab06-2c52d8a8f051")
+    (property "Reference" "#PWR10048"
+      (at 704.85 262.89 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 704.85 262.89 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 704.85 262.89 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 704.85 262.89 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "9333b7b6-cfe4-5dba-9de8-b4518029a34b")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10048")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:L")
+    (at 660.4 298.45 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "b2b68aa7-1e6b-52fd-b155-53e29c4a0ecd")
+    (property "Reference" "L13"
+      (at 663.6 297.05 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "2,2мкГн"
+      (at 663.6 301.05 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Inductor_SMD:L_Coilcraft_XxL4020"
+      (at 660.4 298.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 660.4 298.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Дроссель 4×4 мм 2,2 мкГн ±20 % 3,5 А"
+      (at 660.4 298.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Coilcraft"
+      (at 660.4 298.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "XFL4020-222MEC"
+      (at 660.4 298.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 660.4 298.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "73fc577d-0648-5ff5-b512-c789eda8f721")
+    )
+    (pin "2"
+      (uuid "c78848bf-1afd-5b27-b1ca-9a548e216749")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "L13")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 660.4 290.83)
+      (xy 660.4 288.29)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "10f03cdb-1594-54b7-a26c-cd768c68dec9")
+  )
+  (label "SW_1V2_FX3"
+    (at 660.4 288.29 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "8733aa66-4bb3-59b5-ae7b-0a6d1f51f755")
+  )
+  (wire
+    (pts
+      (xy 660.4 306.07)
+      (xy 660.4 308.61)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "e59b3e99-830b-534c-b13e-19bbadec45b0")
+  )
+  (symbol
+    (lib_id "mgp8:+1V2_FX3")
+    (at 660.4 308.61 180)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "09ebeb9b-1ba0-5aac-a624-deb7a477751b")
+    (property "Reference" "#PWR10049"
+      (at 660.4 308.61 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "+1V2_FX3"
+      (at 660.4 313.21 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 660.4 308.61 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 660.4 308.61 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "289a1687-56cf-55c6-a67c-ce3ae7d723ef")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10049")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 688.34 289.56 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "d69659e8-410c-561c-afd8-d6e436614419")
+    (property "Reference" "R90"
+      (at 691.54 288.16 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "49,9кОм"
+      (at 691.54 292.16 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 688.34 289.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 688.34 289.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Резистор 0402 49,9 кОм ±1 % 0,063 Вт"
+      (at 688.34 289.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 688.34 289.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402FR-0749K9L"
+      (at 688.34 289.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 688.34 289.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "cc70b815-e82c-55ec-a6b4-7fe664addce5")
+    )
+    (pin "2"
+      (uuid "1420ba31-50c0-57aa-a373-03caa2adff8f")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "R90")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 688.34 281.94)
+      (xy 688.34 279.4)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "5a456214-dbfd-52ae-a7e8-1fbbba59712e")
+  )
+  (symbol
+    (lib_id "mgp8:+1V2_FX3")
+    (at 688.34 279.4 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "00780764-42a4-5f7f-be16-642ed275435d")
+    (property "Reference" "#PWR10050"
+      (at 688.34 279.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "+1V2_FX3"
+      (at 688.34 274.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 688.34 279.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 688.34 279.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "a0b8d18c-89aa-5d33-bb7a-44adff844de0")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10050")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 688.34 297.18)
+      (xy 688.34 299.72)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "b5517edc-e37a-5bf9-89bd-866452be64eb")
+  )
+  (label "FB_1V2_FX3"
+    (at 688.34 299.72 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right bottom)
+    )
+    (uuid "6616de0a-9b00-5861-b6a8-461539bd20fa")
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 713.74 298.45 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "373e2fef-76af-532a-a3c6-369bd68f8c38")
+    (property "Reference" "R91"
+      (at 716.94 297.05 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100кОм"
+      (at 716.94 301.05 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 713.74 298.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 713.74 298.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Резистор 0402 100 кОм ±1 % 0,063 Вт"
+      (at 713.74 298.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 713.74 298.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402FR-07100KL"
+      (at 713.74 298.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 713.74 298.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "5538c804-ca9a-53e1-9719-8c410d24adc4")
+    )
+    (pin "2"
+      (uuid "d92017dd-71d3-5257-a88d-91edbd928540")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "R91")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 713.74 290.83)
+      (xy 713.74 288.29)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "276215bc-d9f9-5c51-bf2f-378d5404221c")
+  )
+  (label "FB_1V2_FX3"
+    (at 713.74 288.29 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "17b5889b-a9fa-56cf-a5bb-6dff5fca3d28")
+  )
+  (wire
+    (pts
+      (xy 713.74 306.07)
+      (xy 713.74 308.61)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "778ba12d-75de-5dbc-a045-d692b56ee4af")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 713.74 308.61 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "c00346db-d125-555e-b89d-c33a21fe6652")
+    (property "Reference" "#PWR10051"
+      (at 713.74 308.61 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 713.74 308.61 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 713.74 308.61 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 713.74 308.61 0)
       (effects
         (font
           (face "osifont")
@@ -18748,27 +19331,124 @@
       )
     )
   )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 753.11 177.8 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "92b448ca-c040-5bc0-a794-dd0ad2f493fd")
+    (property "Reference" "C229"
+      (at 756.31 176.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "22мкФ"
+      (at 756.31 180.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+      (at 753.11 177.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 753.11 177.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0603 X5R 10 В 22 мкФ"
+      (at 753.11 177.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 753.11 177.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM188R61A226ME15D"
+      (at 753.11 177.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 753.11 177.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "e29ff047-6398-5bbb-9545-13bbfc67c9b5")
+    )
+    (pin "2"
+      (uuid "12c8419b-5325-5be7-8068-1bd7650730aa")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "C229")
+          (unit 1)
+        )
+      )
+    )
+  )
   (wire
     (pts
-      (xy 557.53 181.61)
-      (xy 557.53 184.15)
+      (xy 753.11 173.99)
+      (xy 753.11 171.45)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "e59b3e99-830b-534c-b13e-19bbadec45b0")
+    (uuid "16e814a0-770d-5685-b5df-9e394cf0f0f8")
   )
   (symbol
-    (lib_id "mgp8:GND")
-    (at 557.53 184.15 0)
+    (lib_id "mgp8:+3V3_FX3")
+    (at 753.11 171.45 0)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
     (uuid "d085f64f-e209-552c-8b0e-7fe9c2c513f7")
     (property "Reference" "#PWR10052"
-      (at 557.53 184.15 0)
+      (at 753.11 171.45 0)
       (effects
         (font
           (face "osifont")
@@ -18776,17 +19456,17 @@
         ) hide
       )
     )
-    (property "Value" "GND"
-      (at 557.53 184.15 0)
+    (property "Value" "+3V3_FX3"
+      (at 753.11 166.85 0)
       (effects
         (font
           (face "osifont")
           (size 2.5 2.5)
-        ) hide
+        )
       )
     )
     (property "Footprint" ""
-      (at 557.53 184.15 0)
+      (at 753.11 171.45 0)
       (effects
         (font
           (face "osifont")
@@ -18795,7 +19475,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 557.53 184.15 0)
+      (at 753.11 171.45 0)
       (effects
         (font
           (face "osifont")
@@ -18815,16 +19495,83 @@
       )
     )
   )
+  (wire
+    (pts
+      (xy 753.11 181.61)
+      (xy 753.11 184.15)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "a3a121a4-513e-574e-8116-71eadaa09735")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 753.11 184.15 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "93b45506-638f-5d12-a2e5-1ffaccd0ceb4")
+    (property "Reference" "#PWR10053"
+      (at 753.11 184.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 753.11 184.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 753.11 184.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 753.11 184.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "9c72179e-a56d-551b-ba33-d26b230dbae1")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10053")
+          (unit 1)
+        )
+      )
+    )
+  )
   (symbol
     (lib_id "mgp8:C")
-    (at 582.93 177.8 0)
+    (at 779.78 177.8 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "d8106499-efe1-51a5-a2b4-3624c49ac02c")
-    (property "Reference" "C230"
-      (at 586.13 176.4 0)
+    (uuid "8f97f809-0444-5518-80a1-5aec9178f22b")
+    (property "Reference" "C232"
+      (at 782.98 176.4 0)
       (effects
         (font
           (face "osifont")
@@ -18834,7 +19581,7 @@
       )
     )
     (property "Value" "100нФ"
-      (at 586.13 180.4 0)
+      (at 782.98 180.4 0)
       (effects
         (font
           (face "osifont")
@@ -18844,7 +19591,7 @@
       )
     )
     (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-      (at 582.93 177.8 0)
+      (at 779.78 177.8 0)
       (effects
         (font
           (face "osifont")
@@ -18853,7 +19600,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 582.93 177.8 0)
+      (at 779.78 177.8 0)
       (effects
         (font
           (face "osifont")
@@ -18862,7 +19609,7 @@
       )
     )
     (property "Наименование" "Конденсатор 0402 X7R 16 В 100 нФ"
-      (at 582.93 177.8 0)
+      (at 779.78 177.8 0)
       (effects
         (font
           (face "osifont")
@@ -18871,7 +19618,7 @@
       )
     )
     (property "Изготовитель" "Murata"
-      (at 582.93 177.8 0)
+      (at 779.78 177.8 0)
       (effects
         (font
           (face "osifont")
@@ -18880,7 +19627,7 @@
       )
     )
     (property "Артикул" "GRM155R71C104KA88D"
-      (at 582.93 177.8 0)
+      (at 779.78 177.8 0)
       (effects
         (font
           (face "osifont")
@@ -18889,7 +19636,469 @@
       )
     )
     (property "Примечание" ""
-      (at 582.93 177.8 0)
+      (at 779.78 177.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "ae2fb2d3-8afa-5690-8e53-0c786dc53cb9")
+    )
+    (pin "2"
+      (uuid "36fa2484-8713-5da1-aec0-831fe207aade")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "C232")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 779.78 173.99)
+      (xy 779.78 171.45)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "df112aad-e037-5dc4-9dff-64561e045038")
+  )
+  (symbol
+    (lib_id "mgp8:+3V3_FX3")
+    (at 779.78 171.45 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "99584140-43e6-5666-83a8-f8abbb6499d1")
+    (property "Reference" "#PWR10054"
+      (at 779.78 171.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "+3V3_FX3"
+      (at 779.78 166.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 779.78 171.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 779.78 171.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "dd33cf2d-3c28-5594-aef4-bee1cacd1a86")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10054")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 779.78 181.61)
+      (xy 779.78 184.15)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "12446ad8-e512-5fff-8268-20d13fe5f904")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 779.78 184.15 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "79e72c4f-990b-5864-a850-8c8f888e8824")
+    (property "Reference" "#PWR10055"
+      (at 779.78 184.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 779.78 184.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 779.78 184.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 779.78 184.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "e9572c01-c2d1-55a3-8390-23d72d36245d")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10055")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 805.18 177.8 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "eb7f7a53-3764-53d5-b730-e2be5774454c")
+    (property "Reference" "C234"
+      (at 808.38 176.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100нФ"
+      (at 808.38 180.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+      (at 805.18 177.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 805.18 177.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0402 X7R 16 В 100 нФ"
+      (at 805.18 177.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 805.18 177.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM155R71C104KA88D"
+      (at 805.18 177.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 805.18 177.8 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "b81845d5-e8a5-58b0-b352-07c960a4e88f")
+    )
+    (pin "2"
+      (uuid "b361346a-8e23-515e-8224-5526f7d8ec0e")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "C234")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 805.18 173.99)
+      (xy 805.18 171.45)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "f79d94dc-e3ef-573c-92bd-ddac8e3d62a8")
+  )
+  (symbol
+    (lib_id "mgp8:+3V3_FX3")
+    (at 805.18 171.45 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "1a72d233-4187-5557-ae75-878b9129c847")
+    (property "Reference" "#PWR10056"
+      (at 805.18 171.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "+3V3_FX3"
+      (at 805.18 166.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 805.18 171.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 805.18 171.45 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "e2b44f7e-71cc-502b-a5ba-73e5e73605af")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10056")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 805.18 181.61)
+      (xy 805.18 184.15)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "4e1603fd-7a25-5b4f-8f4f-774aacdfa59d")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 805.18 184.15 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "1d442907-e049-528e-be45-dc4eaffa0245")
+    (property "Reference" "#PWR10057"
+      (at 805.18 184.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 805.18 184.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 805.18 184.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 805.18 184.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "9d137589-3650-5dff-b38d-b8e784c78f49")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10057")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 753.11 207.01 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "d8106499-efe1-51a5-a2b4-3624c49ac02c")
+    (property "Reference" "C230"
+      (at 756.31 205.61 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100нФ"
+      (at 756.31 209.61 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+      (at 753.11 207.01 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 753.11 207.01 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0402 X7R 16 В 100 нФ"
+      (at 753.11 207.01 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 753.11 207.01 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM155R71C104KA88D"
+      (at 753.11 207.01 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 753.11 207.01 0)
       (effects
         (font
           (face "osifont")
@@ -18914,25 +20123,25 @@
   )
   (wire
     (pts
-      (xy 582.93 173.99)
-      (xy 582.93 171.45)
+      (xy 753.11 203.2)
+      (xy 753.11 200.66)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "5a456214-dbfd-52ae-a7e8-1fbbba59712e")
+    (uuid "b309fbb4-f588-567f-b7eb-b1f2bfc637cd")
   )
   (symbol
     (lib_id "mgp8:+3V3_FX3")
-    (at 582.93 171.45 0)
+    (at 753.11 200.66 0)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "93b45506-638f-5d12-a2e5-1ffaccd0ceb4")
-    (property "Reference" "#PWR10053"
-      (at 582.93 171.45 0)
+    (uuid "7802101a-571a-5ad3-942c-31cc57016289")
+    (property "Reference" "#PWR10058"
+      (at 753.11 200.66 0)
       (effects
         (font
           (face "osifont")
@@ -18941,7 +20150,7 @@
       )
     )
     (property "Value" "+3V3_FX3"
-      (at 582.93 166.85 0)
+      (at 753.11 196.06 0)
       (effects
         (font
           (face "osifont")
@@ -18950,7 +20159,7 @@
       )
     )
     (property "Footprint" ""
-      (at 582.93 171.45 0)
+      (at 753.11 200.66 0)
       (effects
         (font
           (face "osifont")
@@ -18959,7 +20168,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 582.93 171.45 0)
+      (at 753.11 200.66 0)
       (effects
         (font
           (face "osifont")
@@ -18968,12 +20177,12 @@
       )
     )
     (pin "1"
-      (uuid "9c72179e-a56d-551b-ba33-d26b230dbae1")
+      (uuid "6bf2ef95-03da-5319-878e-1b7ce685ae6f")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10053")
+          (reference "#PWR10058")
           (unit 1)
         )
       )
@@ -18981,25 +20190,25 @@
   )
   (wire
     (pts
-      (xy 582.93 181.61)
-      (xy 582.93 184.15)
+      (xy 753.11 210.82)
+      (xy 753.11 213.36)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "b5517edc-e37a-5bf9-89bd-866452be64eb")
+    (uuid "56213721-d3f9-52b6-9b2c-11ed12c06911")
   )
   (symbol
     (lib_id "mgp8:GND")
-    (at 582.93 184.15 0)
+    (at 753.11 213.36 0)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "99584140-43e6-5666-83a8-f8abbb6499d1")
-    (property "Reference" "#PWR10054"
-      (at 582.93 184.15 0)
+    (uuid "21600876-7861-509e-ba8f-d1ae7e66b7e3")
+    (property "Reference" "#PWR10059"
+      (at 753.11 213.36 0)
       (effects
         (font
           (face "osifont")
@@ -19008,7 +20217,7 @@
       )
     )
     (property "Value" "GND"
-      (at 582.93 184.15 0)
+      (at 753.11 213.36 0)
       (effects
         (font
           (face "osifont")
@@ -19017,7 +20226,7 @@
       )
     )
     (property "Footprint" ""
-      (at 582.93 184.15 0)
+      (at 753.11 213.36 0)
       (effects
         (font
           (face "osifont")
@@ -19026,7 +20235,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 582.93 184.15 0)
+      (at 753.11 213.36 0)
       (effects
         (font
           (face "osifont")
@@ -19035,12 +20244,12 @@
       )
     )
     (pin "1"
-      (uuid "dd33cf2d-3c28-5594-aef4-bee1cacd1a86")
+      (uuid "59b84866-87f9-5618-b24e-f193eecbce9e")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10054")
+          (reference "#PWR10059")
           (unit 1)
         )
       )
@@ -19048,14 +20257,14 @@
   )
   (symbol
     (lib_id "mgp8:C")
-    (at 530.86 208.28 0)
+    (at 779.78 207.01 0)
     (unit 1)
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "1b9fa944-6959-5841-9733-ddb0070da3bf")
-    (property "Reference" "C225"
-      (at 534.06 206.88 0)
+    (uuid "711b69bd-cae6-5228-9d07-2ff109fbbe18")
+    (property "Reference" "C233"
+      (at 782.98 205.61 0)
       (effects
         (font
           (face "osifont")
@@ -19065,7 +20274,7 @@
       )
     )
     (property "Value" "100нФ"
-      (at 534.06 210.88 0)
+      (at 782.98 209.61 0)
       (effects
         (font
           (face "osifont")
@@ -19075,7 +20284,7 @@
       )
     )
     (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-      (at 530.86 208.28 0)
+      (at 779.78 207.01 0)
       (effects
         (font
           (face "osifont")
@@ -19084,7 +20293,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 530.86 208.28 0)
+      (at 779.78 207.01 0)
       (effects
         (font
           (face "osifont")
@@ -19093,7 +20302,7 @@
       )
     )
     (property "Наименование" "Конденсатор 0402 X7R 16 В 100 нФ"
-      (at 530.86 208.28 0)
+      (at 779.78 207.01 0)
       (effects
         (font
           (face "osifont")
@@ -19102,7 +20311,7 @@
       )
     )
     (property "Изготовитель" "Murata"
-      (at 530.86 208.28 0)
+      (at 779.78 207.01 0)
       (effects
         (font
           (face "osifont")
@@ -19111,7 +20320,7 @@
       )
     )
     (property "Артикул" "GRM155R71C104KA88D"
-      (at 530.86 208.28 0)
+      (at 779.78 207.01 0)
       (effects
         (font
           (face "osifont")
@@ -19120,7 +20329,7 @@
       )
     )
     (property "Примечание" ""
-      (at 530.86 208.28 0)
+      (at 779.78 207.01 0)
       (effects
         (font
           (face "osifont")
@@ -19129,15 +20338,15 @@
       )
     )
     (pin "1"
-      (uuid "8693fcd6-e18d-5bfd-857c-12f9e30352b0")
+      (uuid "523dcd31-bee0-5a60-b698-535059d36275")
     )
     (pin "2"
-      (uuid "e29f13dd-7ece-57bd-9927-91667d434660")
+      (uuid "8292bb04-d290-5e1b-b79d-163978bfb085")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "C225")
+          (reference "C233")
           (unit 1)
         )
       )
@@ -19145,25 +20354,25 @@
   )
   (wire
     (pts
-      (xy 530.86 204.47)
-      (xy 530.86 201.93)
+      (xy 779.78 203.2)
+      (xy 779.78 200.66)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "276215bc-d9f9-5c51-bf2f-378d5404221c")
+    (uuid "f42ed490-1317-58e6-93be-f19da98e880e")
   )
   (symbol
     (lib_id "mgp8:+3V3_FX3")
-    (at 530.86 201.93 0)
+    (at 779.78 200.66 0)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "79e72c4f-990b-5864-a850-8c8f888e8824")
-    (property "Reference" "#PWR10055"
-      (at 530.86 201.93 0)
+    (uuid "ec3847ea-6ead-51de-b477-efe660e84b18")
+    (property "Reference" "#PWR10060"
+      (at 779.78 200.66 0)
       (effects
         (font
           (face "osifont")
@@ -19172,7 +20381,7 @@
       )
     )
     (property "Value" "+3V3_FX3"
-      (at 530.86 197.33 0)
+      (at 779.78 196.06 0)
       (effects
         (font
           (face "osifont")
@@ -19181,7 +20390,7 @@
       )
     )
     (property "Footprint" ""
-      (at 530.86 201.93 0)
+      (at 779.78 200.66 0)
       (effects
         (font
           (face "osifont")
@@ -19190,7 +20399,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 530.86 201.93 0)
+      (at 779.78 200.66 0)
       (effects
         (font
           (face "osifont")
@@ -19199,12 +20408,12 @@
       )
     )
     (pin "1"
-      (uuid "e9572c01-c2d1-55a3-8390-23d72d36245d")
+      (uuid "d1525241-7928-5277-83e7-fcacf2e41bca")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10055")
+          (reference "#PWR10060")
           (unit 1)
         )
       )
@@ -19212,25 +20421,25 @@
   )
   (wire
     (pts
-      (xy 530.86 212.09)
-      (xy 530.86 214.63)
+      (xy 779.78 210.82)
+      (xy 779.78 213.36)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "778ba12d-75de-5dbc-a045-d692b56ee4af")
+    (uuid "6d8fa188-b684-5745-ab53-04250ea8fd5a")
   )
   (symbol
     (lib_id "mgp8:GND")
-    (at 530.86 214.63 0)
+    (at 779.78 213.36 0)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "1a72d233-4187-5557-ae75-878b9129c847")
-    (property "Reference" "#PWR10056"
-      (at 530.86 214.63 0)
+    (uuid "e7d17461-f42d-59fe-af0f-aa4d0697ed4d")
+    (property "Reference" "#PWR10061"
+      (at 779.78 213.36 0)
       (effects
         (font
           (face "osifont")
@@ -19239,7 +20448,7 @@
       )
     )
     (property "Value" "GND"
-      (at 530.86 214.63 0)
+      (at 779.78 213.36 0)
       (effects
         (font
           (face "osifont")
@@ -19248,7 +20457,7 @@
       )
     )
     (property "Footprint" ""
-      (at 530.86 214.63 0)
+      (at 779.78 213.36 0)
       (effects
         (font
           (face "osifont")
@@ -19257,7 +20466,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 530.86 214.63 0)
+      (at 779.78 213.36 0)
       (effects
         (font
           (face "osifont")
@@ -19266,12 +20475,474 @@
       )
     )
     (pin "1"
-      (uuid "e2b44f7e-71cc-502b-a5ba-73e5e73605af")
+      (uuid "dfb7530e-8a18-5c30-b3fd-a7479c86e5d3")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10056")
+          (reference "#PWR10061")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 805.18 207.01 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "297dbe53-e7c4-568e-a5db-e3eb6735a597")
+    (property "Reference" "C235"
+      (at 808.38 205.61 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100нФ"
+      (at 808.38 209.61 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+      (at 805.18 207.01 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 805.18 207.01 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0402 X7R 16 В 100 нФ"
+      (at 805.18 207.01 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 805.18 207.01 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM155R71C104KA88D"
+      (at 805.18 207.01 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 805.18 207.01 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "ed1cc8d1-687d-5bb9-8ee7-62031109be74")
+    )
+    (pin "2"
+      (uuid "75e595dd-c683-5803-a649-867ce2110d13")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "C235")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 805.18 203.2)
+      (xy 805.18 200.66)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "62949585-0767-5fb7-bef2-64f28fb6b8a1")
+  )
+  (symbol
+    (lib_id "mgp8:+3V3_FX3")
+    (at 805.18 200.66 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "13b67aca-5efa-5134-abfc-627989fbe483")
+    (property "Reference" "#PWR10062"
+      (at 805.18 200.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "+3V3_FX3"
+      (at 805.18 196.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 805.18 200.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 805.18 200.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "4fb323c0-d438-504d-868d-4b3601a08201")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10062")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 805.18 210.82)
+      (xy 805.18 213.36)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "216d9f96-1c1b-5631-ae17-648b56502b8c")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 805.18 213.36 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "d9b8f663-d7b3-52ba-9f9e-b3778107041b")
+    (property "Reference" "#PWR10063"
+      (at 805.18 213.36 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 805.18 213.36 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 805.18 213.36 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 805.18 213.36 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "abe7e863-b8cb-5d78-a24d-d6a5da2106e0")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10063")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 753.11 237.49 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "b60f8795-5cba-5525-9810-a54ed7d05ea8")
+    (property "Reference" "C231"
+      (at 756.31 236.09 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100нФ"
+      (at 756.31 240.09 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+      (at 753.11 237.49 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 753.11 237.49 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0402 X7R 16 В 100 нФ"
+      (at 753.11 237.49 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 753.11 237.49 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM155R71C104KA88D"
+      (at 753.11 237.49 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 753.11 237.49 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "99d14396-4c08-5124-be73-cd0dbd3ef2d5")
+    )
+    (pin "2"
+      (uuid "838a6a7a-c2de-530e-9360-20bba7441b4d")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "C231")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 753.11 233.68)
+      (xy 753.11 231.14)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "67d59833-a743-52ac-bfe4-960725dabc20")
+  )
+  (symbol
+    (lib_id "mgp8:+3V3_FX3")
+    (at 753.11 231.14 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "8318011f-ff43-5112-b573-02764ee6009f")
+    (property "Reference" "#PWR10064"
+      (at 753.11 231.14 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "+3V3_FX3"
+      (at 753.11 226.54 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 753.11 231.14 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 753.11 231.14 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "80fdd667-df43-514c-9790-12a0cf9218ba")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10064")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 753.11 241.3)
+      (xy 753.11 243.84)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "6dc504f9-7f45-5eff-b635-b6be6c140699")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 753.11 243.84 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "fd15cc87-63f4-5fe1-9538-6b0a30d12281")
+    (property "Reference" "#PWR10065"
+      (at 753.11 243.84 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 753.11 243.84 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 753.11 243.84 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 753.11 243.84 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "dd54d4f2-8b9b-5d40-86dd-4450a58e5484")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
+          (reference "#PWR10065")
           (unit 1)
         )
       )
@@ -19383,7 +21054,7 @@
       (width 0)
       (type default)
     )
-    (uuid "16e814a0-770d-5685-b5df-9e394cf0f0f8")
+    (uuid "e158f6c8-9a52-5ab1-8691-7541d474c158")
   )
   (symbol
     (lib_id "mgp8:+1V2_FX3")
@@ -19392,8 +21063,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "1d442907-e049-528e-be45-dc4eaffa0245")
-    (property "Reference" "#PWR10057"
+    (uuid "a35ec844-9e36-58a9-8f4a-94baee9255dd")
+    (property "Reference" "#PWR10066"
       (at 353.06 191.77 0)
       (effects
         (font
@@ -19430,12 +21101,12 @@
       )
     )
     (pin "1"
-      (uuid "9d137589-3650-5dff-b38d-b8e784c78f49")
+      (uuid "b0373895-52c8-54e5-b42e-8c85eda7f74a")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10057")
+          (reference "#PWR10066")
           (unit 1)
         )
       )
@@ -19450,7 +21121,7 @@
       (width 0)
       (type default)
     )
-    (uuid "a3a121a4-513e-574e-8116-71eadaa09735")
+    (uuid "9ed17dd6-feb9-53dc-9be0-582351489a46")
   )
   (symbol
     (lib_id "mgp8:GND")
@@ -19459,8 +21130,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "7802101a-571a-5ad3-942c-31cc57016289")
-    (property "Reference" "#PWR10058"
+    (uuid "af1106f4-af69-5ca1-9ae0-d051ebd3a700")
+    (property "Reference" "#PWR10067"
       (at 353.06 204.47 0)
       (effects
         (font
@@ -19497,12 +21168,12 @@
       )
     )
     (pin "1"
-      (uuid "6bf2ef95-03da-5319-878e-1b7ce685ae6f")
+      (uuid "d403a362-b856-5972-8efd-998a80768c6d")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10058")
+          (reference "#PWR10067")
           (unit 1)
         )
       )
@@ -19614,7 +21285,7 @@
       (width 0)
       (type default)
     )
-    (uuid "df112aad-e037-5dc4-9dff-64561e045038")
+    (uuid "06261153-288d-56d0-a393-e7d86a424cb4")
   )
   (symbol
     (lib_id "mgp8:+1V2_FX3")
@@ -19623,8 +21294,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "21600876-7861-509e-ba8f-d1ae7e66b7e3")
-    (property "Reference" "#PWR10059"
+    (uuid "5d2d576e-e2d7-5dfd-b36e-2c7f4834893c")
+    (property "Reference" "#PWR10068"
       (at 379.73 191.77 0)
       (effects
         (font
@@ -19661,12 +21332,12 @@
       )
     )
     (pin "1"
-      (uuid "59b84866-87f9-5618-b24e-f193eecbce9e")
+      (uuid "405e4f1d-ceac-5b69-84b8-6979e36222ba")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10059")
+          (reference "#PWR10068")
           (unit 1)
         )
       )
@@ -19681,7 +21352,7 @@
       (width 0)
       (type default)
     )
-    (uuid "12446ad8-e512-5fff-8268-20d13fe5f904")
+    (uuid "d77bcd9c-e06a-5cb3-9ee8-b6fdcc126ae2")
   )
   (symbol
     (lib_id "mgp8:GND")
@@ -19690,8 +21361,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "ec3847ea-6ead-51de-b477-efe660e84b18")
-    (property "Reference" "#PWR10060"
+    (uuid "f0d3802a-7d03-5a20-8d07-8423884081a0")
+    (property "Reference" "#PWR10069"
       (at 379.73 204.47 0)
       (effects
         (font
@@ -19728,12 +21399,12 @@
       )
     )
     (pin "1"
-      (uuid "d1525241-7928-5277-83e7-fcacf2e41bca")
+      (uuid "7dd5bacc-0e54-5b46-97d5-ef41e6dbb854")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10060")
+          (reference "#PWR10069")
           (unit 1)
         )
       )
@@ -19845,7 +21516,7 @@
       (width 0)
       (type default)
     )
-    (uuid "f79d94dc-e3ef-573c-92bd-ddac8e3d62a8")
+    (uuid "5975d851-07af-5c8d-a0ad-5afe75fb64ad")
   )
   (symbol
     (lib_id "mgp8:+1V2_FX3")
@@ -19854,8 +21525,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "e7d17461-f42d-59fe-af0f-aa4d0697ed4d")
-    (property "Reference" "#PWR10061"
+    (uuid "35c7852b-bfa0-5c6e-8cee-79a2a4ebbceb")
+    (property "Reference" "#PWR10070"
       (at 406.4 191.77 0)
       (effects
         (font
@@ -19892,12 +21563,12 @@
       )
     )
     (pin "1"
-      (uuid "dfb7530e-8a18-5c30-b3fd-a7479c86e5d3")
+      (uuid "9eee6f47-3a4e-52e9-ae5e-61f4d3401f8e")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10061")
+          (reference "#PWR10070")
           (unit 1)
         )
       )
@@ -19912,7 +21583,7 @@
       (width 0)
       (type default)
     )
-    (uuid "4e1603fd-7a25-5b4f-8f4f-774aacdfa59d")
+    (uuid "05c361ee-72d3-57eb-8aa0-0873321742d1")
   )
   (symbol
     (lib_id "mgp8:GND")
@@ -19921,8 +21592,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "13b67aca-5efa-5134-abfc-627989fbe483")
-    (property "Reference" "#PWR10062"
+    (uuid "77e3b135-cd4d-5ffd-aa95-3fc1ed92b370")
+    (property "Reference" "#PWR10071"
       (at 406.4 204.47 0)
       (effects
         (font
@@ -19959,12 +21630,12 @@
       )
     )
     (pin "1"
-      (uuid "4fb323c0-d438-504d-868d-4b3601a08201")
+      (uuid "82399cad-4a97-5e41-991d-4fa31f36fb5c")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10062")
+          (reference "#PWR10071")
           (unit 1)
         )
       )
@@ -20076,7 +21747,7 @@
       (width 0)
       (type default)
     )
-    (uuid "b309fbb4-f588-567f-b7eb-b1f2bfc637cd")
+    (uuid "e3ca98cc-6a86-57d4-91d2-c10b03e16812")
   )
   (symbol
     (lib_id "mgp8:+1V2_FX3")
@@ -20085,8 +21756,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "d9b8f663-d7b3-52ba-9f9e-b3778107041b")
-    (property "Reference" "#PWR10063"
+    (uuid "e1d8de3d-0afb-5217-bdaa-72d6d9edc75a")
+    (property "Reference" "#PWR10072"
       (at 353.06 220.98 0)
       (effects
         (font
@@ -20123,12 +21794,12 @@
       )
     )
     (pin "1"
-      (uuid "abe7e863-b8cb-5d78-a24d-d6a5da2106e0")
+      (uuid "b443a0c3-a489-5437-9472-cf1c027a6e3d")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10063")
+          (reference "#PWR10072")
           (unit 1)
         )
       )
@@ -20143,7 +21814,7 @@
       (width 0)
       (type default)
     )
-    (uuid "56213721-d3f9-52b6-9b2c-11ed12c06911")
+    (uuid "cf4d93b1-4c08-5e89-a56f-74d1d1113ddf")
   )
   (symbol
     (lib_id "mgp8:GND")
@@ -20152,8 +21823,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "8318011f-ff43-5112-b573-02764ee6009f")
-    (property "Reference" "#PWR10064"
+    (uuid "42197e10-8ebf-5233-aeb1-27668d8fa10c")
+    (property "Reference" "#PWR10073"
       (at 353.06 233.68 0)
       (effects
         (font
@@ -20190,12 +21861,12 @@
       )
     )
     (pin "1"
-      (uuid "80fdd667-df43-514c-9790-12a0cf9218ba")
+      (uuid "f852bee6-14e4-5d3c-a1f7-98a792d7b634")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10064")
+          (reference "#PWR10073")
           (unit 1)
         )
       )
@@ -20307,7 +21978,7 @@
       (width 0)
       (type default)
     )
-    (uuid "f42ed490-1317-58e6-93be-f19da98e880e")
+    (uuid "80e73a4f-e291-5087-ab1b-a8dc7e904bbd")
   )
   (symbol
     (lib_id "mgp8:+1V2_FX3")
@@ -20316,8 +21987,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "fd15cc87-63f4-5fe1-9538-6b0a30d12281")
-    (property "Reference" "#PWR10065"
+    (uuid "65d3f831-537a-5579-970b-2d07730eca6c")
+    (property "Reference" "#PWR10074"
       (at 379.73 220.98 0)
       (effects
         (font
@@ -20354,12 +22025,12 @@
       )
     )
     (pin "1"
-      (uuid "dd54d4f2-8b9b-5d40-86dd-4450a58e5484")
+      (uuid "8bca11df-3fae-5df7-bf81-859feac60319")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10065")
+          (reference "#PWR10074")
           (unit 1)
         )
       )
@@ -20374,7 +22045,7 @@
       (width 0)
       (type default)
     )
-    (uuid "6d8fa188-b684-5745-ab53-04250ea8fd5a")
+    (uuid "5a7bab62-1028-59bb-8a19-a2d0f6326c99")
   )
   (symbol
     (lib_id "mgp8:GND")
@@ -20383,8 +22054,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "a35ec844-9e36-58a9-8f4a-94baee9255dd")
-    (property "Reference" "#PWR10066"
+    (uuid "2989f28b-f527-5d9e-9a8b-657cb6b7f913")
+    (property "Reference" "#PWR10075"
       (at 379.73 233.68 0)
       (effects
         (font
@@ -20421,12 +22092,12 @@
       )
     )
     (pin "1"
-      (uuid "b0373895-52c8-54e5-b42e-8c85eda7f74a")
+      (uuid "c87d65cc-0ff1-5c1c-88af-3bd30662b7eb")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10066")
+          (reference "#PWR10075")
           (unit 1)
         )
       )
@@ -20538,7 +22209,7 @@
       (width 0)
       (type default)
     )
-    (uuid "62949585-0767-5fb7-bef2-64f28fb6b8a1")
+    (uuid "1e8ff78c-8bf3-588f-a3d9-4e28411e6b4d")
   )
   (symbol
     (lib_id "mgp8:+1V2_FX3")
@@ -20547,8 +22218,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "af1106f4-af69-5ca1-9ae0-d051ebd3a700")
-    (property "Reference" "#PWR10067"
+    (uuid "7a29265b-64e3-5b30-8b66-8b9eb79ebfb9")
+    (property "Reference" "#PWR10076"
       (at 406.4 220.98 0)
       (effects
         (font
@@ -20585,12 +22256,12 @@
       )
     )
     (pin "1"
-      (uuid "d403a362-b856-5972-8efd-998a80768c6d")
+      (uuid "bb68ae3a-958c-57a3-ba5a-67cbd44d9285")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10067")
+          (reference "#PWR10076")
           (unit 1)
         )
       )
@@ -20605,7 +22276,7 @@
       (width 0)
       (type default)
     )
-    (uuid "216d9f96-1c1b-5631-ae17-648b56502b8c")
+    (uuid "b818c3c5-774e-5bc8-83ce-b1ed850f31f6")
   )
   (symbol
     (lib_id "mgp8:GND")
@@ -20614,8 +22285,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "5d2d576e-e2d7-5dfd-b36e-2c7f4834893c")
-    (property "Reference" "#PWR10068"
+    (uuid "68421cb2-a469-5ab8-948f-eb3b0abdcdf4")
+    (property "Reference" "#PWR10077"
       (at 406.4 233.68 0)
       (effects
         (font
@@ -20652,12 +22323,12 @@
       )
     )
     (pin "1"
-      (uuid "405e4f1d-ceac-5b69-84b8-6979e36222ba")
+      (uuid "fb4c9e82-13cd-5ea0-a898-7bd229fe7cd4")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10068")
+          (reference "#PWR10077")
           (unit 1)
         )
       )
@@ -20769,7 +22440,7 @@
       (width 0)
       (type default)
     )
-    (uuid "67d59833-a743-52ac-bfe4-960725dabc20")
+    (uuid "b17c46b8-6653-5ae0-998b-bdbeaba63667")
   )
   (symbol
     (lib_id "mgp8:+1V2_FX3")
@@ -20778,8 +22449,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "f0d3802a-7d03-5a20-8d07-8423884081a0")
-    (property "Reference" "#PWR10069"
+    (uuid "5758ae88-710e-5f91-80b3-5e6bba3dc5fc")
+    (property "Reference" "#PWR10078"
       (at 353.06 251.46 0)
       (effects
         (font
@@ -20816,12 +22487,12 @@
       )
     )
     (pin "1"
-      (uuid "7dd5bacc-0e54-5b46-97d5-ef41e6dbb854")
+      (uuid "597876b9-5e2e-5535-9cad-8f0133a29593")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10069")
+          (reference "#PWR10078")
           (unit 1)
         )
       )
@@ -20836,7 +22507,7 @@
       (width 0)
       (type default)
     )
-    (uuid "6dc504f9-7f45-5eff-b635-b6be6c140699")
+    (uuid "9eb072cb-d867-51e3-86c7-286503ef6582")
   )
   (symbol
     (lib_id "mgp8:GND")
@@ -20845,8 +22516,8 @@
     (in_bom no)
     (on_board no)
     (dnp no)
-    (uuid "35c7852b-bfa0-5c6e-8cee-79a2a4ebbceb")
-    (property "Reference" "#PWR10070"
+    (uuid "703b8f54-d56d-583a-bcb0-19a62d7a5192")
+    (property "Reference" "#PWR10079"
       (at 353.06 264.16 0)
       (effects
         (font
@@ -20883,12 +22554,12 @@
       )
     )
     (pin "1"
-      (uuid "9eee6f47-3a4e-52e9-ae5e-61f4d3401f8e")
+      (uuid "1e209a43-2270-5ed5-b7c3-9a5208bc5ca2")
     )
     (instances
       (project "mgp8"
         (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/035e9730-4dcb-5d1e-814f-c6c78f426b4a"
-          (reference "#PWR10070")
+          (reference "#PWR10079")
           (unit 1)
         )
       )
@@ -20903,10 +22574,10 @@
       )
       (justify left top)
     )
-    (uuid "f9d81230-1387-5081-a48e-af05c3285ada")
+    (uuid "412b924f-34d7-5663-8bd4-d0a83c606ac9")
   )
   (text "Подключение одноименных выводов питания и общего провода:"
-    (at 26 538.8 0)
+    (at 26 526.2 0)
     (effects
       (font
         (face "osifont")
@@ -20914,9 +22585,42 @@
       )
       (justify left top)
     )
-    (uuid "1ce2758e-567e-51c4-b87c-1ebf68ae6ed4")
+    (uuid "966b1385-3f99-553f-98dd-8f2f8d8b07b1")
   )
-  (text "DA26: I/O1 (USB_DP) — выв. 1, 6"
+  (text "DA26: GND (GND) — выв. 6, 15, 16, 17"
+    (at 26 530.8 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2 2)
+      )
+      (justify left top)
+    )
+    (uuid "6b3fd672-213a-53d1-bb1a-16c2d9bc87bb")
+  )
+  (text "DA26: SW (SW_1V2_FX3) — выв. 1, 2, 3"
+    (at 26 535 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2 2)
+      )
+      (justify left top)
+    )
+    (uuid "253bbc5b-b024-55aa-a47e-3286ef0a9e82")
+  )
+  (text "DA26: VIN (+5V_USB) — выв. 10, 11, 12"
+    (at 26 539.2 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2 2)
+      )
+      (justify left top)
+    )
+    (uuid "78323bb7-53b4-5837-ae93-de5c21fca1f6")
+  )
+  (text "DA27: I/O1 (USB_DP) — выв. 1, 6"
     (at 26 543.4 0)
     (effects
       (font
@@ -20925,9 +22629,9 @@
       )
       (justify left top)
     )
-    (uuid "7125dcb8-6aff-547f-b28b-be7d42c13264")
+    (uuid "afa1f97c-f4b6-50d9-b7f6-cb4d2bb734de")
   )
-  (text "DA26: I/O2 (USB_DM) — выв. 3, 4"
+  (text "DA27: I/O2 (USB_DM) — выв. 3, 4"
     (at 26 547.6 0)
     (effects
       (font
@@ -20936,7 +22640,7 @@
       )
       (justify left top)
     )
-    (uuid "6becad19-fac4-59ea-af9a-38d7791278a0")
+    (uuid "e2bf0549-2fa9-5a79-84ef-8f2dfaa47ba1")
   )
   (text "DD10: VDD (+1V2_FX3) — выв. C3, E9, H1, L5, L7, B10, F11, J11"
     (at 26 551.8 0)
@@ -20947,7 +22651,7 @@
       )
       (justify left top)
     )
-    (uuid "74924d64-4617-5c47-b7e4-cbbdd45d2d25")
+    (uuid "f8ea434b-5f0f-5066-8ed0-7de3408ca56a")
   )
   (text "DD10: VIO1 (+3V3_FX3) — выв. L9, H11"
     (at 26 556 0)
@@ -20958,7 +22662,7 @@
       )
       (justify left top)
     )
-    (uuid "d8107e5d-2a56-530f-b1dd-b90d49134f36")
+    (uuid "7cd2cc4d-f258-5ce9-9a81-fb5e6a74da71")
   )
   (text "DD10: VSS (GND) — выв. A8, B8, B9, D8, E2, G1, K3, K4, L1, L2, L3, L6, G11, L11"
     (at 26 560.2 0)
@@ -20969,7 +22673,7 @@
       )
       (justify left top)
     )
-    (uuid "a4a29bed-5b32-5fbc-902c-c604c0779d46")
+    (uuid "9ab5ebff-54ba-5e73-9bc4-53f3da3d4118")
   )
   (text "DD11: GND (GND) — выв. 5, 11, 20, 21"
     (at 26 564.4 0)
@@ -20980,7 +22684,7 @@
       )
       (justify left top)
     )
-    (uuid "51b7aece-7555-550a-970b-7bc303e5d406")
+    (uuid "fa97ff8c-caa5-51a2-8fc6-ff5954573178")
   )
   (text "DD11: VDD (+3V3_FX3) — выв. 1, 6, 10"
     (at 26 568.6 0)
@@ -20991,7 +22695,7 @@
       )
       (justify left top)
     )
-    (uuid "a33f855e-8f50-5c96-970a-fd9a5b7232d4")
+    (uuid "5d5b66dd-e747-5a67-87ac-130bbd747b90")
   )
   (text "XS2: GND (GND) — выв. A1, B1, A12, B12"
     (at 26 572.8 0)
@@ -21002,7 +22706,7 @@
       )
       (justify left top)
     )
-    (uuid "4d30d123-e443-5022-b23b-3e1bc0d72994")
+    (uuid "98742d20-2d6c-575f-b7e3-92ec097fad4e")
   )
   (text "XS2: VBUS (+5V_USB) — выв. A4, A9, B4, B9"
     (at 26 577 0)
@@ -21013,6 +22717,6 @@
       )
       (justify left top)
     )
-    (uuid "84960e91-156c-5ef8-b0bc-6df5ba8ade84")
+    (uuid "723d8b36-3c05-5f8d-813b-21ded8d55cb7")
   )
 )

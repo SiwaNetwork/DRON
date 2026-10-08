@@ -86,6 +86,7 @@ void corr_config(int ch, int sig, int prn, int fcn, int nint, double spacing_chi
     double cp = fmod(code_phase_chips, (double)c->L);
     if (cp < 0) cp += c->L;
     c->code_fx = (uint64_t)llround(cp * TWO32) % ((uint64_t)c->L << 32);
+    c->code_tot = c->code_fx;
     double fr = carr_phase_cyc - floor(carr_phase_cyc);
     uint32_t cp0 = (uint32_t)(llround(fr * TWO32) & 0xFFFFFFFFll);
     c->if_rate = corr_rate_carr(sig_if(sig, fcn));
@@ -135,6 +136,7 @@ static void advance(corr_ch_t *c, uint64_t n)
     uint64_t mod = (uint64_t)c->L << 32;
     /* dn · rate < 2^64 при dn < 2^32 (≈ 3 мин) */
     c->code_fx = (c->code_fx + (dn * c->code_rate) % mod) % mod;
+    c->code_tot += dn * c->code_rate;
     c->dop_fx += (int64_t)dn * (int64_t)(int32_t)(c->carr_rate - c->if_rate);
     c->t_ref = n;
 }
@@ -173,4 +175,11 @@ void corr_phase_at(int ch, uint64_t n, double *code_chips, double *carr_cyc)
     advance(&t, n);
     if (code_chips) *code_chips = (double)t.code_fx / TWO32;
     if (carr_cyc) *carr_cyc = (double)t.dop_fx / TWO32;
+}
+
+uint64_t corr_code_total_at(int ch, uint64_t n)
+{
+    corr_ch_t t = CORR[ch];
+    advance(&t, n);
+    return t.code_tot;
 }

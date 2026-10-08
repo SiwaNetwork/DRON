@@ -81,17 +81,20 @@ module corr_engine #(
 
     // ------------------------------------------------------------ планировщик слотов
     reg [CLOG-1:0] slot;
+    // копии номера слота для групп памяти (нагрузка одного триггера на ~170 ячеек LUTRAM велика)
+    (* keep *) reg [CLOG-1:0] slot_a, slot_b, slot_c;
     reg            run;                  // в этом обходе обрабатывается новая группа
     reg [127:0]    grp_l;
     reg [31:0]     cnt_l;
     always @(posedge clk) begin
         if (rst) begin
-            run <= 1'b0; slot <= 0;
+            run <= 1'b0; slot <= 0; slot_a <= 0; slot_b <= 0; slot_c <= 0;
         end else if (grp_stb) begin
-            run <= 1'b1; slot <= 0; grp_l <= grp_data; cnt_l <= grp_count;
+            run <= 1'b1; slot <= 0; slot_a <= 0; slot_b <= 0; slot_c <= 0;
+            grp_l <= grp_data; cnt_l <= grp_count;
         end else begin
             if (slot == NMUX-1) run <= 1'b0;
-            slot <= slot + 1'b1;
+            slot <= slot + 1'b1; slot_a <= slot_a + 1'b1; slot_b <= slot_b + 1'b1; slot_c <= slot_c + 1'b1;
         end
     end
 
@@ -103,6 +106,7 @@ module corr_engine #(
     reg [W:0]    m_kr3 [0:NMUX-1];      // 3 × шаг кода (33 бит)
     reg [W-1:0]  m_cf  [0:NMUX-1];      // дробная фаза кода
     reg [CB-1:0] m_ci  [0:NMUX-1];      // целая фаза кода
+    reg [CB:0]   m_D   [0:NMUX-1];      // L − ci (≥ 1)
     reg [8:0]    m_ep  [0:NMUX-1];      // {последняя эпоха интервала, счётчик эпох}
     reg [15:0]   m_ctl [0:NMUX-1];      // запись с шины
     reg [CB:0]   m_len [0:NMUX-1];
@@ -167,28 +171,28 @@ module corr_engine #(
     endfunction
 
     // ------------------------------------------------------------ S0: NCO, эпоха, адреса кода
-    wire [15:0]   c0  = m_ctl[slot];
+    wire [15:0]   c0  = m_ctl[slot_c];
     wire          en0 = en_r[slot];
     wire [2:0]    rf0 = c0[5:3];
-    wire [W-1:0]  cp0 = m_cp[slot];
-    wire [W-1:0]  cr0 = m_cr[slot];
-    wire [W-1:0]  kr0 = m_kr[slot];
-    wire [W-1:0]  cf0 = m_cf[slot];
-    wire [CB-1:0] ci0 = m_ci[slot];
-    wire [CB:0]   L0  = m_len[slot];
-    wire [8:0]    ep0 = m_ep[slot];
+    wire [W-1:0]  cp0 = m_cp[slot_a];
+    wire [W-1:0]  cr0 = m_cr[slot_a];
+    wire [W-1:0]  kr0 = m_kr[slot_b];
+    wire [W-1:0]  cf0 = m_cf[slot_b];
+    wire [CB-1:0] ci0 = m_ci[slot_b];
+    wire [CB:0]   L0  = m_len[slot_c];
+    wire [8:0]    ep0 = m_ep[slot_c];
     // положение кода отсчёта j группы: ci0 + (cf0 + j·kr0) / 2^32
     wire [33:0] f1 = {2'b0, cf0} + {2'b0, kr0};
     wire [33:0] f2 = {2'b0, cf0} + {1'b0, kr0, 1'b0};
-    wire [33:0] f3 = {2'b0, cf0} + {1'b0, m_kr3[slot]};
+    wire [33:0] f3 = {2'b0, cf0} + {1'b0, m_kr3[slot_b]};
     wire [33:0] f4 = {2'b0, cf0} + {kr0, 2'b0};
     // фаза несущей отсчёта j: cp0 + j·cr0
     wire [W-1:0] ph1 = cp0 + cr0;
     wire [W-1:0] ph2 = cp0 + {cr0[W-2:0], 1'b0};
-    wire [W-1:0] ph3 = cp0 + m_cr3[slot];
+    wire [W-1:0] ph3 = cp0 + m_cr3[slot_a];
     wire [W-1:0] ph4 = cp0 + {cr0[W-3:0], 2'b0};
     // эпоха кода после отсчёта j: ci0 + o_{j+1} ≥ L, т. е. o_{j+1} ≥ D = L − ci0 (D ≥ 1, o ≤ 2)
-    wire [CB:0] D0 = L0 - {1'b0, ci0};
+    wire [CB:0] D0 = m_D[slot_b];
     wire        dsm = (D0[CB:2] == 0);
     wire w0 = dsm && (f1[33:32] >= D0[1:0]);
     wire w1 = dsm && (f2[33:32] >= D0[1:0]);
@@ -197,7 +201,6 @@ module corr_engine #(
     wire       wrap0 = w3;
     wire       dump0 = wrap0 && ep0[8];
     wire       act0  = run && en0;
-    wire       apply0 = pend[slot] && (!en0 || (act0 && dump0));
 
     // буфер записи фаз: регистры 4, 5, 6 -> pw_reg 0, 1, 2
     reg            pw_v;
@@ -210,20 +213,24 @@ module corr_engine #(
     // Новое состояние записывается тактом позже (адрес u_slot): слот снова читается через NMUX
     // тактов, а длинная цепочка «чтение LUTRAM — сумматоры — запись» разбивается на два такта.
     reg [CLOG-1:0] u_slot;
-    reg            u_v, u_en, u_wrap, u_dump, u_apply, u_pw;
+    reg            u_v, u_en, u_wrap, u_dump, u_pend, u_pw;
     reg [W-1:0]    u_cp, u_cf, u_pwd;
     reg [1:0]      u_o4, u_pwr;
     reg [CB-1:0]   u_ci;
-    reg [CB:0]     u_D;
+    reg [CB:0]     u_D, u_L;
     reg [7:0]      u_ep, u_nint;
     always @(posedge clk) begin
         u_slot <= slot; u_v <= act0; u_en <= en0; u_wrap <= wrap0; u_dump <= dump0;
-        u_apply <= apply0; u_pw <= pw_now; u_pwr <= pw_reg; u_pwd <= pw_data;
-        u_cp <= ph4; u_cf <= f4[W-1:0]; u_o4 <= f4[33:32]; u_ci <= ci0; u_D <= D0; u_ep <= ep0[7:0];
+        u_pend <= pend[slot]; u_pw <= pw_now; u_pwr <= pw_reg; u_pwd <= pw_data;
+        u_cp <= ph4; u_cf <= f4[W-1:0]; u_o4 <= f4[33:32]; u_ci <= ci0; u_D <= D0; u_L <= L0; u_ep <= ep0[7:0];
         u_nint <= c0[15:8];
     end
+    // новые шаги NCO: при сбросе (канал включён) или сразу (канал выключен)
+    wire        u_apply = u_pend && (!u_en || (u_v && u_dump));
     // при переходе через конец кода: ci + o4 − L = o4 − D
     wire [CB:0] u_ni = u_wrap ? ({{(CB-1){1'b0}}, u_o4} - u_D) : ({1'b0, u_ci} + u_o4);
+    // новое расстояние до конца кода: при переходе L − (o4 − D), иначе D − o4
+    wire [CB:0] u_Dn = u_wrap ? (u_L - u_ni) : (u_D - u_o4);
     // счётчик эпох и признак «следующая эпоха завершает интервал» (ep + 1 ≥ n_int)
     wire [7:0]  u_epn = (u_v && u_wrap) ? (u_dump ? 8'd0 : u_ep + 1'b1) : (u_v ? u_ep : 8'd0);
     wire [8:0]  u_epw = {({1'b0, u_epn} + 9'd1 >= {1'b0, u_nint}), u_epn};
@@ -232,9 +239,11 @@ module corr_engine #(
             m_cp[u_slot] <= u_cp;
             m_cf[u_slot] <= u_cf;
             m_ci[u_slot] <= u_ni[CB-1:0];
+            m_D[u_slot]  <= u_Dn;
             m_ep[u_slot] <= u_epw;
         end else if (!u_en) begin
             m_ep[u_slot] <= u_epw;
+            m_D[u_slot]  <= u_L - {1'b0, u_ci};          // пересчёт после записи CODE_INT / LEN
             if (u_pw && u_pwr == 2'd0) m_cp[u_slot] <= u_pwd;
             if (u_pw && u_pwr == 2'd1) m_ci[u_slot] <= u_pwd[CB-1:0];
             if (u_pw && u_pwr == 2'd2) m_cf[u_slot] <= u_pwd;
@@ -328,7 +337,7 @@ module corr_engine #(
         s1_cl   <= ci0[1:0];
         s1_o    <= {f3[33:32], f2[33:32], f1[33:32]};
         s1_F    <= {f3[31:16], f2[31:16], f1[31:16], cf0[31:16]};
-        s1_sp   <= m_sp[slot];
+        s1_sp   <= m_sp[slot_c];
         s1_k    <= {ph3[31:26], ph2[31:26], ph1[31:26], cp0[31:26]};
         s1_x    <= {grp_l[96 + rf0*4 +: 4], grp_l[64 + rf0*4 +: 4],
                     grp_l[32 + rf0*4 +: 4], grp_l[rf0*4 +: 4]};
