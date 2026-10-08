@@ -1,0 +1,647 @@
+(kicad_sch
+  (version 20230121)
+  (generator eeschema)
+  (uuid "b897eb84-c3a6-5407-9ace-c16a4e8ba270")
+  (paper "A3")
+  (title_block
+    (title "Модуль приемника ГНСС МГП-8")
+    (date "08.10.2026")
+    (rev "")
+    (company "SiwaNetwork")
+    (comment 1 "ШИВА.468157.001 Э3")
+    (comment 2 "Разработчик")
+    (comment 3 "")
+    (comment 4 "")
+    (comment 5 "")
+    (comment 6 "")
+    (comment 7 "Э")
+    (comment 8 "Схема электрическая принципиальная")
+    (comment 9 "")
+  )
+  (lib_symbols)
+  (sheet
+    (at 30 35)
+    (size 115 16)
+    (fields_autoplaced)
+    (stroke
+      (width 0.3)
+      (type solid)
+    )
+    (fill
+      (color 0 0 0 0)
+    )
+    (uuid "edb96388-8ab7-56a1-a761-b1c623672b38")
+    (property "Sheetname" "Лист 2. Вторичные источники питания"
+      (at 31 41 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left top)
+      )
+    )
+    (property "Sheetfile" "02_power.kicad_sch"
+      (at 31 50 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left bottom)
+      )
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270"
+          (page "2")
+        )
+      )
+    )
+  )
+  (sheet
+    (at 155 35)
+    (size 115 16)
+    (fields_autoplaced)
+    (stroke
+      (width 0.3)
+      (type solid)
+    )
+    (fill
+      (color 0 0 0 0)
+    )
+    (uuid "b77ec16e-d084-575c-8321-cdd61d59444e")
+    (property "Sheetname" "Лист 3. Антенный вход, питание антенны, ВЧ-делитель 1:8"
+      (at 156 41 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left top)
+      )
+    )
+    (property "Sheetfile" "03_ant.kicad_sch"
+      (at 156 50 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left bottom)
+      )
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270"
+          (page "3")
+        )
+      )
+    )
+  )
+  (sheet
+    (at 30 59)
+    (size 115 16)
+    (fields_autoplaced)
+    (stroke
+      (width 0.3)
+      (type solid)
+    )
+    (fill
+      (color 0 0 0 0)
+    )
+    (uuid "827da912-0692-5fb9-912f-8867f38e51bb")
+    (property "Sheetname" "Лист 4. Приемные ВЧ-каналы 1–4"
+      (at 31 65 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left top)
+      )
+    )
+    (property "Sheetfile" "04_rf1.kicad_sch"
+      (at 31 74 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left bottom)
+      )
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270"
+          (page "4")
+        )
+      )
+    )
+  )
+  (sheet
+    (at 155 59)
+    (size 115 16)
+    (fields_autoplaced)
+    (stroke
+      (width 0.3)
+      (type solid)
+    )
+    (fill
+      (color 0 0 0 0)
+    )
+    (uuid "9fb2c946-de37-5654-8f9d-5b5508b2b735")
+    (property "Sheetname" "Лист 5. Приемные ВЧ-каналы 5–8"
+      (at 156 65 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left top)
+      )
+    )
+    (property "Sheetfile" "05_rf2.kicad_sch"
+      (at 156 74 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left bottom)
+      )
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270"
+          (page "5")
+        )
+      )
+    )
+  )
+  (sheet
+    (at 30 83)
+    (size 115 16)
+    (fields_autoplaced)
+    (stroke
+      (width 0.3)
+      (type solid)
+    )
+    (fill
+      (color 0 0 0 0)
+    )
+    (uuid "f7e10bbc-f120-50ee-9c1c-d821b7dadedc")
+    (property "Sheetname" "Лист 6. Опорный генератор, тактирование, вход опоры 10 МГц / 1PPS, выход 1PPS"
+      (at 31 89 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left top)
+      )
+    )
+    (property "Sheetfile" "06_clk.kicad_sch"
+      (at 31 98 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left bottom)
+      )
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270"
+          (page "6")
+        )
+      )
+    )
+  )
+  (sheet
+    (at 155 83)
+    (size 115 16)
+    (fields_autoplaced)
+    (stroke
+      (width 0.3)
+      (type solid)
+    )
+    (fill
+      (color 0 0 0 0)
+    )
+    (uuid "36c3d110-3c4d-554b-a152-177d495ba6c8")
+    (property "Sheetname" "Лист 7. ПЛИС: банки ввода-вывода"
+      (at 156 89 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left top)
+      )
+    )
+    (property "Sheetfile" "07_fpga1.kicad_sch"
+      (at 156 98 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left bottom)
+      )
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270"
+          (page "7")
+        )
+      )
+    )
+  )
+  (sheet
+    (at 30 107)
+    (size 115 16)
+    (fields_autoplaced)
+    (stroke
+      (width 0.3)
+      (type solid)
+    )
+    (fill
+      (color 0 0 0 0)
+    )
+    (uuid "d8db24bb-c63f-5178-a954-3170838523bb")
+    (property "Sheetname" "Лист 8. ПЛИС: конфигурация, питание, память конфигурации, JTAG"
+      (at 31 113 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left top)
+      )
+    )
+    (property "Sheetfile" "08_fpga2.kicad_sch"
+      (at 31 122 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left bottom)
+      )
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270"
+          (page "8")
+        )
+      )
+    )
+  )
+  (sheet
+    (at 155 107)
+    (size 115 16)
+    (fields_autoplaced)
+    (stroke
+      (width 0.3)
+      (type solid)
+    )
+    (fill
+      (color 0 0 0 0)
+    )
+    (uuid "1ca56d2c-7152-517f-8d12-4d01b1c7aab8")
+    (property "Sheetname" "Лист 9. Управляющий микроконтроллер, microSD, CAN FD"
+      (at 156 113 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left top)
+      )
+    )
+    (property "Sheetfile" "09_mcu.kicad_sch"
+      (at 156 122 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left bottom)
+      )
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270"
+          (page "9")
+        )
+      )
+    )
+  )
+  (sheet
+    (at 30 131)
+    (size 115 16)
+    (fields_autoplaced)
+    (stroke
+      (width 0.3)
+      (type solid)
+    )
+    (fill
+      (color 0 0 0 0)
+    )
+    (uuid "035e9730-4dcb-5d1e-814f-c6c78f426b4a")
+    (property "Sheetname" "Лист 10. Контроллер USB 3.0 (режим выдачи отсчетов ПЧ)"
+      (at 31 137 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left top)
+      )
+    )
+    (property "Sheetfile" "10_usb.kicad_sch"
+      (at 31 146 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left bottom)
+      )
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270"
+          (page "10")
+        )
+      )
+    )
+  )
+  (sheet
+    (at 155 131)
+    (size 115 16)
+    (fields_autoplaced)
+    (stroke
+      (width 0.3)
+      (type solid)
+    )
+    (fill
+      (color 0 0 0 0)
+    )
+    (uuid "5f8847ce-ecb2-5f29-87ff-c0bcc04b90b9")
+    (property "Sheetname" "Лист 11. Внешние интерфейсы"
+      (at 156 137 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left top)
+      )
+    )
+    (property "Sheetfile" "11_io.kicad_sch"
+      (at 156 146 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left bottom)
+      )
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270"
+          (page "11")
+        )
+      )
+    )
+  )
+  (text "Технические требования"
+    (at 290 35 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "3086ea1c-c1c1-595d-a3f9-43ebc8960d5a")
+  )
+  (text "1. Позиционные обозначения элементов — по ГОСТ 2.710-81. Перечень элем"
+    (at 290 41 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "9047994f-f1c2-50a0-baf4-7f3f7825b2ad")
+  )
+  (text "ентов — ШИВА.468157.001 ПЭ3."
+    (at 290 45.5 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "5b203abd-d29c-5c78-9dae-86ff49f0cbdc")
+  )
+  (text "2. Многовыводные микросхемы показаны по частям (DD1.1 … DD1.8); одноим"
+    (at 290 51.5 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "504cc53c-bf9b-55d8-907c-c2040e586633")
+  )
+  (text "енные выводы питания и общего провода объединены, номера выводов приве"
+    (at 290 56 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "c10917fc-be5d-54f0-bb8e-52aa4e3fe6a7")
+  )
+  (text "дены в таблицах на листах."
+    (at 290 60.5 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "1c67b644-6bfe-5f6f-a13b-71198f1397a7")
+  )
+  (text "3. Связи между листами показаны глобальными метками цепей; цепи питани"
+    (at 290 66.5 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "e76451f3-2d69-5605-a15e-706b11154957")
+  )
+  (text "я — знаками питания."
+    (at 290 71 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "d8339492-803c-5abd-ac9c-96b21502a4e1")
+  )
+  (text "4. Знаком «X» отмечены неподключаемые выводы. Неиспользуемые выводы ПЛ"
+    (at 290 77 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "b43ff8ed-c0a2-5e64-9653-ccd8abe6d00a")
+  )
+  (text "ИС и МК не подключены."
+    (at 290 81.5 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "da10edca-0c7d-5608-b47c-bd0e775cc146")
+  )
+  (text "5. Элементы с пометкой «DNP» в ПЭ3 устанавливаются по заказу."
+    (at 290 87.5 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "e87d1e10-d8c2-55b3-8a27-2fdbeec2844c")
+  )
+  (text "6. Линии RF_ANT, RF_DIV_IN, RF_S*, RF1…RF8 выполнять с волновым сопрот"
+    (at 290 93.5 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "dd8e323f-0b3e-5c3a-9e35-7155e0ad46c7")
+  )
+  (text "ивлением 50 Ом (копланарная линия с заземленным основанием), длины от "
+    (at 290 98 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "b7810941-c6cb-56c0-b5bf-fd825fe9fa83")
+  )
+  (text "делителя до каналов выравнивать с точностью ±0,5 мм."
+    (at 290 102.5 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "06695758-a569-562c-b8c9-42b6c3783e6f")
+  )
+  (text "7. ВЧ-каналы 1–4 и 5–8 закрывать экранами (рамка MS448-10F с крышкой M"
+    (at 290 108.5 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "ad27128d-d681-517d-b266-2b1ce1a02ff7")
+  )
+  (text "S448-10C)."
+    (at 290 113 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "623ca083-b9b1-532e-a419-c958475a20c5")
+  )
+  (text "8. Цепи MAX_I*, MAX_Q*, ADC_CLK_*, ADC_SCLK трассировать с выравнивани"
+    (at 290 119 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "7066a797-bd0e-5cb8-874d-7c48770c1bc1")
+  )
+  (text "ем длин ±2 мм внутри группы."
+    (at 290 123.5 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "626c3c22-1a76-5b25-abc4-8da8f8a170e7")
+  )
+  (text "9. Цепи USB 3.0 (SS*) — дифференциальные пары 90 Ом; USB 2.0 (USB_DP/D"
+    (at 290 129.5 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "a5804893-53d7-5c53-aea0-dc61bf95db29")
+  )
+  (text "M) — 90 Ом."
+    (at 290 134 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left top)
+    )
+    (uuid "fffde941-9b4a-5d9c-bfd8-55194f01321e")
+  )
+  (sheet_instances
+    (path "/"
+      (page "1")
+    )
+  )
+)
