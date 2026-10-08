@@ -283,6 +283,10 @@ def inline(t):
     t = re.sub(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?!\w)", r"<i>\1</i>", t)
     t = re.sub(r"`([^`]+)`", r'<font face="Mono">\1</font>', t)
     t = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'\1 (\2)', t)
+    # степени: 2^32, 10^−2, 2^μ (вне моноширинных фрагментов)
+    parts = re.split(r'(<font face="Mono">.*?</font>)', t)
+    t = "".join(p if p.startswith('<font face="Mono">') else
+                re.sub(r"(\d|\))\^([−-]?[0-9A-Za-zμα-ω]+)", r"\1<super>\2</super>", p) for p in parts)
     return t
 
 

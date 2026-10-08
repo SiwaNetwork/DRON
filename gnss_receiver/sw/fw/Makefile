@@ -1,4 +1,5 @@
-# МГП-8: ПО МК — сборка и тесты на ПК (gcc). Сборка для STM32H743 — цель mcu (arm-none-eabi-gcc).
+# МГП-8: ПО МК — сборка и тесты на ПК (gcc); цель mcu — вычислительное ядро для STM32H743
+# (arm-none-eabi-gcc), библиотека build/mcu/libmgp8.a и оценка объёма.
 CC      ?= gcc
 CFLAGS  ?= -std=c99 -O2 -g -Wall -Wextra -Wno-unused-parameter -Iinc -Isrc
 LDLIBS  = -lm
@@ -28,7 +29,23 @@ test: $(TESTS)
 test-long: $(LONG)
 	./build/test_rx_pvt
 
+# вычислительное ядро ПО МК для STM32H743 (Cortex-M7, FPU двойной точности): библиотека и
+# оценка объёма кода и статических данных (без драйверов периферии и модели ПЛИС)
+MCU_CC     = arm-none-eabi-gcc
+MCU_CFLAGS = -std=c99 -O2 -Wall -Wextra -Wno-unused-parameter -mcpu=cortex-m7 -mfpu=fpv5-d16 \
+             -mfloat-abi=hard -mthumb -ffunction-sections -fdata-sections -DMGP8_MCU -Iinc -Isrc
+MCU_SRC    = $(filter-out src/corr_sim.c src/rinex.c,$(SRC))
+MCU_OBJ    = $(patsubst %.c,build/mcu/%.o,$(MCU_SRC))
+
+build/mcu/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(MCU_CC) $(MCU_CFLAGS) -c -o $@ $<
+
+mcu: $(MCU_OBJ)
+	arm-none-eabi-ar rcs build/mcu/libmgp8.a $(MCU_OBJ)
+	arm-none-eabi-size -t $(MCU_OBJ) | tail -1
+
 clean:
 	rm -rf build
 
-.PHONY: all test clean
+.PHONY: all test test-long mcu clean
