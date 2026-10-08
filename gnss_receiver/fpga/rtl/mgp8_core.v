@@ -229,13 +229,19 @@ module mgp8_core #(
     // ------------------------------------------------------------ чтение (задержка 4 такта)
     reg [31:0] t96_hi_l;
     reg [31:0] sys_rd;
+    // асинхронные входы состояния — через двухтриггерный синхронизатор
+    reg [9:0]  st_s1, st_s2;
+    always @(posedge clk) begin
+        st_s1 <= {pll_lock, fx3_pwr_ok, max_ld};
+        st_s2 <= st_s1;
+    end
     always @(posedge clk) begin
         if (bus_re && sel_sys && ra == 8'h04) t96_hi_l <= t96[63:32];
         case (ra)
             8'h00: sys_rd <= 32'h4D475038;
             8'h01: sys_rd <= {NENG[7:0], 8'h00, VERSION};
             8'h02: sys_rd <= ctrl;
-            8'h03: sys_rd <= {22'd0, pll_lock, fx3_pwr_ok, max_ld};
+            8'h03: sys_rd <= {22'd0, st_s2};
             8'h04: sys_rd <= t96[31:0];
             8'h05: sys_rd <= t96_hi_l;
             8'h06: sys_rd <= tic_period;

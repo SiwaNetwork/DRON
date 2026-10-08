@@ -170,3 +170,15 @@ int code_gen(int sig, int prn, uint8_t *bits)
         return mem_code(SIGS[sig].id, prn, bits);
     }
 }
+
+int sec_code(int sig, int prn, uint8_t *bits)
+{
+    static const char CS25[] = "0011100000001010110110010";      /* E1C, CS25_1 = 0x380AD90 */
+    static const char NH20[] = "00000100110101001110";           /* L5Q, NH20 = 0x04D4E */
+    const char *c = sig == SIG_E1C ? CS25 : sig == SIG_L5Q ? NH20 : NULL;
+    (void)prn;
+    if (!c) return 0;
+    int n = (int)strlen(c);
+    for (int i = 0; i < n; i++) bits[i] = (uint8_t)(c[i] == '1');
+    return n;
+}

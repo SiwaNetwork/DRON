@@ -5,7 +5,7 @@ CFLAGS  ?= -std=c99 -O2 -g -Wall -Wextra -Wno-unused-parameter -Iinc -Isrc
 LDLIBS  = -lm
 SRC     = src/signals.c src/codes.c src/gen/code_tab.c src/corr_sim.c src/corr.c src/fft.c src/acq.c src/track.c src/eph.c src/rinex.c src/pvt.c src/lnav.c src/nmea.c src/rx.c src/spectrum.c src/rtcm3.c
 TESTS   = build/test_codes build/test_corr_sim build/test_pvt build/test_lnav build/test_spectrum build/test_output build/test_acq_weak build/test_rx_l1
-LONG    = build/test_rx_pvt
+LONG    = build/test_trk_weak build/test_rx_pvt
 
 all: $(TESTS)
 
@@ -25,9 +25,9 @@ test: $(TESTS)
 	@for t in $(TESTS); do echo "== $$t"; ./$$t || exit 1; done
 	python3 tests/check_output.py
 
-# длительный сквозной тест «ПЧ -> координаты, 1PPS» (несколько минут)
+# длительные тесты: слежение за слабыми сигналами, сквозной «ПЧ -> координаты, 1PPS» (≈ 25 мин)
 test-long: $(LONG)
-	./build/test_rx_pvt
+	@for t in $(LONG); do echo "== $$t"; ./$$t || exit 1; done
 
 # вычислительное ядро ПО МК для STM32H743 (Cortex-M7, FPU двойной точности): библиотека и
 # оценка объёма кода и статических данных (без драйверов периферии и модели ПЛИС)

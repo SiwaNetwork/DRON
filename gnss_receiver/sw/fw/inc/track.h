@@ -3,6 +3,7 @@
 #define TRACK_H
 #include <stdint.h>
 #include "corr.h"
+#include "codes.h"
 
 enum { TRK_IDLE = 0, TRK_PULLIN, TRK_LOCK, TRK_LOST };
 
@@ -14,6 +15,10 @@ typedef struct {
     double dll_bw;           /* Гц */
     double spacing;          /* смещение E/L, чипы */
     double fll_time;         /* время работы ЧАП, с */
+    /* длительное накопление (слабые сигналы): после синхронизации по битам при C/N0 ниже
+     * long_cn0 петли обновляются раз в бит (20 периодов, когерентно), полосы — *_long */
+    double long_cn0;         /* дБГц; 0 — не применять, > 60 — всегда после синхронизации */
+    double pll_bw_long, dll_bw_long;
 } trk_cfg_t;
 
 typedef struct {
@@ -47,6 +52,15 @@ typedef struct {
     void   (*on_bit)(void *ctx, int bit, uint64_t n_end);
     void    *ctx;
     double   last_perr;
+    /* длительное накопление */
+    double   long_cn0, pll_bw_long, dll_bw_long;
+    int      ncoh;           /* периодов на обновление петель (1, bit_len или ≈ 20 мс для пилота) */
+    double   acc[6];         /* E, P, L (I, Q) за интервал петли */
+    int      nacc;
+    /* вторичный код пилотной составляющей: синхронизация по знакам точного отвода */
+    uint8_t  sec[SEC_MAX_LEN];
+    int      sec_len, sec_sync, sec_pos, sec_sgn, sec_n;
+    double   sec_hist[SEC_MAX_LEN];
 } trk_t;
 
 void trk_default_cfg(trk_cfg_t *c);

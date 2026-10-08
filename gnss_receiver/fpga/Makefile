@@ -2,13 +2,14 @@
 #   make sim       — все тесты RTL (движок коррелятора, режекторный фильтр, система)
 #   make syn       — синтез, размещение и трассировка LFE5U-45F-6BG381I, build/mgp8.bit
 #   make engine    — P&R одного движка коррелятора (оценка частоты, 3 seed)
+#   make notch     — P&R режекторного фильтра (оценка частоты)
 RTL    = rtl/cmem_4kx4.v rtl/corr_engine.v rtl/corr_bank.v rtl/rf_capture.v rtl/notch.v \
          rtl/timebase.v rtl/fmc_slave.v rtl/max_spi.v rtl/snapshot.v rtl/mgp8_core.v rtl/mgp8_top.v
 IVFLAGS = -g2005 -Wall
 B       = build
 SEED   ?= 1
 
-.PHONY: sim sim-engine sim-notch sim-sys syn engine clean
+.PHONY: sim sim-engine sim-notch sim-sys syn engine notch clean
 sim: sim-engine sim-notch sim-sys
 
 $(B):
@@ -49,6 +50,12 @@ engine: | $(B)
 	for s in 1 2 3; do nextpnr-ecp5 --45k --package CABGA381 --speed 6 --json $(B)/ew.json \
 	    --lpf syn/engine_wrap.lpf --lpf-allow-unconstrained --seed $$s > $(B)/ew_pnr$$s.log 2>&1; \
 	    grep -E "Max frequency" $(B)/ew_pnr$$s.log | tail -1; done
+
+notch: | $(B)
+	yosys -q -p "read_verilog rtl/notch.v syn/notch_wrap.v; synth_ecp5 -top notch_wrap -json $(B)/nw.json"
+	nextpnr-ecp5 --45k --package CABGA381 --speed 6 --json $(B)/nw.json --lpf syn/notch_wrap.lpf \
+	    --lpf-allow-unconstrained --seed 1 > $(B)/nw_pnr.log 2>&1; \
+	grep -E "Max frequency" $(B)/nw_pnr.log | tail -1
 
 clean:
 	rm -rf $(B) tb/out tb/stim

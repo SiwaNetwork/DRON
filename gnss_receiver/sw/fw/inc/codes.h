@@ -13,4 +13,10 @@ int code_gen(int sig, int prn, uint8_t *bits);
 
 static inline int code_bit(const uint8_t *bits, int i) { return (bits[i >> 3] >> (i & 7)) & 1; }
 
+/* Вторичный код пилотной составляющей (по одному чипу на период первичного кода):
+ * Galileo E1C — CS25 (OS SIS ICD), GPS L5Q — NH20 (IS-GPS-705). bits[i] = 1 — чип −1.
+ * Возвращает длину (0 — нет или не поддерживается). */
+#define SEC_MAX_LEN 32
+int sec_code(int sig, int prn, uint8_t *bits);
+
 #endif
