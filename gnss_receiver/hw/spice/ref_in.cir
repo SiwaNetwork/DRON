@@ -1,0 +1,30 @@
+* МГП-8: вход опоры 10 МГц / 1PPS — нагрузка 49,9 Ом, разделительный 100 нФ, смещение 1,65 В,
+* порог 1,61 В, компаратор TLV3501 (задержка 4,5 нс, гистерезис 6 мВ — поведенческая модель)
+.param f=10e6 amp=0.2
+* синус 10 МГц: 0 дБм на 50 Ом = 0,316 Впик -> моделируем худший случай -6 дБм (0,158 Впик)
+Vsrc s 0 SIN(0 0.316 {f})
+Rsrc s in 50
+Rterm in 0 49.9
+Cac in ac 100n
+Rb1 vcc ac 10k
+Rb2 ac 0 10k
+Rt1 vcc th 10k
+Rt2 th 0 9.53k
+Cth th 0 100n
+Vcc vcc 0 3.3
+* компаратор: идеальный с задержкой 4,5 нс
+Bc cmpi 0 V = V(ac) > V(th) ? 3.3 : 0
+Tdl cmpi 0 out 0 Z0=50 TD=4.5n
+Rout out 0 50
+.tran 0.1n 3u 0 0.1n
+.control
+run
+meas tran duty AVG V(out) FROM=2u TO=3u
+meas tran t1 WHEN V(out)=1.65 RISE=15
+meas tran t2 WHEN V(out)=1.65 RISE=16
+let period = t2 - t1
+print period
+wrdata ref_in.dat V(in) V(ac) V(th) V(out)
+quit
+.endc
+.end

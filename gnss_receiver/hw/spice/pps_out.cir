@@ -1,0 +1,27 @@
+* МГП-8: выход 1PPS — SN74LVC1G125 (Rвых ≈ 15 Ом, фронт 1 нс) + 33 Ом + кабель 50 Ом 2 м (10 нс)
+* Нагрузка 1: 50 Ом (вход измерителя интервалов); нагрузка 2: 1 МОм || 15 пФ (вход КМОП)
+.param rout=15 rser=33
+Vdrv drv 0 PULSE(0 3.3 50n 1n 1n 1u 2u)
+Rout drv a {rout}
+Rs a b {rser}
+T1 b 0 c1 0 Z0=50 TD=10n
+Rload1 c1 0 50
+Vdrv2 drv2 0 PULSE(0 3.3 50n 1n 1n 1u 2u)
+Rout2 drv2 a2 {rout}
+Rs2 a2 b2 {rser}
+T2 b2 0 c2 0 Z0=50 TD=10n
+Rload2 c2 0 1meg
+Cload2 c2 0 15p
+.tran 0.05n 400n
+.control
+run
+meas tran v50_high FIND V(c1) AT=300n
+meas tran vhz_high FIND V(c2) AT=300n
+meas tran vhz_peak MAX V(c2) FROM=55n TO=120n
+meas tran t50_cross WHEN V(c1)=0.8 RISE=1
+meas tran thz_cross WHEN V(c2)=1.65 RISE=1
+meas tran tdrv_cross WHEN V(drv)=1.65 RISE=1
+wrdata pps_out.dat V(c1) V(c2) V(b)
+quit
+.endc
+.end

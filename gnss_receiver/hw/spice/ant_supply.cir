@@ -1,0 +1,49 @@
+* МГП-8: питание активной антенны, контроль тока и защита от КЗ
+* Узлы: VANT_SRC -> ключ TPS22917 (Ron 80 мОм) -> шунт 1 Ом -> FEMTOSMDC010F (R≈3,5 Ом холодный)
+*       -> дроссель 68 нГн (DCR 0,5 Ом) -> RF_ANT -> кабель/антенна (30 мА), КЗ в момент 2 мс
+* INA181A1 (Ку = 20): Vout = 20·Vshunt, полоса 350 кГц (модель — ФНЧ 1-го порядка)
+* МК: аналоговый сторожевой таймер АЦП, порог 2,4 В (120 мА), задержка реакции 5 мкс
+.param ron=0.08 rsh=1.0 rpf=3.5 rdcr=0.5
+V5 vsrc 0 DC 5.0
+S1 vsrc vsw en 0 swmod
+.model swmod sw(vt=1.5 vh=0.1 ron={ron} roff=1e7)
+Rsh vsw vsns {rsh}
+Rpf vsns vf {rpf}
+Cf vf 0 100n
+L1 vf lx 68n
+Rdcr lx rfant {rdcr}
+* антенна: 30 мА потребления + 10 нФ входной ёмкости; КЗ (0,05 Ом) с t = 2 мс
+Iant rfant 0 DC 30m
+Cant rfant 0 10n
+Sshort rfant 0 sc 0 shmod
+.model shmod sw(vt=0.5 vh=0.01 ron=0.05 roff=1e9)
+Vsc sc 0 PWL(0 0 2m 0 2.0001m 1)
+* усилитель тока INA181A1 (Ку=20, fср=350 кГц)
+Eamp ia 0 VALUE={20*V(vsw,vsns)}
+Rina ia imon 1k
+Cina imon 0 {1/(2*3.14159*350k*1k)}
+* фильтр 100 Ом / 10 нФ перед АЦП
+Rf imon adc 100
+Cadc adc 0 10n
+* МК: компаратор АЦП (порог 2,4 В) с задержкой реакции 5 мкс -> снятие сигнала ANT_EN
+Bcmp trip 0 V = V(adc) > 2.4 ? 1 : 0
+Rdl trip trd 50k
+Cdl trd 0 100p
+Ben en 0 V = V(enlat) > 0.5 ? 0 : 3.3
+* защёлка отключения (как в ПО: после срабатывания ключ выключен до повторного включения)
+Blat enlat 0 V = (V(trd) > 0.5 || V(enlat) > 0.5) ? 1 : 0
+Rlat enlat 0 1e9
+.ic V(enlat)=0
+.tran 20n 3m 0 20n uic
+.control
+run
+meas tran i_norm FIND I(V5) AT=1.5m
+meas tran v_ant_norm FIND V(rfant) AT=1.5m
+meas tran imon_norm FIND V(imon) AT=1.5m
+meas tran i_peak MIN I(V5) FROM=2m TO=2.2m
+meas tran t_trip WHEN V(en)=1.65 FALL=1
+let iant = -I(V5)
+wrdata ant_supply.dat V(rfant) V(imon) V(en) iant
+quit
+.endc
+.end
