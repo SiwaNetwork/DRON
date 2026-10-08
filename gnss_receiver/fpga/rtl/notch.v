@@ -11,9 +11,10 @@
 // cos/sin (EBR), C — перенос на нулевую частоту, D1/D2 — обновление B, E — умножители (DSP),
 // F1/F2 — вычитание оценки (и дизеринг: x·127²·2^7 + d·2^7 − ŝ), G0 — модуль, G1 — квантование, G2 — АРУ. Выход (out_stb) — через 15
 // тактов после smp_stb (номер отсчёта сопровождает данные: out_count).
-// Состояние канала (φ, B, T, счётчик АРУ) удерживается в начальном значении, пока канал выключен;
-// запись en_wr (регистр NOTCH_EN) обнуляет счётчик окна АРУ (модель начинает с отсчёта,
-// пришедшего после записи).
+// Состояние канала (φ, B, T, счётчик АРУ) удерживается в начальном значении, пока канал выключен.
+// Запись NOTCH_EN (en_wr) вступает в силу с первого отсчёта после неё: маски en/dith фиксируются,
+// окно АРУ и генераторы дизеринга начинаются заново (модель начинает с этого отсчёта; его номер —
+// cfg_n).
 // =============================================================================
 `default_nettype none
 
@@ -299,19 +300,28 @@ module notch (
     reg        xlast;                     // отсчёт — последний в окне
     reg [1:0]  ph;
     reg        act;
+    reg [7:0]  en_s, di_s;                // маски, действующие с отсчёта cfg_n
+    reg        pend, xfirst;               // xfirst — отсчёт первый после применения настройки
+    reg [31:0] cfg_n;
+    wire       apply = smp_stb && (pend || en_wr);
     always @(posedge clk) begin
         if (rst) begin
-            act <= 1'b0; ph <= 2'd0; wcnt <= 10'd0;
+            act <= 1'b0; ph <= 2'd0; wcnt <= 10'd0; pend <= 1'b0; en_s <= 8'd0; di_s <= 8'd0;
         end else begin
+            if (en_wr) pend <= 1'b1;
             if (smp_stb) begin
-                xin <= smp_data; xlast <= (wcnt == 10'd1023);
-                wcnt <= wcnt + 1'b1;
+                xin <= smp_data;
                 ph <= 2'd0; act <= 1'b1;
+                if (apply) begin
+                    en_s <= en; di_s <= dith; pend <= 1'b0; cfg_n <= smp_count;
+                    xlast <= 1'b0; wcnt <= 10'd1; xfirst <= 1'b1;
+                end else begin
+                    xlast <= (wcnt == 10'd1023); wcnt <= wcnt + 1'b1; xfirst <= 1'b0;
+                end
             end else if (act) begin
                 ph <= ph + 1'b1;
                 if (ph == 2'd3) act <= 1'b0;
             end
-            if (en_wr) wcnt <= 10'd0;
         end
     end
     // номер отсчёта: кольцо на 4 отсчёта (в конвейере не более 4), индекс идёт с тегами ступеней
@@ -330,11 +340,13 @@ module notch (
     reg       vA, vB, vC, vD1, vD2, vE, vF1, vF2, vG0;
     reg       wA, wB, wC, wD1, wD2, wE, wF1, wF2, wG0;
     reg [1:0] tA, tB, tC, tD1, tD2, tE, tF1, tF2, tG0, tG1;
+    reg       fA, fB, fC, fD1, fD2, fE;     // первый канал первого отсчёта после настройки
     reg [1:0] pG1;
     reg       vG1, wG1;
     always @(posedge clk) begin
         tA <= xtag; tB <= tA; tC <= tB; tD1 <= tC; tD2 <= tD1; tE <= tD2; tF1 <= tE; tF2 <= tF1;
         tG0 <= tF2; tG1 <= tG0;
+        fA <= act && xfirst && (ph == 2'd0); fB <= fA; fC <= fB; fD1 <= fC; fD2 <= fD1; fE <= fD2;
         vA <= act && !rst; pA <= ph; wA <= xlast;
         vB <= vA;   pB <= pA;   wB <= wA;
         vC <= vB;   pC <= pB;   wC <= wB;
@@ -366,7 +378,7 @@ module notch (
             assign dp_l[j] = dphi[32*(4*L + j) +: 32];
             assign mu_l[j] = mu[4*(4*L + j) +: 4];
         end
-        wire [3:0] en_l = en[4*L +: 4], di_l = dith[4*L +: 4];
+        wire [3:0] en_l = en_s[4*L +: 4], di_l = di_s[4*L +: 4];
         wire [15:0] xin_l = xin[16*L +: 16];
 
         // A: фаза NCO
@@ -457,8 +469,10 @@ module notch (
             pQc <= bhQ * cD2; pIs <= bhI * sD2;
             xE <= xD2; eE <= eD2; dE <= dD2;
         end
-        // F1: ŝ; x·127²·2^7 + d·2^7 (d — дизеринг, xorshift32 дорожки: шаг на каждый канал)
-        reg [31:0] rng;
+        // F1: ŝ; x·127²·2^7 + d·2^7 (d — дизеринг, xorshift32 дорожки: шаг на каждый канал;
+        // с первого отсчёта после настройки генератор начинается с начального значения)
+        reg [31:0] rng_q;
+        wire [31:0] rng = fE ? (L ? 32'h9E3779B9 : 32'h12345678) : rng_q;
         wire [31:0] rx1 = rng ^ {rng[18:0], 13'd0};
         wire [31:0] rx2 = rx1 ^ {17'd0, rx1[31:17]};
         wire [31:0] rx3 = rx2 ^ {rx2[26:0], 5'd0};
@@ -472,8 +486,8 @@ module notch (
         reg [3:0] xF1;
         reg       eF1;
         always @(posedge clk) begin
-            if (rst) rng <= L ? 32'h9E3779B9 : 32'h12345678;
-            else if (vE) rng <= rx3;
+            if (rst) rng_q <= L ? 32'h9E3779B9 : 32'h12345678;
+            else if (vE) rng_q <= rx3;
             siF <= pIc - pQs;
             sqF <= pQc + pIs;
             kiF <= (xE[3] ? -xiK : xiK) + dI;

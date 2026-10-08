@@ -169,6 +169,121 @@ int acq_search_multi(const uint8_t *const *x4, const uint32_t *t0, int nsnap, in
     return 1;
 }
 
+/* ---------------------------------------------------------------- захват слабых сигналов */
+int acq_weak_init(acq_weak_t *w, int sig, int fcn, const int *prn, int nprn, double dop_min, double dop_max,
+                  double step, int K, void *rep_buf, float *acc_buf)
+{
+    const sig_info_t *si = &SIGS[sig];
+    memset(w, 0, sizeof(*w));
+    if (nprn < 1 || nprn > AW_MAXPRN || step <= 0 || K < 1) return 0;
+    init_tab();
+    w->sig = sig; w->fcn = fcn; w->nprn = nprn;
+    memcpy(w->prn, prn, sizeof(int) * (size_t)nprn);
+    w->dop_min = dop_min; w->step = step; w->K = K;
+    w->nd = (int)floor((dop_max - dop_min) / step + 1e-9) + 1;
+    w->thresh = 6.5;
+    w->rep = rep_buf; w->acc = acc_buf;
+    cpx_t *R0 = rep_buf;
+    for (int i = 0; i < nprn; i++) {
+        int L = code_gen(sig, prn[i], BITS);
+        if (L <= 0) return 0;
+        if (i == 0) {
+            w->L = L;
+            w->nfft = 1;
+            while (w->nfft < (si->boc ? 8 : 4) * L) w->nfft <<= 1;
+            w->Ns = (int)lround(L / si->chip_rate * FS_HZ);
+            if (w->nfft > NFFT_MAX || w->Ns < w->nfft / 2) return 0;
+        }
+        cpx_t *Ri = R0 + (size_t)i * w->nfft;
+        for (int k = 0; k < w->nfft; k++) { Ri[k].re = rep(si, L, (double)k * L / w->nfft); Ri[k].im = 0; }
+        fft(Ri, w->nfft, 0);
+        for (int k = 0; k < w->nfft; k++) Ri[k].im = -Ri[k].im;
+        w->z[i] = 0;
+    }
+    memset(w->acc, 0, sizeof(float) * (size_t)nprn * w->nfft);
+    return 1;
+}
+
+static void aw_eval(acq_weak_t *w)
+{
+    int nfft = w->nfft;
+    for (int i = 0; i < w->nprn; i++) {
+        const float *a = w->acc + (size_t)i * nfft;
+        double sum = 0, best = -1;
+        int bk = 0;
+        for (int k = 0; k < nfft; k++) { sum += a[k]; if (a[k] > best) { best = a[k]; bk = k; } }
+        double mean = sum / nfft, z = mean > 0 ? (best / mean - 1) * sqrt((double)w->k) : 0;
+        if (z > w->z[i]) {
+            w->z[i] = z;
+            w->cp[i] = fmod((double)(nfft - bk) * w->L / nfft, (double)w->L);
+            w->dop[i] = w->dop_min + w->d * w->step;
+            w->tr[i] = w->t_ref;
+        }
+    }
+    memset(w->acc, 0, sizeof(float) * (size_t)w->nprn * nfft);
+}
+
+int acq_weak_add(acq_weak_t *w, const uint8_t *x4, uint32_t t0, int n)
+{
+    if (w->d >= w->nd) return 1;
+    const sig_info_t *si = &SIGS[w->sig];
+    int nfft = w->nfft, Ns = w->Ns, L = w->L;
+    if (w->k == 0) w->t_ref = t0;
+    double fd = w->dop_min + w->d * w->step, fif = sig_if(w->sig, w->fcn), fc = sig_carrier(w->sig, w->fcn);
+    double rate = si->chip_rate * (1 + fd / fc);
+    uint32_t dph = (uint32_t)(int64_t)llround(-(fif + fd) / FS_HZ * 4294967296.0);
+    const cpx_t *R0 = w->rep;
+    for (int p = 0; p < n / Ns && w->k < w->K; p++, w->k++) {
+        memset(Y, 0, sizeof(cpx_t) * nfft);
+        const uint8_t *xp = x4 + (size_t)p * Ns;
+        uint32_t ph = 0;
+        for (int i = 0; i < Ns; i++) {
+            int xi, xq;
+            decode(xp[i], &xi, &xq);
+            float c = SIN256[((ph >> 24) + 64) & 255], sn = SIN256[ph >> 24];
+            int k = (int)((int64_t)i * nfft / Ns);
+            Y[k].re += xi * c - xq * sn;
+            Y[k].im += xi * sn + xq * c;
+            ph += dph;
+        }
+        fft(Y, nfft, 0);
+        /* доплер кода: пик периода в ячейке k соответствует ячейке k + sh на t_ref */
+        double dt = ((double)(uint32_t)(t0 - w->t_ref) + (double)p * Ns) / FS_HZ;
+        int sh = (int)lround(fmod(rate * dt, (double)L) * nfft / L) % nfft;
+        for (int i = 0; i < w->nprn; i++) {
+            const cpx_t *Ri = R0 + (size_t)i * nfft;
+            for (int k = 0; k < nfft; k++) {
+                R[k].re = Y[k].re * Ri[k].re - Y[k].im * Ri[k].im;
+                R[k].im = Y[k].re * Ri[k].im + Y[k].im * Ri[k].re;
+            }
+            fft(R, nfft, 1);
+            float *a = w->acc + (size_t)i * nfft;
+            for (int k = 0; k < nfft; k++) a[(k + sh) % nfft] += R[k].re * R[k].re + R[k].im * R[k].im;
+        }
+    }
+    if (w->k >= w->K) {
+        aw_eval(w);
+        w->k = 0;
+        w->d++;
+    }
+    return w->d >= w->nd;
+}
+
+int acq_weak_result(const acq_weak_t *w, int i, acq_res_t *r, uint32_t *tref)
+{
+    memset(r, 0, sizeof(*r));
+    if (i < 0 || i >= w->nprn) return 0;
+    r->metric = w->z[i];
+    r->code_phase = w->cp[i];
+    r->doppler = w->dop[i];
+    r->found = w->z[i] > w->thresh;
+    /* оценка C/N0 по z: пик/среднее − 1 = z/√K ≈ отношение с/ш за период */
+    double snr = w->z[i] / sqrt((double)w->K), T = w->L / SIGS[w->sig].chip_rate;
+    r->cn0 = snr > 0 ? 10 * log10(snr / T) : 0;
+    if (tref) *tref = w->tr[i];
+    return r->found;
+}
+
 int acq_search(const uint8_t *x4, int n, int sig, int prn, int fcn, const acq_cfg_t *cfg, acq_res_t *r)
 {
     const uint8_t *xs[1] = {x4};

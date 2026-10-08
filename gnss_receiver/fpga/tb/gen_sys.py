@@ -11,7 +11,9 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+sys.path.insert(0, os.path.join(HERE, "..", "model"))
 import gen_stim as G   # noqa: E402
+import notch_model as NM  # noqa: E402
 M = G.M
 
 NSMP = int(os.environ.get("NSMP", 72000))       # 3 мс: ~0,8 мс настройка через FMC, далее слежение
@@ -19,6 +21,8 @@ STIM, OUTD = G.STIM, G.OUTD
 CORR = 0x1000
 # (движок, слот, строка таблицы gen_stim.SLOTS)
 MAP = [(0, 0, 0), (0, 1, 2), (0, 2, 3), (0, 7, 12), (1, 0, 1), (1, 15, 7)]
+# режекторный фильтр: ВЧ-канал 1 (ГЛОНАСС L1) — «помеха» на ПЧ +2,3 МГц, μ = 6, дизеринг
+NOTCH = {1: (int(round(2.3e6 / 24e6 * 2 ** 32)), 6, 1)}
 
 
 def ch_addr(e, s, r):
@@ -38,6 +42,12 @@ def gen():
     # выбранные каналы и команды шины FMC: (вид, адрес, данные); вид 0 — запись, 1 — запись кода
     # (после неё — ожидание BUSY движка)
     cmds = [(0, 0x0A, 0x1)]                       # IRQ_MASK: корреляторы
+    mu = 0x88888888
+    for k, (d, m, _) in NOTCH.items():
+        mu = (mu & ~(0xF << (4 * k))) | (m << (4 * k))
+        cmds.append((0, 0x58 + k, d))
+    cmds.append((0, 0x51, mu))
+    cmds.append((0, 0x50, sum(1 << k for k in NOTCH) | (sum(1 << k for k, v in NOTCH.items() if v[2]) << 16)))
     chans = []
     for e, s, row in MAP:
         ch = chans_all[row]
@@ -65,9 +75,12 @@ def gen():
     return words, chans
 
 
-def model(st, end):
-    """Эталон: каналы включаются с отсчёта st (регистры START_T/START_MASK)."""
+def model(st, end, n_notch):
+    """Эталон: режекторный фильтр — с отсчёта n_notch, каналы включаются с отсчёта st
+    (регистры START_T/START_MASK)."""
     words, chans = gen()
+    words = np.array(words, dtype=np.uint32)
+    words[n_notch:] = NM.run(words[n_notch:], NOTCH)
     for n in range(st, end):
         row = int(words[n])
         for e, s, ch in chans:
@@ -81,7 +94,7 @@ def model(st, end):
 
 
 def check():
-    r, other, st, end = set(), [], None, None
+    r, other, st, end, n_notch = set(), [], None, None, None
     for ln in open(os.path.join(OUTD, "sys_rtl.txt")):
         if ln.startswith("D "):
             r.add(tuple(int(v) for v in ln.split()[1:]))
@@ -89,12 +102,15 @@ def check():
             st = int(ln.split()[1])
         elif ln.startswith("END"):
             end = int(ln.split()[1])
+        elif ln.startswith("NOTCH"):
+            n_notch = int(ln.split()[1])
         else:
             other.append(ln.strip())
     cut = end - 1500                     # сбросы у конца прогона могли не успеть прочитать
-    m = {x for x in model(st, end) if x[1] < cut}
+    m = {x for x in model(st, end, n_notch) if x[1] < cut}
     r = {x for x in r if x[1] < cut}
-    print(f"Пуск каналов с отсчёта {st}, конец прогона {end}")
+    print(f"Режекторный фильтр (ВЧ-канал 1) с отсчёта {n_notch}; пуск каналов с отсчёта {st}, "
+          f"конец прогона {end}")
     ok = m == r and len(m) > 0
     print(f"Корреляторы через FMC: сбросов модель {len(m)}, прочитано МК {len(r)}; совпадение: "
           f"{'ДА' if ok else 'НЕТ'}")

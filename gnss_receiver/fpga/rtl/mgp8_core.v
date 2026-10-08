@@ -95,7 +95,10 @@ module mgp8_core #(
     reg [31:0] tic_period, irq_mask, pps_lo, pps_hi, pps_ctrl, ext_ctrl;
     reg [31:0] spi_wdata, spi_div, snap_ctrl, snap_t, snap_len, dbg_sel;
     reg [31:0] notch_ctl, notch_mu;
-    reg [255:0] notch_dphi;
+    reg [31:0]  notch_dp [0:7];
+    wire [255:0] notch_dphi = {notch_dp[7], notch_dp[6], notch_dp[5], notch_dp[4],
+                               notch_dp[3], notch_dp[2], notch_dp[1], notch_dp[0]};
+    integer nk;
     reg        notch_wr;
     reg        pps_arm, spi_start, snap_arm, corr_rst;
     always @(posedge clk) begin
@@ -103,7 +106,8 @@ module mgp8_core #(
         if (rst) begin
             ctrl <= 32'h0000_FF00; tic_period <= 32'd0; irq_mask <= 32'd0; pps_ctrl <= 32'd9_600_000;
             ext_ctrl <= 32'd0; spi_div <= 32'd8; dbg_sel <= 32'd0; corr_rst <= 1'b1;
-            notch_ctl <= 32'd0; notch_mu <= 32'h8888_8888; notch_dphi <= 256'd0;
+            notch_ctl <= 32'd0; notch_mu <= 32'h8888_8888;
+            for (nk = 0; nk < 8; nk = nk + 1) notch_dp[nk] <= 32'd0;
         end else begin
             corr_rst <= ctrl[16];
             if (bus_we && sel_sys) case (ra)
@@ -124,7 +128,7 @@ module mgp8_core #(
                 8'h50: begin notch_ctl <= bus_wdata; notch_wr <= 1'b1; end
                 8'h51: notch_mu <= bus_wdata;
                 8'h58, 8'h59, 8'h5A, 8'h5B, 8'h5C, 8'h5D, 8'h5E, 8'h5F:
-                    notch_dphi[32*ra[2:0] +: 32] <= bus_wdata;
+                    notch_dp[ra[2:0]] <= bus_wdata;
                 default: ;
             endcase
         end
@@ -260,7 +264,7 @@ module mgp8_core #(
             8'h50: sys_rd <= notch_ctl;
             8'h51: sys_rd <= notch_mu;
             8'h58, 8'h59, 8'h5A, 8'h5B, 8'h5C, 8'h5D, 8'h5E, 8'h5F:
-                   sys_rd <= notch_dphi[32*ra[2:0] +: 32];
+                   sys_rd <= notch_dp[ra[2:0]];
             default: sys_rd <= 32'd0;
         endcase
     end

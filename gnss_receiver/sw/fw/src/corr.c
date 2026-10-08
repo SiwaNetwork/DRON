@@ -130,14 +130,19 @@ void corr_set_rates(int ch, double f_carr_hz, double code_cps)
     fpga_wr(R_CH(ch / 16, ch % 16, CH_CODE_RATE), c->code_rate_n);
 }
 
+/* перенос зеркала на отсчёт n, в т. ч. назад (n < t_ref: момент внутри группы, в которой уже
+ * сменились шаги). Арифметика знаковая: остаток от беззнакового (−k·rate) mod L·2^32 дал бы
+ * сдвиг 2^64 mod L·2^32 (для L = 1023 — ровно 4 чипа). |dn · rate| < 2^63 при |dn| < 2^31. */
 static void advance(corr_ch_t *c, uint64_t n)
 {
-    uint64_t dn = n - c->t_ref;
-    uint64_t mod = (uint64_t)c->L << 32;
-    /* dn · rate < 2^64 при dn < 2^32 (≈ 3 мин) */
-    c->code_fx = (c->code_fx + (dn * c->code_rate) % mod) % mod;
-    c->code_tot += dn * c->code_rate;
-    c->dop_fx += (int64_t)dn * (int64_t)(int32_t)(c->carr_rate - c->if_rate);
+    int64_t dn = (int64_t)(n - c->t_ref);
+    int64_t mod = (int64_t)c->L << 32;
+    int64_t d = dn * (int64_t)c->code_rate;
+    int64_t f = ((int64_t)c->code_fx + d % mod) % mod;
+    if (f < 0) f += mod;
+    c->code_fx = (uint64_t)f;
+    c->code_tot += (uint64_t)d;
+    c->dop_fx += dn * (int64_t)(int32_t)(c->carr_rate - c->if_rate);
     c->t_ref = n;
 }
 

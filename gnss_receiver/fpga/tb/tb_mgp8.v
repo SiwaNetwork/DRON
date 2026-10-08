@@ -221,6 +221,7 @@ module tb;
             end
         end
         $fwrite(f, "END %0d\n", dut.u_core.u_cap.n);
+        $fwrite(f, "NOTCH %0d\n", dut.u_core.u_notch.cfg_n);
         // --- снимок
         rd32(15'h0030, v);
         rd32(15'h0033, t_lo);
@@ -232,5 +233,9 @@ module tb;
         $display("tb_mgp8: сбросов прочитано %0d", nd);
         $finish;
     end
+    // отладка: выход режекторного фильтра
+    integer fn;
+    initial fn = $fopen("tb/out/sys_notch.txt", "w");
+    always @(posedge clk96) if (dut.u_core.f_stb) $fwrite(fn, "%0d %08x\n", dut.u_core.f_count, dut.u_core.f_data);
 endmodule
 `default_nettype wire
