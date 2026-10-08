@@ -1,5 +1,7 @@
-/* Формирование выходных сообщений для внешней проверки (tests/check_output.py — pyrtcm, pynmeagps):
- * RTCM 3.3 MSM7 (1077, 1087, 1097, 1127), 1005; NMEA GGA, RMC, GSA, GSV, GST, ZDA. */
+/* Формирование выходных сообщений для внешней проверки (tests/check_output.py — pyrtcm, pynmeagps,
+ * декодер собственного протокола на struct): RTCM 3.3 MSM7 (1077, 1087, 1097, 1127), 1005;
+ * NMEA GGA, RMC, GSA, GSV, GST, ZDA; двоичный протокол (решение, измерения, эфемериды, каналы, ИТМ).
+ * Здесь же — разбор кадров двоичного протокола (mbp_parse), в том числе с повреждённым байтом. */
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -7,6 +9,7 @@
 #include "rtcm3.h"
 #include "nmea.h"
 #include "pvt.h"
+#include "proto.h"
 
 int main(void)
 {
@@ -59,7 +62,60 @@ int main(void)
     l = nmea_gsv(nb, ob, 3); nb[l] = 0; fputs(nb, fn);
     nmea_gst(nb, &s, week, tow, 18); fputs(nb, fn);
     nmea_zda(nb, week, tow, 18); fputs(nb, fn);
+    /* двоичный протокол */
+    static uint8_t mb[8192];
+    int mn = 0;
+    s.t_rx = 345600.5; s.nsys = 2; s.ok = 1; s.tdop = 0.71;
+    s.pos[0] = 2849547.796; s.pos[1] = 2195818.206; s.pos[2] = 5249314.274;
+    s.clk[0] = 1234.5; s.clk[1] = 1240.25; s.clkd = -3.5;
+    mn += mbp_pvt(mb + mn, week, &s);
+    mbp_meas_t mm[3];
+    for (int j = 0; j < 3; j++) {
+        memset(&mm[j], 0, sizeof(mm[j]));
+        mm[j].sys = j == 2 ? SYS_GLO : SYS_GPS; mm[j].prn = (uint8_t)(5 + j); mm[j].sig = j == 2 ? SIG_G1CA : SIG_L1CA;
+        mm[j].fcn = (int8_t)(j == 2 ? -3 : 0); mm[j].pr = 2.1e7 + 1e5 * j; mm[j].cp = 1.1e8 + 0.25 * j;
+        mm[j].dop = -1234.5f + j; mm[j].cn0 = 41.25f + j; mm[j].lock = 12.5f * j; mm[j].flags = (uint8_t)(j & 1);
+        fprintf(ft, "M %d %d %d %d %.3f %.3f %.3f %.2f %.3f %d\n", mm[j].sys, mm[j].prn, mm[j].sig, mm[j].fcn, mm[j].pr,
+                mm[j].cp, mm[j].dop, mm[j].cn0, mm[j].lock, mm[j].flags);
+    }
+    mn += mbp_meas(mb + mn, week, tow, mm, 3);
+    eph_t eg;
+    memset(&eg, 0, sizeof(eg));
+    eg.sys = SYS_GPS; eg.prn = 7; eg.week = week; eg.iode = 33; eg.toc = eg.toe = 345600; eg.sqrtA = 5153.7;
+    eg.e = 0.0123; eg.M0 = 1.1; eg.af0 = 1.5e-5;
+    mn += mbp_eph(mb + mn, &eg);
+    eph_t er;
+    memset(&er, 0, sizeof(er));
+    er.sys = SYS_GLO; er.prn = 11; er.fcn = -3; er.toc = er.toe = 345618; er.pos[0] = 1.2e7; er.vel[1] = 3100.5;
+    er.taun = -2.5e-5; er.gamn = 1.8e-12;
+    mn += mbp_eph(mb + mn, &er);
+    mbp_ch_t cc[2] = {{3, SIG_L1CA, 7, 2, 0, 0x3, 44.5f, -1500.25f}, {17, SIG_G1CA, 11, 2, -3, 0x9, 39.75f, 812.5f}};
+    mn += mbp_ch(mb + mn, cc, 2);
+    mbp_tm_t tm = {48.5f, 31.25f, 1, 0xFF, 0x02, 0x00, 5010, 3600, 1, 1};
+    mn += mbp_tm(mb + mn, &tm);
+    FILE *fm = fopen("build/out.mbp", "wb");
+    fwrite(mb, 1, (size_t)mn, fm);
+    fclose(fm);
+    /* разбор потока: все кадры; затем с повреждённым байтом — кадр отбрасывается, следующие находятся */
+    int ok = 1, nfr = 0, cls, id, plen, used;
+    const uint8_t *pl;
+    for (int i = 0; i < mn;) {
+        int r = mbp_parse(mb + i, mn - i, &cls, &id, &pl, &plen, &used);
+        if (r <= 0) { ok = 0; break; }
+        nfr++; i += used;
+    }
+    mb[20] ^= 0x10;                                   /* данные первого кадра */
+    int ngood = 0, nskip = 0;
+    for (int i = 0; i < mn;) {
+        int r = mbp_parse(mb + i, mn - i, &cls, &id, &pl, &plen, &used);
+        if (r == 0) break;
+        if (r < 0) nskip++; else ngood++;
+        i += used;
+    }
+    printf("двоичный протокол: кадров %d, разобрано %d; с повреждённым байтом — верных %d (пропусков %d)\n",
+           6, nfr, ngood, nskip);
+    if (nfr != 6 || ngood != 5) ok = 0;
     fclose(fb); fclose(ft); fclose(fn);
-    printf("сформированы build/out.rtcm, build/out.nmea\n");
-    return 0;
+    printf("сформированы build/out.rtcm, build/out.nmea, build/out.mbp\n");
+    return !ok;
 }
