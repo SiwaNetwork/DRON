@@ -29,6 +29,8 @@ void trk_default_cfg(trk_cfg_t *c)
     c->pll_bw_long = 5.0;
     c->dll_bw_long = 0.2;
     c->coast_time = 30.0;
+    c->pll_order = 3;
+    c->pll_bw3 = 18.0;
     c->reacq_thr = 4.5;      /* шум: P(max(E,P,L) > 4,5·среднее) ≈ 0,033; 5 из 8 — ≈ 2·10^−6 на интервал */
 }
 
@@ -63,6 +65,8 @@ void trk_start(trk_t *k, int ch, int sig, int prn, int fcn, double doppler, doub
     k->ncoh = 1;
     k->sec_len = sec_code(sig, prn, k->sec);
     k->coast_time = cfg->coast_time;
+    k->pll_order = cfg->pll_order;
+    k->pll_bw3 = cfg->pll_bw3;
     k->reacq_thr = cfg->reacq_thr;
     corr_config(ch, sig, prn, fcn, 1, k->spacing, k->f_carr, k->f_code, code_phase, 0.0, t_start);
 }
@@ -160,6 +164,13 @@ static void loops(trk_t *k, double EI, double EQ, double I, double Q, double LI,
         double wfw = 4 * k->wf;
         k->int_f += wfw * ferr * Tl;
         k->f_carr = k->f0 + k->int_f;
+    } else if (k->pll_order == 3 && k->state == TRK_LOCK && k->ncoh == 1) {
+        /* ФАП 3-го порядка (Kaplan, табл. 5.6): нулевая установившаяся ошибка при постоянном
+         * ускорении, ошибка от рывка — (dω²/dt²)/ω0³ */
+        double ec = perr / (2 * GPI);
+        k->x1 += k->w3 * ec * Tl;
+        k->int_f += (k->a3w * ec + k->x1) * Tl;
+        k->f_carr = k->f0 + k->int_f + k->b3w * ec;
     } else {
         k->int_f += (k->w2 * perr / (2 * GPI) + k->wf * ferr) * Tl;
         k->f_carr = k->f0 + k->int_f + k->a2 * perr / (2 * GPI);
@@ -182,6 +193,9 @@ static void loops(trk_t *k, double EI, double EQ, double I, double Q, double LI,
             k->a2 = 1.414 * wn;
             k->w2 = wn * wn;
             k->wf = k->fll_bw_lock / 0.25;
+            double w0 = k->pll_bw3 / 0.7845;
+            k->w3 = w0 * w0 * w0; k->a3w = 1.1 * w0 * w0; k->b3w = 2.4 * w0;
+            k->x1 = 0;
         }
     } else if (k->state == TRK_LOCK && k->lock < 0.1 && (k->ncoh == 1 || ++k->low_cnt >= 10)) {
         /* при длительном накоплении срыв — 10 интервалов (200 мс) подряд ниже порога */

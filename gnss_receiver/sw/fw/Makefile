@@ -5,7 +5,7 @@ CFLAGS  ?= -std=c99 -O2 -g -Wall -Wextra -Wno-unused-parameter -Iinc -Isrc
 LDLIBS  = -lm
 SRC     = src/signals.c src/codes.c src/gen/code_tab.c src/corr_sim.c src/corr.c src/fft.c src/acq.c src/track.c src/eph.c src/rinex.c src/pvt.c src/lnav.c src/nmea.c src/rx.c src/spectrum.c src/rtcm3.c src/glonav.c
 TESTS   = build/test_glonav build/test_codes build/test_corr_sim build/test_pvt build/test_lnav build/test_spectrum build/test_output build/test_acq_weak build/test_rx_l1
-LONG    = build/test_trk_weak build/test_rx_pvt build/test_rx_glo
+LONG    = build/test_trk_dyn build/test_trk_weak build/test_rx_pvt build/test_rx_glo
 
 all: $(TESTS)
 

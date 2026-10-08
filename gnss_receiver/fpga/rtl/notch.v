@@ -394,12 +394,21 @@ module notch (
         reg       eA, dA;
         integer q;
         // разрешения записи φ — однопозиционный код такта (регистр, без дешифратора)
+        // φ и Δφ канала выбираются тактом раньше (по коду следующего такта wen_n) — сумматор
+        // начинается от регистров
         reg  [3:0]  wen;
-        wire [31:0] phi_n = en_l[ph] ? phi[ph] + dp_l[ph] : 32'd0;
+        wire [3:0]  wen_n = smp_stb ? 4'b0001 : {wen[2:0], 1'b0};
+        reg  [31:0] phi_s, dp_s;
+        wire [31:0] phi_n = en_l[ph] ? phi_s + dp_s : 32'd0;
         always @(posedge clk) begin
             if (rst) wen <= 4'd0;
-            else if (smp_stb) wen <= 4'b0001;
-            else wen <= {wen[2:0], 1'b0};
+            else wen <= wen_n;
+            case (1'b1)
+                wen_n[0]: begin phi_s <= phi[0]; dp_s <= dp_l[0]; end
+                wen_n[1]: begin phi_s <= phi[1]; dp_s <= dp_l[1]; end
+                wen_n[2]: begin phi_s <= phi[2]; dp_s <= dp_l[2]; end
+                default:  begin phi_s <= phi[3]; dp_s <= dp_l[3]; end
+            endcase
         end
         always @(posedge clk) begin
             if (rst) begin
@@ -407,7 +416,7 @@ module notch (
             end else begin
                 for (q = 0; q < 4; q = q + 1) if (wen[q]) phi[q] <= phi_n;
             end
-            idxA <= phi[ph][31:24];
+            idxA <= phi_s[31:24];
             case (ph)
                 2'd0: xA <= xin_l[3:0];
                 2'd1: xA <= xin_l[7:4];

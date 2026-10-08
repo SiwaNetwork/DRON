@@ -106,10 +106,16 @@ void corr_config(int ch, int sig, int prn, int fcn, int nint, double spacing_chi
 
 void corr_start(const int *chs, int n, uint64_t t_start)
 {
+    /* START_MASK движка заменяет ожидающую маску: каналы, запущенные на тот же отсчёт
+     * предыдущим вызовом (другой сигнал), добавляются к новой маске */
+    static uint64_t pend_t[CORR_MAXENG];
+    static uint32_t pend_m[CORR_MAXENG];
     uint32_t mask[CORR_MAXENG] = {0};
     for (int k = 0; k < n; k++) mask[chs[k] / 16] |= 1u << (chs[k] % 16);
     for (int e = 0; e < CORR_MAXENG; e++) {
         if (!mask[e]) continue;
+        if (pend_t[e] == t_start) mask[e] |= pend_m[e];
+        pend_t[e] = t_start; pend_m[e] = mask[e];
         fpga_wr(R_ENG(e, ENG_START_T), (uint32_t)t_start);
         fpga_wr(R_ENG(e, ENG_START_MASK), mask[e]);
     }
