@@ -60,3 +60,9 @@ Belarusian, Russian
 ### Participate
 
 If you want to join the project, send me email to hikikomori82 at gmail dot com. I am currently very busy with other projects to create new characters myself but if you create new characters I will add them.
+
+---
+Изменения для проекта МГП-8 (osifont-mgp8.ttf, производная от osifont-lgpl3fe.ttf, LGPL-3.0 с font exception):
+в исходном шрифте глифы «Э», «Ё», «ё» — пустые прямоугольники-заглушки, символ «…» отсутствует.
+Добавлены: «Э» (масштабированный «э»), «Ё»/«ё» (составные «Е»/«е» + U+0308), «…» (три точки).
+Скрипт исправления — tools/fix_osifont.py.
