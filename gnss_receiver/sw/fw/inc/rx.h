@@ -6,6 +6,7 @@
 #include "corr.h"
 #include "track.h"
 #include "lnav.h"
+#include "glonav.h"
 #include "eph.h"
 #include "pvt.h"
 #include "acq.h"
@@ -14,6 +15,7 @@ typedef struct {
     int      used, ch, sig, prn, fcn;
     trk_t    trk;
     lnav_t   nav;
+    glonav_t gnav;           /* ГЛОНАСС: строки навигационного сообщения */
     /* привязка времени излучения: на начало отсчёта ref_n время излучения ref_tow (по шкале КА) */
     int      tx_ok;
     uint64_t ref_n;
@@ -41,7 +43,8 @@ typedef struct {
 } rx_t;
 
 void   rx_init(rx_t *r);
-/* поиск по снимкам и пуск каналов слежения с отсчёта t_start (для всех PRN сигнала sig) */
+/* поиск по снимкам и пуск каналов слежения с отсчёта t_start (для всех PRN сигнала sig;
+ * ГЛОНАСС — для всех литер −7…+6; номер КА определяется по строке 4) */
 int    rx_acquire(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap, int len, int sig,
                   uint64_t t_start, const acq_cfg_t *ac);
 /* чтение результатов коррелятора, петли, навигационные данные */

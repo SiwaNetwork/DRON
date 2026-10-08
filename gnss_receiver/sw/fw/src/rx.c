@@ -2,7 +2,9 @@
  * Время излучения сигнала КА (GPS L1 C/A): по границе подкадра LNAV (TOW из HOW — время начала
  * следующего подкадра) и фазе кода без свёртки из «зеркала» NCO:
  *   t_tx(n) = ref_tow + (code_tot(n) − ref_code) / 2^32 / R_code.
- * Псевдодальность: PR = c·(t_rx(n) − t_tx(n)), t_rx — шкала приёмника (номинальная Fд). */
+ * Псевдодальность: PR = c·(t_rx(n) − t_tx(n)), t_rx — шкала приёмника (номинальная Fд).
+ * ГЛОНАСС: опорная эпоха — конец метки времени строки (время — tk + 2m по МДВ, переводится
+ * в GPST по шкале приёмника), эфемериды — по строкам 1–4, номер КА — из строки 4. */
 #include <math.h>
 #include <string.h>
 #include "fpga.h"
@@ -32,45 +34,75 @@ int rx_acquire(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap,
     int chs[CORR_MAXCH], n = 0;
     const sig_info_t *si = &SIGS[sig];
     RX = r;
-    for (int prn = 1; prn <= 32; prn++) {
+    int glo = si->sys == SYS_GLO;
+    for (int q = glo ? -7 : 1; q <= (glo ? 6 : 32); q++) {
+        int prn = glo ? 1 : q, fcn = glo ? q : 0;        /* ГЛОНАСС: код общий, перебор литер */
         int busy = 0;
-        for (int k = 0; k < CORR_MAXCH; k++) if (r->ch[k].used && r->ch[k].sig == sig && r->ch[k].prn == prn) busy = 1;
+        for (int k = 0; k < CORR_MAXCH; k++)
+            if (r->ch[k].used && r->ch[k].sig == sig && (glo ? r->ch[k].fcn == fcn : r->ch[k].prn == prn)) busy = 1;
         if (busy) continue;
         acq_res_t a;
-        if (!acq_search_multi(x4, t0, nsnap, len, sig, prn, 0, ac, &a)) continue;
+        if (!acq_search_multi(x4, t0, nsnap, len, sig, prn, fcn, ac, &a)) continue;
         int ch = corr_alloc(sig);
         if (ch < 0) break;
-        double rate = si->chip_rate * (1 + a.doppler / sig_carrier(sig, 0));
+        double rate = si->chip_rate * (1 + a.doppler / sig_carrier(sig, fcn));
         double cps = a.code_phase + rate * (double)(int64_t)(t_start - t0[0]) / FS_HZ;
         corr_load_code(ch, sig, prn);
         rx_ch_t *c = &r->ch[ch];
         memset(c, 0, sizeof(*c));
-        c->used = 1; c->ch = ch; c->sig = sig; c->prn = prn;
-        trk_start(&c->trk, ch, sig, prn, 0, a.doppler, cps, t_start, &r->tcfg);
+        c->used = 1; c->ch = ch; c->sig = sig; c->prn = glo ? 0 : prn; c->fcn = fcn;
+        trk_start(&c->trk, ch, sig, prn, fcn, a.doppler, cps, t_start, &r->tcfg);
         c->trk.on_bit = on_bit;
         c->trk.ctx = c;
-        lnav_init(&c->nav, prn);
+        if (glo) glonav_init(&c->gnav, fcn);
+        else lnav_init(&c->nav, prn);
         chs[n++] = ch;
     }
     if (n) corr_start(chs, n, t_start);
     return n;
 }
 
-static void on_bit(void *ctx, int bit, uint64_t n_end)
+/* привязка времени излучения к эпохе кода, ближайшей к началу отсчёта n */
+static void set_ref(rx_ch_t *c, uint64_t n, double tow)
 {
-    rx_ch_t *c = ctx;
-    rx_t *r = RX;
-    int id = lnav_bit(&c->nav, bit, n_end);
-    if (!id) return;
-    /* граница подкадра: конец последнего бита — эпоха кода внутри отсчёта n_end */
-    uint64_t n = n_end + 1;
     double cp;
     corr_phase_at(c->ch, n, &cp, NULL);
     if (cp > CORR[c->ch].L / 2) cp -= CORR[c->ch].L;          /* эпоха чуть позже начала отсчёта */
     c->ref_n = n;
     c->ref_code = corr_code_total_at(c->ch, n) - (uint64_t)(int64_t)llround(cp * TWO32);
-    c->ref_tow = c->nav.sf_end_tow;
+    c->ref_tow = tow;
     c->tx_ok = 1;
+}
+
+/* ГЛОНАСС: символ 10 мс */
+static void on_sym_glo(rx_ch_t *c, int sym, uint64_t n_end)
+{
+    rx_t *r = RX;
+    if (!glonav_sym(&c->gnav, sym ? -1.0 : 1.0, n_end)) return;
+    if (!r->time_ok) return;                      /* сутки и неделя — по шкале приёмника (GPS) */
+    double tr = rx_time(r, n_end);
+    if (c->gnav.eph_new) {
+        eph_t e = c->gnav.eph;
+        e.toc = e.toe = glo_tod2gpst(e.toc, tr);
+        e.week = r->week;
+        r->eph[SYS_GLO][c->gnav.slot] = e;
+        c->prn = c->gnav.slot;
+        c->gnav.eph_new = 0;
+    }
+    /* конец метки времени — конец строки и эпоха кода */
+    if (c->gnav.str_end_tod >= 0) set_ref(c, n_end + 1, glo_tod2gpst(c->gnav.str_end_tod, tr));
+}
+
+static void on_bit(void *ctx, int bit, uint64_t n_end)
+{
+    rx_ch_t *c = ctx;
+    rx_t *r = RX;
+    if (SIGS[c->sig].sys == SYS_GLO) { on_sym_glo(c, bit, n_end); return; }
+    int id = lnav_bit(&c->nav, bit, n_end);
+    if (!id) return;
+    /* граница подкадра: конец последнего бита — эпоха кода внутри отсчёта n_end */
+    uint64_t n = n_end + 1;
+    set_ref(c, n, c->nav.sf_end_tow);
     if (c->nav.eph_new) {
         r->eph[SYS_GPS][c->prn] = c->nav.eph;
         c->nav.eph_new = 0;
@@ -108,17 +140,19 @@ int rx_measure(rx_t *r, uint64_t n_m)
     for (int k = 0; k < CORR_MAXCH && n < PVT_MAXOBS; k++) {
         rx_ch_t *c = &r->ch[k];
         if (!c->used || !c->tx_ok || c->trk.state != TRK_LOCK) continue;
-        eph_t *e = &r->eph[SYS_GPS][c->prn];
+        int sys = SIGS[c->sig].sys;
+        if (c->prn < 1 || c->prn > 63) continue;
+        eph_t *e = &r->eph[sys][c->prn];
         if (!e->valid) continue;
         const sig_info_t *si = &SIGS[c->sig];
         uint64_t ct = corr_code_total_at(c->ch, n_m);
         double ttx = c->ref_tow + (double)(int64_t)(ct - c->ref_code) / TWO32 / si->chip_rate;
         obs_t *o = &r->obs[n];
         memset(o, 0, sizeof(*o));
-        o->sys = SYS_GPS; o->prn = c->prn;
+        o->sys = sys; o->prn = c->prn;
         o->pr = CLIGHT * eph_tdiff(trx, ttx);
         o->dop = trk_doppler(&c->trk);
-        o->fc = sig_carrier(c->sig, 0);
+        o->fc = sig_carrier(c->sig, c->fcn);
         o->cn0 = c->trk.cn0;
         o->eph = e;
         n++;

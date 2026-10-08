@@ -55,7 +55,8 @@ void trk_start(trk_t *k, int ch, int sig, int prn, int fcn, double doppler, doub
     k->pll_bw_lock = cfg->pll_bw_lock;
     k->fll_bw_lock = cfg->fll_bw_lock;
     k->cn0 = 0;
-    k->bit_len = (sig == SIG_L1CA) ? 20 : 0;
+    /* синхронизация по символам данных: L1 C/A — биты 20 мс, ГЛОНАСС — символы 10 мс (меандр) */
+    k->bit_len = sig == SIG_L1CA ? 20 : (sig == SIG_G1CA || sig == SIG_G2CA) ? 10 : 0;
     k->long_cn0 = cfg->long_cn0;
     k->pll_bw_long = cfg->pll_bw_long;
     k->dll_bw_long = cfg->dll_bw_long;
@@ -70,10 +71,11 @@ static void bit_sync(trk_t *k, double I, const corr_dump_t *d)
 {
     int s = I >= 0 ? 1 : -1;
     if (!k->bit_sync) {
-        if (k->prev_sign && s != k->prev_sign) k->bit_hist[k->n_epoch % 20]++;
+        int L = k->bit_len;
+        if (k->prev_sign && s != k->prev_sign) k->bit_hist[k->n_epoch % (uint64_t)L]++;
         k->prev_sign = s;
         int best = 0, second = 0, bi = 0, tot = 0;
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < L; i++) {
             tot += k->bit_hist[i];
             if (k->bit_hist[i] > best) { second = best; best = k->bit_hist[i]; bi = i; }
             else if (k->bit_hist[i] > second) second = k->bit_hist[i];
@@ -81,16 +83,16 @@ static void bit_sync(trk_t *k, double I, const corr_dump_t *d)
         if (best >= 8 && best > 4 * second + 2) {
             k->bit_sync = 1;
             /* переход знака между интервалами bi−1 и bi: интервал bi — первый в бите */
-            k->bit_pos = (int)((k->n_epoch - (uint64_t)bi) % 20);
+            k->bit_pos = (int)((k->n_epoch - (uint64_t)bi) % (uint64_t)L);
             k->bit_acc = 0;
             (void)tot;
         }
         return;
     }
-    k->bit_pos = (k->bit_pos + 1) % 20;
+    k->bit_pos = (k->bit_pos + 1) % k->bit_len;
     if (k->bit_pos == 0) k->bit_acc = 0;
     k->bit_acc += I;
-    if (k->bit_pos == 19 && k->on_bit) k->on_bit(k->ctx, k->bit_acc < 0, d->n);
+    if (k->bit_pos == k->bit_len - 1 && k->on_bit) k->on_bit(k->ctx, k->bit_acc < 0, d->n);
 }
 
 /* петли по результатам интервала Tl (один период или накопление ncoh периодов) */

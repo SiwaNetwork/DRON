@@ -190,6 +190,7 @@ module tb;
         wr32(15'h0031, st + 1000);                           // снимок: канал 0, 256 отсчётов
         wr32(15'h0032, 256);
         wr32(15'h0030, 32'h0000_0008);
+        wr32(15'h0006, 32'd1000);                            // TIC: каждые 1000 отсчётов
         // --- приём результатов по прерыванию
         wr32(15'h000A, 32'h0000_0001);
         while (dut.u_core.u_cap.n < nsmp - 200) begin
@@ -222,6 +223,10 @@ module tb;
         end
         $fwrite(f, "END %0d\n", dut.u_core.u_cap.n);
         $fwrite(f, "NOTCH %0d\n", dut.u_core.u_notch.cfg_n);
+        rd32(15'h0007, t_lo); rd32(15'h0008, t_hi);
+        $fwrite(f, "TIC событий %0d, интервалов по 4000 тактов %0d, TIC_T = последнему событию: %0d %s\n",
+                tic_n, tic_good, {t_hi, t_lo} == tic_last,
+                (tic_n > 10 && tic_good == tic_n - 1 && {t_hi, t_lo} == tic_last) ? "PASS" : "FAIL");
         // --- снимок
         rd32(15'h0030, v);
         rd32(15'h0033, t_lo);
@@ -237,5 +242,13 @@ module tb;
     integer fn;
     initial fn = $fopen("tb/out/sys_notch.txt", "w");
     always @(posedge clk96) if (dut.u_core.f_stb) $fwrite(fn, "%0d %08x\n", dut.u_core.f_count, dut.u_core.f_data);
+    // TIC: интервалы между событиями
+    integer tic_n = 0, tic_good = 0;
+    reg [63:0] tic_last = 0;
+    always @(posedge clk96) if (dut.u_core.u_tb.tic_ev) begin
+        if (tic_n > 0 && dut.u_core.u_tb.tic_t - tic_last == 64'd4000) tic_good = tic_good + 1;
+        tic_last = dut.u_core.u_tb.tic_t;
+        tic_n = tic_n + 1;
+    end
 endmodule
 `default_nettype wire

@@ -77,13 +77,19 @@ module timebase (
     end
 
     // ------------------------------------------------------------ TIC
-    reg [31:0] tic_cnt;
+    // событие — каждые tic_period отсчётов; сравнение на равенство с period − 1 вычисляется
+    // заранее (регистр; отсчёты приходят раз в 4 такта), смена периода сбрасывает счётчик
+    reg [31:0] tic_cnt, tic_pm1, tic_prev;
+    reg        tic_eq;
     always @(posedge clk) begin
-        tic_ev <= 1'b0;
-        if (rst || tic_period == 0) begin
+        tic_ev   <= 1'b0;
+        tic_pm1  <= tic_period - 32'd1;
+        tic_prev <= tic_period;
+        tic_eq   <= (tic_cnt == tic_pm1);
+        if (rst || tic_period == 0 || tic_period != tic_prev) begin
             tic_cnt <= 32'd0;
         end else if (smp_stb) begin
-            if (tic_cnt + 1'b1 >= tic_period) begin
+            if (tic_eq) begin
                 tic_cnt <= 32'd0; tic_ev <= 1'b1; tic_t <= t96;
             end else
                 tic_cnt <= tic_cnt + 1'b1;

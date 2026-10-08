@@ -134,7 +134,7 @@ def check():
             sok = exp == got
             print(f"  снимок канала {ch} с отсчёта {t0}: {len(got)} слов, совпадение: {'ДА' if sok else 'НЕТ'}")
             ok &= sok
-        if ln.startswith(("PPS", "EXT", "SPI", "FX3")) and "FAIL" in ln:
+        if ln.startswith(("PPS", "EXT", "SPI", "FX3", "TIC")) and "FAIL" in ln:
             ok = False
     print("ИТОГ:", "ПРОЙДЕН" if ok else "НЕ ПРОЙДЕН")
     sys.exit(0 if ok else 1)
