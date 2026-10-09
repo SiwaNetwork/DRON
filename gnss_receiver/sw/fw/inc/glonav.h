@@ -36,6 +36,9 @@ void glonav_init(glonav_t *g, int fcn);
 int  glonav_sym(glonav_t *g, double v, uint64_t n_end);
 /* перевод времени суток МДВ в GPST (секунды недели) по приближённому GPST t_ref */
 double glo_tod2gpst(double tod, double t_ref);
+/* время МДВ (N4 — номер четырёхлетия с 1996 г., NA — сутки в четырёхлетии, tod — с от начала
+ * суток) -> GPST: неделя и секунды недели (без шкалы приёмника, для работы только по ГЛОНАСС) */
+double glo_date2gpst(int n4, int na, double tod, int *week);
 
 /* проверка кода Хэмминга строки (биты 85..1, s[0] — бит 85); 1 — без ошибок */
 int  glo_str_check(const uint8_t *s);

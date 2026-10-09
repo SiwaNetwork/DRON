@@ -79,7 +79,16 @@ static void on_sym_glo(rx_ch_t *c, int sym, uint64_t n_end)
 {
     rx_t *r = RX;
     if (!glonav_sym(&c->gnav, sym ? -1.0 : 1.0, n_end)) return;
-    if (!r->time_ok) return;                      /* сутки и неделя — по шкале приёмника (GPS) */
+    if (!r->time_ok && c->gnav.n4 > 0 && c->gnav.na > 0 && c->gnav.str_end_tod >= 0) {
+        /* шкала приёмника по ГЛОНАСС (без GPS): дата — из строки 5, задержка ≈ 75 мс */
+        int wk;
+        double sow = glo_date2gpst(c->gnav.n4, c->gnav.na, c->gnav.str_end_tod, &wk);
+        r->t0_n = n_end + 1;
+        r->t0_tow = sow + 0.075;
+        r->week = wk;
+        r->time_ok = 1;
+    }
+    if (!r->time_ok) return;                      /* сутки и неделя — по шкале приёмника */
     double tr = rx_time(r, n_end);
     if (c->gnav.eph_new) {
         eph_t e = c->gnav.eph;

@@ -8,6 +8,7 @@
 #include "glonav.h"
 
 #define P2(n) ldexp(1.0, n)
+#define DAYS_1996 5839.0                 /* сутки от 06.01.1980 (начало GPST) до 01.01.1996 */
 
 /* метка времени (укороченная ПСП, 30 символов по 10 мс) */
 static const uint8_t TM[GLO_TM_LEN] = {1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0,
@@ -90,6 +91,11 @@ void glo_str_encode(const eph_t *e, int m, double tk, int slot, uint8_t *s)
         ssm(s, 80, 22, -e->taun, P2(-30));         /* в eph_t хранится −τn */
         sb(s, 15, 5, (uint32_t)slot); sb(s, 10, 2, 1);
         break;
+    case 5: {                                      /* NA, N4 — по дате МДВ момента toc */
+        double t = e->week * 604800.0 + e->toc - GPST_UTC + 10800.0;
+        int d = (int)floor(t / 86400.0 - DAYS_1996);
+        sb(s, 80, 11, (uint32_t)(d % 1461 + 1)); sb(s, 36, 5, (uint32_t)(d / 1461 + 1));
+        break; }
     default:
         break;
     }
@@ -125,6 +131,15 @@ double glo_tod2gpst(double tod, double t_ref)
     if (t - t_ref > 43200) t -= 86400;
     if (t - t_ref < -43200) t += 86400;
     return fmod(t + 604800.0, 604800.0);
+}
+
+double glo_date2gpst(int n4, int na, double tod, int *week)
+{
+    double d = (n4 - 1) * 1461.0 + (na - 1);
+    double t = (d + DAYS_1996) * 86400.0 + tod - 10800.0 + GPST_UTC;     /* с от начала GPST */
+    int w = (int)floor(t / 604800.0);
+    if (week) *week = w;
+    return t - w * 604800.0;
 }
 
 /* проверка окна 230 символов: метка времени в начале и в конце; 0 — прямая, 1 — инверсная */
