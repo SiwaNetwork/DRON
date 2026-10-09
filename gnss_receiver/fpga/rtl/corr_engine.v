@@ -68,9 +68,10 @@ module corr_engine #(
     integer i;
 
     // ------------------------------------------------------------ входной регистр шины
-    reg        b_we, b_re;
-    reg [8:0]  b_addr;
-    reg [31:0] b_wdata;
+    // (* keep *): у каждого движка свои регистры (без объединения одинаковых триггеров движков)
+    (* keep *) reg        b_we, b_re;
+    (* keep *) reg [8:0]  b_addr;
+    (* keep *) reg [31:0] b_wdata;
     always @(posedge clk) begin
         b_we <= bus_we; b_re <= bus_re; b_addr <= bus_addr; b_wdata <= bus_wdata;
     end
@@ -310,7 +311,20 @@ module corr_engine #(
     reg [WBITS-1:0] w_word;
     reg [15:0]      w_data;
     reg [2:0]       w_cnt;
-    wire w_now = (w_cnt != 0) && (slot == w_slot);
+    // запись — в такте слота w_slot; признак вычисляется тактом раньше по номеру следующего
+    // слота (регистр). Записи регистров 0x100/0x101 действуют на следующий такт (регистры wr*).
+    wire [CLOG-1:0] slot_nx = grp_stb ? {CLOG{1'b0}} : slot + 1'b1;
+    reg  w_now;
+    reg  wr100, wr101;
+    reg  [31:0] wdr;
+    // Слот w_slot повторяется раз в NMUX тактов, поэтому в такте записи w_cnt не меняется,
+    // а после записи последнего полубайта признак уже не совпадёт со слотом.
+    always @(posedge clk) begin
+        w_now <= !rst && (w_cnt != 0) && (slot_nx == w_slot);
+        wr100 <= !rst && b_we && b_addr == 9'h100;
+        wr101 <= !rst && b_we && b_addr == 9'h101;
+        wdr   <= b_wdata;
+    end
     wire [WBITS-1:0] wa0 = ci0[CB-1:2];
     wire [WBITS-1:0] wa1 = w_now ? w_word : m_wn[slot_b];
     wire [3:0] cm_a [0:NMUX-1];
@@ -324,11 +338,11 @@ module corr_engine #(
     endgenerate
     always @(posedge clk) begin
         if (rst) w_cnt <= 0;
-        else if (b_we && b_addr == 9'h100) begin
-            w_slot <= b_wdata[16 +: CLOG];
-            w_word <= b_wdata[WBITS-1:0];
-        end else if (b_we && b_addr == 9'h101) begin
-            w_data <= b_wdata[15:0];
+        else if (wr100) begin
+            w_slot <= wdr[16 +: CLOG];
+            w_word <= wdr[WBITS-1:0];
+        end else if (wr101) begin
+            w_data <= wdr[15:0];
             w_cnt  <= 3'd4;
         end else if (w_now) begin
             w_data <= {4'd0, w_data[15:4]};
@@ -588,7 +602,7 @@ module corr_engine #(
     always @(posedge clk) begin
         if (b_addr[8])
             bus_rdata <= (b_addr[3:0] == 4'd2) ? {{(32-NMUX){1'b0}}, ready} :
-                         (b_addr[3:0] == 4'd3) ? {31'd0, (w_cnt != 0) | pw_v} : 32'd0;
+                         (b_addr[3:0] == 4'd3) ? {31'd0, (w_cnt != 0) | wr101 | pw_v} : 32'd0;
         else case (b_addr[3:0])
             4'd8:  bus_rdata <= r_ei[rs];
             4'd9:  bus_rdata <= r_eq[rs];

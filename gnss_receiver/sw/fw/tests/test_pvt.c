@@ -65,6 +65,7 @@ int main(void)
     pvt_cfg_t cfg;
     pvt_default_cfg(&cfg);
     cfg.trop = cfg.iono = 0;
+    cfg.tgd = 0;                                         /* эталонные ПД — без TGD */
     for (int pass = 0; pass < 2; pass++) {
         obs_t o2[PVT_MAXOBS];
         memcpy(o2, obs, sizeof(obs_t) * no);

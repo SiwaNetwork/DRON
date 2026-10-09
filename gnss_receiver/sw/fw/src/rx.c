@@ -126,6 +126,34 @@ static void on_bit(void *ctx, int bit, uint64_t n_end)
     }
 }
 
+/* время излучения по каналу на отсчёт n */
+static double tx_time(const rx_ch_t *c, uint64_t n)
+{
+    uint64_t ct = corr_code_total_at(c->ch, n);
+    return c->ref_tow + (double)(int64_t)(ct - c->ref_code) / TWO32 / SIGS[c->sig].chip_rate;
+}
+
+/* запуск L2CM по каналу L1 C/A того же КА: фаза кода — по времени излучения L1 (эпохи
+ * L2CM — через 20 мс шкалы КА), доплер — пересчётом по частоте; поиск не нужен */
+static void start_l2(rx_t *r, int k1, uint64_t n_now)
+{
+    rx_ch_t *c1 = &r->ch[k1];
+    int ch = corr_alloc(SIG_L2CM);
+    if (ch < 0) return;
+    uint64_t ns = ((n_now + 24000) >> 2) << 2;              /* через 1 мс, начало группы */
+    double t1 = tx_time(c1, ns);
+    double cp = fmod(t1, 0.020) * SIGS[SIG_L2CM].chip_rate;
+    double dop = trk_doppler(&c1->trk) * sig_carrier(SIG_L2CM, 0) / sig_carrier(SIG_L1CA, 0);
+    corr_load_code(ch, SIG_L2CM, c1->prn);
+    rx_ch_t *c = &r->ch[ch];
+    memset(c, 0, sizeof(*c));
+    c->used = 1; c->ch = ch; c->sig = SIG_L2CM; c->prn = c1->prn; c->pair = k1 + 1;
+    trk_start(&c->trk, ch, SIG_L2CM, c1->prn, 0, dop, cp, ns, &r->tcfg);
+    int chs[1] = {ch};
+    corr_start(chs, 1, ns);
+    c1->pair = ch + 1;
+}
+
 void rx_process(rx_t *r, uint64_t n_now)
 {
     corr_dump_t d;
@@ -135,9 +163,13 @@ void rx_process(rx_t *r, uint64_t n_now)
         if (!c->used) continue;
         while (corr_read(c->ch, &d, n_now)) trk_update(&c->trk, &d);
         if (c->trk.state == TRK_IDLE) {          /* срыв более 1 с — канал освобождается */
+            if (c->pair && r->ch[c->pair - 1].pair == k + 1) r->ch[c->pair - 1].pair = 0;
             corr_free(c->ch);
             c->used = 0;
+            continue;
         }
+        if (r->dual && c->sig == SIG_L1CA && !c->pair && c->tx_ok && c->trk.state == TRK_LOCK)
+            start_l2(r, k, n_now);
     }
 }
 
@@ -148,7 +180,7 @@ int rx_measure(rx_t *r, uint64_t n_m)
     int n = 0;
     for (int k = 0; k < CORR_MAXCH && n < PVT_MAXOBS; k++) {
         rx_ch_t *c = &r->ch[k];
-        if (!c->used || !c->tx_ok || c->trk.state != TRK_LOCK) continue;
+        if (!c->used || !c->tx_ok || c->trk.state != TRK_LOCK || c->sig == SIG_L2CM) continue;
         int sys = SIGS[c->sig].sys;
         if (c->prn < 1 || c->prn > 63) continue;
         eph_t *e = &r->eph[sys][c->prn];
@@ -159,7 +191,22 @@ int rx_measure(rx_t *r, uint64_t n_m)
         obs_t *o = &r->obs[n];
         memset(o, 0, sizeof(*o));
         o->sys = sys; o->prn = c->prn;
-        o->pr = CLIGHT * eph_tdiff(trx, ttx);
+        o->pr = o->pr1 = CLIGHT * eph_tdiff(trx, ttx);
+        /* L2CM: время внутри периода 20 мс — по фазе кода, целые периоды — по L1 */
+        if (c->pair) {
+            rx_ch_t *c2 = &r->ch[c->pair - 1];
+            if (c2->used && c2->trk.state == TRK_LOCK) {
+                uint64_t ct2 = corr_code_total_at(c2->ch, n_m);
+                double tc = fmod((double)ct2 / TWO32 / SIGS[SIG_L2CM].chip_rate, 0.020);
+                double dt = fmod(tc - ttx, 0.020);
+                if (dt > 0.010) dt -= 0.020;
+                if (dt < -0.010) dt += 0.020;
+                double f1 = sig_carrier(SIG_L1CA, 0), f2 = sig_carrier(SIG_L2CM, 0), g = f1 * f1 / (f2 * f2);
+                o->pr2 = CLIGHT * eph_tdiff(trx, ttx + dt);
+                o->pr = (g * o->pr1 - o->pr2) / (g - 1);
+                o->iono_free = 1;
+            }
+        }
         o->dop = trk_doppler(&c->trk);
         o->fc = sig_carrier(c->sig, c->fcn);
         o->cn0 = c->trk.cn0;

@@ -55,7 +55,7 @@ static double tsv_at(const eph_t *e, double t)
         tau = sqrt((x - RR[0]) * (x - RR[0]) + (y - RR[1]) * (y - RR[1]) + (rs[2] - RR[2]) * (rs[2] - RR[2])) / CLIGHT;
     }
     eph_satpos(e, t - tau, rs, &dts, NULL, NULL);
-    return t - tau + dts;
+    return t - tau + dts - e->tgd;                      /* L1 C/A: Δt − TGD */
 }
 
 static uint32_t src(uint64_t i)

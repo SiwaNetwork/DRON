@@ -62,7 +62,7 @@ static double tsv_at(const eph_t *e, double t)
         tau = sqrt((x - RR[0]) * (x - RR[0]) + (y - RR[1]) * (y - RR[1]) + (rs[2] - RR[2]) * (rs[2] - RR[2])) / CLIGHT;
     }
     eph_satpos(e, t - tau, rs, &dts, NULL, NULL);
-    return t - tau + dts;
+    return t - tau + dts - (e->sys == SYS_GPS ? e->tgd : 0);   /* GPS L1 C/A: Δt − TGD */
 }
 
 /* знак данных на текущем периоде кода (по времени КА) */

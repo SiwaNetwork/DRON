@@ -21,6 +21,7 @@ typedef struct {
     uint64_t ref_n;
     uint64_t ref_code;           /* фаза кода без свёртки на ref_n минус дробная часть, чипы·2^32 */
     double   ref_tow;
+    int      pair;               /* L1 C/A <-> L2CM того же КА: индекс канала + 1 (0 — нет) */
 } rx_ch_t;
 
 typedef struct {
@@ -40,6 +41,7 @@ typedef struct {
     pvt_cfg_t pcfg;
     trk_cfg_t tcfg;
     int      n_sol;
+    int      dual;               /* двухчастотный режим GPS L1 C/A + L2CM (ВЧ-канал L2 настроен) */
 } rx_t;
 
 void   rx_init(rx_t *r);

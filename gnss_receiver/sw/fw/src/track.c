@@ -47,15 +47,18 @@ void trk_start(trk_t *k, int ch, int sig, int prn, int fcn, double doppler, doub
     k->f0 = k->f_if + doppler;
     k->f_carr = k->f0;
     k->f_code = si->chip_rate * (1 + doppler / k->fc);
-    double wn = cfg->pll_bw / 0.53;
+    /* полосы ограничены условием Bn·T ≤ 0,15 (устойчивость дискретной петли при длинном
+     * периоде кода, например L2CM — 20 мс) */
+    double bmax = 0.15 / k->T;
+    double wn = (cfg->pll_bw < bmax ? cfg->pll_bw : bmax) / 0.53;
     k->a2 = 1.414 * wn;
     k->w2 = wn * wn;
-    k->wf = cfg->fll_bw / 0.25;
+    k->wf = (cfg->fll_bw < bmax ? cfg->fll_bw : bmax) / 0.25;
     k->dll_k = 4 * cfg->dll_bw;
     k->spacing = si->boc && cfg->spacing > 0.15 ? 0.15 : cfg->spacing;   /* BOC(1,1): узкий E–L */
     k->fll_time = cfg->fll_time;
-    k->pll_bw_lock = cfg->pll_bw_lock;
-    k->fll_bw_lock = cfg->fll_bw_lock;
+    k->pll_bw_lock = cfg->pll_bw_lock < bmax ? cfg->pll_bw_lock : bmax;
+    k->fll_bw_lock = cfg->fll_bw_lock < bmax ? cfg->fll_bw_lock : bmax;
     k->cn0 = 0;
     /* синхронизация по символам данных: L1 C/A — биты 20 мс, ГЛОНАСС — символы 10 мс (меандр) */
     k->bit_len = sig == SIG_L1CA ? 20 : (sig == SIG_G1CA || sig == SIG_G2CA) ? 10 : 0;
@@ -65,8 +68,8 @@ void trk_start(trk_t *k, int ch, int sig, int prn, int fcn, double doppler, doub
     k->ncoh = 1;
     k->sec_len = sec_code(sig, prn, k->sec);
     k->coast_time = cfg->coast_time;
-    k->pll_order = cfg->pll_order;
-    k->pll_bw3 = cfg->pll_bw3;
+    k->pll_order = k->T >= 0.01 ? 2 : cfg->pll_order;   /* 3-й порядок — при коротком периоде */
+    k->pll_bw3 = cfg->pll_bw3 < bmax ? cfg->pll_bw3 : bmax;
     k->reacq_thr = cfg->reacq_thr;
     corr_config(ch, sig, prn, fcn, 1, k->spacing, k->f_carr, k->f_code, code_phase, 0.0, t_start);
 }
@@ -132,6 +135,8 @@ static void loops(trk_t *k, double EI, double EQ, double I, double Q, double LI,
 {
     const sig_info_t *si = &SIGS[k->sig];
     if (k->state == TRK_LOST && k->ncoh > 1) { coast(k, EI, EQ, I, Q, LI, LQ); return; }
+    /* втягивание без захвата дольше 5 с (например, запуск по другой частоте без сигнала) */
+    if (k->state == TRK_PULLIN && !k->n_reacq && k->t > 5.0) { k->state = TRK_IDLE; return; }
     /* повторное втягивание без захвата за 1 с — ложное обнаружение: снова прогноз */
     if (k->state == TRK_PULLIN && k->ncoh > 1 && k->n_reacq && k->t - k->t_pull > 1.0) {
         k->state = TRK_LOST;

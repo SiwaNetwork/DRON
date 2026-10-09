@@ -16,6 +16,7 @@ void pvt_default_cfg(pvt_cfg_t *c)
     c->el_mask = 10.0 * GPI / 180;
     c->trop = 1;
     c->iono = 1;
+    c->tgd = 1;
 }
 
 void llh2ecef(double lat, double lon, double h, double *r)
@@ -135,6 +136,12 @@ int pvt_solve(obs_t *obs, int n, double t_rx, const pvt_cfg_t *cfg, sol_t *sol)
             if (!eph_satpos(o->eph, tt, r0, &dt0, NULL, NULL)) continue;
             tt -= dt0;
             if (!eph_satpos(o->eph, tt, rs[i], &dts[i], NULL, NULL)) continue;
+            /* GPS: часы КА в эфемеридах отнесены к ионосферно-свободной комбинации; для ПД на
+             * одной частоте fc — Δt − TGD·(f1/fc)² (IS-GPS-200, п. 20.3.3.3.3.2) */
+            if (cfg->tgd && o->sys == SYS_GPS && !o->iono_free) {
+                double f = sig_carrier(SIG_L1CA, 0) / (o->fc > 0 ? o->fc : sig_carrier(SIG_L1CA, 0));
+                dts[i] -= o->eph->tgd * f * f;
+            }
             double d[3] = {rs[i][0] - x[0], rs[i][1] - x[1], rs[i][2] - x[2]};
             double rho = sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
             double th = OMGE * rho / CLIGHT, xs = rs[i][0] * cos(th) + rs[i][1] * sin(th);
@@ -148,7 +155,7 @@ int pvt_solve(obs_t *obs, int n, double t_rx, const pvt_cfg_t *cfg, sol_t *sol)
                 azel(x, lat, lon, rsr, &o->az, &o->el);
                 if (it > 1 && o->el < cfg->el_mask) continue;
                 if (cfg->trop) corr += trop(h, o->el);
-                if (cfg->iono) {
+                if (cfg->iono && !o->iono_free) {
                     double di = klobuchar(cfg->ion, t_rx, lat, lon, o->az, o->el);
                     double f = sig_carrier(SIG_L1CA, 0) / (o->fc > 0 ? o->fc : sig_carrier(SIG_L1CA, 0));
                     corr += di * f * f;
