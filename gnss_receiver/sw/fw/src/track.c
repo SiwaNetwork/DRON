@@ -47,15 +47,21 @@ void trk_start(trk_t *k, int ch, int sig, int prn, int fcn, double doppler, doub
     k->f0 = k->f_if + doppler;
     k->f_carr = k->f0;
     k->f_code = si->chip_rate * (1 + doppler / k->fc);
-    /* полосы ограничены условием Bn·T ≤ 0,15 (устойчивость дискретной петли при длинном
-     * периоде кода, например L2CM — 20 мс) */
-    double bmax = 0.15 / k->T;
+    /* полосы ограничены условием Bn·T ≤ 0,1 (устойчивость дискретной петли при длинном
+     * периоде кода, например L2CM — 20 мс; новые шаги NCO действуют со следующего интервала,
+     * и при 0,15 втягивание L2CM срывалось) */
+    double bmax = 0.1 / k->T;
     double wn = (cfg->pll_bw < bmax ? cfg->pll_bw : bmax) / 0.53;
     k->a2 = 1.414 * wn;
     k->w2 = wn * wn;
     k->wf = (cfg->fll_bw < bmax ? cfg->fll_bw : bmax) / 0.25;
-    k->dll_k = 4 * cfg->dll_bw;
+    /* длинный период кода (L2CM, L1C — 10…20 мс): ССЗ с поддержкой от несущей в узкой полосе
+     * (динамику снимает ФАП) — шум кода, усиливаемый ионосферно-свободной комбинацией */
+    k->dll_k = 4 * (k->T >= 0.01 ? cfg->dll_bw_long : cfg->dll_bw);
     k->spacing = si->boc && cfg->spacing > 0.15 ? 0.15 : cfg->spacing;   /* BOC(1,1): узкий E–L */
+    /* TDM (L2C): копия CM занимает первую половину чипа — пик корреляции вдвое уже */
+    k->dll_hw = si->tdm ? 0.5 : 1.0;
+    if (k->spacing > k->dll_hw / 2) k->spacing = k->dll_hw / 2;
     k->fll_time = cfg->fll_time;
     k->pll_bw_lock = cfg->pll_bw_lock < bmax ? cfg->pll_bw_lock : bmax;
     k->fll_bw_lock = cfg->fll_bw_lock < bmax ? cfg->fll_bw_lock : bmax;
@@ -167,6 +173,9 @@ static void loops(trk_t *k, double EI, double EQ, double I, double Q, double LI,
      * частоты из ячейки захвата), этап 2 — ФАП с поддержкой ЧАП (полоса ЧАП — номинальная) */
     if (k->t < k->fll_time) {
         double wfw = 4 * k->wf;
+        /* петля 1-го порядка устойчива при K·T < 2; при длинном периоде (L2CM, 20 мс) четырёхкратная
+         * полоса нарушила бы и это условие, и Bn·T ≤ 0,1 (K = 4·Bn) */
+        if (wfw * Tl > 0.4) wfw = 0.4 / Tl;
         k->int_f += wfw * ferr * Tl;
         k->f_carr = k->f0 + k->int_f;
     } else if (k->pll_order == 3 && k->state == TRK_LOCK && k->ncoh == 1) {
@@ -181,7 +190,7 @@ static void loops(trk_t *k, double EI, double EQ, double I, double Q, double LI,
         k->f_carr = k->f0 + k->int_f + k->a2 * perr / (2 * GPI);
     }
     /* ССЗ */
-    double cerr = (e + l) > 0 ? (e - l) / (e + l) * (1 - k->spacing) : 0;
+    double cerr = (e + l) > 0 ? (e - l) / (e + l) * (k->dll_hw - k->spacing) : 0;
     k->f_code = si->chip_rate * (1 + (k->f_carr - k->f_if) / k->fc) + k->dll_k * cerr;
     corr_set_rates(k->ch, k->f_carr, k->f_code);
     /* индикатор захвата фазы: постоянная ≈ 20 интервалов (по периодам) или 5 интервалов
@@ -331,4 +340,10 @@ void trk_update(trk_t *k, const corr_dump_t *d)
 double trk_doppler(const trk_t *k)
 {
     return k->f_carr - k->f_if;
+}
+
+double trk_doppler_smooth(const trk_t *k)
+{
+    if (k->f_lp == 0) return trk_doppler(k);
+    return k->f_lp + k->f_rate * 1.0 - k->f_if;          /* запаздывание фильтра (τ = 1 с) — по скорости */
 }

@@ -40,6 +40,7 @@ typedef struct {
     double   f_code;         /* частота кода, чип/с */
     double   int_f;
     double   a2, w2, wf, dll_k, spacing, fll_time, pll_bw_lock, fll_bw_lock, t_lost;
+    double   dll_hw;             /* полуширина главного пика корреляции, чипы (TDM — 0,5) */
     double   pI, pQ;
     int      have_prev;
     double   t;              /* время слежения, с */
@@ -89,5 +90,8 @@ void trk_start(trk_t *k, int ch, int sig, int prn, int fcn, double doppler, doub
 /* обработка результата интервала; пишет новые частоты в канал ПЛИС */
 void trk_update(trk_t *k, const corr_dump_t *d);
 double trk_doppler(const trk_t *k);
+/* доплер по сглаженной частоте NCO (τ = 1 с, с поправкой на скорость изменения) — без шума ФАП;
+ * для пуска сопряжённых каналов (L2 по L1) */
+double trk_doppler_smooth(const trk_t *k);
 
 #endif

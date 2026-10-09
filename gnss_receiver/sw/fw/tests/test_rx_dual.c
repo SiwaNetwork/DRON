@@ -6,7 +6,8 @@
  * (IS-GPS-200); уход ТКГ +0,3 ppm. Код CL — псевдослучайная последовательность (в коррелятор
  * не попадает: половины чипов CL обнуляются в канале L2CM).
  * ПО МК: захват L1 по снимкам, слежение, LNAV, запуск L2CM по каналу L1 (без поиска),
- * ПД на двух частотах, ионосферно-свободная комбинация, решение.
+ * ПД на двух частотах со сглаживанием по фазе несущей, ионосферно-свободная комбинация,
+ * решение. Отладочный вывод по каналам L2CM — при заданной переменной окружения DUAL_DBG.
  * Проверка: каналы L2CM в захвате для всех КА, ошибка координат по ионосферно-свободной
  * комбинации, оценка наклонной ионосферной задержки по P2 − P1; для сравнения — решение
  * только по L1 (без модели ионосферы: параметры Клобучара в имитаторе не передаются). */
@@ -123,6 +124,15 @@ static void ms_state(sat_t *p, long k, uint64_t i)
         b->dph = (uint32_t)(int64_t)llround((fc * dts - flo / FS_HZ) * 4294967296.0);
         chip_value(p, f);
     }
+}
+
+/* время КА в сигнале частоты f (0 — L1, 1 — L2) на истинный момент t */
+static double tsv_sig(const sat_t *p, int f, double t)
+{
+    double x = (t - T0) * 1e3;
+    long k = (long)x;
+    double ts = p->tsv[k] + (p->tsv[k + 1] - p->tsv[k]) * (x - k);
+    return ts - (f ? G12 : 1.0) * (p->I1 / CLIGHT + p->e->tgd);
 }
 
 static int q2(double v) { return (v < 0 ? 2 : 0) | (fabs(v) > 0.70710678 ? 1 : 0); }
@@ -264,6 +274,21 @@ int main(void)
             nl1 += rx.ch[k].sig == SIG_L1CA;
             nl2 += rx.ch[k].sig == SIG_L2CM;
         }
+        if (getenv("DUAL_DBG"))
+            for (int k = 0; k < CORR_MAXCH; k++) if (rx.ch[k].used && rx.ch[k].sig == SIG_L2CM) {
+                rx_ch_t *c = &rx.ch[k];
+                const sat_t *p = NULL;
+                for (int s = 0; s < NS; s++) if (S[s].prn == c->prn) p = &S[s];
+                double cp;
+                corr_phase_at(c->ch, nm, &cp, NULL);
+                double ct = fmod(tsv_sig(p, 1, t_true(nm)) * 511500.0, 10230.0), de = cp - ct;
+                if (de > 5115) de -= 10230;
+                if (de < -5115) de += 10230;
+                double f1d = c->pair ? trk_doppler(&rx.ch[c->pair - 1].trk) * F2 / F1 : 0;
+                printf("    L2CM G%02d: сост. %d, t %.2f, lock %.2f, C/N0 %.1f, доплер %.2f (L1·f2/f1 %.2f), "
+                       "ошибка кода %.2f м\n", c->prn, c->trk.state, c->trk.t, c->trk.lock, c->trk.cn0,
+                       trk_doppler(&c->trk), f1d, de * CLIGHT / 511500.0);
+            }
         if (!rx_measure(&rx, nm)) {
             printf("  t=%5.1f с: каналов L1 в захвате %d, L2CM %d — решения нет\n", t_true(nm) - T0, nl1, nl2);
             continue;
@@ -305,11 +330,35 @@ int main(void)
             if (err > maxerr) maxerr = err;
         }
     }
+    for (int k = 0; k < CORR_MAXCH; k++) if (rx.ch[k].used && rx.ch[k].sig == SIG_L2CM)
+        printf("  L2CM G%02d: состояние %d, C/N0 %.1f дБГц\n", rx.ch[k].prn, rx.ch[k].trk.state, rx.ch[k].trk.cn0);
+    /* ошибки ПД на последней эпохе относительно истинного времени КА в сигнале (общая для всех
+     * КА ошибка шкалы приёмника исключена по среднему P1) */
+    double m1 = 0;
+    int nm1 = 0;
+    for (int i = 0; i < rx.nobs; i++)
+        for (int s = 0; s < NS; s++) if (S[s].prn == rx.obs[i].prn) {
+            m1 += rx.obs[i].pr1 - CLIGHT * (rx_time(&rx, rx.sol_n) - tsv_sig(&S[s], 0, t_true(rx.sol_n)));
+            nm1++;
+        }
+    m1 = nm1 ? m1 / nm1 : 0;
+    for (int i = 0; i < rx.nobs; i++) {
+        obs_t *o = &rx.obs[i];
+        for (int s = 0; s < NS; s++) if (S[s].prn == o->prn && o->iono_free) {
+            double tr = rx_time(&rx, rx.sol_n), tt = t_true(rx.sol_n);
+            double e1 = o->pr1 - CLIGHT * (tr - tsv_sig(&S[s], 0, tt)) - m1;
+            double e2 = o->pr2 - CLIGHT * (tr - tsv_sig(&S[s], 1, tt)) - m1;
+            printf("  G%02d: ионосфера L1 %.2f м, оценка %.2f м; ошибка P1 %+.2f м, P2 %+.2f м\n", o->prn, S[s].I1,
+                   (o->pr2 - o->pr1) / (G12 - 1) - CLIGHT * o->eph->tgd, e1, e2);
+        }
+    }
     double rms_i = nie ? sqrt(si2 / nie) : 1e9;
     printf("Решений %d, по ионосферно-свободной комбинации на всех КА %d; средняя ошибка коорд.: ИСК %.2f м, "
            "только L1 %.2f м; макс. (ИСК) %.2f м; СКО оценки ионосферной задержки %.2f м\n", nsol, nfull,
            nfull ? sum_if / nfull : 0.0, nfull ? sum_l1 / nfull : 0.0, maxerr, rms_i);
-    if (nfull < 3 || maxerr > 10 || rms_i > 3 || nl2 < NS || sum_if >= sum_l1) ok = 0;
+    /* критерии: все КА двухчастотные, средняя ошибка ИСК ≤ 3 м и меньше, чем только по L1,
+     * макс. ≤ 8 м (первое решение — по 5 КА, PDOP ≈ 4), ионосферная задержка — СКО ≤ 2 м */
+    if (nfull < 5 || sum_if / nfull > 3 || maxerr > 8 || rms_i > 2 || nl2 < NS || sum_if >= sum_l1) ok = 0;
     printf("ИТОГ: %s\n", ok ? "ПРОЙДЕН" : "НЕ ПРОЙДЕН");
     return !ok;
 }

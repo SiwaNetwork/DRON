@@ -7,6 +7,9 @@
 
 corr_ch_t CORR[CORR_MAXCH];
 int corr_nch;
+/* последний пуск по движкам: отсчёт и маска (у движка один регистр START_T/START_MASK) */
+static uint64_t pend_t[CORR_MAXENG];
+static uint32_t pend_m[CORR_MAXENG];
 
 #define TWO32 4294967296.0
 
@@ -29,6 +32,8 @@ uint64_t corr_time_now(void)
 int corr_init(void)
 {
     memset(CORR, 0, sizeof(CORR));
+    memset(pend_t, 0, sizeof(pend_t));
+    memset(pend_m, 0, sizeof(pend_m));
     if (fpga_rd(R_ID) != 0x4D475038u) return 0;
     int neng = (int)(fpga_rd(R_VERSION) >> 24);
     if (neng > CORR_MAXENG) neng = CORR_MAXENG;
@@ -107,9 +112,8 @@ void corr_config(int ch, int sig, int prn, int fcn, int nint, double spacing_chi
 void corr_start(const int *chs, int n, uint64_t t_start)
 {
     /* START_MASK движка заменяет ожидающую маску: каналы, запущенные на тот же отсчёт
-     * предыдущим вызовом (другой сигнал), добавляются к новой маске */
-    static uint64_t pend_t[CORR_MAXENG];
-    static uint32_t pend_m[CORR_MAXENG];
+     * предыдущим вызовом (другой сигнал), добавляются к новой маске. Пуск на другой отсчёт
+     * до срабатывания ожидающего отменил бы его — см. corr_start_pending */
     uint32_t mask[CORR_MAXENG] = {0};
     for (int k = 0; k < n; k++) mask[chs[k] / 16] |= 1u << (chs[k] % 16);
     for (int e = 0; e < CORR_MAXENG; e++) {
@@ -119,6 +123,12 @@ void corr_start(const int *chs, int n, uint64_t t_start)
         fpga_wr(R_ENG(e, ENG_START_T), (uint32_t)t_start);
         fpga_wr(R_ENG(e, ENG_START_MASK), mask[e]);
     }
+}
+
+int corr_start_pending(int ch, uint64_t n_now, uint64_t t_start)
+{
+    int e = ch / 16;
+    return pend_m[e] && pend_t[e] > n_now && pend_t[e] != t_start;
 }
 
 void corr_stop(int ch)

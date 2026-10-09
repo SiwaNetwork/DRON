@@ -47,6 +47,9 @@ void     corr_config(int ch, int sig, int prn, int fcn, int nint, double spacing
                      uint64_t t_start);
 /* одновременный пуск каналов (маска по каналам) с отсчёта t_start */
 void     corr_start(const int *chs, int n, uint64_t t_start);
+/* у движка канала ch есть ещё не сработавший пуск на другой отсчёт (не t_start): новый пуск
+ * заменил бы его, поэтому откладывается */
+int      corr_start_pending(int ch, uint64_t n_now, uint64_t t_start);
 void     corr_stop(int ch);
 /* новые частоты (вступают в силу в конце группы следующего сброса) */
 void     corr_set_rates(int ch, double f_carr_hz, double code_cps);
