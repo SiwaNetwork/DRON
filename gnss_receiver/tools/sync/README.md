@@ -26,14 +26,19 @@
    winget install --id Git.Git -e
    ```
 
-2. Откройте PowerShell (без прав администратора). Скачайте скрипт, получите копию и включите
-   обновление каждый час:
+2. Откройте **новое** окно PowerShell (без прав администратора; после установки Git окно
+   нужно открыть заново, иначе git не будет найден). Скачайте скрипт, получите копию и
+   включите обновление каждый час:
 
    ```powershell
+   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
    $s = "$env:TEMP\sync_documents.ps1"
-   Invoke-WebRequest https://raw.githubusercontent.com/SiwaNetwork/DRON/refs/heads/claude/gnss-multiband-receiver-nht15x/gnss_receiver/tools/sync/sync_documents.ps1 -OutFile $s
+   Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/SiwaNetwork/DRON/refs/heads/claude/gnss-multiband-receiver-nht15x/gnss_receiver/tools/sync/sync_documents.ps1 -OutFile $s
    powershell -NoProfile -ExecutionPolicy Bypass -File $s -Install
    ```
+
+   Первая строка включает TLS 1.2 для старых версий Windows PowerShell, `-UseBasicParsing`
+   нужен, если Internet Explorer на ПК не настраивался.
 
 Копия появится в папке «Документы\DRON». Расписание — задание `DRON-sync` в Планировщике
 заданий. Задание выполняется от имени пользователя, когда пользователь вошёл в систему;
