@@ -1,0 +1,82 @@
+{
+  "board": {
+    "design_settings": {
+      "defaults": {},
+      "diff_pair_dimensions": [],
+      "drc_exclusions": [],
+      "rules": {},
+      "track_widths": [],
+      "via_dimensions": []
+    }
+  },
+  "boards": [],
+  "libraries": {
+    "pinned_footprint_libs": [],
+    "pinned_symbol_libs": []
+  },
+  "meta": {
+    "filename": "mgp8.kicad_pro",
+    "version": 1
+  },
+  "net_settings": {
+    "classes": [],
+    "meta": {
+      "version": 0
+    }
+  },
+  "pcbnew": {
+    "page_layout_descr_file": "eskd.kicad_wks"
+  },
+  "sheets": [
+    [
+      "edb96388-8ab7-56a1-a761-b1c623672b38",
+      "Лист 2"
+    ],
+    [
+      "b77ec16e-d084-575c-8321-cdd61d59444e",
+      "Лист 3"
+    ],
+    [
+      "827da912-0692-5fb9-912f-8867f38e51bb",
+      "Лист 4"
+    ],
+    [
+      "9fb2c946-de37-5654-8f9d-5b5508b2b735",
+      "Лист 5"
+    ],
+    [
+      "f7e10bbc-f120-50ee-9c1c-d821b7dadedc",
+      "Лист 6"
+    ],
+    [
+      "36c3d110-3c4d-554b-a152-177d495ba6c8",
+      "Лист 7"
+    ],
+    [
+      "d8db24bb-c63f-5178-a954-3170838523bb",
+      "Лист 8"
+    ],
+    [
+      "1ca56d2c-7152-517f-8d12-4d01b1c7aab8",
+      "Лист 9"
+    ],
+    [
+      "035e9730-4dcb-5d1e-814f-c6c78f426b4a",
+      "Лист 10"
+    ],
+    [
+      "5f8847ce-ecb2-5f29-87ff-c0bcc04b90b9",
+      "Лист 11"
+    ]
+  ],
+  "text_variables": {},
+  "schematic": {
+    "page_layout_descr_file": "eskd.kicad_wks",
+    "subpart_id_separator": 46,
+    "subpart_first_id": 49,
+    "drawing": {
+      "default_text_size": 98.4,
+      "default_line_thickness": 10.0
+    }
+  }
+}

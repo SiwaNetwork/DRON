@@ -1,0 +1,32 @@
+* МГП-8: АЧХ ВЧ-входа 0,5–2,5 ГГц: SMA -> ESD131 (0,23 пФ) -> дроссель питания 68 нГн
+* (LQW18AN68NJ00D: Cпар ≈ 0,1 пФ, SRF ≈ 1,9 ГГц, Q≈30) -> разделительный 470 пФ (ESL 0,4 нГн, ESR 0,2 Ом) -> 50 Ом
+Vin src 0 AC 1
+Rs src in 50
+Cesd in 0 0.23p
+* дроссель с паразитными параметрами; холодный конец по ВЧ заземлён через 100 пФ || 100 нФ
+L68 in lmid 68n
+Rq lmid lq 0.5
+Cpar in lq 0.103p
+Rpar in lq 20k
+Cdec lq 0 100p
+* разделительный конденсатор
+Cb in cb1 470p
+Lesl cb1 cb2 0.4n
+Resr cb2 out 0.2
+RL out 0 50
+.ac lin 401 0.5e9 2.5e9
+.control
+run
+let s21 = 2*V(out)
+let s11 = (V(in)/(1 - V(in)) - 50)/(V(in)/(1 - V(in)) + 50)
+let zin = 50*V(in)/(1-V(in))
+let s21db = db(s21)
+let s11db = db((2*V(in) - 1))
+meas ac s21_1176 FIND s21db AT=1.17645e9
+meas ac s21_1575 FIND s21db AT=1.57542e9
+meas ac s11_1176 FIND s11db AT=1.17645e9
+meas ac s11_1575 FIND s11db AT=1.57542e9
+wrdata biastee_rf.dat s21db s11db
+quit
+.endc
+.end

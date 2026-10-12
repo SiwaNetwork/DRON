@@ -1,0 +1,4 @@
+tb/stim/
+tb/out/
+build/
+*.vvp

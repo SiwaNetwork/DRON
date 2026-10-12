@@ -1,0 +1,9290 @@
+(kicad_sch
+  (version 20230121)
+  (generator eeschema)
+  (uuid "b77ec16e-d084-575c-8321-cdd61d59444e")
+  (paper "A2")
+  (title_block
+    (title "Модуль приемника ГНСС МГП-8")
+    (date "08.10.2026")
+    (rev "")
+    (company "SiwaNetwork")
+    (comment 1 "ШИВА.468157.001 Э3")
+    (comment 2 "Разработчик")
+    (comment 3 "")
+    (comment 4 "")
+    (comment 5 "")
+    (comment 6 "")
+    (comment 7 "Э")
+    (comment 8 "Схема электрическая принципиальная")
+    (comment 9 "")
+  )
+  (lib_symbols
+    (symbol "mgp8:+3V3D"
+      (power)
+      (pin_numbers hide)
+      (pin_names
+        (offset 0) hide
+      )
+      (in_bom no)
+      (on_board no)
+      (property "Reference" "#PWR"
+        (at 0 6.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Value" "+3V3D"
+        (at 0 4.3 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "+3V3D_0_1"
+        (polyline
+          (pts
+            (xy 0 0)
+            (xy 0 1.905)
+          )
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy -1.27 1.905)
+            (xy 1.27 1.905)
+            (xy 0 3.175)
+            (xy -1.27 1.905)
+          )
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type outline)
+          )
+        )
+      )
+      (symbol "+3V3D_1_1"
+        (pin power_in line
+          (at 0 0 90)
+          (length 0)
+          (name "+3V3D"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+      )
+    )
+    (symbol "mgp8:+5V_SYS"
+      (power)
+      (pin_numbers hide)
+      (pin_names
+        (offset 0) hide
+      )
+      (in_bom no)
+      (on_board no)
+      (property "Reference" "#PWR"
+        (at 0 6.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Value" "+5V_SYS"
+        (at 0 4.3 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "+5V_SYS_0_1"
+        (polyline
+          (pts
+            (xy 0 0)
+            (xy 0 1.905)
+          )
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy -1.27 1.905)
+            (xy 1.27 1.905)
+            (xy 0 3.175)
+            (xy -1.27 1.905)
+          )
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type outline)
+          )
+        )
+      )
+      (symbol "+5V_SYS_1_1"
+        (pin power_in line
+          (at 0 0 90)
+          (length 0)
+          (name "+5V_SYS"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+      )
+    )
+    (symbol "mgp8:C"
+      (pin_numbers hide)
+      (pin_names
+        (offset 0) hide
+      )
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "C"
+        (at 3.8 1.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Value" "C"
+        (at 3.8 -1.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "C_0_1"
+        (polyline
+          (pts
+            (xy -3.048 0.762)
+            (xy 3.048 0.762)
+          )
+          (stroke
+            (width 0.5)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy -3.048 -0.762)
+            (xy 3.048 -0.762)
+          )
+          (stroke
+            (width 0.5)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+      )
+      (symbol "C_1_1"
+        (pin passive line
+          (at 0 3.81 270)
+          (length 3.048)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+        (pin passive line
+          (at 0 -3.81 90)
+          (length 3.048)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "2"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+      )
+    )
+    (symbol "mgp8:Coax"
+      (pin_numbers hide)
+      (pin_names
+        (offset 0) hide
+      )
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "XW"
+        (at 0 4 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Value" "Coax"
+        (at 0 -6 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "Coax_0_1"
+        (circle
+          (center 0 0)
+          (radius 2.2)
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (circle
+          (center 0 0)
+          (radius 0.7)
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type outline)
+          )
+        )
+        (polyline
+          (pts
+            (xy 0 -2.2)
+            (xy 0 -2.54)
+          )
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+      )
+      (symbol "Coax_1_1"
+        (pin passive line
+          (at -5.08 0 0)
+          (length 4.4)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+        (pin passive line
+          (at 0 -5.08 90)
+          (length 2.54)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "2"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+      )
+    )
+    (symbol "mgp8:D_TVS"
+      (pin_numbers hide)
+      (pin_names
+        (offset 0) hide
+      )
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "VD"
+        (at 4 1.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Value" "D_TVS"
+        (at 4 -1.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "D_TVS_0_1"
+        (polyline
+          (pts
+            (xy -2.54 0)
+            (xy 2.54 0)
+            (xy 0 3.4)
+            (xy -2.54 0)
+          )
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy -2.54 0)
+            (xy 2.54 0)
+            (xy 0 -3.4)
+            (xy -2.54 0)
+          )
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy -3.3 0.6)
+            (xy -2.54 0)
+            (xy 2.54 0)
+            (xy 3.3 -0.6)
+          )
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+      )
+      (symbol "D_TVS_1_1"
+        (pin passive line
+          (at 0 6.35 270)
+          (length 2.95)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+        (pin passive line
+          (at 0 -6.35 90)
+          (length 2.95)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "2"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+      )
+    )
+    (symbol "mgp8:Fuse"
+      (pin_numbers hide)
+      (pin_names
+        (offset 0) hide
+      )
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "FU"
+        (at 3.6 1.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Value" "Fuse"
+        (at 3.6 -1.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "Fuse_0_1"
+        (rectangle
+          (start -1.524 -3.81)
+          (end 1.524 3.81)
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy 0 3.81)
+            (xy 0 -3.81)
+          )
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy -2.6 -3.2)
+            (xy -1.524 -3.2)
+            (xy 1.524 3.2)
+            (xy 2.6 3.2)
+          )
+          (stroke
+            (width 0.25)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+      )
+      (symbol "Fuse_1_1"
+        (pin passive line
+          (at 0 6.35 270)
+          (length 2.54)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+        (pin passive line
+          (at 0 -6.35 90)
+          (length 2.54)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "2"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+      )
+    )
+    (symbol "mgp8:GND"
+      (power)
+      (pin_numbers hide)
+      (pin_names
+        (offset 0) hide
+      )
+      (in_bom no)
+      (on_board no)
+      (property "Reference" "#PWR"
+        (at 0 -5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Value" "GND"
+        (at 0 -4.2 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "GND_0_1"
+        (polyline
+          (pts
+            (xy 0 0)
+            (xy 0 -1.27)
+          )
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy -2.54 -1.27)
+            (xy 2.54 -1.27)
+          )
+          (stroke
+            (width 0.5)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy -1.5 -1.9)
+            (xy 1.5 -1.9)
+          )
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy -0.6 -2.5)
+            (xy 0.6 -2.5)
+          )
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+      )
+      (symbol "GND_1_1"
+        (pin power_in line
+          (at 0 0 270)
+          (length 0)
+          (name "GND"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+      )
+    )
+    (symbol "mgp8:INA181A1"
+      (pin_names
+        (offset 0.762)
+      )
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "DA"
+        (at 0 27.9 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Value" "INA181A1IDBVR"
+        (at 0 30.9 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "INA181A1_1_1"
+        (rectangle
+          (start -12.7 -25.4)
+          (end 12.7 25.4)
+          (stroke
+            (width 0.35)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy -6.15 25.4)
+            (xy -6.15 -25.4)
+          )
+          (stroke
+            (width 0.25)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy 8.85 25.4)
+            (xy 8.85 -25.4)
+          )
+          (stroke
+            (width 0.25)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (text "▷ I"
+          (at 1.35 22.4 0)
+          (effects
+            (font
+              (face "osifont")
+              (size 2.5 2.5)
+            )
+          )
+        )
+        (text "×20"
+          (at 1.35 19.4 0)
+          (effects
+            (font
+              (face "osifont")
+              (size 2 2)
+            )
+          )
+        )
+        (pin input line
+          (at -17.78 15.24 0)
+          (length 5.08)
+          (name "+"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "3"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin input line
+          (at -17.78 10.16 0)
+          (length 5.08)
+          (name "-"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "4"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin input line
+          (at -17.78 0 0)
+          (length 5.08)
+          (name "REF"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "5"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin power_in line
+          (at -17.78 -5.08 0)
+          (length 5.08)
+          (name "V+"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "6"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin power_in line
+          (at -17.78 -10.16 0)
+          (length 5.08)
+          (name "GND"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "2"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin output line
+          (at 17.78 15.24 180)
+          (length 5.08)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+      )
+    )
+    (symbol "mgp8:L"
+      (pin_numbers hide)
+      (pin_names
+        (offset 0) hide
+      )
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "L"
+        (at 3.2 1.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Value" "L"
+        (at 3.2 -1.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "L_0_1"
+        (arc
+          (start 0 5.08)
+          (mid 1.27 3.81)
+          (end 0 2.54)
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (arc
+          (start 0 2.54)
+          (mid 1.27 1.27)
+          (end 0 0)
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (arc
+          (start 0 0)
+          (mid 1.27 -1.27)
+          (end 0 -2.54)
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (arc
+          (start 0 -2.54)
+          (mid 1.27 -3.81)
+          (end 0 -5.08)
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+      )
+      (symbol "L_1_1"
+        (pin passive line
+          (at 0 7.62 270)
+          (length 2.54)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+        (pin passive line
+          (at 0 -7.62 90)
+          (length 2.54)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "2"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+      )
+    )
+    (symbol "mgp8:PD0922"
+      (pin_names
+        (offset 0.762)
+      )
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "W"
+        (at 0 22.82 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Value" "PD0922J5050S2HF"
+        (at 0 25.82 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Footprint" "mgp8:RF_DIV"
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "PD0922_1_1"
+        (rectangle
+          (start -15.24 -20.32)
+          (end 15.24 20.32)
+          (stroke
+            (width 0.35)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy -5.99 20.32)
+            (xy -5.99 -20.32)
+          )
+          (stroke
+            (width 0.25)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy 7.34 20.32)
+            (xy 7.34 -20.32)
+          )
+          (stroke
+            (width 0.25)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (text "÷2"
+          (at 0.675 17.32 0)
+          (effects
+            (font
+              (face "osifont")
+              (size 2.5 2.5)
+            )
+          )
+        )
+        (text "1:2"
+          (at 0.675 14.32 0)
+          (effects
+            (font
+              (face "osifont")
+              (size 2 2)
+            )
+          )
+        )
+        (pin input line
+          (at -20.32 10.16 0)
+          (length 5.08)
+          (name "INPUT"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "2"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin bidirectional line
+          (at -20.32 0 0)
+          (length 5.08)
+          (name "GND@1"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin bidirectional line
+          (at -20.32 -5.08 0)
+          (length 5.08)
+          (name "GND@2"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "3"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin bidirectional line
+          (at -20.32 -10.16 0)
+          (length 5.08)
+          (name "GND@3"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "5"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin bidirectional line
+          (at 20.32 10.16 180)
+          (length 5.08)
+          (name "OUT1"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "4"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin bidirectional line
+          (at 20.32 5.08 180)
+          (length 5.08)
+          (name "OUT2"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "6"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+      )
+    )
+    (symbol "mgp8:R"
+      (pin_numbers hide)
+      (pin_names
+        (offset 0) hide
+      )
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "R"
+        (at 3.2 1.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Value" "R"
+        (at 3.2 -1.5 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Footprint" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "R_0_1"
+        (rectangle
+          (start -2.032 -5.08)
+          (end 2.032 5.08)
+          (stroke
+            (width 0.3)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+      )
+      (symbol "R_1_1"
+        (pin passive line
+          (at 0 7.62 270)
+          (length 2.54)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+        (pin passive line
+          (at 0 -7.62 90)
+          (length 2.54)
+          (name "~"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+          (number "2"
+            (effects
+              (font
+                (face "osifont")
+                (size 1.8 1.8)
+              )
+            )
+          )
+        )
+      )
+    )
+    (symbol "mgp8:TPS22917"
+      (pin_names
+        (offset 0.762)
+      )
+      (in_bom yes)
+      (on_board yes)
+      (property "Reference" "DA"
+        (at 0 22.82 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          )
+        )
+      )
+      (property "Value" "TPS22917DBVR"
+        (at 0 25.82 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (effects
+          (font
+            (face "osifont")
+            (size 2.5 2.5)
+          ) hide
+        )
+      )
+      (symbol "TPS22917_1_1"
+        (rectangle
+          (start -12.7 -20.32)
+          (end 12.7 20.32)
+          (stroke
+            (width 0.35)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy -6.15 20.32)
+            (xy -6.15 -20.32)
+          )
+          (stroke
+            (width 0.25)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (polyline
+          (pts
+            (xy 4.8 20.32)
+            (xy 4.8 -20.32)
+          )
+          (stroke
+            (width 0.25)
+            (type default)
+          )
+          (fill
+            (type none)
+          )
+        )
+        (text "SW"
+          (at -0.675 17.32 0)
+          (effects
+            (font
+              (face "osifont")
+              (size 2.5 2.5)
+            )
+          )
+        )
+        (pin power_in line
+          (at -17.78 10.16 0)
+          (length 5.08)
+          (name "VIN"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "1"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin input line
+          (at -17.78 5.08 0)
+          (length 5.08)
+          (name "ON"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "3"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin output line
+          (at -17.78 0 0)
+          (length 5.08)
+          (name "CT"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "4"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin power_in line
+          (at -17.78 -10.16 0)
+          (length 5.08)
+          (name "GND"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "2"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin power_out line
+          (at 17.78 10.16 180)
+          (length 5.08)
+          (name "VOUT"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "6"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+        (pin open_collector line
+          (at 17.78 5.08 180)
+          (length 5.08)
+          (name "QOD"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+          (number "5"
+            (effects
+              (font
+                (face "osifont")
+                (size 2 2)
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:Coax")
+    (at 46.99 30.48 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "4f986065-6fd2-5e5f-b5b7-5452c958d422")
+    (property "Reference" "XW1"
+      (at 50.19 29.08 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "SMA"
+      (at 50.19 33.08 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Connector_Coaxial:SMA_Samtec_SMA-J-P-X-ST-EM1_EdgeMount"
+      (at 46.99 30.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 46.99 30.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Розетка SMA угловая на край платы SMA-J-P-H-ST-EM1"
+      (at 46.99 30.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Samtec"
+      (at 46.99 30.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "SMA-J-P-H-ST-EM1"
+      (at 46.99 30.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 46.99 30.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "d22108a7-7f93-58bd-87ec-3f587265f2f5")
+    )
+    (pin "2"
+      (uuid "adfded10-de12-5e70-86e4-3d3a36caa82a")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "XW1")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 41.91 30.48)
+      (xy 39.37 30.48)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "cae8ea54-f580-5f89-abf4-fc2367c54a19")
+  )
+  (global_label "RF_ANT"
+    (shape passive)
+    (at 39.37 30.48 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "74f3fc85-83e4-5195-8b0a-87d2f2e8417b")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 39.37 30.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 46.99 35.56)
+      (xy 46.99 38.1)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "1eb79c75-7f99-5d98-ac60-2fb0f46d7002")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 46.99 38.1 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "aea02c4f-cfbf-527f-9708-a4ed7addcba3")
+    (property "Reference" "#PWR03001"
+      (at 46.99 38.1 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 46.99 38.1 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 46.99 38.1 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 46.99 38.1 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "a73c11be-8e2b-5299-8fe5-c5ecded19a9e")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03001")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:D_TVS")
+    (at 64.77 48.26 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "9232de6c-d742-5179-b46e-42b8c9c32941")
+    (property "Reference" "VD4"
+      (at 67.97 46.86 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "ESD131-B1-W0201"
+      (at 67.97 50.86 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Diode_SMD:Infineon_SG-WLL-2-3_0.58x0.28_P0.36mm"
+      (at 64.77 48.26 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 64.77 48.26 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Диод защитный ESD131-B1-W0201 ±5,5 В 0,23 пФ"
+      (at 64.77 48.26 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Infineon"
+      (at 64.77 48.26 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "ESD131-B1-W0201"
+      (at 64.77 48.26 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 64.77 48.26 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "0c757103-3d07-52bb-a2f1-56007f72ff85")
+    )
+    (pin "2"
+      (uuid "eba1e288-8ae5-5db1-8faf-a52b2c193ba3")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "VD4")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 64.77 41.91)
+      (xy 64.77 39.37)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "32a7a7b3-b2bb-5214-81f7-ef5b538642ac")
+  )
+  (label "RF_ANT"
+    (at 64.77 39.37 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "516abcbd-ee8c-58f9-b1a2-1d6c2862a6c8")
+  )
+  (wire
+    (pts
+      (xy 64.77 54.61)
+      (xy 64.77 57.15)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "249cea72-0af6-5b51-9aef-979bbaadcd4a")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 64.77 57.15 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "b7baba28-17bc-5bd7-b875-254a0f85d30f")
+    (property "Reference" "#PWR03002"
+      (at 64.77 57.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 64.77 57.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 64.77 57.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 64.77 57.15 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "a75e3dca-c93a-57ec-803b-62efa37bcb91")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03002")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:L")
+    (at 96.52 49.53 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "47260c41-7d64-5163-b575-b4afd81a55dc")
+    (property "Reference" "L3"
+      (at 99.72 48.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "68нГн"
+      (at 99.72 52.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Inductor_SMD:L_0603_1608Metric"
+      (at 96.52 49.53 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 96.52 49.53 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Катушка индуктивности 0603 68 нГн ±5 %"
+      (at 96.52 49.53 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 96.52 49.53 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "LQW18AN68NJ00D"
+      (at 96.52 49.53 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 96.52 49.53 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "042acf38-d59f-5355-9797-4b2aa3514d4c")
+    )
+    (pin "2"
+      (uuid "cdbafb31-1bdc-5a37-9131-77dd0a888868")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "L3")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 96.52 41.91)
+      (xy 96.52 39.37)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "16ea2977-9432-5778-9b1e-421f0eff47fd")
+  )
+  (label "VANT_F"
+    (at 96.52 39.37 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "4030d409-da4b-5f24-b326-33279576fdd5")
+  )
+  (wire
+    (pts
+      (xy 96.52 57.15)
+      (xy 96.52 59.69)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "c66088bc-1620-5c39-87cf-e6c8c5359dcf")
+  )
+  (label "RF_ANT"
+    (at 96.52 59.69 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right bottom)
+    )
+    (uuid "9f037468-d72d-5920-a9d5-bb5d3cbab154")
+  )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 27.94 92.71 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "e530fa59-4a9d-50aa-99b5-b6f0880cbd2e")
+    (property "Reference" "C30"
+      (at 31.14 91.31 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "470пФ"
+      (at 31.14 95.31 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+      (at 27.94 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 27.94 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0402 C0G 50 В 470 пФ"
+      (at 27.94 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 27.94 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM1555C1H471JA01D"
+      (at 27.94 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 27.94 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "0492fcc7-732f-5c5b-93c5-14d7d1d3becb")
+    )
+    (pin "2"
+      (uuid "332bed67-163b-56e6-a275-fcf932e71bf3")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "C30")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 27.94 88.9)
+      (xy 27.94 86.36)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "22ccfa4c-cb0b-5f2d-ada1-7c6445c1a73c")
+  )
+  (label "RF_ANT"
+    (at 27.94 86.36 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "204877a3-81a9-5c1a-bc5e-bf2606d3e70a")
+  )
+  (wire
+    (pts
+      (xy 27.94 96.52)
+      (xy 27.94 99.06)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "70e36df0-c27a-5636-9386-84da7521e760")
+  )
+  (label "RF_DIV_IN"
+    (at 27.94 99.06 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right bottom)
+    )
+    (uuid "436ab193-3b67-57cd-884a-9a6601be31ca")
+  )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 45.72 92.71 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "41f35997-71ff-5583-9bc1-3af53006b529")
+    (property "Reference" "C31"
+      (at 48.92 91.31 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100пФ"
+      (at 48.92 95.31 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+      (at 45.72 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 45.72 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0402 C0G 50 В 100 пФ"
+      (at 45.72 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 45.72 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM1555C1H101JA01D"
+      (at 45.72 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 45.72 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "3ceb5efd-5b69-545f-a4c6-fb397194af34")
+    )
+    (pin "2"
+      (uuid "40f8cc62-07da-5109-9700-318bb87d9549")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "C31")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 45.72 88.9)
+      (xy 45.72 86.36)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "e513bf27-5486-5df5-b1f0-09b66ef7236c")
+  )
+  (label "VANT_F"
+    (at 45.72 86.36 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "e7f292f4-7a42-5ed9-868f-84a121063a35")
+  )
+  (wire
+    (pts
+      (xy 45.72 96.52)
+      (xy 45.72 99.06)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "69aee33b-25b7-544c-945a-57c5f19ccbf4")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 45.72 99.06 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "7cf44d75-2673-5a73-a11e-492c8976acf2")
+    (property "Reference" "#PWR03003"
+      (at 45.72 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 45.72 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 45.72 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 45.72 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "cdd9eecf-2a71-5457-841c-b2c620741733")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03003")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 64.77 92.71 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "e2c0cd4d-51b8-5f63-ab5e-261cb45b9bfd")
+    (property "Reference" "C32"
+      (at 67.97 91.31 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100нФ"
+      (at 67.97 95.31 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+      (at 64.77 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 64.77 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0402 X7R 16 В 100 нФ"
+      (at 64.77 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 64.77 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM155R71C104KA88D"
+      (at 64.77 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 64.77 92.71 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "13e80ccf-0876-55b3-9165-850f5aff200f")
+    )
+    (pin "2"
+      (uuid "2703248a-68c3-5c0c-893a-7e516d088b2c")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "C32")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 64.77 88.9)
+      (xy 64.77 86.36)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "b8fa9f5b-cd1e-5eec-a6d1-ac4854a75cef")
+  )
+  (label "VANT_F"
+    (at 64.77 86.36 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "58708f70-a7b2-55c2-9244-ee2bc6bdc165")
+  )
+  (wire
+    (pts
+      (xy 64.77 96.52)
+      (xy 64.77 99.06)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "0a350cf7-d5ef-5684-9411-5c3bd55f19bd")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 64.77 99.06 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "8a144c12-168c-5518-a9e6-3fd00891e796")
+    (property "Reference" "#PWR03004"
+      (at 64.77 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 64.77 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 64.77 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 64.77 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "d97acf85-c8be-59d9-951f-871731711af9")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03004")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:Fuse")
+    (at 82.55 97.79 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "ddbf948d-2467-5bb9-b16c-ce9ff62583bb")
+    (property "Reference" "FU1"
+      (at 85.75 96.39 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "0,1А"
+      (at 85.75 100.39 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Fuse:Fuse_0603_1608Metric"
+      (at 82.55 97.79 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 82.55 97.79 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Предохранитель самовосстанавливающийся 0,1 А FEMTOSMDC010F-2"
+      (at 82.55 97.79 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Littelfuse"
+      (at 82.55 97.79 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "FEMTOSMDC010F-2"
+      (at 82.55 97.79 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 82.55 97.79 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "509724bd-d411-55a9-a7b7-b26398407673")
+    )
+    (pin "2"
+      (uuid "3206ff94-769b-59a1-b563-8de33f806b4e")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "FU1")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 82.55 91.44)
+      (xy 82.55 88.9)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "cfab8e48-6f6d-5b07-a523-b5d53e837ae8")
+  )
+  (label "VANT_SNS"
+    (at 82.55 88.9 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "e84b1aea-4e7e-5d85-957c-d04eecc5e491")
+  )
+  (wire
+    (pts
+      (xy 82.55 104.14)
+      (xy 82.55 106.68)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "3bd64814-770d-5643-a19b-66db556643a1")
+  )
+  (label "VANT_F"
+    (at 82.55 106.68 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right bottom)
+    )
+    (uuid "5f695f2f-cb73-5b27-9fcc-c50475f65832")
+  )
+  (symbol
+    (lib_id "mgp8:TPS22917")
+    (at 153.67 53.34 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "4dfce1c8-63f0-560c-b4e2-4b6d8d0248de")
+    (property "Reference" "DA13"
+      (at 140.97 31.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "TPS22917DBVR"
+      (at 140.97 31.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top) hide
+      )
+    )
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
+      (at 153.67 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 153.67 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Микросхема TPS22917DBVR"
+      (at 153.67 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Texas Instruments"
+      (at 153.67 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "TPS22917DBVR"
+      (at 153.67 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 153.67 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "5e7d358a-693f-54ad-8a02-438f0d85ffbe")
+    )
+    (pin "3"
+      (uuid "13e82a8b-008c-5f84-b223-a4699d0b6e1d")
+    )
+    (pin "4"
+      (uuid "5c843217-2a0d-5a00-9e06-8e0d1687821f")
+    )
+    (pin "2"
+      (uuid "ac783d2d-1733-5af4-ba3a-78208edd993c")
+    )
+    (pin "6"
+      (uuid "a77ef9b2-c10b-5ed0-bb11-1c6077f05d74")
+    )
+    (pin "5"
+      (uuid "1470abf2-cc2b-5a0b-bd0e-c03c77b60055")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "DA13")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 135.89 43.18)
+      (xy 133.35 43.18)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "55973298-6f09-52c8-8595-4981d3951164")
+  )
+  (global_label "VANT_SRC"
+    (shape passive)
+    (at 133.35 43.18 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "570e5da1-523d-5529-ae2a-ac47ee8eceba")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 133.35 43.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 135.89 48.26)
+      (xy 133.35 48.26)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "8e7eb9ae-130b-5ece-b7ad-012924b821b4")
+  )
+  (global_label "ANT_EN"
+    (shape input)
+    (at 133.35 48.26 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "2fb7739d-cc35-5329-80b1-b9536b313bec")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 133.35 48.26 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 135.89 53.34)
+      (xy 133.35 53.34)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "b143c45e-0b98-5275-9492-d66d0be5f5f0")
+  )
+  (global_label "ANT_CT"
+    (shape passive)
+    (at 133.35 53.34 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "26a43df7-db1a-5a5c-a003-7e62cc9bbfbc")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 133.35 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 135.89 63.5)
+      (xy 133.35 63.5)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "ec3723d8-3dc8-5aaa-93bd-9b23951b2629")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 133.35 63.5 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "616f657f-ca8d-55e0-97aa-e4d0863b4d40")
+    (property "Reference" "#PWR03005"
+      (at 133.35 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 133.35 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 133.35 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 133.35 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "22255594-2fe0-5343-9c2e-4dc229b46ade")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03005")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 171.45 43.18)
+      (xy 173.99 43.18)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "3404e07c-4fbe-58cc-aa94-33c034158fef")
+  )
+  (global_label "VANT_SW"
+    (shape passive)
+    (at 173.99 43.18 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "68c4e419-18c4-5dba-a6a5-24d5e8507ca9")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 173.99 43.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 171.45 48.26)
+      (xy 173.99 48.26)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "bd3bb3c8-2fc2-5c92-8492-c7c6b6bde701")
+  )
+  (global_label "VANT_SW"
+    (shape passive)
+    (at 173.99 48.26 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "6f7a3569-a3f9-5ecf-8f00-a72cf185a247")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 173.99 48.26 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 121.92 96.52 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "1272314e-7cc3-5453-872f-a624f1a2af0d")
+    (property "Reference" "R14"
+      (at 125.12 95.12 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "0Ом"
+      (at 125.12 99.12 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 121.92 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 121.92 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Перемычка 0402 0 Ом"
+      (at 121.92 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 121.92 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402JR-070RL"
+      (at 121.92 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" "Питание антенны 5 В"
+      (at 121.92 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "9fbd7533-e8da-5612-b6cb-3c63c25aae80")
+    )
+    (pin "2"
+      (uuid "dc2be462-d029-5cd0-a360-ad8578749e87")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "R14")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 121.92 88.9)
+      (xy 121.92 86.36)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "f6f86aeb-75a8-5eee-b819-a5c507f05b71")
+  )
+  (symbol
+    (lib_id "mgp8:+5V_SYS")
+    (at 121.92 86.36 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "f8d11eef-41ab-59e1-92ec-e9578b7515a0")
+    (property "Reference" "#PWR03006"
+      (at 121.92 86.36 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "+5V_SYS"
+      (at 121.92 81.76 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 121.92 86.36 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 121.92 86.36 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "5122be1a-0df6-59a8-b1ef-0eaa0863681e")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03006")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 121.92 104.14)
+      (xy 121.92 106.68)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "7ec21349-02d4-57d9-8314-8299da4116ec")
+  )
+  (label "VANT_SRC"
+    (at 121.92 106.68 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right bottom)
+    )
+    (uuid "de7b4124-7885-5518-a438-caf0002f0d87")
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 142.24 96.52 0)
+    (unit 1)
+    (in_bom no)
+    (on_board yes)
+    (dnp yes)
+    (uuid "b355aced-9a55-5ca7-87bd-36a979c4fd4f")
+    (property "Reference" "R16"
+      (at 145.44 95.12 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "0Ом"
+      (at 145.44 99.12 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 142.24 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 142.24 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Перемычка 0402 0 Ом"
+      (at 142.24 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 142.24 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402JR-070RL"
+      (at 142.24 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" "Питание антенны 3,3 В"
+      (at 142.24 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "68309a2e-7da6-5e3e-a43e-89b1e887be7d")
+    )
+    (pin "2"
+      (uuid "da59539c-32e2-554b-9112-9bc5d0d37ca2")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "R16")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 142.24 88.9)
+      (xy 142.24 86.36)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "87a46b87-c83e-5cde-a7ef-5d123e5cfed7")
+  )
+  (symbol
+    (lib_id "mgp8:+3V3D")
+    (at 142.24 86.36 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "9fe6c152-f094-57f0-bd83-0c31012ab713")
+    (property "Reference" "#PWR03007"
+      (at 142.24 86.36 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "+3V3D"
+      (at 142.24 81.76 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 142.24 86.36 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 142.24 86.36 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "540584bc-8fde-5cbd-9250-db0de63c1f63")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03007")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 142.24 104.14)
+      (xy 142.24 106.68)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "3aaa5455-adc5-5414-815a-6a510b7e26d2")
+  )
+  (label "VANT_SRC"
+    (at 142.24 106.68 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right bottom)
+    )
+    (uuid "993a359c-26ea-5089-91c1-ee1a625c4b89")
+  )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 160.02 99.06 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "f058c772-e044-5116-8e1e-e24c526c04bd")
+    (property "Reference" "C33"
+      (at 163.22 97.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "1мкФ"
+      (at 163.22 101.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+      (at 160.02 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 160.02 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0402 X5R 10 В 1 мкФ"
+      (at 160.02 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 160.02 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM155R61A105KE15D"
+      (at 160.02 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 160.02 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "f2f4f142-69fe-53a5-ae11-74d92b9e0e38")
+    )
+    (pin "2"
+      (uuid "6bc7ae94-1f88-5a9c-aa69-9faa8cd15781")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "C33")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 160.02 95.25)
+      (xy 160.02 92.71)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "e4c27265-206e-58e5-96f7-f87ca5da8c62")
+  )
+  (label "VANT_SRC"
+    (at 160.02 92.71 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "55929700-dc84-5d6c-a297-1a5382e29df2")
+  )
+  (wire
+    (pts
+      (xy 160.02 102.87)
+      (xy 160.02 105.41)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "7648bbf0-1788-5259-94da-37e8df9cb7ae")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 160.02 105.41 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "e811d4ad-6b76-5aa3-9b91-ca23c5fd5c3e")
+    (property "Reference" "#PWR03008"
+      (at 160.02 105.41 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 160.02 105.41 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 160.02 105.41 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 160.02 105.41 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "08e11ed7-00de-56f1-acc0-752cb61a5a6f")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03008")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 176.53 95.25 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "a02aae0d-8d7e-5c98-9a05-11f10dd1d974")
+    (property "Reference" "C34"
+      (at 179.73 93.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "10нФ"
+      (at 179.73 97.85 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+      (at 176.53 95.25 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 176.53 95.25 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0402 X7R 50 В 10 нФ"
+      (at 176.53 95.25 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 176.53 95.25 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM155R71H103KA88D"
+      (at 176.53 95.25 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 176.53 95.25 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "790f7b47-0423-5090-8fc7-d35c189796ab")
+    )
+    (pin "2"
+      (uuid "11579592-0e9b-50b6-b60e-c2be3709d7cb")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "C34")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 176.53 91.44)
+      (xy 176.53 88.9)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "b37d8f39-7045-5845-921a-29ff0850721f")
+  )
+  (label "ANT_CT"
+    (at 176.53 88.9 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "bef3a3fc-b910-5bb0-b8e9-e354af7b31c5")
+  )
+  (wire
+    (pts
+      (xy 176.53 99.06)
+      (xy 176.53 101.6)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "bccf8841-8be1-56df-89eb-d19523e403fc")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 176.53 101.6 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "c15aec2c-fb6d-5fce-8849-27c37b7b8ff3")
+    (property "Reference" "#PWR03009"
+      (at 176.53 101.6 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 176.53 101.6 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 176.53 101.6 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 176.53 101.6 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "08664649-2134-54ec-be4f-3afbd6617061")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03009")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 119.38 149.86 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "999ac73a-385b-58a5-a0c0-2b099af6e2b1")
+    (property "Reference" "R15"
+      (at 122.58 148.46 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100кОм"
+      (at 122.58 152.46 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 119.38 149.86 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 119.38 149.86 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Резистор 0402 100 кОм ±1 % 0,063 Вт"
+      (at 119.38 149.86 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 119.38 149.86 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402FR-07100KL"
+      (at 119.38 149.86 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 119.38 149.86 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "26ec6987-1448-5a39-b9a8-97e2f0857038")
+    )
+    (pin "2"
+      (uuid "b5efd88d-04d9-5351-9a13-20b589f28556")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "R15")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 119.38 142.24)
+      (xy 119.38 139.7)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "b8878246-834d-55b6-8630-576348ae7529")
+  )
+  (global_label "ANT_EN"
+    (shape bidirectional)
+    (at 119.38 139.7 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "4f53638a-3665-5b39-b080-66ae6c398789")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 119.38 139.7 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 119.38 157.48)
+      (xy 119.38 160.02)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "3101aee1-5ee1-54c5-85ef-3ca75d251f70")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 119.38 160.02 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "71b62334-2912-5dce-8c92-6038db902039")
+    (property "Reference" "#PWR03010"
+      (at 119.38 160.02 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 119.38 160.02 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 119.38 160.02 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 119.38 160.02 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "c1be7f5a-7c07-5a13-8235-f933f9e3f950")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03010")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:INA181A1")
+    (at 233.68 58.42 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "75aa4af7-f42f-5e8e-967f-4fe3e2864cac")
+    (property "Reference" "DA14"
+      (at 220.98 31.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "INA181A1IDBVR"
+      (at 220.98 31.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top) hide
+      )
+    )
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
+      (at 233.68 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 233.68 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Микросхема INA181A1IDBVR"
+      (at 233.68 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Texas Instruments"
+      (at 233.68 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "INA181A1IDBVR"
+      (at 233.68 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 233.68 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "3"
+      (uuid "2591f2b0-8333-555d-a65a-c1dc0d0d3cb8")
+    )
+    (pin "4"
+      (uuid "f68791d8-6e1d-5d52-b0b3-78c4cc6e2cae")
+    )
+    (pin "5"
+      (uuid "bfc70598-d6c8-5a42-91e9-39ce17fd73fc")
+    )
+    (pin "6"
+      (uuid "74d9780d-5c7e-583e-8c67-c73eac5e6492")
+    )
+    (pin "2"
+      (uuid "d22543a2-0179-556f-8cff-0f0c7e673bbd")
+    )
+    (pin "1"
+      (uuid "a74a8ffd-11c9-5070-994e-6f3df99956ef")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "DA14")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 215.9 43.18)
+      (xy 213.36 43.18)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "b0060a7f-1c62-5680-9f4e-066d990aa6ac")
+  )
+  (global_label "VANT_SW"
+    (shape passive)
+    (at 213.36 43.18 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "fc4a39af-f9de-52a7-8087-94248d34dedb")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 213.36 43.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 215.9 48.26)
+      (xy 213.36 48.26)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "6f78994b-e87e-58e0-b0ec-956dac3f5e12")
+  )
+  (global_label "VANT_SNS"
+    (shape passive)
+    (at 213.36 48.26 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "d3d22d90-959c-5349-b8d5-82827dfebf4c")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 213.36 48.26 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 215.9 58.42)
+      (xy 213.36 58.42)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "8fd51dac-80f9-5baf-a10c-9f1c5b94b9cd")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 213.36 58.42 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "8344df72-e458-5f3c-a919-c0fafd86a7d5")
+    (property "Reference" "#PWR03011"
+      (at 213.36 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 213.36 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 213.36 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 213.36 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "701dd9b6-02bc-502c-a5af-0099c92a5fc1")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03011")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 215.9 63.5)
+      (xy 213.36 63.5)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "db59c12a-d9fe-51cc-b1f7-4ee298595084")
+  )
+  (global_label "+3V3D"
+    (shape passive)
+    (at 213.36 63.5 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "568dbc17-5de4-51bd-a5af-3cc5d1f957e9")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 213.36 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 215.9 68.58)
+      (xy 213.36 68.58)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "95d42156-c919-5fa6-9765-359a8683e593")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 213.36 68.58 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "cca3a6b7-c99a-5dfc-9501-ce86cd3c45df")
+    (property "Reference" "#PWR03012"
+      (at 213.36 68.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 213.36 68.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 213.36 68.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 213.36 68.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "deacbc32-e37c-570c-bb81-17b8285dc4be")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03012")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 251.46 43.18)
+      (xy 254 43.18)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "8cba793b-283c-5792-8409-741ae4591379")
+  )
+  (global_label "ANT_IMON_R"
+    (shape passive)
+    (at 254 43.18 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "d4572256-93ba-56c9-a5bf-9b651d02abb1")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 254 43.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 199.39 110.49 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "8b471b81-93a6-52e8-84a4-8c6d35389c23")
+    (property "Reference" "R17"
+      (at 202.59 109.09 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "1Ом"
+      (at 202.59 113.09 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 199.39 110.49 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 199.39 110.49 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Резистор 0402 1 Ом ±1 % 0,063 Вт"
+      (at 199.39 110.49 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 199.39 110.49 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402FR-071RL"
+      (at 199.39 110.49 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 199.39 110.49 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "b06a0906-4bc1-5ae6-b727-e679bfdd0f51")
+    )
+    (pin "2"
+      (uuid "cc894ff6-8105-559b-9e97-8a1999308a94")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "R17")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 199.39 102.87)
+      (xy 199.39 100.33)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "c73b1734-3e76-5b43-a05a-385f57aa9a74")
+  )
+  (label "VANT_SW"
+    (at 199.39 100.33 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "90eb8ab1-afa9-53b2-8f63-9ead2111a192")
+  )
+  (wire
+    (pts
+      (xy 199.39 118.11)
+      (xy 199.39 120.65)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "6de9c5ee-37cc-533f-a6f2-b419ade31066")
+  )
+  (label "VANT_SNS"
+    (at 199.39 120.65 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right bottom)
+    )
+    (uuid "bade0b6b-3978-5ecb-9b25-1d80cbbfdcf9")
+  )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 215.9 102.87 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "af9d072b-eb77-544e-b2ac-8656ca9ad20d")
+    (property "Reference" "C35"
+      (at 219.1 101.47 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100нФ"
+      (at 219.1 105.47 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+      (at 215.9 102.87 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 215.9 102.87 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0402 X7R 16 В 100 нФ"
+      (at 215.9 102.87 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 215.9 102.87 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM155R71C104KA88D"
+      (at 215.9 102.87 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 215.9 102.87 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "ada54954-ea62-5322-9916-5a279ccaedb4")
+    )
+    (pin "2"
+      (uuid "46898591-cf7c-5f01-b6d8-7f6ff0cd8962")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "C35")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 215.9 99.06)
+      (xy 215.9 96.52)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "d5a9ebde-0ebf-59ba-825f-a6cdf44daf95")
+  )
+  (symbol
+    (lib_id "mgp8:+3V3D")
+    (at 215.9 96.52 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "eae8fb8c-a460-5b91-8731-16de5adedfaf")
+    (property "Reference" "#PWR03013"
+      (at 215.9 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "+3V3D"
+      (at 215.9 91.92 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+      )
+    )
+    (property "Footprint" ""
+      (at 215.9 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 215.9 96.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "13b7a818-5ff4-52f6-bbe7-5fb5ee382c41")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03013")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 215.9 106.68)
+      (xy 215.9 109.22)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "576f005d-74d4-5b4c-9b98-580c577d8286")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 215.9 109.22 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "12403ab5-e81e-5dd1-afe6-c086e4aa1b69")
+    (property "Reference" "#PWR03014"
+      (at 215.9 109.22 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 215.9 109.22 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 215.9 109.22 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 215.9 109.22 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "d691fdca-ca2e-542f-9031-4139999cf997")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03014")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 234.95 115.57 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "0fc49179-7bae-5f5b-9090-124861fe2fc8")
+    (property "Reference" "R18"
+      (at 238.15 114.17 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100Ом"
+      (at 238.15 118.17 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 234.95 115.57 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 234.95 115.57 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Резистор 0402 100 Ом ±1 % 0,063 Вт"
+      (at 234.95 115.57 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 234.95 115.57 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402FR-07100RL"
+      (at 234.95 115.57 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 234.95 115.57 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "5da93320-dc17-5b0e-80b4-89e933b94117")
+    )
+    (pin "2"
+      (uuid "97255f29-beb7-5cb3-8964-36ced587ce1a")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "R18")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 234.95 107.95)
+      (xy 234.95 105.41)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "5664250e-fb5f-5983-9b1e-b77d32af8b11")
+  )
+  (label "ANT_IMON_R"
+    (at 234.95 105.41 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "53b6182b-8917-5bf1-a019-dafdda8683f6")
+  )
+  (wire
+    (pts
+      (xy 234.95 123.19)
+      (xy 234.95 125.73)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "b81a2094-549d-5582-a885-08fa765f076f")
+  )
+  (global_label "ANT_IMON"
+    (shape bidirectional)
+    (at 234.95 125.73 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "805eeaad-5bd1-53c8-a845-07864b900296")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 234.95 125.73 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:C")
+    (at 252.73 111.76 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "8b7cc1b2-ba40-57d9-9f39-911fa8e3244e")
+    (property "Reference" "C36"
+      (at 255.93 110.36 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "10нФ"
+      (at 255.93 114.36 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+      (at 252.73 111.76 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 252.73 111.76 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Конденсатор 0402 X7R 50 В 10 нФ"
+      (at 252.73 111.76 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Murata"
+      (at 252.73 111.76 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "GRM155R71H103KA88D"
+      (at 252.73 111.76 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 252.73 111.76 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "2bdb3fe1-492c-5f57-9e2f-d65203dc0e30")
+    )
+    (pin "2"
+      (uuid "d487ffea-e043-538d-9c68-093a5b538cb3")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "C36")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 252.73 107.95)
+      (xy 252.73 105.41)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "f7c73956-8eac-59f5-b282-3a7db60fbbbb")
+  )
+  (global_label "ANT_IMON"
+    (shape bidirectional)
+    (at 252.73 105.41 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "e0174ba6-b287-5901-a214-b82544404210")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 252.73 105.41 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 252.73 115.57)
+      (xy 252.73 118.11)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "7b35f929-514e-5128-90fa-1f883d523a08")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 252.73 118.11 0)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "b12a628a-5cc1-5760-a2bc-71a374002a83")
+    (property "Reference" "#PWR03015"
+      (at 252.73 118.11 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 252.73 118.11 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 252.73 118.11 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 252.73 118.11 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "34231401-2d89-5db5-b2d3-902827c47f15")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03015")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:PD0922")
+    (at 322.58 53.34 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "d1ffe541-1e4e-55a8-82fc-b63eafe48e73")
+    (property "Reference" "W2"
+      (at 307.34 31.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "PD0922J5050S2HF"
+      (at 307.34 31.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top) hide
+      )
+    )
+    (property "Footprint" "mgp8:RF_DIV"
+      (at 322.58 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 322.58 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Делитель мощности СВЧ 1:2 PD0922J5050S2HF"
+      (at 322.58 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "TTM (Anaren)"
+      (at 322.58 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "PD0922J5050S2HF"
+      (at 322.58 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 322.58 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "2"
+      (uuid "19ab1703-41a0-5eac-8d23-c93ef3662091")
+    )
+    (pin "1"
+      (uuid "215fb3cc-2af8-5d75-bda8-5218f3d3711b")
+    )
+    (pin "3"
+      (uuid "04157126-83d1-5594-bc03-d60ff9bb1f64")
+    )
+    (pin "5"
+      (uuid "ec9d3c24-4666-5f45-a8d7-06602caefa8c")
+    )
+    (pin "4"
+      (uuid "bfc2bdb2-819f-5ca9-9f0d-16f62e5895b0")
+    )
+    (pin "6"
+      (uuid "c202218b-4343-53a8-8f26-1860b9f92754")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "W2")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 302.26 43.18)
+      (xy 299.72 43.18)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "e8bdf0db-a113-50ab-b90c-1478427076a4")
+  )
+  (global_label "RF_DIV_IN"
+    (shape passive)
+    (at 299.72 43.18 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "e91436fe-0294-56cc-a0b7-d7e7e7a246d1")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 299.72 43.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 302.26 53.34)
+      (xy 299.72 53.34)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "c0e4f1de-65bf-5c9a-a29a-899aa3b0783a")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 299.72 53.34 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "f2e67bdc-f04c-50c3-9430-af5bd803852d")
+    (property "Reference" "#PWR03016"
+      (at 299.72 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 299.72 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 299.72 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 299.72 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "048ade39-3dbc-5a7b-a425-44093efce811")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03016")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 302.26 58.42)
+      (xy 299.72 58.42)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "fb4d732e-d056-5e4d-9065-9b8fa10404a3")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 299.72 58.42 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "6b4f1f0f-8c5f-5d41-b381-131dde5fd474")
+    (property "Reference" "#PWR03017"
+      (at 299.72 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 299.72 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 299.72 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 299.72 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "2f2f9a93-57dc-55f2-83ad-2f7217e87174")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03017")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 302.26 63.5)
+      (xy 299.72 63.5)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "f1c6a690-f79a-5fdc-9567-f7190ca16af7")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 299.72 63.5 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "9c273595-8487-57c5-be08-4dd5446a29ab")
+    (property "Reference" "#PWR03018"
+      (at 299.72 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 299.72 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 299.72 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 299.72 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "ad6ecc86-8d41-5f09-9d72-db8885efe80d")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03018")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 342.9 43.18)
+      (xy 345.44 43.18)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "e5371991-2646-56de-8787-77c9903e8a99")
+  )
+  (global_label "RF_S1A"
+    (shape passive)
+    (at 345.44 43.18 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "a037b63f-0e79-5065-aeab-18f8a1c2416b")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 345.44 43.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 342.9 48.26)
+      (xy 345.44 48.26)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "8303706c-b306-585e-9969-d79dca10a647")
+  )
+  (global_label "RF_S1B"
+    (shape passive)
+    (at 345.44 48.26 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "4064901c-8f98-527c-a903-60c654093648")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 345.44 48.26 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 284.48 99.06 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "ef606b1d-809e-50e4-bf44-d1944fe628da")
+    (property "Reference" "R19"
+      (at 287.68 97.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100Ом"
+      (at 287.68 101.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 284.48 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 284.48 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Резистор 0402 100 Ом ±1 % 0,063 Вт"
+      (at 284.48 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 284.48 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402FR-07100RL"
+      (at 284.48 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 284.48 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "db6372b7-a25e-56c0-bce1-d6b0903331f1")
+    )
+    (pin "2"
+      (uuid "db8c7d5f-ff07-5335-96d8-c3470513723c")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "R19")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 284.48 91.44)
+      (xy 284.48 88.9)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "cda4fa68-bf39-5059-aa80-06b242035614")
+  )
+  (label "RF_S1A"
+    (at 284.48 88.9 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "3117043a-9a36-5ef2-870a-a953184c372f")
+  )
+  (wire
+    (pts
+      (xy 284.48 106.68)
+      (xy 284.48 109.22)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "1e5b7b83-ee79-594f-be59-c2072aee71eb")
+  )
+  (label "RF_S1B"
+    (at 284.48 109.22 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right bottom)
+    )
+    (uuid "1556eaa2-e3f8-5144-834b-4e40f8a18b5a")
+  )
+  (symbol
+    (lib_id "mgp8:PD0922")
+    (at 403.86 53.34 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "d3b0b913-afed-524d-8802-74ef093e0be0")
+    (property "Reference" "W4"
+      (at 388.62 31.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "PD0922J5050S2HF"
+      (at 388.62 31.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top) hide
+      )
+    )
+    (property "Footprint" "mgp8:RF_DIV"
+      (at 403.86 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 403.86 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Делитель мощности СВЧ 1:2 PD0922J5050S2HF"
+      (at 403.86 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "TTM (Anaren)"
+      (at 403.86 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "PD0922J5050S2HF"
+      (at 403.86 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 403.86 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "2"
+      (uuid "d1e3cdeb-033a-5a1b-806b-0f3c381dcb43")
+    )
+    (pin "1"
+      (uuid "732601fe-cf04-544b-a17f-b3027e467e51")
+    )
+    (pin "3"
+      (uuid "58ed2d31-afe6-5f07-9bbe-85631993fdd0")
+    )
+    (pin "5"
+      (uuid "09fe788e-3501-5455-8f40-3e0c060bcee8")
+    )
+    (pin "4"
+      (uuid "1f783fe2-e1b2-5c77-be2d-b744ff2c5432")
+    )
+    (pin "6"
+      (uuid "a4f62586-6a46-5cc7-b3b5-1ab8ebde2756")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "W4")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 383.54 43.18)
+      (xy 381 43.18)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "741fcb42-6073-5224-ae6a-c9bc8d6e8f74")
+  )
+  (global_label "RF_S1A"
+    (shape passive)
+    (at 381 43.18 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "905a28c7-f6f4-5d1a-8db2-59957b2dd38a")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 381 43.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 383.54 53.34)
+      (xy 381 53.34)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "cb40e7b0-06d9-5e1d-ba99-494820d73891")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 381 53.34 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "dee4d4fb-aef8-5191-a0b7-3cddcd0b1294")
+    (property "Reference" "#PWR03019"
+      (at 381 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 381 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 381 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 381 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "fe9552fa-a141-5809-9d62-bae8c42655e9")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03019")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 383.54 58.42)
+      (xy 381 58.42)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "242f00c6-f939-51e1-b8ab-819cc931bfe0")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 381 58.42 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "860a1510-3e30-5c0a-bfec-3e49622b551f")
+    (property "Reference" "#PWR03020"
+      (at 381 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 381 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 381 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 381 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "235e7e2d-bd5b-53c2-b3a9-0ef85c7dd4e7")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03020")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 383.54 63.5)
+      (xy 381 63.5)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "8bcb9e48-e160-564e-a05f-f84142213109")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 381 63.5 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "5344595e-2b69-5b84-9e62-bec71cc7a5a1")
+    (property "Reference" "#PWR03021"
+      (at 381 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 381 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 381 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 381 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "677577e9-4b62-5aa1-a301-d7eca7c5ee97")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03021")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 424.18 43.18)
+      (xy 426.72 43.18)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "6fb5d3a7-cc7e-5326-bc3d-98cbfda2f91d")
+  )
+  (global_label "RF_S2A"
+    (shape passive)
+    (at 426.72 43.18 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "aca71ac3-abe7-518e-9c04-ca00c3bc5390")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 426.72 43.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 424.18 48.26)
+      (xy 426.72 48.26)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "8a3df025-3508-5474-885c-f556408d6374")
+  )
+  (global_label "RF_S2B"
+    (shape passive)
+    (at 426.72 48.26 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "f884f58c-d516-5182-98ff-1f36caeee58f")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 426.72 48.26 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 369.57 99.06 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "115e178e-c47f-5a02-a45c-f3cf4c933a2c")
+    (property "Reference" "R22"
+      (at 372.77 97.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100Ом"
+      (at 372.77 101.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 369.57 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 369.57 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Резистор 0402 100 Ом ±1 % 0,063 Вт"
+      (at 369.57 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 369.57 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402FR-07100RL"
+      (at 369.57 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 369.57 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "0a89b8f7-182a-5d61-88c9-76c431dc7eaf")
+    )
+    (pin "2"
+      (uuid "3bbaf9c1-50fc-5f56-82e5-5e625a8ff37f")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "R22")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 369.57 91.44)
+      (xy 369.57 88.9)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "9ab168fa-1177-5d81-9b23-c99d4e46eb51")
+  )
+  (label "RF_S2A"
+    (at 369.57 88.9 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "defca159-9fd3-5f49-8f6f-3e19076a5851")
+  )
+  (wire
+    (pts
+      (xy 369.57 106.68)
+      (xy 369.57 109.22)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "d526569c-a649-5cdd-8cfa-701260b39221")
+  )
+  (label "RF_S2B"
+    (at 369.57 109.22 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right bottom)
+    )
+    (uuid "cd2828c4-4e6f-5566-bc5c-50a513cf52b4")
+  )
+  (symbol
+    (lib_id "mgp8:PD0922")
+    (at 483.87 53.34 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "97f0571f-8acf-582d-bb18-7d54aaa3f156")
+    (property "Reference" "W6"
+      (at 468.63 31.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "PD0922J5050S2HF"
+      (at 468.63 31.52 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top) hide
+      )
+    )
+    (property "Footprint" "mgp8:RF_DIV"
+      (at 483.87 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 483.87 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Делитель мощности СВЧ 1:2 PD0922J5050S2HF"
+      (at 483.87 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "TTM (Anaren)"
+      (at 483.87 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "PD0922J5050S2HF"
+      (at 483.87 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 483.87 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "2"
+      (uuid "64ca0b17-27d4-51e0-a494-822b8d111eb5")
+    )
+    (pin "1"
+      (uuid "7f984b2d-4a5d-5106-bd4e-db4baf0b262a")
+    )
+    (pin "3"
+      (uuid "d6fc0fab-66a0-5d7d-a34a-67a76b039d87")
+    )
+    (pin "5"
+      (uuid "8d43cb48-5c3a-5926-a20a-891f9dae7720")
+    )
+    (pin "4"
+      (uuid "46af861d-ca7d-536d-a38e-1c50712fad22")
+    )
+    (pin "6"
+      (uuid "3199c0d4-a3b0-5321-837e-c8a8be8d7c41")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "W6")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 463.55 43.18)
+      (xy 461.01 43.18)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "f73219ee-5061-5c37-a68f-ccc266972696")
+  )
+  (global_label "RF_S1B"
+    (shape passive)
+    (at 461.01 43.18 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "f37665b0-5be4-594c-b89a-40aaa4ef7de5")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 461.01 43.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 463.55 53.34)
+      (xy 461.01 53.34)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "4decaacb-709d-58f2-98ec-e889375dd9fc")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 461.01 53.34 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "f647883d-4990-5198-bdc0-2db082054b0c")
+    (property "Reference" "#PWR03022"
+      (at 461.01 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 461.01 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 461.01 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 461.01 53.34 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "8b7c1885-2bac-5bdf-be24-5033ee5afe9f")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03022")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 463.55 58.42)
+      (xy 461.01 58.42)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "fb120615-017d-55db-b338-907cf0cc9089")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 461.01 58.42 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "3e7ced86-683c-5814-96a9-9fcd130126b7")
+    (property "Reference" "#PWR03023"
+      (at 461.01 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 461.01 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 461.01 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 461.01 58.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "60613d93-e55f-5b17-a294-68ff364efc5a")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03023")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 463.55 63.5)
+      (xy 461.01 63.5)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "531eb71c-72c6-5f4a-99d8-3c601240a4a2")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 461.01 63.5 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "21900b58-f19b-5908-b11d-bdf895efba12")
+    (property "Reference" "#PWR03024"
+      (at 461.01 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 461.01 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 461.01 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 461.01 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "68a0a935-2489-5742-ba74-12af62d6995d")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03024")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 504.19 43.18)
+      (xy 506.73 43.18)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "569d25c8-6555-500a-a9df-fc9c8dd932b6")
+  )
+  (global_label "RF_S2C"
+    (shape passive)
+    (at 506.73 43.18 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "f78e3166-4c42-5f8f-aa86-d7545970f2d2")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 506.73 43.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 504.19 48.26)
+      (xy 506.73 48.26)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "b72e6bfa-2e16-502a-90da-53d670d1199d")
+  )
+  (global_label "RF_S2D"
+    (shape passive)
+    (at 506.73 48.26 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "e614029f-e51a-5d15-93cc-62a972524609")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 506.73 48.26 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 449.58 99.06 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "854b9a61-3d08-5b93-b427-03295c9e9d6a")
+    (property "Reference" "R24"
+      (at 452.78 97.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100Ом"
+      (at 452.78 101.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 449.58 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 449.58 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Резистор 0402 100 Ом ±1 % 0,063 Вт"
+      (at 449.58 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 449.58 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402FR-07100RL"
+      (at 449.58 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 449.58 99.06 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "23ee6e50-2909-5aa0-971e-91072ca9fa4c")
+    )
+    (pin "2"
+      (uuid "75f85422-2386-531c-b9b4-f12af9ebb67e")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "R24")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 449.58 91.44)
+      (xy 449.58 88.9)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "8907dec2-8980-571d-8e19-d7380db92fb1")
+  )
+  (label "RF_S2C"
+    (at 449.58 88.9 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left bottom)
+    )
+    (uuid "3f7c502f-3f6b-55a7-9020-7534776ba7c0")
+  )
+  (wire
+    (pts
+      (xy 449.58 106.68)
+      (xy 449.58 109.22)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "45dbfca8-2716-5161-a9d8-e2c19a589848")
+  )
+  (label "RF_S2D"
+    (at 449.58 109.22 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right bottom)
+    )
+    (uuid "1947eb96-b47f-59a1-87c4-8d4773a58ae0")
+  )
+  (symbol
+    (lib_id "mgp8:PD0922")
+    (at 62.23 152.4 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "92c80584-4b7c-5d84-a9e7-fc06d6eac2f7")
+    (property "Reference" "W1"
+      (at 46.99 130.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "PD0922J5050S2HF"
+      (at 46.99 130.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top) hide
+      )
+    )
+    (property "Footprint" "mgp8:RF_DIV"
+      (at 62.23 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 62.23 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Делитель мощности СВЧ 1:2 PD0922J5050S2HF"
+      (at 62.23 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "TTM (Anaren)"
+      (at 62.23 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "PD0922J5050S2HF"
+      (at 62.23 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 62.23 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "2"
+      (uuid "baa78319-b200-5f0f-b7b9-59667e1606b1")
+    )
+    (pin "1"
+      (uuid "6db39d1a-5130-50d4-9ac4-efd6dfc42d38")
+    )
+    (pin "3"
+      (uuid "51409e43-9c57-5f37-8ce0-d3bcce9f0b66")
+    )
+    (pin "5"
+      (uuid "d67744db-7591-5dd9-974e-974596a64236")
+    )
+    (pin "4"
+      (uuid "8e22f631-2f72-516c-ba02-d62c8f5b8454")
+    )
+    (pin "6"
+      (uuid "2ec80b80-34fc-57ec-ad4d-7b99bf17c98b")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "W1")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 41.91 142.24)
+      (xy 39.37 142.24)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "15046194-80f0-5180-a5ed-5ba6fc8ee8aa")
+  )
+  (global_label "RF_S2A"
+    (shape passive)
+    (at 39.37 142.24 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "085de0ab-fd52-521a-91c3-bbe22e8c9ad8")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 39.37 142.24 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 41.91 152.4)
+      (xy 39.37 152.4)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "92dddf51-8605-5a19-98c9-ee13ac1b9b77")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 39.37 152.4 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "c570454c-0545-5968-97f7-ff8383eb2e27")
+    (property "Reference" "#PWR03025"
+      (at 39.37 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 39.37 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 39.37 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 39.37 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "75d4deac-9ec1-5624-8f00-24e3b90d4259")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03025")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 41.91 157.48)
+      (xy 39.37 157.48)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "515facaf-3a7c-50a6-8e24-a8f161c037fb")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 39.37 157.48 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "df13c1b9-4875-5283-8d7f-e28c3b0c4ab0")
+    (property "Reference" "#PWR03026"
+      (at 39.37 157.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 39.37 157.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 39.37 157.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 39.37 157.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "352630a9-207a-579d-8b21-1b94ca206bbe")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03026")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 41.91 162.56)
+      (xy 39.37 162.56)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "719c7adb-d1ba-5571-84eb-8724ba13bf07")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 39.37 162.56 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "84043cbc-3f26-58c8-9ab8-1f59bbe483ec")
+    (property "Reference" "#PWR03027"
+      (at 39.37 162.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 39.37 162.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 39.37 162.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 39.37 162.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "02032881-2878-59b9-9877-e93437269cbf")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03027")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 82.55 142.24)
+      (xy 85.09 142.24)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "1ac63204-665c-5974-9693-6db8a04e044e")
+  )
+  (global_label "RF1"
+    (shape bidirectional)
+    (at 85.09 142.24 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "c68b6dc7-2256-52d8-a8ce-aeac03a48554")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 85.09 142.24 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 82.55 147.32)
+      (xy 85.09 147.32)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "e93a8774-b535-5dbd-b655-6684d105d372")
+  )
+  (global_label "RF2"
+    (shape bidirectional)
+    (at 85.09 147.32 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "3e93d731-6dd8-528c-b11c-75d7d80a0dbd")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 85.09 147.32 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 27.94 195.58 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "1e04d911-cc42-521f-9c32-f723041ce447")
+    (property "Reference" "R13"
+      (at 31.14 194.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100Ом"
+      (at 31.14 198.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 27.94 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 27.94 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Резистор 0402 100 Ом ±1 % 0,063 Вт"
+      (at 27.94 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 27.94 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402FR-07100RL"
+      (at 27.94 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 27.94 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "86df7336-34e3-52cb-9fbf-4c1cdfd94f98")
+    )
+    (pin "2"
+      (uuid "a95a7d27-8237-5549-bc23-10b709a86fe1")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "R13")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 27.94 187.96)
+      (xy 27.94 185.42)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "c3ace413-2444-5352-9026-8593c93e388b")
+  )
+  (global_label "RF1"
+    (shape bidirectional)
+    (at 27.94 185.42 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "7ee50144-f703-5e47-8451-b3b03ef13b08")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 27.94 185.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 27.94 203.2)
+      (xy 27.94 205.74)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "8b33a21d-903e-55d2-a3d6-cf4dd0b6af98")
+  )
+  (global_label "RF2"
+    (shape bidirectional)
+    (at 27.94 205.74 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "68f356df-87a1-5eed-b2c8-98edeec64bbb")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 27.94 205.74 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:PD0922")
+    (at 318.77 152.4 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "38791446-4859-52a4-bc12-3c3ce64b524e")
+    (property "Reference" "W3"
+      (at 303.53 130.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "PD0922J5050S2HF"
+      (at 303.53 130.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top) hide
+      )
+    )
+    (property "Footprint" "mgp8:RF_DIV"
+      (at 318.77 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 318.77 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Делитель мощности СВЧ 1:2 PD0922J5050S2HF"
+      (at 318.77 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "TTM (Anaren)"
+      (at 318.77 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "PD0922J5050S2HF"
+      (at 318.77 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 318.77 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "2"
+      (uuid "f23ca87e-3747-525f-b639-fe71a2300ce1")
+    )
+    (pin "1"
+      (uuid "3a88740c-76de-5f9e-98dd-3925f7ebb9e0")
+    )
+    (pin "3"
+      (uuid "fa43256b-1cd9-55cf-be4a-9334348652b9")
+    )
+    (pin "5"
+      (uuid "5b2c8cfa-c73f-5485-832d-de78667e86d8")
+    )
+    (pin "4"
+      (uuid "b0a27886-75b3-5112-9a87-c23958b7c9d0")
+    )
+    (pin "6"
+      (uuid "3e74e05a-dfd9-583f-993d-0adbebad0ff0")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "W3")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 298.45 142.24)
+      (xy 295.91 142.24)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "693838e9-c01f-5bb3-b21c-d364f156be42")
+  )
+  (global_label "RF_S2B"
+    (shape passive)
+    (at 295.91 142.24 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "a027d2f0-f2c5-513f-bbf4-b89a1a831bce")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 295.91 142.24 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 298.45 152.4)
+      (xy 295.91 152.4)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "aacf0dd6-aeaf-5ce2-9f74-28225f4adfe7")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 295.91 152.4 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "8a1dfdc3-d0c6-59b1-8a52-e16607da1b79")
+    (property "Reference" "#PWR03028"
+      (at 295.91 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 295.91 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 295.91 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 295.91 152.4 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "0ba01823-4486-55f4-a104-ad0432dd0e95")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03028")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 298.45 157.48)
+      (xy 295.91 157.48)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "8cfe8253-cbc6-5f3d-be61-fc965f98c2ca")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 295.91 157.48 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "1bc39ee3-718e-50d3-81ea-3ad6744a1f23")
+    (property "Reference" "#PWR03029"
+      (at 295.91 157.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 295.91 157.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 295.91 157.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 295.91 157.48 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "51d40c36-d24d-57b6-9859-cf5b5bfa9b1c")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03029")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 298.45 162.56)
+      (xy 295.91 162.56)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "9f1fb952-7a30-599d-985a-8fe25330d997")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 295.91 162.56 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "8a817afe-3e2e-5b60-a951-96c0504cbe90")
+    (property "Reference" "#PWR03030"
+      (at 295.91 162.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 295.91 162.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 295.91 162.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 295.91 162.56 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "c35aae6f-35b0-55ee-9600-160292118932")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03030")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 339.09 142.24)
+      (xy 341.63 142.24)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "b1515db5-4803-5b42-a4e2-a168c010a7e6")
+  )
+  (global_label "RF3"
+    (shape bidirectional)
+    (at 341.63 142.24 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "b0ac3bf5-b46f-5c20-b7de-c407fd72c4a2")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 341.63 142.24 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 339.09 147.32)
+      (xy 341.63 147.32)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "ae027ec7-c93e-5691-a166-0733b9a6e626")
+  )
+  (global_label "RF4"
+    (shape bidirectional)
+    (at 341.63 147.32 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "19cd63aa-07ce-5f75-a874-10a0e7a8760e")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 341.63 147.32 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 284.48 195.58 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "bde583b0-7aa0-5024-9c47-f728a1d09229")
+    (property "Reference" "R20"
+      (at 287.68 194.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100Ом"
+      (at 287.68 198.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 284.48 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 284.48 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Резистор 0402 100 Ом ±1 % 0,063 Вт"
+      (at 284.48 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 284.48 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402FR-07100RL"
+      (at 284.48 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 284.48 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "21ecb378-d1d7-5d42-a49a-714f19339d49")
+    )
+    (pin "2"
+      (uuid "ce47294d-0870-5da7-8724-bfc03a09408a")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "R20")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 284.48 187.96)
+      (xy 284.48 185.42)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "bccd374b-c0ad-5857-8aa3-2000147e89fe")
+  )
+  (global_label "RF3"
+    (shape bidirectional)
+    (at 284.48 185.42 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "4540a522-a9ae-56e1-89a7-8ae16e080a81")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 284.48 185.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 284.48 203.2)
+      (xy 284.48 205.74)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "c0c73017-d699-5c80-8bdd-208b4930fec3")
+  )
+  (global_label "RF4"
+    (shape bidirectional)
+    (at 284.48 205.74 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "b46b58ab-afd7-5fe9-8cfc-25b659c75014")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 284.48 205.74 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:PD0922")
+    (at 393.7 151.13 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "2413dfa0-4421-5d25-aa00-c58ee80eb6cb")
+    (property "Reference" "W5"
+      (at 378.46 129.31 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "PD0922J5050S2HF"
+      (at 378.46 129.31 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top) hide
+      )
+    )
+    (property "Footprint" "mgp8:RF_DIV"
+      (at 393.7 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 393.7 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Делитель мощности СВЧ 1:2 PD0922J5050S2HF"
+      (at 393.7 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "TTM (Anaren)"
+      (at 393.7 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "PD0922J5050S2HF"
+      (at 393.7 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 393.7 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "2"
+      (uuid "a3b5fb08-2bc1-5f1f-954f-3e587f663d4f")
+    )
+    (pin "1"
+      (uuid "9639d9e9-04a8-5bc4-a68a-5267ce14b0da")
+    )
+    (pin "3"
+      (uuid "b6b689d9-9d96-5e5b-8bf5-9ac0c5660222")
+    )
+    (pin "5"
+      (uuid "0638cc84-5b25-5969-9ae0-7beed841ce8c")
+    )
+    (pin "4"
+      (uuid "47df6002-7489-5257-b7bd-f778824303a4")
+    )
+    (pin "6"
+      (uuid "7a08fc19-d4a5-59ae-80d9-a0d9b7a59351")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "W5")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 373.38 140.97)
+      (xy 370.84 140.97)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "33806811-ba34-5c3f-9582-7721c2364c74")
+  )
+  (global_label "RF_S2C"
+    (shape passive)
+    (at 370.84 140.97 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "7bdd855f-c31c-500b-aea0-6f88b686701b")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 370.84 140.97 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 373.38 151.13)
+      (xy 370.84 151.13)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "6842abac-0b8c-58b5-995b-ac92346343c1")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 370.84 151.13 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "beb6a1d5-92a8-5ba5-b09e-42394bc32d83")
+    (property "Reference" "#PWR03031"
+      (at 370.84 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 370.84 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 370.84 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 370.84 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "898aa274-34fd-580f-af27-d5a34fc3351e")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03031")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 373.38 156.21)
+      (xy 370.84 156.21)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "4955e5c8-e381-55dd-bae9-35857587a6c8")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 370.84 156.21 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "2f0e868d-17a1-5e15-b421-90a3be390021")
+    (property "Reference" "#PWR03032"
+      (at 370.84 156.21 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 370.84 156.21 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 370.84 156.21 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 370.84 156.21 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "10889bf6-59a9-504c-9e61-0938563aef86")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03032")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 373.38 161.29)
+      (xy 370.84 161.29)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "2dfb0368-6d34-501f-895b-f7ef25873c64")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 370.84 161.29 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "14ac07f4-d233-5030-a85c-e46c1bffd04a")
+    (property "Reference" "#PWR03033"
+      (at 370.84 161.29 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 370.84 161.29 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 370.84 161.29 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 370.84 161.29 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "76470dd0-3fcb-54c0-a891-2a15b2fca834")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03033")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 414.02 140.97)
+      (xy 416.56 140.97)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "ec63eb71-3099-583d-b876-0d369b0ddec2")
+  )
+  (global_label "RF5"
+    (shape bidirectional)
+    (at 416.56 140.97 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "dc938f0b-70fd-53c4-a99a-59e6f13101c6")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 416.56 140.97 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 414.02 146.05)
+      (xy 416.56 146.05)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "811f9bd7-71fc-5ec3-b2b4-3d829cb2e373")
+  )
+  (global_label "RF6"
+    (shape bidirectional)
+    (at 416.56 146.05 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "f1a993ee-65e7-5c30-bb54-6f1dc6db11a0")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 416.56 146.05 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 359.41 195.58 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "c25077ea-05ba-5740-a2c5-6914ed6c5f82")
+    (property "Reference" "R21"
+      (at 362.61 194.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100Ом"
+      (at 362.61 198.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 359.41 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 359.41 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Резистор 0402 100 Ом ±1 % 0,063 Вт"
+      (at 359.41 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 359.41 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402FR-07100RL"
+      (at 359.41 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 359.41 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "354c46c2-0947-50be-9082-73adf7dbb114")
+    )
+    (pin "2"
+      (uuid "b914ef12-c40b-5943-9e38-6a21c7355d16")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "R21")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 359.41 187.96)
+      (xy 359.41 185.42)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "95804772-b9e8-5d07-85ed-fa85b62ef556")
+  )
+  (global_label "RF5"
+    (shape bidirectional)
+    (at 359.41 185.42 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "829e7a38-5ebd-5cdf-af42-c9a9af6a2dec")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 359.41 185.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 359.41 203.2)
+      (xy 359.41 205.74)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "c58913f2-f3fb-57b7-942c-93a9b60ed369")
+  )
+  (global_label "RF6"
+    (shape bidirectional)
+    (at 359.41 205.74 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "c5cd0773-5071-5d71-b7f0-ad8112a56c56")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 359.41 205.74 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:PD0922")
+    (at 469.9 151.13 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "fac496d2-d416-5add-8902-556bef5342cc")
+    (property "Reference" "W7"
+      (at 454.66 129.31 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "PD0922J5050S2HF"
+      (at 454.66 129.31 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top) hide
+      )
+    )
+    (property "Footprint" "mgp8:RF_DIV"
+      (at 469.9 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 469.9 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Делитель мощности СВЧ 1:2 PD0922J5050S2HF"
+      (at 469.9 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "TTM (Anaren)"
+      (at 469.9 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "PD0922J5050S2HF"
+      (at 469.9 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 469.9 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "2"
+      (uuid "388a7a0e-58aa-560c-a732-1459df2c0f7b")
+    )
+    (pin "1"
+      (uuid "b41d25aa-7776-5d15-b302-f98c059790b2")
+    )
+    (pin "3"
+      (uuid "977fb50c-6e9a-5670-827d-d74237d0d792")
+    )
+    (pin "5"
+      (uuid "d2d4fc00-7445-5da7-af4a-fc05447345ab")
+    )
+    (pin "4"
+      (uuid "631182c2-b538-5735-9a5f-336fb6950a0a")
+    )
+    (pin "6"
+      (uuid "d4cca62b-bdd5-5cea-9be8-2d1fbfd152bf")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "W7")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 449.58 140.97)
+      (xy 447.04 140.97)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "8beadae1-8a71-5ffa-b917-12f47830357b")
+  )
+  (global_label "RF_S2D"
+    (shape passive)
+    (at 447.04 140.97 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "7cd62565-aefe-5d93-b0f7-b838f2d3cf39")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 447.04 140.97 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 449.58 151.13)
+      (xy 447.04 151.13)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "b3bcb090-ad45-5115-9980-ca88cd912988")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 447.04 151.13 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "8e4cc48b-b7af-5c8e-9420-3cc00b8bc5d0")
+    (property "Reference" "#PWR03034"
+      (at 447.04 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 447.04 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 447.04 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 447.04 151.13 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "6382a72e-55b4-5bab-96ce-13a52166cf74")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03034")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 449.58 156.21)
+      (xy 447.04 156.21)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "3a472b1e-d530-5021-b15a-42825c211080")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 447.04 156.21 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "0ccdb1d5-a48e-5ed1-8181-cf3b432eb3fc")
+    (property "Reference" "#PWR03035"
+      (at 447.04 156.21 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 447.04 156.21 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 447.04 156.21 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 447.04 156.21 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "849045b6-6174-52c2-a2bb-b1d8f03d3a8e")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03035")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 449.58 161.29)
+      (xy 447.04 161.29)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "34355346-dc92-5928-8415-05c9394258f4")
+  )
+  (symbol
+    (lib_id "mgp8:GND")
+    (at 447.04 161.29 270)
+    (unit 1)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "ea61f022-f609-5f9e-a77f-4c05f34da31f")
+    (property "Reference" "#PWR03036"
+      (at 447.04 161.29 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Value" "GND"
+      (at 447.04 161.29 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Footprint" ""
+      (at 447.04 161.29 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 447.04 161.29 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "6724e81e-eab3-5167-8b6f-0f396d329c5a")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "#PWR03036")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 490.22 140.97)
+      (xy 492.76 140.97)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "3c7ab51a-e69e-563e-b12b-1f35ef88d90a")
+  )
+  (global_label "RF7"
+    (shape bidirectional)
+    (at 492.76 140.97 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "4b0aedd6-edf9-550d-bba8-e5bcae1941ec")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 492.76 140.97 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 490.22 146.05)
+      (xy 492.76 146.05)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "c9d0f7b5-0027-5ba2-839b-1b829e471de8")
+  )
+  (global_label "RF8"
+    (shape bidirectional)
+    (at 492.76 146.05 0)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "da2a61c9-b871-5a9e-9293-5dc84bec2263")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 492.76 146.05 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (symbol
+    (lib_id "mgp8:R")
+    (at 435.61 195.58 0)
+    (unit 1)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "f6f2b2de-7939-5359-894c-d4b0423dabd6")
+    (property "Reference" "R23"
+      (at 438.81 194.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2.5 2.5)
+        )
+        (justify left bottom)
+      )
+    )
+    (property "Value" "100Ом"
+      (at 438.81 198.18 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 2 2)
+        )
+        (justify left top)
+      )
+    )
+    (property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+      (at 435.61 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Datasheet" ""
+      (at 435.61 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Наименование" "Резистор 0402 100 Ом ±1 % 0,063 Вт"
+      (at 435.61 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Изготовитель" "Yageo"
+      (at 435.61 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Артикул" "RC0402FR-07100RL"
+      (at 435.61 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (property "Примечание" ""
+      (at 435.61 195.58 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.5 1.5)
+        ) hide
+      )
+    )
+    (pin "1"
+      (uuid "bef90921-ff82-53ba-9a01-08e8d9cc7a0b")
+    )
+    (pin "2"
+      (uuid "115a0955-514b-57e3-b178-28c07a36d615")
+    )
+    (instances
+      (project "mgp8"
+        (path "/b897eb84-c3a6-5407-9ace-c16a4e8ba270/b77ec16e-d084-575c-8321-cdd61d59444e"
+          (reference "R23")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 435.61 187.96)
+      (xy 435.61 185.42)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "5e4eded9-c7b5-52cc-9789-8ec1f0e5f147")
+  )
+  (global_label "RF7"
+    (shape bidirectional)
+    (at 435.61 185.42 90)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify left)
+    )
+    (uuid "5bccd599-5c98-57a5-bdff-d4b711e62f46")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 435.61 185.42 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 435.61 203.2)
+      (xy 435.61 205.74)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "6fdf62fe-1815-5b34-96ae-908e7b3e2934")
+  )
+  (global_label "RF8"
+    (shape bidirectional)
+    (at 435.61 205.74 270)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "abd1f43b-2a1f-5c2e-922e-aba2fb03d33b")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 435.61 205.74 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
+  )
+  (text "Антенный вход, питание антенны, ВЧ-делитель 1:8"
+    (at 170 13 0)
+    (effects
+      (font
+        (face "osifont")
+        (size 3.5 3.5)
+      )
+      (justify left top)
+    )
+    (uuid "ab71e93a-bee1-5a08-ae38-c352e533e834")
+  )
+)

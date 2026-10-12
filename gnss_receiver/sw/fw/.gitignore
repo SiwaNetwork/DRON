@@ -1,0 +1,4 @@
+src/gen/
+inc/gen/
+tests/vectors/
+build/
