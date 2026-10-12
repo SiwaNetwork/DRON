@@ -9,7 +9,7 @@
     powershell -NoProfile -ExecutionPolicy Bypass -File sync_documents.ps1 -Install     # и обновлять по расписанию
     powershell -NoProfile -ExecutionPolicy Bypass -File sync_documents.ps1 -Uninstall   # снять задание расписания
   Параметры:
-    -Branch           ветка (по умолчанию — ветка разработки МГП-8; после слияния PR — main);
+    -Branch           ветка (по умолчанию — main);
     -Target           папка копии (по умолчанию «Документы\DRON»);
     -IntervalMinutes  период обновления по расписанию, мин (по умолчанию 60);
     -RepoUrl          адрес репозитория.
@@ -18,7 +18,7 @@
 [CmdletBinding()]
 param(
     [string]$RepoUrl = 'https://github.com/SiwaNetwork/DRON.git',
-    [string]$Branch = 'claude/gnss-multiband-receiver-nht15x',
+    [string]$Branch = 'main',
     [string]$Target = '',
     [ValidateRange(5, 1440)][int]$IntervalMinutes = 60,
     [switch]$Install,

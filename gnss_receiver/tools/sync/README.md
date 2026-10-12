@@ -33,7 +33,7 @@
    ```powershell
    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
    $s = "$env:TEMP\sync_documents.ps1"
-   Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/SiwaNetwork/DRON/refs/heads/claude/gnss-multiband-receiver-nht15x/gnss_receiver/tools/sync/sync_documents.ps1 -OutFile $s
+   Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/SiwaNetwork/DRON/refs/heads/main/gnss_receiver/tools/sync/sync_documents.ps1 -OutFile $s
    powershell -NoProfile -ExecutionPolicy Bypass -File $s -Install
    ```
 
@@ -55,7 +55,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "$([Environment]::GetFolderP
 | Параметр | Назначение | По умолчанию |
 |---|---|---|
 | `-Target` | папка копии | «Документы\DRON» |
-| `-Branch` | ветка | ветка разработки МГП-8 |
+| `-Branch` | ветка | `main` |
 | `-IntervalMinutes` | период обновления по расписанию, мин | 60 |
 | `-Install` | зарегистрировать задание расписания | — |
 | `-Uninstall` | снять задание расписания (копия остаётся) | — |
@@ -70,7 +70,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "$([Environment]::GetFolderP
 ## Linux, macOS
 
 ```sh
-curl -fsSLo /tmp/sync_documents.sh https://raw.githubusercontent.com/SiwaNetwork/DRON/refs/heads/claude/gnss-multiband-receiver-nht15x/gnss_receiver/tools/sync/sync_documents.sh
+curl -fsSLo /tmp/sync_documents.sh https://raw.githubusercontent.com/SiwaNetwork/DRON/refs/heads/main/gnss_receiver/tools/sync/sync_documents.sh
 sh /tmp/sync_documents.sh --install
 ```
 

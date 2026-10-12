@@ -12,7 +12,7 @@
 # Журнал — ${XDG_STATE_HOME:-~/.local/state}/DRON-sync.log.
 
 REPO_URL=https://github.com/SiwaNetwork/DRON.git
-BRANCH=claude/gnss-multiband-receiver-nht15x
+BRANCH=main
 TARGET=
 INTERVAL=60
 ACTION=sync
