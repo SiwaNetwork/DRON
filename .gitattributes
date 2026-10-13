@@ -1,0 +1,2 @@
+# сценарии оболочки — всегда с LF (иначе на Windows с core.autocrlf=true они не запускаются)
+*.sh text eol=lf

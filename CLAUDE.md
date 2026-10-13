@@ -18,8 +18,9 @@
 - Язык: документы, комментарии, сообщения коммитов — **на русском**, документы по ЕСКД.
 - Сообщение коммита: префикс `МГП-8: ` + что сделано; тело — зачем. В конце
   `Co-Authored-By:` агента.
-- Ветки: работа в ветке `claude/<тема>` от `main`, в `main` — через PR
-  (PR #6 «claude/gnss-multiband-receiver-nht15x» уже слит).
+- Ветка: **все готовые изменения — сразу в `main`** (решение владельца, 2026-10-13), без PR.
+  Перед началом работы — `git pull --ff-only`; коммитить законченными шагами (тесты пройдены)
+  и сразу `git push origin main`. Старые ветки `claude/*`, `cursor/*` — история.
 - Каждый блок ПЛИС — битово-точная модель Python + модель C (`sw/fw/src/corr_sim.c`) + сверка RTL.
   Новые протоколы проверяются независимыми декодерами. Не ломать эту цепочку.
 - После изменений, влияющих на документы: `python3 gnss_receiver/tools/build_docs.py`
@@ -29,25 +30,31 @@
 
 ## Окружение на ПК пользователя (Windows, C:\Users\SHIWA)
 
-- Рабочая копия: `C:\Users\SHIWA\Documents\DRON`, remote `origin` = github.com/SiwaNetwork/DRON.
+- Рабочая копия: `C:\Users\SHIWA\Documents\DRON` (ветка `main`), remote `origin` =
+  github.com/SiwaNetwork/DRON. Агенты на ПК работают прямо в ней.
 - Задание планировщика **DRON-sync** раз в час делает `git fetch` + fast-forward этой копии
-  (`gnss_receiver/tools/sync/`, журнал `%LOCALAPPDATA%\DRON-sync.log`). Если в копии есть
-  незакоммиченные правки или свои коммиты — обновление пропускается. Поэтому: коммитить и
-  пушить своевременно, не оставлять копию «грязной» надолго.
-- `git push` работает (Git Credential Manager, учётная запись SiwaNetwork). `gh` **не
-  авторизован** — PR создаётся по ссылке `https://github.com/SiwaNetwork/DRON/compare/main...<ветка>`
-  или после `gh auth login` пользователем.
-- Установлен только Python 3.13. **Нет** gcc/make, iverilog, yosys, nextpnr, arm-none-eabi-gcc,
-  ngspice, kicad-cli — RTL- и C-тесты на ПК не запускаются, пока не установлен тулчейн
-  (см. «Состояние»). В облачной сессии Claude Code (Linux) они ставятся через apt/pip.
+  по ветке `main` (`gnss_receiver/tools/sync/`, журнал `%LOCALAPPDATA%\DRON-sync.log`).
+  При незакоммиченных правках или незапушенных коммитах обновление пропускается; если копия
+  чистая и стоит на другой ветке — задание **переключит её на `main`**. Поэтому в этой копии
+  не работать в других ветках и не оставлять правки незакоммиченными надолго.
+- `git push` работает (Git Credential Manager, учётная запись SiwaNetwork). `gh` не авторизован.
+- Средства сборки установлены (2026-10-13): MSYS2 `C:\msys64` (UCRT64: gcc, make,
+  arm-none-eabi-gcc, iverilog 13, yosys, nextpnr-ecp5, prjtrellis, ngspice), Python 3.13 с
+  numpy/scipy/matplotlib/reportlab/pyrtcm/pynmeagps (`python3.exe` — копия `python.exe`).
+  KiCad (kicad-cli) не установлен.
+- Команды сборки и проверок из Git Bash — **только через обёртку** (каталог `gnss_receiver`):
+  `sh gnss_receiver/tools/win/run.sh 'make -C sw/fw test'`. Напрямую make/gcc MSYS2 из
+  Git Bash не работают: на стыке сред MSYS теряются TMP/TEMP и прочие переменные.
+  На чистой копии перед `make -C sw/fw test`: `(cd fpga/tb && python3 gen_stim.py gen)`.
+- Проверено на ПК 2026-10-13: `make -C sw/fw test` и `make -C fpga sim` — ПРОЙДЕН.
+- Сеть на ПК бывает нестабильной (PyPI, github.com) — при сбое повторить позже.
+- В облачной сессии Claude Code (Linux) средства ставятся через apt/pip, обёртка не нужна.
 
 ## Состояние и следующий шаг
 
 _Обновлять при каждой передаче._
 
-- 2026-10-13. `main` = слитый PR #6. Коммит 426b077 (копия на ПК переходит на main) лежит
-  в ветке `claude/gnss-multiband-receiver-nht15x` и в main ещё не попал — войдёт вместе
-  с веткой `claude/mgp8-dev`.
+- 2026-10-13. Работа ведётся в `main`. Идёт задача 1 (Galileo I/NAV, BeiDou D1).
 - Выполнено (см. ПЗ разд. 7): схема, ПЛИС 80 каналов (96,9 МГц), ПО МК: GPS L1 C/A и
   ГЛОНАСС L1OF полностью, GPS L1+L2C двухчастотный, NMEA/RTCM/собственный протокол, КД.
 - Следующие задачи (ПЗ разд. 9), в порядке предлагаемой очерёдности:
@@ -64,5 +71,7 @@ _Обновлять при каждой передаче._
 - 2026-10-11/12 — облачная сессия Claude Code
   https://claude.ai/code/session_011Z52gGMbqDGtKgZ2TDvqzY — разработка МГП-8 целиком
   (коммиты 3516d47…426b077), PR #6 слит; скрипты копии на ПК.
-- 2026-10-13 — локальная сессия Claude Code на ПК (C:\Users\SHIWA\Documents\shering) —
-  подключение локальной копии, этот файл и `AGENTS.md` для передачи между агентами.
+- 2026-10-13 — локальная сессия Claude Code на ПК (C:\Users\SHIWA\Documents\shering):
+  подключение локальной копии, этот файл и `AGENTS.md`; средства сборки на Windows и обёртка
+  `tools/win/run.sh`; исправления для Windows (файл NMEA теста — в двоичном режиме, порядок
+  объявлений в `tb_mgp8.v` для iverilog 13); DRON-sync переведён на `main`.

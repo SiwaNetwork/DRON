@@ -13,7 +13,7 @@
 
 int main(void)
 {
-    FILE *fb = fopen("build/out.rtcm", "wb"), *ft = fopen("build/out_ref.txt", "w"), *fn = fopen("build/out.nmea", "w");
+    FILE *fb = fopen("build/out.rtcm", "wb"), *ft = fopen("build/out_ref.txt", "w"), *fn = fopen("build/out.nmea", "wb");
     uint8_t buf[1200];
     msm_obs_t o[8];
     const int sys[4] = {SYS_GPS, SYS_GLO, SYS_GAL, SYS_BDS};

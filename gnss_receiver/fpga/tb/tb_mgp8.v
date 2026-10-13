@@ -143,6 +143,9 @@ module tb;
     integer i, e, s, busy, nd, nsys;
     reg [31:0] v, emask, smask, st, t_lo, t_hi, r [0:6];
     reg [63:0] tnow, ext_exp;
+    // TIC (объявлены до основного блока: iverilog 13 не допускает использования до объявления)
+    integer tic_n = 0, tic_good = 0;
+    reg [63:0] tic_last = 0;
     initial begin
         nd = 0;
         #2000;
@@ -243,8 +246,6 @@ module tb;
     initial fn = $fopen("tb/out/sys_notch.txt", "w");
     always @(posedge clk96) if (dut.u_core.f_stb) $fwrite(fn, "%0d %08x\n", dut.u_core.f_count, dut.u_core.f_data);
     // TIC: интервалы между событиями
-    integer tic_n = 0, tic_good = 0;
-    reg [63:0] tic_last = 0;
     always @(posedge clk96) if (dut.u_core.u_tb.tic_ev) begin
         if (tic_n > 0 && dut.u_core.u_tb.tic_t - tic_last == 64'd4000) tic_good = tic_good + 1;
         tic_last = dut.u_core.u_tb.tic_t;
