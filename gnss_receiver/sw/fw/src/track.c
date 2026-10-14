@@ -8,7 +8,9 @@
  * (ФАП 5 Гц без ЧАП, ССЗ 0,2 Гц); C/N0 и биты по-прежнему оцениваются по периодам.
  * Пилотные составляющие с вторичным кодом (E1C, L5Q): до синхронизации по вторичному коду —
  * дискриминатор Костаса; после — снятие вторичного кода, четырёхквадрантная ФАП (без
- * неоднозначности фазы), при слабом сигнале — когерентное накопление ≈ 20 мс. */
+ * неоднозначности фазы), при слабом сигнале — когерентное накопление ≈ 20 мс.
+ * Данные с вторичным кодом (B1I, код NH на интервале бита D1): граница бита — по синхронизации
+ * по коду NH, затем код снимается (знак — данные, ФАП — Костаса). E1-B: символ — период кода. */
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
@@ -66,13 +68,16 @@ void trk_start(trk_t *k, int ch, int sig, int prn, int fcn, double doppler, doub
     k->pll_bw_lock = cfg->pll_bw_lock < bmax ? cfg->pll_bw_lock : bmax;
     k->fll_bw_lock = cfg->fll_bw_lock < bmax ? cfg->fll_bw_lock : bmax;
     k->cn0 = 0;
-    /* синхронизация по символам данных: L1 C/A — биты 20 мс, ГЛОНАСС — символы 10 мс (меандр) */
-    k->bit_len = sig == SIG_L1CA ? 20 : (sig == SIG_G1CA || sig == SIG_G2CA) ? 10 : 0;
+    k->sec_len = sec_code(sig, prn, k->sec);
+    /* синхронизация по символам данных: L1 C/A — биты 20 мс, ГЛОНАСС — символы 10 мс (меандр),
+     * B1I (D1, с кодом NH) — биты 20 мс, E1-B — символ на период кода (граница известна сразу) */
+    k->bit_len = sig == SIG_L1CA || (sig == SIG_B1I && k->sec_len) ? 20 :
+                 (sig == SIG_G1CA || sig == SIG_G2CA) ? 10 : sig == SIG_E1B ? 1 : 0;
+    k->bit_sync = k->bit_len == 1;
     k->long_cn0 = cfg->long_cn0;
     k->pll_bw_long = cfg->pll_bw_long;
     k->dll_bw_long = cfg->dll_bw_long;
     k->ncoh = 1;
-    k->sec_len = sec_code(sig, prn, k->sec);
     k->coast_time = cfg->coast_time;
     k->pll_order = k->T >= 0.01 ? 2 : cfg->pll_order;   /* 3-й порядок — при коротком периоде */
     k->pll_bw3 = cfg->pll_bw3 < bmax ? cfg->pll_bw3 : bmax;
@@ -250,6 +255,14 @@ static void sec_try_sync(trk_t *k, double I)
         k->sec_sync = 1;
         k->sec_pos = br;                     /* следующий период — чип br */
         k->sec_sgn = best > 0 ? 1 : -1;      /* знак снимает неоднозначность фазы Костаса */
+        if (!SIGS[k->sig].pilot && k->bit_len == L) {
+            /* данные (B1I): период кода NH — бит, знак — бит данных, а не фаза; текущий период —
+             * чип br − 1, т. е. интервал br − 1 внутри бита */
+            k->sec_sgn = 1;
+            k->bit_sync = 1;
+            k->bit_pos = (br + L - 1) % L;
+            k->bit_acc = 0;
+        }
     }
 }
 
@@ -288,15 +301,18 @@ void trk_update(trk_t *k, const corr_dump_t *d)
             k->nacc = 0;
         }
     }
-    if (k->bit_len && (k->state == TRK_LOCK || (k->ncoh > 1 && k->state == TRK_LOST))) {
+    /* данные с вторичным кодом: граница бита — только по синхронизации по вторичному коду */
+    if (k->bit_len && (!k->sec_len || k->sec_sync) &&
+        (k->state == TRK_LOCK || (k->ncoh > 1 && k->state == TRK_LOST))) {
         bit_sync(k, I, d);
         /* после синхронизации, в конце бита — переход к длительному накоплению */
-        if (k->ncoh == 1 && k->bit_sync && k->bit_pos == k->bit_len - 1 && k->long_cn0 > 0 &&
-            k->cn0 > 0 && k->cn0 < k->long_cn0)
+        if (k->ncoh == 1 && k->bit_len > 1 && k->bit_sync && k->bit_pos == k->bit_len - 1 &&
+            k->long_cn0 > 0 && k->cn0 > 0 && k->cn0 < k->long_cn0)
             go_long(k, k->bit_len);
     }
     if (k->sec_len && !k->sec_sync && k->state == TRK_LOCK) sec_try_sync(k, d->PI);
-    else if (k->sec_sync && k->ncoh == 1 && k->long_cn0 > 0 && k->cn0 > 0 && k->cn0 < k->long_cn0) {
+    else if (SIGS[k->sig].pilot && k->sec_sync && k->ncoh == 1 && k->long_cn0 > 0 && k->cn0 > 0 &&
+             k->cn0 < k->long_cn0) {
         int n = (int)lround(0.020 / k->T);
         if (n > 1) go_long(k, n);
     }

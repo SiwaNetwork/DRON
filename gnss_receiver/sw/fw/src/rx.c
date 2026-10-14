@@ -4,7 +4,11 @@
  *   t_tx(n) = ref_tow + (code_tot(n) − ref_code) / 2^32 / R_code.
  * Псевдодальность: PR = c·(t_rx(n) − t_tx(n)), t_rx — шкала приёмника (номинальная Fд).
  * ГЛОНАСС: опорная эпоха — конец метки времени строки (время — tk + 2m по МДВ, переводится
- * в GPST по шкале приёмника), эфемериды — по строкам 1–4, номер КА — из строки 4. */
+ * в GPST по шкале приёмника), эфемериды — по строкам 1–4, номер КА — из строки 4.
+ * Galileo E1-B: опорная эпоха — конец страницы I/NAV (2 с; GST начала страницы + 2 с, секунды
+ * недели GST = GPST без GGTO); BeiDou B1I: конец подкадра D1 (6 с; SOW — BDT, GPST = BDT + 14 с).
+ * Время на шкале каждой системы приведено к GPST; расхождение шкал оценивает решение (часы по
+ * системам). */
 #include <math.h>
 #include <string.h>
 #include "fpga.h"
@@ -36,7 +40,10 @@ int rx_acquire(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap,
     const sig_info_t *si = &SIGS[sig];
     RX = r;
     int glo = si->sys == SYS_GLO;
-    for (int q = glo ? -7 : 1; q <= (glo ? 6 : 32); q++) {
+    /* BeiDou: только MEO/IGSO (D1); GEO (PRN 1–5, 59–63, сообщение D2) — не реализовано */
+    int q0 = glo ? -7 : si->sys == SYS_BDS ? 6 : 1;
+    int q1 = glo ? 6 : si->sys == SYS_GAL ? 36 : si->sys == SYS_BDS ? 58 : 32;
+    for (int q = q0; q <= q1; q++) {
         int prn = glo ? 1 : q, fcn = glo ? q : 0;        /* ГЛОНАСС: код общий, перебор литер */
         int busy = 0;
         for (int k = 0; k < CORR_MAXCH; k++)
@@ -55,8 +62,10 @@ int rx_acquire(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap,
         trk_start(&c->trk, ch, sig, prn, fcn, a.doppler, cps, t_start, &r->tcfg);
         c->trk.on_bit = on_bit;
         c->trk.ctx = c;
-        if (glo) glonav_init(&c->gnav, fcn);
-        else lnav_init(&c->nav, prn);
+        if (glo) glonav_init(&c->msg.gnav, fcn);
+        else if (si->sys == SYS_GAL) inav_init(&c->msg.inav, prn);
+        else if (si->sys == SYS_BDS) bdsnav_init(&c->msg.bnav, prn);
+        else lnav_init(&c->msg.lnav, prn);
         chs[n++] = ch;
     }
     if (n) corr_start(chs, n, t_start);
@@ -75,15 +84,28 @@ static void set_ref(rx_ch_t *c, uint64_t n, double tow)
     c->tx_ok = 1;
 }
 
+/* опорная эпоха канала (граница подкадра, страницы, строки) на начало отсчёта n со временем
+ * излучения tow (GPST); первая — начальная шкала приёмника (задержка распространения ≈ 75 мс) */
+static void nav_ref(rx_t *r, rx_ch_t *c, uint64_t n, double tow)
+{
+    set_ref(c, n, tow);
+    if (!r->time_ok) {
+        r->t0_n = n;
+        r->t0_tow = c->ref_tow + 0.075;
+        r->time_ok = 1;
+    }
+}
+
 /* ГЛОНАСС: символ 10 мс */
 static void on_sym_glo(rx_ch_t *c, int sym, uint64_t n_end)
 {
     rx_t *r = RX;
-    if (!glonav_sym(&c->gnav, sym ? -1.0 : 1.0, n_end)) return;
-    if (!r->time_ok && c->gnav.n4 > 0 && c->gnav.na > 0 && c->gnav.str_end_tod >= 0) {
+    glonav_t *g = &c->msg.gnav;
+    if (!glonav_sym(g, sym ? -1.0 : 1.0, n_end)) return;
+    if (!r->time_ok && g->n4 > 0 && g->na > 0 && g->str_end_tod >= 0) {
         /* шкала приёмника по ГЛОНАСС (без GPS): дата — из строки 5, задержка ≈ 75 мс */
         int wk;
-        double sow = glo_date2gpst(c->gnav.n4, c->gnav.na, c->gnav.str_end_tod, &wk);
+        double sow = glo_date2gpst(g->n4, g->na, g->str_end_tod, &wk);
         r->t0_n = n_end + 1;
         r->t0_tow = sow + 0.075;
         r->week = wk;
@@ -91,40 +113,68 @@ static void on_sym_glo(rx_ch_t *c, int sym, uint64_t n_end)
     }
     if (!r->time_ok) return;                      /* сутки и неделя — по шкале приёмника */
     double tr = rx_time(r, n_end);
-    if (c->gnav.eph_new) {
-        eph_t e = c->gnav.eph;
+    if (g->eph_new) {
+        eph_t e = g->eph;
         e.toc = e.toe = glo_tod2gpst(e.toc, tr);
         e.week = r->week;
-        r->eph[SYS_GLO][c->gnav.slot] = e;
-        c->prn = c->gnav.slot;
-        c->gnav.eph_new = 0;
+        r->eph[SYS_GLO][g->slot] = e;
+        c->prn = g->slot;
+        g->eph_new = 0;
     }
     /* конец метки времени — конец строки и эпоха кода */
-    if (c->gnav.str_end_tod >= 0) set_ref(c, n_end + 1, glo_tod2gpst(c->gnav.str_end_tod, tr));
+    if (g->str_end_tod >= 0) set_ref(c, n_end + 1, glo_tod2gpst(g->str_end_tod, tr));
+}
+
+/* Galileo E1-B: символ 4 мс, мягкое значение — точный отвод за период (> 0 — логический 0) */
+static void on_sym_gal(rx_ch_t *c, uint64_t n_end)
+{
+    rx_t *r = RX;
+    inav_t *g = &c->msg.inav;
+    if (!inav_sym(g, c->trk.bit_acc, n_end)) return;
+    if (g->eph_new) {
+        r->eph[SYS_GAL][c->prn] = g->eph;
+        r->week = g->eph.week;
+        g->eph_new = 0;
+    }
+    if (g->utc_ok) r->dt_ls = g->dt_ls;
+    /* конец страницы — эпоха кода внутри отсчёта n_end */
+    if (g->tow_ok) nav_ref(r, c, n_end + 1, fmod(g->page_tow + 2.0, 604800.0));
+}
+
+/* BeiDou B1I: бит D1 20 мс (код NH снят). Ионосфера D1 (модель Клобучара по BDT в
+ * географических координатах) в решение не передаётся — используются параметры GPS */
+static void on_bit_bds(rx_ch_t *c, int bit, uint64_t n_end)
+{
+    rx_t *r = RX;
+    bdsnav_t *b = &c->msg.bnav;
+    if (!bdsnav_bit(b, bit, n_end)) return;
+    nav_ref(r, c, n_end + 1, b->sf_end_tow);
+    if (b->eph_new) {
+        r->eph[SYS_BDS][c->prn] = b->eph;
+        r->week = b->eph.week;
+        b->eph_new = 0;
+    }
 }
 
 static void on_bit(void *ctx, int bit, uint64_t n_end)
 {
     rx_ch_t *c = ctx;
     rx_t *r = RX;
-    if (SIGS[c->sig].sys == SYS_GLO) { on_sym_glo(c, bit, n_end); return; }
-    int id = lnav_bit(&c->nav, bit, n_end);
-    if (!id) return;
+    int sys = SIGS[c->sig].sys;
+    if (sys == SYS_GLO) { on_sym_glo(c, bit, n_end); return; }
+    if (sys == SYS_GAL) { on_sym_gal(c, n_end); return; }
+    if (sys == SYS_BDS) { on_bit_bds(c, bit, n_end); return; }
+    lnav_t *nv = &c->msg.lnav;
+    if (!lnav_bit(nv, bit, n_end)) return;
     /* граница подкадра: конец последнего бита — эпоха кода внутри отсчёта n_end */
-    uint64_t n = n_end + 1;
-    set_ref(c, n, c->nav.sf_end_tow);
-    if (c->nav.eph_new) {
-        r->eph[SYS_GPS][c->prn] = c->nav.eph;
-        c->nav.eph_new = 0;
-        r->week = c->nav.eph.week;
+    nav_ref(r, c, n_end + 1, nv->sf_end_tow);
+    if (nv->eph_new) {
+        r->eph[SYS_GPS][c->prn] = nv->eph;
+        nv->eph_new = 0;
+        r->week = nv->eph.week;
     }
-    if (c->nav.ion_ok && !r->ion_ok) { memcpy(r->ion, c->nav.ion, sizeof(r->ion)); r->ion_ok = 1; }
-    if (c->nav.ok_utc) r->dt_ls = c->nav.dt_ls;
-    if (!r->time_ok) {                       /* начальная шкала: задержка распространения ≈ 75 мс */
-        r->t0_n = n;
-        r->t0_tow = c->ref_tow + 0.075;
-        r->time_ok = 1;
-    }
+    if (nv->ion_ok && !r->ion_ok) { memcpy(r->ion, nv->ion, sizeof(r->ion)); r->ion_ok = 1; }
+    if (nv->ok_utc) r->dt_ls = nv->dt_ls;
 }
 
 /* время излучения по каналу на отсчёт n */

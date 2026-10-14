@@ -7,6 +7,8 @@
 #include "track.h"
 #include "lnav.h"
 #include "glonav.h"
+#include "inav.h"
+#include "bdsnav.h"
 #include "eph.h"
 #include "pvt.h"
 #include "acq.h"
@@ -14,8 +16,12 @@
 typedef struct {
     int      used, ch, sig, prn, fcn;
     trk_t    trk;
-    lnav_t   nav;
-    glonav_t gnav;           /* ГЛОНАСС: строки навигационного сообщения */
+    union {                  /* навигационное сообщение — по системе сигнала канала */
+        lnav_t   lnav;       /* GPS LNAV */
+        glonav_t gnav;       /* ГЛОНАСС: строки */
+        inav_t   inav;       /* Galileo I/NAV (E1-B) */
+        bdsnav_t bnav;       /* BeiDou D1 (B1I, КА MEO/IGSO) */
+    } msg;
     /* привязка времени излучения: на начало отсчёта ref_n время излучения ref_tow (по шкале КА) */
     int      tx_ok;
     uint64_t ref_n;
@@ -49,8 +55,9 @@ typedef struct {
 } rx_t;
 
 void   rx_init(rx_t *r);
-/* поиск по снимкам и пуск каналов слежения с отсчёта t_start (для всех PRN сигнала sig;
- * ГЛОНАСС — для всех литер −7…+6; номер КА определяется по строке 4) */
+/* поиск по снимкам и пуск каналов слежения с отсчёта t_start (для всех PRN сигнала sig: GPS 1–32,
+ * Galileo 1–36, BeiDou 6–58 — MEO/IGSO; ГЛОНАСС — для всех литер −7…+6, номер КА — по строке 4).
+ * Сигналы с навигационными данными: L1 C/A, G1CA, E1B, B1I */
 int    rx_acquire(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap, int len, int sig,
                   uint64_t t_start, const acq_cfg_t *ac);
 /* чтение результатов коррелятора, петли, навигационные данные */

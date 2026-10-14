@@ -22,11 +22,25 @@ from reportlab.platypus import (BaseDocTemplate, Frame, Image, KeepTogether, Pag
 HERE = os.path.dirname(os.path.abspath(__file__))
 FONT_FILE = os.path.join(HERE, "fonts", "osifont-mgp8.ttf")
 pdfmetrics.registerFont(TTFont("GOST", FONT_FILE))
-for name, path in (("Serif", "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf"),
-                   ("Serif-B", "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf"),
-                   ("Serif-I", "/usr/share/fonts/truetype/liberation/LiberationSerif-Italic.ttf"),
-                   ("Mono", "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf")):
-    pdfmetrics.registerFont(TTFont(name, path))
+# Liberation Serif (Linux); на Windows — метрически совместимый Times New Roman (переносы и
+# разбивка на листы те же), DejaVu Sans Mono — из matplotlib
+_LIB, _DJV = "/usr/share/fonts/truetype/liberation/", "/usr/share/fonts/truetype/dejavu/"
+_WIN = os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts")
+
+
+def _mpl_font(f):
+    try:
+        import matplotlib
+        return os.path.join(os.path.dirname(matplotlib.__file__), "mpl-data", "fonts", "ttf", f)
+    except ImportError:
+        return f
+
+
+for name, paths in (("Serif", (_LIB + "LiberationSerif-Regular.ttf", os.path.join(_WIN, "times.ttf"))),
+                    ("Serif-B", (_LIB + "LiberationSerif-Bold.ttf", os.path.join(_WIN, "timesbd.ttf"))),
+                    ("Serif-I", (_LIB + "LiberationSerif-Italic.ttf", os.path.join(_WIN, "timesi.ttf"))),
+                    ("Mono", (_DJV + "DejaVuSansMono.ttf", _mpl_font("DejaVuSansMono.ttf")))):
+    pdfmetrics.registerFont(TTFont(name, next((f for f in paths if os.path.exists(f)), paths[0])))
 pdfmetrics.registerFontFamily("Serif", normal="Serif", bold="Serif-B", italic="Serif-I", boldItalic="Serif-B")
 
 THICK, THIN = 0.6, 0.3   # толщина линий рамки, мм (ГОСТ 2.303: основная 0,5…1,4)

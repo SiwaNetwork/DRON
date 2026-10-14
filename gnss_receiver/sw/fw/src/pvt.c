@@ -137,11 +137,13 @@ int pvt_solve(obs_t *obs, int n, double t_rx, const pvt_cfg_t *cfg, sol_t *sol)
             tt -= dt0;
             if (!eph_satpos(o->eph, tt, rs[i], &dts[i], NULL, NULL)) continue;
             /* GPS: часы КА в эфемеридах отнесены к ионосферно-свободной комбинации; для ПД на
-             * одной частоте fc — Δt − TGD·(f1/fc)² (IS-GPS-200, п. 20.3.3.3.3.2) */
+             * одной частоте fc — Δt − TGD·(f1/fc)² (IS-GPS-200, п. 20.3.3.3.3.2). Galileo E1
+             * (часы I/NAV — по E1, E5b): Δt − BGD(E1, E5b); BeiDou B1I (часы — по B3I): Δt − TGD1 */
             if (cfg->tgd && o->sys == SYS_GPS && !o->iono_free) {
                 double f = sig_carrier(SIG_L1CA, 0) / (o->fc > 0 ? o->fc : sig_carrier(SIG_L1CA, 0));
                 dts[i] -= o->eph->tgd * f * f;
-            }
+            } else if (cfg->tgd && (o->sys == SYS_GAL || o->sys == SYS_BDS) && !o->iono_free)
+                dts[i] -= o->eph->tgd;
             double d[3] = {rs[i][0] - x[0], rs[i][1] - x[1], rs[i][2] - x[2]};
             double rho = sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
             double th = OMGE * rho / CLIGHT, xs = rs[i][0] * cos(th) + rs[i][1] * sin(th);
@@ -231,6 +233,11 @@ int pvt_solve(obs_t *obs, int n, double t_rx, const pvt_cfg_t *cfg, sol_t *sol)
             sol->vel[0] = b[0]; sol->vel[1] = b[1]; sol->vel[2] = b[2]; sol->clkd = b[3];
         }
     }
-    sol->t_rx = t_rx - clk[SYS_GPS] / CLIGHT;
+    /* GPST — по часам GPS; без КА GPS — по первой системе решения (её шкала приведена к GPST:
+     * ГЛОНАСС — с поправкой UTC, BDT + 14 с, GST — без GGTO; расхождение — единицы-десятки нс) */
+    int sref = SYS_GPS;
+    if (sysidx[SYS_GPS] < 0)
+        for (int s = 0; s < SYS_N; s++) if (sysidx[s] == 0) sref = s;
+    sol->t_rx = t_rx - clk[sref] / CLIGHT;
     return 1;
 }

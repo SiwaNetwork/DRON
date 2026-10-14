@@ -70,6 +70,9 @@ int rinex_read_nav(const char *path, eph_t *eph, int max)
             e->sqrtA = v[10]; e->toe = v[11]; e->cic = v[12]; e->OMG0 = v[13]; e->cis = v[14];
             e->i0 = v[15]; e->crc = v[16]; e->omg = v[17]; e->OMGd = v[18]; e->idot = v[19];
             e->sva = (int)v[23]; e->svh = (int)v[24]; e->tgd = v[25]; e->iodc = (int)v[26];
+            /* Galileo: BGD — к паре частот, к которой отнесены часы (источник данных, разряд 8 —
+             * E5a, E1: F/NAV; иначе E5b, E1: I/NAV) */
+            if (sys == SYS_GAL) { e->tgd = ((int)v[20] & 0x100) ? v[25] : v[26]; e->iodc = 0; }
             if (sys == SYS_BDS) e->toe = fmod(e->toe + GPST_BDT, 604800);
         }
         e->valid = 1;

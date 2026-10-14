@@ -1,9 +1,13 @@
 /* МГП-8: захват сигналов по снимкам отсчётов.
  * Алгоритм (sw/pyrx/acq.py): для каждой ячейки доплера — перенос на нулевую частоту, усреднение
- * отсчётов периода кода в Nfft = 2^k ячеек (≥ 4 на чип, ≥ 8 для BOC), круговая корреляция с
- * копией кода через БПФ, некогерентное накопление по периодам кода и по нескольким снимкам
+ * отсчётов периода кода в Nfft = 2^k ячеек (≥ 4 на чип, ≥ 8 для BOC; Galileo E1 — 4: 8 · 4092 больше
+ * NFFT_MAX), круговая корреляция с копией кода через БПФ (период длиннее снимка — E1, 4 мс — одна
+ * неполная часть периода), некогерентное накопление по периодам кода и по нескольким снимкам
  * (сдвиг пика между снимками из-за доплера кода компенсируется). Затем — уточнение доплера
- * прямой корреляцией в найденной фазе кода (сетка шаг/8, параболическая интерполяция).
+ * прямой корреляцией в найденной фазе кода (сетка шаг/8 в ±1,5 шага, параболическая
+ * интерполяция); блок делится эпохой кода на две части, суммы которых складываются без учёта
+ * знака — смена знака на эпохе (символы E1-B через 4 мс, код NH B1I через 1 мс, биты) иначе
+ * расщепляет пик по доплеру, и ошибка выходит за полосу втягивания ЧАП ±1/(4T).
  * Решение: пик / второй пик (вне ±1 чипа в той же ячейке доплера) > порога. */
 #include <math.h>
 #include <string.h>
@@ -59,15 +63,22 @@ int acq_search_multi(const uint8_t *const *x4, const uint32_t *t0, int nsnap, in
     int Ns = (int)lround(T * FS_HZ);
     int nfft = 1;
     while (nfft < (si->boc ? 8 : 4) * L) nfft <<= 1;
+    /* BOC с длинным кодом (E1: 4092 чипа): 4 ячейки на чип — две на полупериод поднесущей,
+     * потери на сетке задержки до ≈ 4 дБ в худшем случае */
+    if (nfft > NFFT_MAX && si->boc)
+        for (nfft = 1; nfft < 4 * L; nfft *= 2) {}
     if (nfft > NFFT_MAX || Ns < nfft / 2) return 0;
+    /* период кода длиннее снимка: когерентно — первые Nu отсчётов (остальные ячейки — нули) */
+    int Nu = Ns < n ? Ns : n;
     int nper = n / Ns;
     if (cfg->nper > 0 && nper > cfg->nper) nper = cfg->nper;
-    if (nper < 1) return 0;
+    if (nper < 1) nper = 1;
+    double Tu = Nu / FS_HZ;                                  /* время когерентного накопления */
     for (int k = 0; k < nfft; k++) { R[k].re = rep(si, L, (double)k * L / nfft); R[k].im = 0; }
     fft(R, nfft, 0);
     for (int k = 0; k < nfft; k++) R[k].im = -R[k].im;
     double fif = sig_if(sig, fcn), fc = sig_carrier(sig, fcn);
-    double step = cfg->dop_step > 0 ? cfg->dop_step : 1.0 / (2 * T);
+    double step = cfg->dop_step > 0 ? cfg->dop_step : 1.0 / (2 * Tu);
     int nd = (int)(2 * cfg->dop_max / step) + 1;
     double best = -1, sum = 0;
     long cnt = 0;
@@ -86,7 +97,7 @@ int acq_search_multi(const uint8_t *const *x4, const uint32_t *t0, int nsnap, in
             for (int p = 0; p < nper; p++) {
                 memset(Y, 0, sizeof(cpx_t) * nfft);
                 const uint8_t *xp = x4[s] + (size_t)p * Ns;
-                for (int i = 0; i < Ns; i++) {
+                for (int i = 0; i < Nu; i++) {
                     int xi, xq;
                     decode(xp[i], &xi, &xq);
                     float c = SIN256[((ph >> 24) + 64) & 255], sn = SIN256[ph >> 24];
@@ -126,14 +137,16 @@ int acq_search_multi(const uint8_t *const *x4, const uint32_t *t0, int nsnap, in
     r->code_phase = fmod((double)(nfft - bk) * L / nfft, (double)L);
     r->doppler = -cfg->dop_max + bd * step;
     double snr = (best - mean) / mean / K;
-    r->cn0 = snr > 0 ? 10 * log10(snr / T) : 0;
+    r->cn0 = snr > 0 ? 10 * log10(snr / Tu) : 0;
     r->found = r->ratio > cfg->thresh;
     if (!r->found) return 0;
-    /* уточнение доплера: прямая корреляция в найденной фазе кода, сетка step/8 в ±step */
-    double pv[17];
-    int nf = 17;
+    /* уточнение доплера: прямая корреляция в найденной фазе кода, сетка step/8 в ±1,5·step;
+     * части блока до и после эпохи кода a, b: max |a ± b|² = |a|² + |b|² + 2|Re a·b*| */
+    enum { NF = 25 };
+    double pv[NF];
+    int nf = NF;
     for (int j = 0; j < nf; j++) {
-        double fd = r->doppler + (j - 8) * step / 8;
+        double fd = r->doppler + (j - NF / 2) * step / 8;
         double rate = si->chip_rate * (1 + fd / fc), acc = 0;
         for (int s = 0; s < nsnap; s++) {
             double cp0 = r->code_phase + rate * (double)(t0[s] - t0[0]) / FS_HZ;
@@ -141,19 +154,22 @@ int acq_search_multi(const uint8_t *const *x4, const uint32_t *t0, int nsnap, in
             uint32_t ph = (uint32_t)(int64_t)llround((ph0 - floor(ph0)) * 4294967296.0);
             uint32_t dph = (uint32_t)(int64_t)llround(-(fif + fd) / FS_HZ * 4294967296.0);
             for (int p = 0; p < nper; p++) {
-                double re = 0, im = 0;
+                double re[2] = {0, 0}, im[2] = {0, 0};
                 const uint8_t *xp = x4[s] + (size_t)p * Ns;
                 double u = cp0 + rate * (double)p * Ns / FS_HZ, du = rate / FS_HZ;
-                for (int i = 0; i < Ns; i++, u += du) {
-                    int xi, xq;
+                /* первый отсчёт следующего периода кода */
+                double ie = ceil(((floor(u / L) + 1) * L - u) / du);
+                for (int i = 0; i < Nu; i++, u += du) {
+                    int xi, xq, h = i >= ie;
                     decode(xp[i], &xi, &xq);
                     float c = SIN256[((ph >> 24) + 64) & 255], sn = SIN256[ph >> 24];
                     float v = rep(si, L, u);
-                    re += v * (xi * c - xq * sn);
-                    im += v * (xi * sn + xq * c);
+                    re[h] += v * (xi * c - xq * sn);
+                    im[h] += v * (xi * sn + xq * c);
                     ph += dph;
                 }
-                acc += re * re + im * im;
+                acc += re[0] * re[0] + im[0] * im[0] + re[1] * re[1] + im[1] * im[1] +
+                       2 * fabs(re[0] * re[1] + im[0] * im[1]);
             }
         }
         pv[j] = acc;
@@ -165,7 +181,7 @@ int acq_search_multi(const uint8_t *const *x4, const uint32_t *t0, int nsnap, in
         double a = pv[jm - 1], b = pv[jm], c = pv[jm + 1], den = a - 2 * b + c;
         if (den < 0) dj = 0.5 * (a - c) / den;
     }
-    r->doppler += (jm - 8 + dj) * step / 8;
+    r->doppler += (jm - NF / 2 + dj) * step / 8;
     return 1;
 }
 

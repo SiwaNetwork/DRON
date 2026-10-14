@@ -166,7 +166,8 @@ static void decode_word(inav_t *g, const uint8_t *w, int type)
         e->svh = (int)(getbitu(w, 72, 1) | getbitu(w, 69, 2) << 1 | getbitu(w, 71, 1) << 6 |
                        getbitu(w, 67, 2) << 7);
         g->week = (int)getbitu(w, 73, 12) + 1024;
-        return;
+        g->w5 = 1;
+        break;
     case 6:
         g->utc_a0 = getbits(w, 6, 32) * P2(-30);
         g->utc_a1 = getbits(w, 38, 24) * P2(-50);
@@ -179,9 +180,11 @@ static void decode_word(inav_t *g, const uint8_t *w, int type)
     default:
         return;
     }
-    /* слова 1–4: полные эфемериды при одной редакции IODnav и известной неделе */
-    g->iod[type - 1] = iod;
-    if (g->iod[0] == iod && g->iod[1] == iod && g->iod[2] == iod && g->iod[3] == iod && g->week) {
+    /* полные эфемериды: слова 1–4 одной редакции IODnav и слово 5 (BGD, состояние, неделя;
+     * неделя может прийти раньше в слове 0 — без слова 5 часы для E1 были бы без BGD) */
+    if (type <= 4) g->iod[type - 1] = iod;
+    iod = g->iod[0];
+    if (iod >= 0 && g->iod[1] == iod && g->iod[2] == iod && g->iod[3] == iod && g->w5 && g->week) {
         e->sys = SYS_GAL; e->prn = (uint8_t)g->prn; e->valid = 1; e->week = g->week;
         e->iode = e->iodc = iod;
         g->eph = *e;
