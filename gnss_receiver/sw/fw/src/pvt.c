@@ -64,7 +64,7 @@ static double trop(double h, double el)
 }
 
 /* ионосфера: модель Клобучара (IS-GPS-200, 20.3.3.5.2.5), задержка на L1, м */
-static double klobuchar(const double *ion, double t, double lat, double lon, double az, double el)
+double pvt_klobuchar(const double *ion, double t, double lat, double lon, double az, double el)
 {
     double E = el / GPI, phi_u = lat / GPI, lam_u = lon / GPI;
     double psi = 0.0137 / (E + 0.11) - 0.022;
@@ -138,11 +138,14 @@ int pvt_solve(obs_t *obs, int n, double t_rx, const pvt_cfg_t *cfg, sol_t *sol)
             if (!eph_satpos(o->eph, tt, rs[i], &dts[i], NULL, NULL)) continue;
             /* GPS: часы КА в эфемеридах отнесены к ионосферно-свободной комбинации; для ПД на
              * одной частоте fc — Δt − TGD·(f1/fc)² (IS-GPS-200, п. 20.3.3.3.3.2). Galileo E1
-             * (часы I/NAV — по E1, E5b): Δt − BGD(E1, E5b); BeiDou B1I (часы — по B3I): Δt − TGD1 */
-            if (cfg->tgd && o->sys == SYS_GPS && !o->iono_free) {
+             * (часы I/NAV — по E1, E5b): Δt − BGD(E1, E5b); BeiDou B1I (часы — по B3I): Δt − TGD1.
+             * Ионосферно-свободная комбинация — Δt − gd (gd рассчитывает rx_measure по паре сигналов) */
+            if (cfg->tgd && o->iono_free)
+                dts[i] -= o->gd;
+            else if (cfg->tgd && o->sys == SYS_GPS) {
                 double f = sig_carrier(SIG_L1CA, 0) / (o->fc > 0 ? o->fc : sig_carrier(SIG_L1CA, 0));
                 dts[i] -= o->eph->tgd * f * f;
-            } else if (cfg->tgd && (o->sys == SYS_GAL || o->sys == SYS_BDS) && !o->iono_free)
+            } else if (cfg->tgd && (o->sys == SYS_GAL || o->sys == SYS_BDS))
                 dts[i] -= o->eph->tgd;
             double d[3] = {rs[i][0] - x[0], rs[i][1] - x[1], rs[i][2] - x[2]};
             double rho = sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
@@ -151,20 +154,25 @@ int pvt_solve(obs_t *obs, int n, double t_rx, const pvt_cfg_t *cfg, sol_t *sol)
             double rsr[3] = {xs, ys, rs[i][2]};
             d[0] = rsr[0] - x[0]; d[1] = rsr[1] - x[1]; d[2] = rsr[2] - x[2];
             rho = sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
-            double corr = 0, w = 1;
+            double corr = 0, w = 1, vi = 0;
             o->el = GPI / 2; o->az = 0;
             if (have_pos) {
                 azel(x, lat, lon, rsr, &o->az, &o->el);
                 if (it > 1 && o->el < cfg->el_mask) continue;
                 if (cfg->trop) corr += trop(h, o->el);
                 if (cfg->iono && !o->iono_free) {
-                    double di = klobuchar(cfg->ion, t_rx, lat, lon, o->az, o->el);
+                    double di = pvt_klobuchar(cfg->ion, t_rx, lat, lon, o->az, o->el);
                     double f = sig_carrier(SIG_L1CA, 0) / (o->fc > 0 ? o->fc : sig_carrier(SIG_L1CA, 0));
                     corr += di * f * f;
+                    vi = 0.25 * di * f * f * di * f * f;    /* модель Клобучара — около 50 % задержки */
                 }
                 double se = sin(o->el > 0.05 ? o->el : 0.05);
                 w = se * se;
             }
+            /* вес по шуму измерения: ионосферно-свободная комбинация в 2–3 раза шумнее кода
+             * первой частоты; G1 + G2 (чип 587 м на обеих частотах) — в 2,5–8 раз шумнее пар
+             * с L5, E5a, B3I (чип 29 м) */
+            if (o->var > 0) w /= o->var + vi;
             double res = o->pr - (rho + clk[o->sys] - CLIGHT * dts[i] + corr);
             double H[8] = {-d[0] / rho, -d[1] / rho, -d[2] / rho, 0, 0, 0, 0, 0};
             H[3 + si] = 1;

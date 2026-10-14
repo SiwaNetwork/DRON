@@ -102,6 +102,7 @@ int main(void)
         e.sva &= 15;
         e.svh &= 1;
         e.tgd = round(e.tgd / 0.1e-9) * 0.1e-9;
+        e.tgd2 = round(e.tgd2 / 0.1e-9) * 0.1e-9;
         int run = ntest, pol = run & 1;
         int toe_bdt = (int)fmod(e.toe - GPST_BDT + 604800, 604800), sow0 = toe_bdt / 30 * 30 + 60;
         int nw = 0, npre = 0;
@@ -136,6 +137,7 @@ int main(void)
                                 (r0[2] - r1[2]) * (r0[2] - r1[2])) : 1e9;
         int fld = full && d.sys == SYS_BDS && d.prn == e.prn && d.week == e.week && d.iode == e.iode &&
                   d.iodc == e.iodc && d.svh == e.svh && d.sva == e.sva && fabs(d.tgd - e.tgd) < 1e-12 &&
+                  fabs(d.tgd2 - e.tgd2) < 1e-12 &&
                   fabs(d.toe - e.toe) < 1e-9 && fabs(d.toc - e.toc) < 1e-9;
         int ion = b.ion_ok;
         for (int k = 0; k < 8; k++) if (b.ion[k] != ldexp(ION_SIM[k], ION_SC[k])) ion = 0;

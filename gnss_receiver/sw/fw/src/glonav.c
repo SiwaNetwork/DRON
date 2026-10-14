@@ -89,6 +89,7 @@ void glo_str_encode(const eph_t *e, int m, double tk, int slot, uint8_t *s)
         break;
     case 4:
         ssm(s, 80, 22, -e->taun, P2(-30));         /* в eph_t хранится −τn */
+        ssm(s, 58, 5, e->tgd2, P2(-30));           /* Δτn */
         sb(s, 15, 5, (uint32_t)slot); sb(s, 10, 2, 1);
         break;
     case 5: {                                      /* NA, N4 — по дате МДВ момента toc */
@@ -171,6 +172,7 @@ static void decode_eph(glonav_t *g)
     e->vel[2] = gsm(s3, 64, 24) * P2(-20) * 1e3; e->acc[2] = gsm(s3, 40, 5) * P2(-30) * 1e3;
     e->pos[2] = gsm(s3, 35, 27) * P2(-11) * 1e3;
     e->taun = -gsm(s4, 80, 22) * P2(-30);
+    e->tgd2 = gsm(s4, 58, 5) * P2(-30);            /* Δτn = tf2 − tf1 */
     g->slot = (int)gb(s4, 15, 5);
     e->prn = (uint8_t)g->slot;
     e->iode = tb;

@@ -70,8 +70,8 @@ void trk_start(trk_t *k, int ch, int sig, int prn, int fcn, double doppler, doub
     k->cn0 = 0;
     k->sec_len = sec_code(sig, prn, k->sec);
     /* синхронизация по символам данных: L1 C/A — биты 20 мс, ГЛОНАСС — символы 10 мс (меандр),
-     * B1I (D1, с кодом NH) — биты 20 мс, E1-B — символ на период кода (граница известна сразу) */
-    k->bit_len = sig == SIG_L1CA || (sig == SIG_B1I && k->sec_len) ? 20 :
+     * B1I и B3I (D1, с кодом NH) — биты 20 мс, E1-B — символ на период кода (граница известна сразу) */
+    k->bit_len = sig == SIG_L1CA || ((sig == SIG_B1I || sig == SIG_B3I) && k->sec_len) ? 20 :
                  (sig == SIG_G1CA || sig == SIG_G2CA) ? 10 : sig == SIG_E1B ? 1 : 0;
     k->bit_sync = k->bit_len == 1;
     k->long_cn0 = cfg->long_cn0;
@@ -234,24 +234,23 @@ static void loops(trk_t *k, double EI, double EQ, double I, double Q, double LI,
 }
 
 /* синхронизация по вторичному коду: знаки точного отвода за последний период вторичного кода
- * сравниваются со всеми его сдвигами; принимается сдвиг с совпадением не менее L − 1 при
- * отсутствии второго близкого */
+ * сравниваются со всеми его сдвигами; принимается сдвиг с совпадением не менее L − 1 (у длинного
+ * кода, CS100 E5a-Q, — с ошибками не более L/50 знаков) при отсутствии второго близкого. Длинный
+ * код проверяется раз в 10 периодов (L² операций) */
 static void sec_try_sync(trk_t *k, double I)
 {
     int L = k->sec_len;
-    k->sec_hist[k->sec_n % L] = I;
-    if (++k->sec_n < L) return;
+    k->sec_hist[k->sec_n % L] = I < 0;
+    if (++k->sec_n < L || (L > 32 && k->sec_n % 10)) return;
     int best = 0, br = 0, second = 0;
     for (int r = 0; r < L; r++) {
         int c = 0;
-        for (int j = 0; j < L; j++) {
-            double v = k->sec_hist[(k->sec_n - L + j) % L];
-            c += ((v < 0) ^ k->sec[(r + j) % L]) ? -1 : 1;
-        }
+        for (int j = 0; j < L; j++)
+            c += (k->sec_hist[(k->sec_n - L + j) % L] ^ k->sec[(r + j) % L]) ? -1 : 1;
         if (abs(c) > abs(best)) { second = abs(best); best = c; br = r; }
         else if (abs(c) > second) second = abs(c);
     }
-    if (abs(best) >= L - 1 && second < L / 2) {
+    if (abs(best) >= L - 1 - 2 * (L / 50) && second < L / 2) {
         k->sec_sync = 1;
         k->sec_pos = br;                     /* следующий период — чип br */
         k->sec_sgn = best > 0 ? 1 : -1;      /* знак снимает неоднозначность фазы Костаса */

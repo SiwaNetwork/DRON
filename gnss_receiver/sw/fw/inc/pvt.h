@@ -16,6 +16,11 @@ typedef struct {
     const eph_t *eph;
     int    iono_free;        /* ПД — ионосферно-свободная комбинация (модель ионосферы не применяется) */
     double pr1, pr2;         /* ПД на двух частотах (двухчастотное измерение; сглаженные по фазе), м */
+    double gd;               /* ионосферно-свободная ПД: групповая задержка комбинации относительно
+                                опорной для часов КА в эфемеридах, с (часы КА — Δt − gd) */
+    double var;              /* дисперсия шума ПД (после сглаживания; у комбинации — с её
+                                коэффициентами), м²; вес — sin²(угла места)/(var + ошибка модели
+                                ионосферы); 0 — вес только по углу места */
     /* результаты */
     double az, el, res;
     int    used;
@@ -24,7 +29,7 @@ typedef struct {
 typedef struct {
     double el_mask;          /* маска угла места, рад */
     int    trop, iono;       /* учитывать тропосферу / ионосферу (Клобучар) */
-    int    tgd;              /* GPS: поправка часов КА за групповую задержку TGD (одночастотные ПД) */
+    int    tgd;              /* поправка часов КА за групповую задержку (TGD, BGD; у комбинации — gd) */
     double ion[8];           /* параметры Клобучара (α0..3, β0..3) */
 } pvt_cfg_t;
 
@@ -45,6 +50,8 @@ void pvt_default_cfg(pvt_cfg_t *c);
  * приближение (0 — центр Земли). sol->t_rx — время приёма по шкале GPST. */
 int  pvt_solve(obs_t *obs, int n, double t_rx, const pvt_cfg_t *cfg, sol_t *sol);
 void ecef2llh(const double *r, double *lat, double *lon, double *h);
+/* ионосферная задержка на частоте GPS L1 по модели Клобучара, м (t — секунды недели GPST) */
+double pvt_klobuchar(const double *ion, double t, double lat, double lon, double az, double el);
 void llh2ecef(double lat, double lon, double h, double *r);
 
 #endif

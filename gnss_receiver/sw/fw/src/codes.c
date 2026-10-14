@@ -174,10 +174,16 @@ int code_gen(int sig, int prn, uint8_t *bits)
 int sec_code(int sig, int prn, uint8_t *bits)
 {
     static const char CS25[] = "0011100000001010110110010";      /* E1C, CS25_1 = 0x380AD90 */
-    static const char NH20[] = "00000100110101001110";           /* L5Q, B1I: NH20 = 0x04D4E */
-    /* B1I: код NH — только у КА MEO/IGSO (D1, PRN 6–58); у GEO (D2) вторичного кода нет */
+    static const char NH20[] = "00000100110101001110";           /* L5Q, B1I, B3I: NH20 = 0x04D4E */
+    /* E5a-Q: CS100 — свой для каждого КА (таблица из Pocket SDR) */
+    if (sig == SIG_E5AQ) {
+        if (prn < 1 || prn > 36) return 0;
+        for (int i = 0; i < SEC_E5AQ_LEN; i++) bits[i] = (uint8_t)(SEC_E5AQ[prn - 1][i >> 3] >> (i & 7) & 1);
+        return SEC_E5AQ_LEN;
+    }
+    /* B1I, B3I: код NH — только у КА MEO/IGSO (D1, PRN 6–58); у GEO (D2) вторичного кода нет */
     const char *c = sig == SIG_E1C ? CS25 : sig == SIG_L5Q ? NH20 :
-                    sig == SIG_B1I && prn >= 6 && prn <= 58 ? NH20 : NULL;
+                    (sig == SIG_B1I || sig == SIG_B3I) && prn >= 6 && prn <= 58 ? NH20 : NULL;
     if (!c) return 0;
     int n = (int)strlen(c);
     for (int i = 0; i < n; i++) bits[i] = (uint8_t)(c[i] == '1');

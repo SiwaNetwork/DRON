@@ -70,6 +70,7 @@ int main(void)
                                 (r0[2] - r1[2]) * (r0[2] - r1[2])) : 1e9;
         int fld = full && d.sys == SYS_GAL && d.prn == e.prn && d.week == e.week && d.iode == e.iode &&
                   d.svh == e.svh && d.sva == e.sva && fabs(d.tgd - e.tgd) < 2.4e-10 &&
+                  fabs(d.tgd2 - e.tgd2) < 2.4e-10 &&
                   fabs(d.toe - e.toe) < 1e-9 && fabs(d.toc - e.toc) < 1e-9;
         printf("  E%02d: Es/N0 %.0f дБ, полярность %s, страниц %d (с TOW %d), ошибок CRC %d, привязка %s, эфемериды %s, "
                "неделя %d, ai0 %.2f, расхождение координат %.4f м, часов %.2e с\n", e.prn, esn0,

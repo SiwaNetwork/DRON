@@ -65,10 +65,10 @@ typedef struct {
     int      ncoh;           /* периодов на обновление петель (1, bit_len или ≈ 20 мс для пилота) */
     double   acc[6];         /* E, P, L (I, Q) за интервал петли */
     int      nacc;
-    /* вторичный код пилотной составляющей: синхронизация по знакам точного отвода */
+    /* вторичный код: синхронизация по знакам точного отвода */
     uint8_t  sec[SEC_MAX_LEN];
     int      sec_len, sec_sync, sec_pos, sec_sgn, sec_n;
-    double   sec_hist[SEC_MAX_LEN];
+    uint8_t  sec_hist[SEC_MAX_LEN];  /* знаки точного отвода за последний период (1 — минус) */
     /* прогноз и повторный захват */
     double   coast_time, reacq_thr;
     double   noise1;         /* мощность шума результата одного периода (оценка) */

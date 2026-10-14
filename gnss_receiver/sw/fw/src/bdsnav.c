@@ -161,6 +161,7 @@ static void decode_eph(bdsnav_t *b)
     b->week = (int)getbitu(s1, 60, 13) + BDS_GPS_WEEK;
     e->toc = bdt2gpst(get2u(s1, 73, 9, 90, 8) * 8.0);
     e->tgd = getbits(s1, 98, 10) * 0.1e-9;                  /* TGD1 (B1I) */
+    e->tgd2 = get2s(s1, 108, 4, 120, 6) * 0.1e-9;           /* TGD2 (B2I) */
     b->ion[0] = getbits(s1, 126, 8) * P2(-30);
     b->ion[1] = getbits(s1, 134, 8) * P2(-27);
     b->ion[2] = getbits(s1, 150, 8) * P2(-24);
@@ -288,7 +289,7 @@ void bdsnav_encode(const eph_t *e, int sfid, int sow, uint8_t bits[300])
         setbitu(s, 60, 13, (uint32_t)(e->week - BDS_GPS_WEEK) & 0x1FFF);
         set2s(s, 73, 9, 90, 8, lround(toc));
         setbits(s, 98, 10, lround(e->tgd / 0.1e-9));
-        set2s(s, 108, 4, 120, 6, lround(e->tgd / 0.1e-9));   /* TGD2 = TGD1 в имитаторе */
+        set2s(s, 108, 4, 120, 6, lround(e->tgd2 / 0.1e-9));
         setbits(s, 126, 8, ION_SIM[0]);
         setbits(s, 134, 8, ION_SIM[1]);
         setbits(s, 150, 8, ION_SIM[2]);

@@ -30,6 +30,7 @@ int main(void)
         if (e->sys != SYS_GLO || !e->valid || e->prn >= 32 || used[e->prn]) continue;
         used[e->prn] = 1;
         nsat++;
+        EPH[i].tgd2 = ldexp((e->prn % 7) - 3, -29);        /* Δτn (в RINEX 3 нет): −6…+6 · 2^−30 с */
         /* кадр начинается за 20 мин до toc по МДВ; два кадра (60 с) */
         double tod_toc = fmod(e->toc - GPST_UTC + 10800.0 + 7 * 86400.0, 86400.0);
         double tk = fmod(tod_toc - 1200.0 + 86400.0, 86400.0);
@@ -73,7 +74,7 @@ int main(void)
                "toc %+.0f с, координаты через 10 мин %.2f м, часы %.2f нс, ошибок времени строк %d, "
                "дата (NA %d, N4 %d) неверна %d из %d\n",
                e->prn, e->fcn, nstr, inv, g.slot, d.toc - e->toc, dp, (t1 - t2) * 1e9, tbad, g.na, g.n4, dbad, ndate);
-        if (!d.valid || g.slot != e->prn || fabs(d.toc - e->toc) > 1e-6 || dp > 2.0 || fabs(t1 - t2) > 2e-9 ||
+        if (!d.valid || g.slot != e->prn || fabs(d.toc - e->toc) > 1e-6 || dp > 2.0 || fabs(t1 - t2) > 2e-9 || d.tgd2 != e->tgd2 ||
             tbad || nstr < 28 || dbad || ndate < 10) ok = 0;
     }
     if (nsat < 3) ok = 0;

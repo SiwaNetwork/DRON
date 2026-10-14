@@ -72,7 +72,8 @@ int rinex_read_nav(const char *path, eph_t *eph, int max)
             e->sva = (int)v[23]; e->svh = (int)v[24]; e->tgd = v[25]; e->iodc = (int)v[26];
             /* Galileo: BGD — к паре частот, к которой отнесены часы (источник данных, разряд 8 —
              * E5a, E1: F/NAV; иначе E5b, E1: I/NAV) */
-            if (sys == SYS_GAL) { e->tgd = ((int)v[20] & 0x100) ? v[25] : v[26]; e->iodc = 0; }
+            if (sys == SYS_GAL) { e->tgd = ((int)v[20] & 0x100) ? v[25] : v[26]; e->tgd2 = v[25]; e->iodc = 0; }
+            if (sys == SYS_BDS) e->tgd2 = v[26];             /* TGD2 (B2I); Δτn ГЛОНАСС в RINEX 3 нет */
             if (sys == SYS_BDS) e->toe = fmod(e->toe + GPST_BDT, 604800);
         }
         e->valid = 1;

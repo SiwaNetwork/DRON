@@ -8,7 +8,11 @@
  * Galileo E1-B: опорная эпоха — конец страницы I/NAV (2 с; GST начала страницы + 2 с, секунды
  * недели GST = GPST без GGTO); BeiDou B1I: конец подкадра D1 (6 с; SOW — BDT, GPST = BDT + 14 с).
  * Время на шкале каждой системы приведено к GPST; расхождение шкал оценивает решение (часы по
- * системам). */
+ * системам).
+ * Двухчастотный режим (r->dual): по каналу первой частоты запускается канал второй — пары
+ * L1 C/A + L2CM или L5Q, G1 + G2, E1-B + E5a-Q, B1I + B3I; ПД второй частоты — по фазе её кода
+ * внутри периода и времени излучения первой, в решение — ионосферно-свободная комбинация с
+ * поправкой часов КА на групповую задержку комбинации (sig_gd). */
 #include <math.h>
 #include <string.h>
 #include "fpga.h"
@@ -23,6 +27,11 @@ void rx_init(rx_t *r)
     trk_default_cfg(&r->tcfg);
     r->dt_ls = (int)GPST_UTC;
     r->smooth = 100.0;
+    for (int s = 0; s < SYS_N; s++) r->sig2[s] = -1;
+    r->sig2[SYS_GPS] = SIG_L2CM;
+    r->sig2[SYS_GLO] = SIG_G2CA;
+    r->sig2[SYS_GAL] = SIG_E5AQ;
+    r->sig2[SYS_BDS] = SIG_B3I;
 }
 
 double rx_time(const rx_t *r, uint64_t n)
@@ -184,23 +193,70 @@ static double tx_time(const rx_ch_t *c, uint64_t n)
     return c->ref_tow + (double)(int64_t)(ct - c->ref_code) / TWO32 / SIGS[c->sig].chip_rate;
 }
 
-/* запуск L2CM по каналу L1 C/A того же КА: фаза кода — по времени излучения L1 (эпохи
- * L2CM — через 20 мс шкалы КА), доплер — пересчётом по частоте; поиск не нужен */
-static void start_l2(rx_t *r, int k1, uint64_t n_now)
+/* сигнал второй частоты для канала первой (−1 — нет) */
+static int sig_second(const rx_t *r, int sig)
+{
+    if (!r->dual || (sig != SIG_L1CA && sig != SIG_G1CA && sig != SIG_E1B && sig != SIG_B1I)) return -1;
+    return r->sig2[SIGS[sig].sys];
+}
+
+/* групповая задержка сигнала относительно опорной для часов КА в эфемеридах, с (часы КА для
+ * сигнала — Δt − gd): GPS LNAV — комбинация L1/L2 (L1 — TGD, L2 — γ12·TGD; L5 — TGD при
+ * ISC_L5 = 0, CNAV не декодируется); Galileo I/NAV — E1/E5b (E1 — BGD(E1,E5b), E5a —
+ * BGD(E1,E5b) + (γ − 1)·BGD(E1,E5a)); BeiDou D1 — B3I (B1I — TGD1); ГЛОНАСС — L1 (L2 — Δτn) */
+static double sig_gd(const eph_t *e, int sig)
+{
+    double f1, f2;
+    switch (sig) {
+    case SIG_L1CA: case SIG_L5I: case SIG_L5Q: return e->tgd;
+    case SIG_L2CM:
+        f1 = sig_carrier(SIG_L1CA, 0); f2 = sig_carrier(SIG_L2CM, 0);
+        return f1 * f1 / (f2 * f2) * e->tgd;
+    case SIG_E1B: case SIG_E1C: return e->tgd;
+    case SIG_E5AI: case SIG_E5AQ:
+        f1 = sig_carrier(SIG_E1B, 0); f2 = sig_carrier(SIG_E5AQ, 0);
+        return e->tgd + (f1 * f1 / (f2 * f2) - 1) * e->tgd2;
+    case SIG_B1I: return e->tgd;
+    case SIG_G2CA: return e->tgd2;
+    default: return 0;
+    }
+}
+
+/* запуск канала второй частоты sig2 по каналу первой k1 того же КА без поиска: фаза кода — по
+ * времени излучения на первой частоте за вычетом разности ионосферных задержек (модель
+ * Клобучара по последнему решению, если есть; эпохи кода — через период кода по шкале КА,
+ * вторичный код синхронизируется при слежении), доплер — пересчётом по частоте */
+static void start_second(rx_t *r, int k1, int sig2, uint64_t n_now)
 {
     rx_ch_t *c1 = &r->ch[k1];
-    int ch = corr_alloc(SIG_L2CM);
+    int ch = corr_alloc(sig2);
     if (ch < 0) return;
     uint64_t ns = ((n_now + 24000) >> 2) << 2;              /* через 1 мс, начало группы */
     if (corr_start_pending(ch, n_now, ns)) { CORR[ch].used = 0; return; }   /* — при следующем вызове */
-    double t1 = tx_time(c1, ns);
-    double cp = fmod(t1, 0.020) * SIGS[SIG_L2CM].chip_rate;
-    double dop = trk_doppler_smooth(&c1->trk) * sig_carrier(SIG_L2CM, 0) / sig_carrier(SIG_L1CA, 0);
-    corr_load_code(ch, SIG_L2CM, c1->prn);
+    const sig_info_t *s2 = &SIGS[sig2];
+    int sys = SIGS[c1->sig].sys, glo = sys == SYS_GLO;
+    double f1 = sig_carrier(c1->sig, c1->fcn), f2 = sig_carrier(sig2, c1->fcn), g = f1 * f1 / (f2 * f2);
+    double diono = 0;
+    if (r->n_sol > 0 && r->ion_ok)
+        for (int i = 0; i < r->nobs; i++)
+            if (r->obs[i].sys == sys && r->obs[i].prn == c1->prn && r->obs[i].el > 0) {
+                double fl1 = sig_carrier(SIG_L1CA, 0);
+                double i1 = pvt_klobuchar(r->ion, r->sol.t_rx, r->sol.lat, r->sol.lon, r->obs[i].az,
+                                          r->obs[i].el) * fl1 * fl1 / (f1 * f1);
+                diono = (g - 1) * i1 / CLIGHT;
+                break;
+            }
+    double per = s2->code_len / s2->chip_rate;
+    double t2 = tx_time(c1, ns) - diono;
+    double cp = (t2 - floor(t2 / per) * per) * s2->chip_rate;
+    double dop = trk_doppler_smooth(&c1->trk) * f2 / f1;
+    int prn = glo ? 1 : c1->prn;                            /* ГЛОНАСС: код общий */
+    corr_load_code(ch, sig2, prn);
     rx_ch_t *c = &r->ch[ch];
     memset(c, 0, sizeof(*c));
-    c->used = 1; c->ch = ch; c->sig = SIG_L2CM; c->prn = c1->prn; c->pair = k1 + 1;
-    trk_start(&c->trk, ch, SIG_L2CM, c1->prn, 0, dop, cp, ns, &r->tcfg);
+    c->used = 1; c->ch = ch; c->sig = sig2; c->prn = c1->prn; c->fcn = c1->fcn;
+    c->f2 = 1; c->pair = k1 + 1;
+    trk_start(&c->trk, ch, sig2, prn, c1->fcn, dop, cp, ns, &r->tcfg);
     int chs[1] = {ch};
     corr_start(chs, 1, ns);
     c1->pair = ch + 1;
@@ -214,14 +270,16 @@ void rx_process(rx_t *r, uint64_t n_now)
         rx_ch_t *c = &r->ch[k];
         if (!c->used) continue;
         while (corr_read(c->ch, &d, n_now)) trk_update(&c->trk, &d);
-        if (c->trk.state == TRK_IDLE) {          /* срыв более 1 с — канал освобождается */
+        /* срыв более 1 с — канал освобождается; канал второй частоты — и без канала первой */
+        if (c->trk.state == TRK_IDLE || (c->f2 && !c->pair)) {
             if (c->pair && r->ch[c->pair - 1].pair == k + 1) r->ch[c->pair - 1].pair = 0;
             corr_free(c->ch);
             c->used = 0;
             continue;
         }
-        if (r->dual && c->sig == SIG_L1CA && !c->pair && c->tx_ok && c->trk.state == TRK_LOCK)
-            start_l2(r, k, n_now);
+        int s2 = c->f2 ? -1 : sig_second(r, c->sig);
+        if (s2 >= 0 && !c->pair && c->tx_ok && c->trk.state == TRK_LOCK)
+            start_second(r, k, s2, n_now);
     }
 }
 
@@ -235,7 +293,10 @@ static double carr_m(const rx_ch_t *c, uint64_t n)
 
 /* сглаживание кода по фазе несущей (фильтр Хэтча): Ps = P/m + (Ps' + ΔΦ)·(m − 1)/m,
  * m — число измерений, не более окна r->smooth. Сброс — при срыве слежения, перерыве
- * в измерениях более 5 с и расхождении кода и фазы более 30 м (проскок фазы). */
+ * в измерениях более 5 с и расхождении кода и фазы более 30 м (проскок фазы).
+ * hs_m — эффективное число независимых измерений: до заполнения окна — m (среднее),
+ * затем 2m − 1 (экспоненциальное среднее); при интервале короче времени корреляции шума ССЗ
+ * 1/(2Bn) — с множителем 2Bn·dt */
 static double hatch(const rx_t *r, rx_ch_t *c, double p, double phi, double t)
 {
     double dt = t - c->hs_t;
@@ -246,11 +307,31 @@ static double hatch(const rx_t *r, rx_ch_t *c, double p, double phi, double t)
             if (m < 1) m = 1;
             c->hs_p = p / m + pred * (m - 1) / m;
             c->hs_l = phi; c->hs_t = t; c->hs_n++;
+            double ind = 2 * c->trk.dll_k / 4 * dt;
+            c->hs_m = (c->hs_n < mmax ? c->hs_n : 2 * mmax - 1) * (ind < 1 ? ind : 1);
+            if (c->hs_m < 1) c->hs_m = 1;
             return c->hs_p;
         }
     }
-    c->hs_n = 1; c->hs_p = p; c->hs_l = phi; c->hs_t = t;
+    c->hs_n = 1; c->hs_m = 1; c->hs_p = p; c->hs_l = phi; c->hs_t = t;
     return p;
+}
+
+/* дисперсия шума кода канала (тепловой шум ССЗ с поддержкой от несущей: когерентный
+ * дискриминатор (E − L)/(E + L), Kaplan) после сглаживания, м²:
+ * σ² = h·s·Bn/(C/N0)·(1 + 1/(T·C/N0·(1 − s/h)))·λc²/m + σ0²,
+ * h — полуширина пика корреляции (BPSK — 1 чип, TDM L2C — 0,5, BOC(1,1) — 1/3), s — смещение
+ * отводов E/L, Bn — полоса ССЗ, T — время когерентного накопления, λc — длина чипа, m — hs_m;
+ * σ0 = 0,3 м — остаточные ошибки (многолучёвость, не усредняемая сглаживанием) */
+static double code_var(const rx_ch_t *c)
+{
+    const trk_t *k = &c->trk;
+    const sig_info_t *si = &SIGS[c->sig];
+    double cn0 = pow(10.0, (k->cn0 > 20.0 ? k->cn0 : k->cn0 > 0 ? 20.0 : 35.0) / 10.0);
+    double h = si->boc ? 1.0 / 3.0 : k->dll_hw, s = k->spacing < h / 2 ? k->spacing : h / 2;
+    double bn = k->dll_k / 4, T = k->T * (k->ncoh > 1 ? k->ncoh : 1), lc = CLIGHT / si->chip_rate;
+    double v = h * s * bn / cn0 * (1 + 1 / (T * cn0 * (1 - s / h))) * lc * lc;
+    return v / (c->hs_m > 1 ? c->hs_m : 1) + 0.09;
 }
 
 int rx_measure(rx_t *r, uint64_t n_m)
@@ -260,7 +341,7 @@ int rx_measure(rx_t *r, uint64_t n_m)
     int n = 0;
     for (int k = 0; k < CORR_MAXCH; k++) {
         rx_ch_t *c = &r->ch[k];
-        if (!c->used || c->sig == SIG_L2CM) continue;
+        if (!c->used || c->f2) continue;
         rx_ch_t *c2 = c->pair ? &r->ch[c->pair - 1] : NULL;
         if (!c->tx_ok || c->trk.state != TRK_LOCK) {
             c->hs_n = 0;
@@ -275,13 +356,15 @@ int rx_measure(rx_t *r, uint64_t n_m)
         /* ПД сглаживаются и до приёма эфемерид */
         double p1 = hatch(r, c, CLIGHT * eph_tdiff(trx, ttx), carr_m(c, n_m), trx), p2 = 0;
         int dual = 0;
-        /* L2CM: время внутри периода 20 мс — по фазе кода, целые периоды — по L1 */
+        /* вторая частота: время внутри периода кода — по фазе кода (с точностью до разности
+         * задержек, много меньше полупериода), целые периоды — по первой частоте */
         if (c2 && c2->used && c2->trk.state == TRK_LOCK) {
-            uint64_t ct2 = corr_code_total_at(c2->ch, n_m);
-            double tc = fmod((double)ct2 / TWO32 / SIGS[SIG_L2CM].chip_rate, 0.020);
-            double dt = fmod(tc - ttx, 0.020);
-            if (dt > 0.010) dt -= 0.020;
-            if (dt < -0.010) dt += 0.020;
+            const sig_info_t *s2 = &SIGS[c2->sig];
+            double per = s2->code_len / s2->chip_rate, cp2;
+            corr_phase_at(c2->ch, n_m, &cp2, NULL);
+            double dt = fmod(cp2 / s2->chip_rate - fmod(ttx, per), per);
+            if (dt > per / 2) dt -= per;
+            if (dt < -per / 2) dt += per;
             p2 = hatch(r, c2, CLIGHT * eph_tdiff(trx, ttx + dt), carr_m(c2, n_m), trx);
             dual = 1;
         } else if (c2) c2->hs_n = 0;
@@ -291,10 +374,13 @@ int rx_measure(rx_t *r, uint64_t n_m)
         memset(o, 0, sizeof(*o));
         o->sys = sys; o->prn = c->prn;
         o->pr = o->pr1 = p1;
+        o->var = code_var(c);
         if (dual) {
-            double f1 = sig_carrier(SIG_L1CA, 0), f2 = sig_carrier(SIG_L2CM, 0), g = f1 * f1 / (f2 * f2);
+            double f1 = sig_carrier(c->sig, c->fcn), f2 = sig_carrier(c2->sig, c2->fcn), g = f1 * f1 / (f2 * f2);
             o->pr2 = p2;
             o->pr = (g * p1 - p2) / (g - 1);
+            o->gd = (g * sig_gd(e, c->sig) - sig_gd(e, c2->sig)) / (g - 1);
+            o->var = (g * g * o->var + code_var(c2)) / ((g - 1) * (g - 1));
             o->iono_free = 1;
         }
         o->dop = trk_doppler(&c->trk);

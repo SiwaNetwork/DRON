@@ -5,11 +5,11 @@ CFLAGS  ?= -std=c99 -O2 -g -Wall -Wextra -Wno-unused-parameter -Iinc -Isrc
 LDLIBS  = -lm
 SRC     = src/signals.c src/codes.c src/gen/code_tab.c src/corr_sim.c src/corr.c src/fft.c src/acq.c src/track.c src/eph.c src/rinex.c src/pvt.c src/lnav.c src/nmea.c src/rx.c src/spectrum.c src/rtcm3.c src/glonav.c src/proto.c src/inav.c src/bdsnav.c
 TESTS   = build/test_glonav build/test_inav build/test_bdsnav build/test_codes build/test_corr_sim build/test_pvt build/test_lnav build/test_spectrum build/test_output build/test_acq_weak build/test_rx_l1
-LONG    = build/test_trk_dyn build/test_trk_weak build/test_rx_pvt build/test_rx_glo build/test_rx_dual build/test_rx_gb
+LONG    = build/test_trk_dyn build/test_trk_weak build/test_rx_pvt build/test_rx_glo build/test_rx_dual build/test_rx_gb build/test_rx_dual2
 
 all: $(TESTS)
 
-src/gen/code_tab.c inc/gen/code_tab.h tests/vectors/codes.txt: tools/gen_tables.py
+src/gen/code_tab.c inc/gen/code_tab.h tests/vectors/codes.txt tests/vectors/sec.txt: tools/gen_tables.py
 	python3 tools/gen_tables.py
 
 tests/vectors/pvt.txt tests/vectors/satpos.txt: tools/gen_nav_vectors.py
@@ -25,7 +25,7 @@ test: $(TESTS)
 	@for t in $(TESTS); do echo "== $$t"; ./$$t || exit 1; done
 	python3 tests/check_output.py
 
-# длительные тесты: слежение за слабыми сигналами, сквозной «ПЧ -> координаты, 1PPS» (≈ 25 мин)
+# длительные тесты: слежение за слабыми сигналами, сквозной «ПЧ -> координаты, 1PPS», четыре двухчастотные пары (≈ 70 мин)
 test-long: $(LONG)
 	@for t in $(LONG); do echo "== $$t"; ./$$t || exit 1; done
 

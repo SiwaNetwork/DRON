@@ -13,6 +13,9 @@ typedef struct {
     int     week;                /* неделя GPS */
     double  toc, toe;            /* секунды недели GPST */
     double  af0, af1, af2, tgd;
+    /* вторая групповая задержка, с: Galileo — BGD(E1, E5a) (tgd — BGD(E1, E5b)), BeiDou — TGD2
+     * (tgd — TGD1), ГЛОНАСС — Δτn = tf2 − tf1 (задержка L2 относительно L1, строка 4) */
+    double  tgd2;
     double  sqrtA, e, i0, OMG0, omg, M0, dn, OMGd, idot, cuc, cus, crc, crs, cic, cis;
     int     iode, iodc, svh, sva;
     /* ГЛОНАСС: ПЗ-90, м, м/с, м/с² на момент toc; −τn (с), γn */

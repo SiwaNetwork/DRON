@@ -160,7 +160,8 @@ static void decode_word(inav_t *g, const uint8_t *w, int type)
         g->ai[1] = getbits(w, 17, 11) * P2(-8);
         g->ai[2] = getbits(w, 28, 14) * P2(-15);
         g->ai_ok = 1;
-        /* BGD(E1, E5b) — для одночастотного E1 по часам I/NAV */
+        /* BGD(E1, E5b) — для одночастотного E1 по часам I/NAV; BGD(E1, E5a) — для пары E1, E5a */
+        e->tgd2 = getbits(w, 47, 10) * P2(-32);
         e->tgd = getbits(w, 57, 10) * P2(-32);
         /* состояние в разрядах RINEX: 0 — E1-B DVS, 1–2 — E1-B HS, 6 — E5b DVS, 7–8 — E5b HS */
         e->svh = (int)(getbitu(w, 72, 1) | getbitu(w, 69, 2) << 1 | getbitu(w, 71, 1) << 6 |
@@ -325,7 +326,7 @@ static void encode_word(const eph_t *e, int type, int tow, int week, uint8_t *w)
         setbitu(w, 6, 11, (uint32_t)lround(AI_SIM[0] / P2(-2)));
         setbits(w, 17, 11, (int32_t)lround(AI_SIM[1] / P2(-8)));
         setbits(w, 28, 14, (int32_t)lround(AI_SIM[2] / P2(-15)));
-        setbits(w, 47, 10, (int32_t)lround(e->tgd / P2(-32)));
+        setbits(w, 47, 10, (int32_t)lround(e->tgd2 / P2(-32)));
         setbits(w, 57, 10, (int32_t)lround(e->tgd / P2(-32)));
         setbitu(w, 67, 2, (uint32_t)(e->svh >> 7) & 3);
         setbitu(w, 69, 2, (uint32_t)(e->svh >> 1) & 3);

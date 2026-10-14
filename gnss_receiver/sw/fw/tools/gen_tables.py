@@ -4,7 +4,9 @@
 Источник — эталонная реализация Pocket SDR (BSD-2, sw/pyrx/third_party/pocketsdr) через
 sw/pyrx/codes.py. Генераторы на РСЛОС реализованы в src/codes.c; здесь — только их таблицы
 (начальные состояния, задержки) и коды, хранимые в памяти (Galileo E1/E6), и коды Вейля
-(GPS L1C, BeiDou B1C) — упакованные биты первичного кода (1 = чип −1, младший бит — первый).
+(GPS L1C, BeiDou B1C) — упакованные биты первичного кода (1 = чип −1, младший бит — первый);
+вторичные коды, задаваемые таблицей (Galileo E5a-Q — CS100, свой для каждого КА), и эталонные
+векторы вторичных кодов (tests/vectors/sec.txt).
 """
 import os
 import sys
@@ -34,6 +36,11 @@ LFSR = {
     "B2AD": list(range(1, 64)), "B2AP": list(range(1, 64)), "B2BI": list(range(1, 64)),
     "I5S": list(range(1, 15)),
 }
+# вторичные коды в памяти: сигнал -> PRN (CS100 Galileo E5a-Q, 100 чипов)
+SEC_MEM = {"E5AQ": list(range(1, 37))}
+# эталонные вторичные коды для проверки sec_code() на C
+SEC_REF = {"E1C": list(range(1, 37)), "L5Q": list(range(1, 33)), "E5AQ": list(range(1, 37)),
+           "B1I": list(range(6, 59)), "B3I": list(range(6, 59))}
 TABLES = ["L1CA_G2_delay", "L2CM_R_init_1", "L5I_XB_adv", "L5Q_XB_adv", "E5AI_X2_init",
           "E5AQ_X2_init", "E5BI_X2_init", "E5BQ_X2_init", "B2AD_G2_init", "B2AP_G2_init",
           "B2BI_G2_init", "B3I_G2_init", "I5S_G2_init"]
@@ -93,6 +100,17 @@ def main():
         entries.append(f'    {{"{sig}", {L}, {len(prns)}, PRN_{sig}, BITS_{sig}}}')
     c.append("const mem_code_t MEM_CODES[] = {\n" + ",\n".join(entries) + "\n};")
     c.append(f"const int N_MEM_CODES = {len(entries)};")
+    # вторичные коды в памяти: SEC_<сигнал>[PRN − 1][байт]
+    h.append("")
+    for sig, prns in SEC_MEM.items():
+        L = len(ref.sec_code(sig, prns[0]))
+        nb = (L + 7) // 8
+        rows = [pack(ref.sec_code(sig, p)) for p in prns]
+        assert all(len(r) == nb for r in rows) and prns == list(range(1, len(prns) + 1))
+        c.append(f"const uint8_t SEC_{sig}[{len(prns)}][{nb}] = {{\n" +
+                 ",\n".join("{" + ",".join(f"0x{b:02x}" for b in r) + "}" for r in rows) + "};\n")
+        h.append(f"#define SEC_{sig}_LEN {L}")
+        h.append(f"extern const uint8_t SEC_{sig}[{len(prns)}][{nb}];")
     h += ["", "#endif"]
     open(os.path.join(FW, "src", "gen", "code_tab.c"), "w").write("\n".join(c) + "\n")
     open(os.path.join(FW, "inc", "gen", "code_tab.h"), "w").write("\n".join(h) + "\n")
@@ -102,6 +120,11 @@ def main():
             for p in prns:
                 ch = chips(sig, p)
                 f.write(f"{sig} {p} {len(ch)} {pack(ch).hex()}\n")
+    with open(os.path.join(FW, "tests", "vectors", "sec.txt"), "w") as f:
+        for sig, prns in SEC_REF.items():
+            for p in prns:
+                sc = ref.sec_code(sig, p)
+                f.write(f"{sig} {p} {len(sc)} {pack(sc).hex()}\n")
     print("code_tab.c:", os.path.getsize(os.path.join(FW, "src", "gen", "code_tab.c")) // 1024, "КБ")
 
 
