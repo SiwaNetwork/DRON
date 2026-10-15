@@ -343,7 +343,7 @@ int main(void)
         for (int k = 0; k < CORR_MAXCH; k++) if (rx.ch[k].used && rx.ch[k].trk.state == TRK_LOCK) {
             int sys = SIGS[rx.ch[k].sig].sys;
             nlk[sys]++;
-            neph[sys] += rx.eph[sys][rx.ch[k].prn].valid;
+            neph[sys] += rx_eph(&rx, sys, rx.ch[k].prn)->valid;
         }
         if (getenv("GB_DBG"))
             for (int k = 0; k < CORR_MAXCH; k++) if (rx.ch[k].used && SIGS[rx.ch[k].sig].sys != SYS_GPS) {
@@ -364,11 +364,11 @@ int main(void)
                 printf("    %c%02d: сост. %d, lock %.2f, C/N0 %.1f, доплер %+.1f (ист. %+.1f), ошибка кода %+.3f чипа",
                        SYSC[p->sys], c->prn, c->trk.state, c->trk.lock, c->trk.cn0, trk_doppler(&c->trk), fd, de);
                 if (p->sys == SYS_GAL) {
-                    const inav_t *g = &c->msg.inav;
+                    const inav_t *g = &c->msg->inav;
                     printf("; I/NAV: синхр. %d, стр. %d, CRC ош. %d, TOW %d, IOD %d %d %d %d\n", g->sync, g->n_page,
                            g->n_crc_err, g->tow_ok, g->iod[0], g->iod[1], g->iod[2], g->iod[3]);
                 } else {
-                    const bdsnav_t *b = &c->msg.bnav;
+                    const bdsnav_t *b = &c->msg->bnav;
                     printf("; NH %d, D1: синхр. %d, подкадров %d, испр. %d, ош. SOW %d\n", c->trk.sec_sync, b->sync,
                            b->n_sf, b->n_corr, b->n_sow_err);
                 }
@@ -429,7 +429,7 @@ int main(void)
         const rx_ch_t *c = NULL;
         for (int k = 0; k < CORR_MAXCH; k++)
             if (rx.ch[k].used && rx.ch[k].sig == p->sig && rx.ch[k].prn == p->prn) c = &rx.ch[k];
-        const eph_t *d = &rx.eph[p->sys][p->prn];
+        const eph_t *d = rx_eph(&rx, p->sys, p->prn);
         double de = -1, dt = 0;
         if (d->valid) {
             double r0[3], r1[3], c0, c1, t = T0 + DUR;

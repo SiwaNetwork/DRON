@@ -34,6 +34,17 @@ void rx_init(rx_t *r)
     r->sig2[SYS_BDS] = SIG_B3I;
 }
 
+static const int EPH_N[SYS_N] = RX_EPH_N;
+typedef char eph_n_check[(33 + 32 + 37 + 64 + 11 + 15 + 40 == RX_NEPH && SYS_N == 7) ? 1 : -1];
+
+eph_t *rx_eph(rx_t *r, int sys, int prn)
+{
+    if (sys < 0 || sys >= SYS_N || prn < 0 || prn >= EPH_N[sys]) return NULL;
+    int off = 0;
+    for (int s = 0; s < sys; s++) off += EPH_N[s];
+    return &r->eph[off + prn];
+}
+
 double rx_time(const rx_t *r, uint64_t n)
 {
     return r->t0_tow + (double)(int64_t)(n - r->t0_n) / FS_HZ;
@@ -58,6 +69,9 @@ int rx_acquire(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap,
         for (int k = 0; k < CORR_MAXCH; k++)
             if (r->ch[k].used && r->ch[k].sig == sig && (glo ? r->ch[k].fcn == fcn : r->ch[k].prn == prn)) busy = 1;
         if (busy) continue;
+        int m = 0;
+        while (m < RX_NMSG && r->msg_busy[m]) m++;
+        if (m == RX_NMSG) break;
         acq_res_t a;
         if (!acq_search_multi(x4, t0, nsnap, len, sig, prn, fcn, ac, &a)) continue;
         int ch = corr_alloc(sig);
@@ -71,10 +85,12 @@ int rx_acquire(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap,
         trk_start(&c->trk, ch, sig, prn, fcn, a.doppler, cps, t_start, &r->tcfg);
         c->trk.on_bit = on_bit;
         c->trk.ctx = c;
-        if (glo) glonav_init(&c->msg.gnav, fcn);
-        else if (si->sys == SYS_GAL) inav_init(&c->msg.inav, prn);
-        else if (si->sys == SYS_BDS) bdsnav_init(&c->msg.bnav, prn);
-        else lnav_init(&c->msg.lnav, prn);
+        r->msg_busy[m] = 1;
+        c->msg = &r->msg[m];
+        if (glo) glonav_init(&c->msg->gnav, fcn);
+        else if (si->sys == SYS_GAL) inav_init(&c->msg->inav, prn);
+        else if (si->sys == SYS_BDS) bdsnav_init(&c->msg->bnav, prn);
+        else lnav_init(&c->msg->lnav, prn);
         chs[n++] = ch;
     }
     if (n) corr_start(chs, n, t_start);
@@ -109,7 +125,7 @@ static void nav_ref(rx_t *r, rx_ch_t *c, uint64_t n, double tow)
 static void on_sym_glo(rx_ch_t *c, int sym, uint64_t n_end)
 {
     rx_t *r = RX;
-    glonav_t *g = &c->msg.gnav;
+    glonav_t *g = &c->msg->gnav;
     if (!glonav_sym(g, sym ? -1.0 : 1.0, n_end)) return;
     if (!r->time_ok && g->n4 > 0 && g->na > 0 && g->str_end_tod >= 0) {
         /* шкала приёмника по ГЛОНАСС (без GPS): дата — из строки 5, задержка ≈ 75 мс */
@@ -126,7 +142,8 @@ static void on_sym_glo(rx_ch_t *c, int sym, uint64_t n_end)
         eph_t e = g->eph;
         e.toc = e.toe = glo_tod2gpst(e.toc, tr);
         e.week = r->week;
-        r->eph[SYS_GLO][g->slot] = e;
+        eph_t *d = rx_eph(r, SYS_GLO, g->slot);
+        if (d) *d = e;
         c->prn = g->slot;
         g->eph_new = 0;
     }
@@ -138,10 +155,11 @@ static void on_sym_glo(rx_ch_t *c, int sym, uint64_t n_end)
 static void on_sym_gal(rx_ch_t *c, uint64_t n_end)
 {
     rx_t *r = RX;
-    inav_t *g = &c->msg.inav;
+    inav_t *g = &c->msg->inav;
     if (!inav_sym(g, c->trk.bit_acc, n_end)) return;
     if (g->eph_new) {
-        r->eph[SYS_GAL][c->prn] = g->eph;
+        eph_t *d = rx_eph(r, SYS_GAL, c->prn);
+        if (d) *d = g->eph;
         r->week = g->eph.week;
         g->eph_new = 0;
     }
@@ -155,11 +173,12 @@ static void on_sym_gal(rx_ch_t *c, uint64_t n_end)
 static void on_bit_bds(rx_ch_t *c, int bit, uint64_t n_end)
 {
     rx_t *r = RX;
-    bdsnav_t *b = &c->msg.bnav;
+    bdsnav_t *b = &c->msg->bnav;
     if (!bdsnav_bit(b, bit, n_end)) return;
     nav_ref(r, c, n_end + 1, b->sf_end_tow);
     if (b->eph_new) {
-        r->eph[SYS_BDS][c->prn] = b->eph;
+        eph_t *d = rx_eph(r, SYS_BDS, c->prn);
+        if (d) *d = b->eph;
         r->week = b->eph.week;
         b->eph_new = 0;
     }
@@ -173,12 +192,13 @@ static void on_bit(void *ctx, int bit, uint64_t n_end)
     if (sys == SYS_GLO) { on_sym_glo(c, bit, n_end); return; }
     if (sys == SYS_GAL) { on_sym_gal(c, n_end); return; }
     if (sys == SYS_BDS) { on_bit_bds(c, bit, n_end); return; }
-    lnav_t *nv = &c->msg.lnav;
+    lnav_t *nv = &c->msg->lnav;
     if (!lnav_bit(nv, bit, n_end)) return;
     /* граница подкадра: конец последнего бита — эпоха кода внутри отсчёта n_end */
     nav_ref(r, c, n_end + 1, nv->sf_end_tow);
     if (nv->eph_new) {
-        r->eph[SYS_GPS][c->prn] = nv->eph;
+        eph_t *d = rx_eph(r, SYS_GPS, c->prn);
+        if (d) *d = nv->eph;
         nv->eph_new = 0;
         r->week = nv->eph.week;
     }
@@ -274,6 +294,8 @@ void rx_process(rx_t *r, uint64_t n_now)
         if (c->trk.state == TRK_IDLE || (c->f2 && !c->pair)) {
             if (c->pair && r->ch[c->pair - 1].pair == k + 1) r->ch[c->pair - 1].pair = 0;
             corr_free(c->ch);
+            if (c->msg) r->msg_busy[c->msg - r->msg] = 0;
+            c->msg = NULL;
             c->used = 0;
             continue;
         }
@@ -368,8 +390,8 @@ int rx_measure(rx_t *r, uint64_t n_m)
             p2 = hatch(r, c2, CLIGHT * eph_tdiff(trx, ttx + dt), carr_m(c2, n_m), trx);
             dual = 1;
         } else if (c2) c2->hs_n = 0;
-        eph_t *e = &r->eph[sys][c->prn];
-        if (!e->valid || n >= PVT_MAXOBS) continue;
+        eph_t *e = rx_eph(r, sys, c->prn);
+        if (!e || !e->valid || n >= PVT_MAXOBS) continue;
         obs_t *o = &r->obs[n];
         memset(o, 0, sizeof(*o));
         o->sys = sys; o->prn = c->prn;

@@ -251,7 +251,7 @@ int main(void)
         for (int k = 0; k < CORR_MAXCH; k++) if (rx.ch[k].used) {
             int g = rx.ch[k].sig == SIG_G1CA;
             nl[g] += rx.ch[k].trk.state == TRK_LOCK; nt[g] += rx.ch[k].tx_ok;
-            nep[g] += rx.ch[k].prn > 0 && rx.eph[g ? SYS_GLO : SYS_GPS][rx.ch[k].prn].valid;
+            nep[g] += rx.ch[k].prn > 0 && rx_eph(&rx, g ? SYS_GLO : SYS_GPS, rx.ch[k].prn)->valid;
         }
         if (!rx_measure(&rx, nm)) {
             printf("  t=%5.1f с: в захвате GPS/ГЛО %d/%d, с временем %d/%d, с эфемеридами %d/%d — решения нет\n",

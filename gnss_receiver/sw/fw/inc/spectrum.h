@@ -8,7 +8,7 @@
 typedef struct { double f_hz; double jn_db; } cw_t;
 
 /* спектральная плотность (метод Уэлча, окно Ханна, перекрытие 50 %), дБ относительно медианы;
- * psd[SPEC_N], частоты −Fд/2..+Fд/2 */
+ * psd[SPEC_N], частоты −Fд/2..+Fд/2; x4 — упакованный снимок из n отсчётов (acq.h, snap_x) */
 void spec_psd(const uint8_t *x4, int n, float *psd);
 /* узкополосные помехи: пики выше порога thr_db над медианным уровнем; возвращает число найденных */
 int  spec_detect_cw(const float *psd, double thr_db, cw_t *cw, int max);

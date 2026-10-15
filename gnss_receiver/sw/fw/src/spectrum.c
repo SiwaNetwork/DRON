@@ -5,6 +5,7 @@
 #include "gnss.h"
 #include "fft.h"
 #include "spectrum.h"
+#include "acq.h"
 #include "fpga.h"
 
 static int cmpf(const void *a, const void *b)
@@ -23,7 +24,7 @@ void spec_psd(const uint8_t *x4, int n, float *psd)
     int nseg = 0;
     for (int s = 0; s + SPEC_N <= n; s += SPEC_N / 2, nseg++) {
         for (int k = 0; k < SPEC_N; k++) {
-            uint8_t x = x4[s + k];
+            unsigned x = snap_x(x4, s + k);
             int xi = ((x >> 2) & 1 ? 3 : 1) * ((x >> 3) & 1 ? -1 : 1);
             int xq = ((x & 1) ? 3 : 1) * ((x >> 1) & 1 ? -1 : 1);
             X[k].re = w[k] * xi; X[k].im = w[k] * xq;
@@ -65,7 +66,7 @@ static double dft_pow(const uint8_t *x4, int n, double f)
     double re = 0, im = 0, w = -2 * GPI * f / FS_HZ;
     double cr = 1, ci = 0, dr = cos(w), di = sin(w);
     for (int k = 0; k < n; k++) {
-        uint8_t x = x4[k];
+        unsigned x = snap_x(x4, k);
         int xi = ((x >> 2) & 1 ? 3 : 1) * ((x >> 3) & 1 ? -1 : 1);
         int xq = ((x & 1) ? 3 : 1) * ((x >> 1) & 1 ? -1 : 1);
         re += xi * cr - xq * ci;

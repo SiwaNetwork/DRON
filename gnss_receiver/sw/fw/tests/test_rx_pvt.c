@@ -163,7 +163,7 @@ int main(void)
         next += 24000000ull;
         int nlk = 0, ntx = 0, neph = 0;
         for (int k = 0; k < CORR_MAXCH; k++) if (rx.ch[k].used) {
-            nlk += rx.ch[k].trk.state == TRK_LOCK; ntx += rx.ch[k].tx_ok; neph += rx.eph[SYS_GPS][rx.ch[k].prn].valid;
+            nlk += rx.ch[k].trk.state == TRK_LOCK; ntx += rx.ch[k].tx_ok; neph += rx_eph(&rx, SYS_GPS, rx.ch[k].prn)->valid;
         }
         if (!rx_measure(&rx, nm)) {
             printf("  t=%5.1f с: каналов в захвате %d, с временем %d, с эфемеридами %d — решения нет\n",

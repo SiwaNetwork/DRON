@@ -8,8 +8,10 @@
 #define CORR_H
 #include <stdint.h>
 #include "gnss.h"
+#include "fpga.h"
 
-#define CORR_MAXCH (7 * 16)
+#define CORR_NENG  5                         /* движков в ПЛИС МГП-8 (R_VERSION[31:24]) */
+#define CORR_MAXCH (CORR_NENG * CORR_NSLOT)
 
 typedef struct {
     int      used;

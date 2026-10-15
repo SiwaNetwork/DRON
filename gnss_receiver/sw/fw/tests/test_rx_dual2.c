@@ -677,7 +677,7 @@ int main(void)
         if (c1 && c1->pair) c2 = &rx.ch[c1->pair - 1];
         int l1 = c1 && c1->trk.state == TRK_LOCK, l2 = c2 && c2->trk.state == TRK_LOCK;
         nlock1 += l1; nlock2 += l2;
-        neph += rx.eph[p->sys][p->prn].valid;
+        neph += rx_eph(&rx, p->sys, p->prn)->valid;
         printf("  %c%02d: %s %s (%.1f дБГц), %s %s (%.1f дБГц)", SYSC[p->sys], p->prn, SIGS[p->b[0].sig].id,
                l1 ? "захват" : "НЕТ", c1 ? c1->trk.cn0 : 0.0, SIGS[p->b[1].sig].id, l2 ? "захват" : "НЕТ",
                c2 ? c2->trk.cn0 : 0.0);

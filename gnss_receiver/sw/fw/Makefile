@@ -21,9 +21,13 @@ build/%: tests/%.c $(SRC) src/gen/code_tab.c tests/vectors/pvt.txt | build
 build:
 	mkdir -p build
 
-test: $(TESTS)
+test: $(TESTS) board-check
 	@for t in $(TESTS); do echo "== $$t"; ./$$t || exit 1; done
 	python3 tests/check_output.py
+
+# карта выводов МК inc/board_pins.h совпадает со схемой Э3 (лист 9)
+board-check:
+	python3 tools/gen_board.py --check
 
 # длительные тесты: слежение за слабыми сигналами, сквозной «ПЧ -> координаты, 1PPS», четыре двухчастотные пары (≈ 70 мин)
 test-long: $(LONG)
@@ -48,4 +52,4 @@ mcu: $(MCU_OBJ)
 clean:
 	rm -rf build
 
-.PHONY: all test test-long mcu clean
+.PHONY: all test test-long board-check mcu clean

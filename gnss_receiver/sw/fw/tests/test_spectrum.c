@@ -5,13 +5,14 @@
 #include <stdlib.h>
 #include "gnss.h"
 #include "spectrum.h"
+#include "acq.h"
 #include "fpga.h"
 
 static uint32_t regs[0x100];
 static void cap_wr(uint32_t a, uint32_t v) { if (a < 0x100) regs[a] = v; }
 static uint32_t cap_rd(uint32_t a) { return a < 0x100 ? regs[a] : 0; }
 
-static uint8_t x4[49152];
+static uint8_t x4[49152 / 2];         /* упакованный снимок (snap_put) */
 
 /* шум + две непрерывные помехи (J/N, дБ), 2-битное квантование с АРУ (порог — 1σ суммы) */
 static void make(double f1, double j1, double f2, double j2, unsigned seed)
@@ -26,7 +27,7 @@ static void make(double f1, double j1, double f2, double j2, unsigned seed)
         re += a1 * cos(2 * GPI * f1 * t) + a2 * cos(2 * GPI * f2 * t + 1);
         im += a1 * sin(2 * GPI * f1 * t) + a2 * sin(2 * GPI * f2 * t + 1);
         int qi = (re < 0 ? 2 : 0) | (fabs(re) > s ? 1 : 0), qq = (im < 0 ? 2 : 0) | (fabs(im) > s ? 1 : 0);
-        x4[i] = (uint8_t)(qi << 2 | qq);
+        snap_put(x4, i, (unsigned)(qi << 2 | qq));
     }
 }
 

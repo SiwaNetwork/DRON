@@ -201,7 +201,7 @@ int glonav_sym(glonav_t *g, double v, uint64_t n_end)
     g->rev = rev;
     int m = (int)gb(s, 84, 4);
     if (m < 1 || m > 15) return 0;
-    memcpy(g->str[m], s, GLO_STR_BITS);
+    if (m <= 4) memcpy(g->str[m], s, GLO_STR_BITS);
     g->n_str++;
     /* время: строка 1 — tk (начало кадра); иначе — смена кадра по убыванию номера строки */
     if (m == 1) {

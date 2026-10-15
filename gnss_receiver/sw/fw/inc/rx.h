@@ -13,15 +13,26 @@
 #include "pvt.h"
 #include "acq.h"
 
+typedef union {             /* навигационное сообщение — по системе сигнала канала */
+    lnav_t   lnav;           /* GPS LNAV */
+    glonav_t gnav;           /* ГЛОНАСС: строки */
+    inav_t   inav;           /* Galileo I/NAV (E1-B) */
+    bdsnav_t bnav;           /* BeiDou D1 (B1I, КА MEO/IGSO) */
+} rx_msg_t;
+
+/* декодеров сообщений меньше, чем каналов: они нужны только каналам первой частоты (в
+ * двухчастотном режиме — половина каналов), а память МК ограничена (ПЗ 4.5.3) */
+#define RX_NMSG 56
+
+/* таблица эфемерид: по системам SYS_* номера КА 0..N−1 (ГЛОНАСС — номер в группировке, QZSS —
+ * PRN−192, SBAS — PRN−119); в сумме RX_NEPH */
+#define RX_EPH_N {33, 32, 37, 64, 11, 15, 40}
+#define RX_NEPH  232
+
 typedef struct {
     int      used, ch, sig, prn, fcn;
     trk_t    trk;
-    union {                  /* навигационное сообщение — по системе сигнала канала */
-        lnav_t   lnav;       /* GPS LNAV */
-        glonav_t gnav;       /* ГЛОНАСС: строки */
-        inav_t   inav;       /* Galileo I/NAV (E1-B) */
-        bdsnav_t bnav;       /* BeiDou D1 (B1I, КА MEO/IGSO) */
-    } msg;
+    rx_msg_t *msg;           /* декодер из пула rx_t.msg (у канала второй частоты — нет) */
     /* привязка времени излучения: на начало отсчёта ref_n время излучения ref_tow (по шкале КА) */
     int      tx_ok;
     uint64_t ref_n;
@@ -37,7 +48,7 @@ typedef struct {
 
 typedef struct {
     rx_ch_t  ch[CORR_MAXCH];
-    eph_t    eph[SYS_N][64];
+    eph_t    eph[RX_NEPH];        /* эфемериды по системам и номерам КА — доступ через rx_eph() */
     double   ion[8];
     int      ion_ok, week, dt_ls;
     /* шкала приёмника: t_rx(n) = t0_tow + (n − t0_n)/fs */
@@ -57,9 +68,12 @@ typedef struct {
     int      sig2[SYS_N];        /* сигнал второй частоты (−1 — нет); по умолчанию L2CM, G2CA, E5a-Q,
                                     B3I; L5Q для GPS — при настроенном ВЧ-канале L5 */
     double   smooth;             /* окно сглаживания кода по фазе несущей, с (0 — без сглаживания) */
+    rx_msg_t msg[RX_NMSG];       /* пул декодеров сообщений */
+    uint8_t  msg_busy[RX_NMSG];
 } rx_t;
 
 void   rx_init(rx_t *r);
+eph_t *rx_eph(rx_t *r, int sys, int prn);   /* ячейка эфемерид КА; NULL — номер вне таблицы */
 /* поиск по снимкам и пуск каналов слежения с отсчёта t_start (для всех PRN сигнала sig: GPS 1–32,
  * Galileo 1–36, BeiDou 6–58 — MEO/IGSO; ГЛОНАСС — для всех литер −7…+6, номер КА — по строке 4).
  * Сигналы с навигационными данными: L1 C/A, G1CA, E1B, B1I */

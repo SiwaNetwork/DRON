@@ -33,7 +33,7 @@ static void init_tab(void)
     done = 1;
 }
 
-static inline void decode(uint8_t x, int *xi, int *xq)
+static inline void decode(unsigned x, int *xi, int *xq)
 {
     *xi = ((x >> 2) & 1 ? 3 : 1) * ((x >> 3) & 1 ? -1 : 1);
     *xq = ((x & 1) ? 3 : 1) * ((x >> 1) & 1 ? -1 : 1);
@@ -96,10 +96,11 @@ int acq_search_multi(const uint8_t *const *x4, const uint32_t *t0, int nsnap, in
             uint32_t dph = (uint32_t)(int64_t)llround(-(fif + fd) / FS_HZ * 4294967296.0);
             for (int p = 0; p < nper; p++) {
                 memset(Y, 0, sizeof(cpx_t) * nfft);
-                const uint8_t *xp = x4[s] + (size_t)p * Ns;
+                const uint8_t *xp = x4[s];
+                long i0 = (long)p * Ns;
                 for (int i = 0; i < Nu; i++) {
                     int xi, xq;
-                    decode(xp[i], &xi, &xq);
+                    decode(snap_x(xp, i0 + i), &xi, &xq);
                     float c = SIN256[((ph >> 24) + 64) & 255], sn = SIN256[ph >> 24];
                     int k = (int)((int64_t)i * nfft / Ns);
                     Y[k].re += xi * c - xq * sn;
@@ -155,13 +156,14 @@ int acq_search_multi(const uint8_t *const *x4, const uint32_t *t0, int nsnap, in
             uint32_t dph = (uint32_t)(int64_t)llround(-(fif + fd) / FS_HZ * 4294967296.0);
             for (int p = 0; p < nper; p++) {
                 double re[2] = {0, 0}, im[2] = {0, 0};
-                const uint8_t *xp = x4[s] + (size_t)p * Ns;
+                const uint8_t *xp = x4[s];
+                long i0 = (long)p * Ns;
                 double u = cp0 + rate * (double)p * Ns / FS_HZ, du = rate / FS_HZ;
                 /* первый отсчёт следующего периода кода */
                 double ie = ceil(((floor(u / L) + 1) * L - u) / du);
                 for (int i = 0; i < Nu; i++, u += du) {
                     int xi, xq, h = i >= ie;
-                    decode(xp[i], &xi, &xq);
+                    decode(snap_x(xp, i0 + i), &xi, &xq);
                     float c = SIN256[((ph >> 24) + 64) & 255], sn = SIN256[ph >> 24];
                     float v = rep(si, L, u);
                     re[h] += v * (xi * c - xq * sn);
@@ -251,11 +253,12 @@ int acq_weak_add(acq_weak_t *w, const uint8_t *x4, uint32_t t0, int n)
     const cpx_t *R0 = w->rep;
     for (int p = 0; p < n / Ns && w->k < w->K; p++, w->k++) {
         memset(Y, 0, sizeof(cpx_t) * nfft);
-        const uint8_t *xp = x4 + (size_t)p * Ns;
+        const uint8_t *xp = x4;
+        long i0 = (long)p * Ns;
         uint32_t ph = 0;
         for (int i = 0; i < Ns; i++) {
             int xi, xq;
-            decode(xp[i], &xi, &xq);
+            decode(snap_x(xp, i0 + i), &xi, &xq);
             float c = SIN256[((ph >> 24) + 64) & 255], sn = SIN256[ph >> 24];
             int k = (int)((int64_t)i * nfft / Ns);
             Y[k].re += xi * c - xq * sn;
@@ -318,9 +321,9 @@ int acq_snap_read(int len, uint8_t *x4, uint32_t *t0)
 {
     if (fpga_rd(R_SNAP_CTRL) >> 31) return 0;           /* ещё записывается */
     *t0 = fpga_rd(R_SNAP_T0);
-    for (int w = 0; w < len / 8; w++) {
+    for (int w = 0; w < len / 8; w++) {                 /* слово — 8 отсчётов, первый — мл. тетрада */
         uint32_t v = fpga_rd(R_SNAP_DATA + (uint32_t)w);
-        for (int k = 0; k < 8; k++) x4[8 * w + k] = (uint8_t)((v >> (4 * k)) & 0xF);
+        for (int k = 0; k < 4; k++) x4[4 * w + k] = (uint8_t)(v >> (8 * k));
     }
     return 1;
 }

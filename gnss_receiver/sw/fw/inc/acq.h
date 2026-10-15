@@ -1,6 +1,7 @@
 /* МГП-8: захват сигналов по снимку отсчётов (параллельный поиск по задержке кода с БПФ). */
 #ifndef ACQ_H
 #define ACQ_H
+#include <stddef.h>
 #include <stdint.h>
 
 typedef struct {
@@ -19,7 +20,16 @@ typedef struct {
     double cn0;              /* оценка C/N0, дБГц */
 } acq_res_t;
 
-/* x4 — отсчёты одного ВЧ-канала, по байту на отсчёт {sI,mI,sQ,mQ}; n — число отсчётов */
+/* Снимок отсчётов одного ВЧ-канала хранится упакованным, как в памяти снимка ПЛИС: два 4-битных
+ * отсчёта {sI,mI,sQ,mQ} в байте, отсчёт i — в байте i/2, чётный — в младшей тетраде. */
+#define SNAP_BYTES(n) ((size_t)(n) / 2)
+static inline unsigned snap_x(const uint8_t *x, long i) { return (x[i >> 1] >> ((i & 1) << 2)) & 15u; }
+static inline void snap_put(uint8_t *x, long i, unsigned v)
+{
+    x[i >> 1] = (uint8_t)((x[i >> 1] & (0xF0u >> ((i & 1) << 2))) | ((v & 15u) << ((i & 1) << 2)));
+}
+
+/* x4 — упакованный снимок (snap_x); n — число отсчётов */
 int acq_search(const uint8_t *x4, int n, int sig, int prn, int fcn, const acq_cfg_t *cfg, acq_res_t *r);
 /* некогерентное накопление по nsnap снимкам (t0 — номера первых отсчётов); фаза кода — на t0[0] */
 int acq_search_multi(const uint8_t *const *x4, const uint32_t *t0, int nsnap, int n,

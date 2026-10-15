@@ -49,7 +49,7 @@ static void gen(const sat_t *S, int ns, uint32_t t0, uint8_t *x4)
     for (int i = 0; i < NSNAP_LEN; i++) {
         int qi = (re[i] < 0 ? 2 : 0) | (fabsf(re[i]) > 0.70710678f ? 1 : 0);
         int qq = (im[i] < 0 ? 2 : 0) | (fabsf(im[i]) > 0.70710678f ? 1 : 0);
-        x4[i] = (uint8_t)(qi << 2 | qq);
+        snap_put(x4, i, (unsigned)(qi << 2 | qq));
     }
 }
 
