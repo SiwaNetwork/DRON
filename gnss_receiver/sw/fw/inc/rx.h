@@ -70,6 +70,9 @@ typedef struct {
     double   smooth;             /* окно сглаживания кода по фазе несущей, с (0 — без сглаживания) */
     rx_msg_t msg[RX_NMSG];       /* пул декодеров сообщений */
     uint8_t  msg_busy[RX_NMSG];
+    /* блокировка (на МК — запрет прерывания ПЛИС, в котором выполняется rx_process): каналы и
+     * пул декодеров общие у поиска (фон) и слежения; NULL — без блокировки (проверки на ПК) */
+    void   (*lock)(int on);
 } rx_t;
 
 void   rx_init(rx_t *r);
@@ -79,10 +82,21 @@ eph_t *rx_eph(rx_t *r, int sys, int prn);   /* ячейка эфемерид К�
  * Сигналы с навигационными данными: L1 C/A, G1CA, E1B, B1I */
 int    rx_acquire(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap, int len, int sig,
                   uint64_t t_start, const acq_cfg_t *ac);
+/* поиск одного КА q (PRN; ГЛОНАСС — литера −7…+6) и пуск канала сразу после поиска (на МК поиск
+ * долгий — фаза кода переносится от снимка на момент пуска). 1 — запущен, 0 — уже в слежении
+ * или не найден, −1 — нет свободного канала или декодера */
+int    rx_acquire_one(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap, int len, int sig,
+                      int q, const acq_cfg_t *ac);
+int    rx_sig_range(int sig, int *q0, int *q1);     /* диапазон q для rx_acquire_one; число номеров */
 /* чтение результатов коррелятора, петли, навигационные данные */
 void   rx_process(rx_t *r, uint64_t n_now);
 /* измерения на отсчёт n_m и навигационное решение; 1 — решение получено */
 int    rx_measure(rx_t *r, uint64_t n_m);
+/* то же по частям: rx_latch — измерения на отсчёт n_m в r->obs (сглаживание, веса; на МК — в
+ * прерывании ПЛИС сразу после rx_process: «зеркало» NCO отнесено к моменту, близкому к n_m);
+ * число измерений с эфемеридами, −1 — нет шкалы времени. rx_solve — решение по r->obs */
+int    rx_latch(rx_t *r, uint64_t n_m);
+int    rx_solve(rx_t *r, uint64_t n_m);
 double rx_time(const rx_t *r, uint64_t n);          /* время приёмника (GPST sow, без поправки) */
 /* момент (в тактах T96) ближайшей после отсчёта n_now секунды GPST по последнему решению;
  * qerr — ошибка квантования (с) */

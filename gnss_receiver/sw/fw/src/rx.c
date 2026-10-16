@@ -53,49 +53,88 @@ double rx_time(const rx_t *r, uint64_t n)
 static void on_bit(void *ctx, int bit, uint64_t n_end);
 static rx_t *RX;                     /* для обратного вызова (один приёмник) */
 
+static void lock(const rx_t *r, int on) { if (r->lock) r->lock(on); }
+
+/* поиск КА q (PRN; ГЛОНАСС — литера) и настройка канала слежения. t_start ≠ 0 — пуск на этот
+ * отсчёт выполняет вызывающий (общий для группы), t_start = 0 — пуск сразу (≈ 1 мс после
+ * поиска). 1 — канал настроен (*chp), 0 — КА уже в слежении или не найден, −1 — нет свободного
+ * канала или декодера сообщений. Поиск — без блокировки; занятие канала и декодера, загрузка
+ * кода и пуск — под блокировкой (общие с rx_process данные и регистры движка) */
+static int acq_one(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap, int len, int sig,
+                   int q, uint64_t t_start, const acq_cfg_t *ac, int *chp)
+{
+    const sig_info_t *si = &SIGS[sig];
+    int glo = si->sys == SYS_GLO;
+    int prn = glo ? 1 : q, fcn = glo ? q : 0;            /* ГЛОНАСС: код общий, перебор литер */
+    for (int k = 0; k < CORR_MAXCH; k++)
+        if (r->ch[k].used && r->ch[k].sig == sig && (glo ? r->ch[k].fcn == fcn : r->ch[k].prn == prn)) return 0;
+    int m = 0;
+    while (m < RX_NMSG && r->msg_busy[m]) m++;
+    if (m == RX_NMSG) return -1;
+    acq_res_t a;
+    if (!acq_search_multi(x4, t0, nsnap, len, sig, prn, fcn, ac, &a)) return 0;
+    lock(r, 1);
+    m = 0;
+    while (m < RX_NMSG && r->msg_busy[m]) m++;
+    int ch = m < RX_NMSG ? corr_alloc(sig) : -1;
+    if (ch < 0) { lock(r, 0); return -1; }
+    uint64_t ts = t_start ? t_start : corr_start_next(ch, corr_time_now());
+    double rate = si->chip_rate * (1 + a.doppler / sig_carrier(sig, fcn));
+    /* t0 — мл. 32 бит номера отсчёта (переполнение через 179 с): разность — по модулю 2^32 */
+    double cps = a.code_phase + rate * (double)(int32_t)((uint32_t)ts - t0[0]) / FS_HZ;
+    corr_load_code(ch, sig, prn);
+    rx_ch_t *c = &r->ch[ch];
+    memset(c, 0, sizeof(*c));
+    c->ch = ch; c->sig = sig; c->prn = glo ? 0 : prn; c->fcn = fcn;
+    trk_start(&c->trk, ch, sig, prn, fcn, a.doppler, cps, ts, &r->tcfg);
+    c->trk.on_bit = on_bit;
+    c->trk.ctx = c;
+    r->msg_busy[m] = 1;
+    c->msg = &r->msg[m];
+    if (glo) glonav_init(&c->msg->gnav, fcn);
+    else if (si->sys == SYS_GAL) inav_init(&c->msg->inav, prn);
+    else if (si->sys == SYS_BDS) bdsnav_init(&c->msg->bnav, prn);
+    else lnav_init(&c->msg->lnav, prn);
+    c->used = 1;                                         /* канал готов — виден rx_process */
+    if (!t_start) corr_start(&ch, 1, ts);
+    lock(r, 0);
+    *chp = ch;
+    return 1;
+}
+
+static void sig_range(int sig, int *q0, int *q1)
+{
+    const sig_info_t *si = &SIGS[sig];
+    int glo = si->sys == SYS_GLO;
+    /* BeiDou: только MEO/IGSO (D1); GEO (PRN 1–5, 59–63, сообщение D2) — не реализовано */
+    *q0 = glo ? -7 : si->sys == SYS_BDS ? 6 : 1;
+    *q1 = glo ? 6 : si->sys == SYS_GAL ? 36 : si->sys == SYS_BDS ? 58 : 32;
+}
+
 int rx_acquire(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap, int len, int sig,
                uint64_t t_start, const acq_cfg_t *ac)
 {
-    int chs[CORR_MAXCH], n = 0;
-    const sig_info_t *si = &SIGS[sig];
+    int chs[CORR_MAXCH], n = 0, q0, q1;
     RX = r;
-    int glo = si->sys == SYS_GLO;
-    /* BeiDou: только MEO/IGSO (D1); GEO (PRN 1–5, 59–63, сообщение D2) — не реализовано */
-    int q0 = glo ? -7 : si->sys == SYS_BDS ? 6 : 1;
-    int q1 = glo ? 6 : si->sys == SYS_GAL ? 36 : si->sys == SYS_BDS ? 58 : 32;
+    sig_range(sig, &q0, &q1);
     for (int q = q0; q <= q1; q++) {
-        int prn = glo ? 1 : q, fcn = glo ? q : 0;        /* ГЛОНАСС: код общий, перебор литер */
-        int busy = 0;
-        for (int k = 0; k < CORR_MAXCH; k++)
-            if (r->ch[k].used && r->ch[k].sig == sig && (glo ? r->ch[k].fcn == fcn : r->ch[k].prn == prn)) busy = 1;
-        if (busy) continue;
-        int m = 0;
-        while (m < RX_NMSG && r->msg_busy[m]) m++;
-        if (m == RX_NMSG) break;
-        acq_res_t a;
-        if (!acq_search_multi(x4, t0, nsnap, len, sig, prn, fcn, ac, &a)) continue;
-        int ch = corr_alloc(sig);
-        if (ch < 0) break;
-        double rate = si->chip_rate * (1 + a.doppler / sig_carrier(sig, fcn));
-        double cps = a.code_phase + rate * (double)(int64_t)(t_start - t0[0]) / FS_HZ;
-        corr_load_code(ch, sig, prn);
-        rx_ch_t *c = &r->ch[ch];
-        memset(c, 0, sizeof(*c));
-        c->used = 1; c->ch = ch; c->sig = sig; c->prn = glo ? 0 : prn; c->fcn = fcn;
-        trk_start(&c->trk, ch, sig, prn, fcn, a.doppler, cps, t_start, &r->tcfg);
-        c->trk.on_bit = on_bit;
-        c->trk.ctx = c;
-        r->msg_busy[m] = 1;
-        c->msg = &r->msg[m];
-        if (glo) glonav_init(&c->msg->gnav, fcn);
-        else if (si->sys == SYS_GAL) inav_init(&c->msg->inav, prn);
-        else if (si->sys == SYS_BDS) bdsnav_init(&c->msg->bnav, prn);
-        else lnav_init(&c->msg->lnav, prn);
-        chs[n++] = ch;
+        int ch, s = acq_one(r, x4, t0, nsnap, len, sig, q, t_start, ac, &ch);
+        if (s < 0) break;
+        if (s > 0) chs[n++] = ch;
     }
-    if (n) corr_start(chs, n, t_start);
+    if (n && t_start) { lock(r, 1); corr_start(chs, n, t_start); lock(r, 0); }
     return n;
 }
+
+int rx_acquire_one(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap, int len, int sig,
+                   int q, const acq_cfg_t *ac)
+{
+    int ch;
+    RX = r;
+    return acq_one(r, x4, t0, nsnap, len, sig, q, 0, ac, &ch);
+}
+
+int rx_sig_range(int sig, int *q0, int *q1) { sig_range(sig, q0, q1); return *q1 - *q0 + 1; }
 
 /* привязка времени излучения к эпохе кода, ближайшей к началу отсчёта n */
 static void set_ref(rx_ch_t *c, uint64_t n, double tow)
@@ -356,9 +395,9 @@ static double code_var(const rx_ch_t *c)
     return v / (c->hs_m > 1 ? c->hs_m : 1) + 0.09;
 }
 
-int rx_measure(rx_t *r, uint64_t n_m)
+int rx_latch(rx_t *r, uint64_t n_m)
 {
-    if (!r->time_ok) return 0;
+    if (!r->time_ok) return -1;
     double trx = rx_time(r, n_m);
     int n = 0;
     for (int k = 0; k < CORR_MAXCH; k++) {
@@ -412,15 +451,25 @@ int rx_measure(rx_t *r, uint64_t n_m)
         n++;
     }
     r->nobs = n;
-    if (n < 4) return 0;
+    return n;
+}
+
+int rx_solve(rx_t *r, uint64_t n_m)
+{
+    if (r->nobs < 4) return 0;
     memcpy(r->pcfg.ion, r->ion, sizeof(r->ion));
     r->pcfg.iono = r->ion_ok;
     sol_t s = r->sol;
-    if (!pvt_solve(r->obs, n, trx, &r->pcfg, &s)) return 0;
+    if (!pvt_solve(r->obs, r->nobs, rx_time(r, n_m), &r->pcfg, &s)) return 0;
     r->sol = s;
     r->sol_n = n_m;
     r->n_sol++;
     return 1;
+}
+
+int rx_measure(rx_t *r, uint64_t n_m)
+{
+    return rx_latch(r, n_m) >= 4 && rx_solve(r, n_m);
 }
 
 int rx_pps_next(const rx_t *r, uint64_t n_now, uint64_t *t96, double *qerr, double *sec)

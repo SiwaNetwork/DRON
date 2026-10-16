@@ -22,7 +22,7 @@ static void wf(wr_t *w, float v) { uint32_t u; memcpy(&u, &v, 4); w32(w, u); }
 static void wd(wr_t *w, double v) { uint64_t u; memcpy(&u, &v, 8); w32(w, (uint32_t)u); w32(w, (uint32_t)(u >> 32)); }
 static uint16_t u16c(double v) { return v <= 0 ? 0 : v >= 655.35 ? 65535 : (uint16_t)(v * 100 + 0.5); }
 
-static int frame(uint8_t *buf, int cls, int id, int plen)
+int mbp_frame(uint8_t *buf, int cls, int id, int plen)
 {
     buf[0] = MBP_SYNC1; buf[1] = MBP_SYNC2;
     buf[2] = (uint8_t)cls; buf[3] = (uint8_t)id;
@@ -42,7 +42,7 @@ int mbp_pvt(uint8_t *buf, int week, const sol_t *s)
     for (int i = 0; i < 4; i++) wd(&w, s->clk[i]);                   /* GPS, ГЛОНАСС, Galileo, BeiDou */
     wf(&w, (float)s->clkd);
     w16(&w, u16c(s->pdop)); w16(&w, u16c(s->hdop)); w16(&w, u16c(s->vdop)); w16(&w, u16c(s->tdop));
-    return frame(buf, MBP_NAV, MBP_NAV_PVT, w.n);
+    return mbp_frame(buf, MBP_NAV, MBP_NAV_PVT, w.n);
 }
 
 int mbp_meas(uint8_t *buf, int week, double tow, const mbp_meas_t *m, int n)
@@ -55,7 +55,7 @@ int mbp_meas(uint8_t *buf, int week, double tow, const mbp_meas_t *m, int n)
         wd(&w, m[i].pr); wd(&w, m[i].cp); wf(&w, m[i].dop);
         w16(&w, u16c(m[i].cn0)); w32(&w, (uint32_t)(m[i].lock * 1000 + 0.5)); w8(&w, m[i].flags);
     }
-    return frame(buf, MBP_RAW, MBP_RAW_MEAS, w.n);
+    return mbp_frame(buf, MBP_RAW, MBP_RAW_MEAS, w.n);
 }
 
 int mbp_eph(uint8_t *buf, const eph_t *e)
@@ -68,7 +68,7 @@ int mbp_eph(uint8_t *buf, const eph_t *e)
                           e->pos[0], e->pos[1], e->pos[2], e->vel[0], e->vel[1], e->vel[2],
                           e->acc[0], e->acc[1], e->acc[2], e->taun, e->gamn};
     for (int i = 0; i < 32; i++) wd(&w, v[i]);
-    return frame(buf, MBP_RAW, MBP_RAW_EPH, w.n);
+    return mbp_frame(buf, MBP_RAW, MBP_RAW_EPH, w.n);
 }
 
 int mbp_ch(uint8_t *buf, const mbp_ch_t *c, int n)
@@ -80,7 +80,7 @@ int mbp_ch(uint8_t *buf, const mbp_ch_t *c, int n)
         w8(&w, c[i].ch); w8(&w, c[i].sig); w8(&w, c[i].prn); w8(&w, (uint8_t)c[i].fcn);
         w8(&w, c[i].state); w8(&w, c[i].flags); w16(&w, u16c(c[i].cn0)); wf(&w, c[i].dop);
     }
-    return frame(buf, MBP_CH, MBP_CH_STAT, w.n);
+    return mbp_frame(buf, MBP_CH, MBP_CH_STAT, w.n);
 }
 
 int mbp_tm(uint8_t *buf, const mbp_tm_t *t)
@@ -89,7 +89,7 @@ int mbp_tm(uint8_t *buf, const mbp_tm_t *t)
     wf(&w, t->t_mcu); wf(&w, t->ant_ma); w8(&w, t->ant_state); w8(&w, t->max_ld);
     w8(&w, t->notch_en); w8(&w, t->notch_dith); w16(&w, t->vin_mv); w32(&w, t->uptime_s);
     w8(&w, t->fpga_ok); w8(&w, t->pll_lock);
-    return frame(buf, MBP_TM, MBP_TM_STAT, w.n);
+    return mbp_frame(buf, MBP_TM, MBP_TM_STAT, w.n);
 }
 
 int mbp_parse(const uint8_t *b, int n, int *cls, int *id, const uint8_t **pl, int *plen, int *used)

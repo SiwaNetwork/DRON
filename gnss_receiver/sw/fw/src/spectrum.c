@@ -1,17 +1,29 @@
 /* МГП-8: спектральный контроль ВЧ-каналов по снимку отсчётов (МК, по запросу и периодически). */
 #include <math.h>
 #include <string.h>
-#include <stdlib.h>
 #include "gnss.h"
 #include "fft.h"
 #include "spectrum.h"
 #include "acq.h"
 #include "fpga.h"
 
-static int cmpf(const void *a, const void *b)
+/* k-я порядковая статистика: выбор Хоара без рекурсии (стек МК ограничен), массив переставляется */
+static float kth(float *a, int n, int k)
 {
-    float x = *(const float *)a, y = *(const float *)b;
-    return x < y ? -1 : x > y;
+    int lo = 0, hi = n - 1;
+    while (lo < hi) {
+        float p = a[(lo + hi) / 2];
+        int i = lo, j = hi;
+        while (i <= j) {
+            while (a[i] < p) i++;
+            while (a[j] > p) j--;
+            if (i <= j) { float t = a[i]; a[i] = a[j]; a[j] = t; i++; j--; }
+        }
+        if (k <= j) hi = j;
+        else if (k >= i) lo = i;
+        else break;
+    }
+    return a[k];
 }
 
 void spec_psd(const uint8_t *x4, int n, float *psd)
@@ -38,8 +50,7 @@ void spec_psd(const uint8_t *x4, int n, float *psd)
         psd[k] = (float)(10 * log10(acc[j] / (nseg ? nseg : 1) + 1e-30));
         tmp[k] = psd[k];
     }
-    qsort(tmp, SPEC_N, sizeof(float), cmpf);
-    float med = tmp[SPEC_N / 2];
+    float med = kth(tmp, SPEC_N, SPEC_N / 2);
     for (int k = 0; k < SPEC_N; k++) psd[k] -= med;
 }
 

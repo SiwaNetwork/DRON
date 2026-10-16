@@ -1,4 +1,4 @@
-/* МГП-8: БПФ по основанию 2 (комплексное, float). На МК — CMSIS-DSP (arm_cfft_f32). */
+/* МГП-8: БПФ по основанию 2 (комплексное, float) — на МК и на ПК (без библиотек изготовителя). */
 #ifndef FFT_H
 #define FFT_H
 typedef struct { float re, im; } cpx_t;

@@ -17,7 +17,8 @@
  *         u8 состояние, u8 признаки, u16 C/N0 (×100), f32 доплер (Гц)
  *   04/01 ИТМ: f32 температура МК, f32 ток антенны (мА), u8 состояние антенны, u8 LD MAX2771,
  *         u8 NOTCH_EN, u8 дизеринг, u16 напряжение питания (мВ), u32 время работы (с),
- *         u8 ПЛИС загружена, u8 ФАПЧ ПЛИС */
+ *         u8 ПЛИС загружена, u8 ФАПЧ ПЛИС
+ *   10/xx загрузчик (обновление ПО МК) — inc/bootp.h */
 #ifndef PROTO_H
 #define PROTO_H
 #include <stdint.h>
@@ -26,7 +27,7 @@
 
 #define MBP_SYNC1 0x4D
 #define MBP_SYNC2 0x38
-enum { MBP_NAV = 0x01, MBP_RAW = 0x02, MBP_CH = 0x03, MBP_TM = 0x04 };
+enum { MBP_NAV = 0x01, MBP_RAW = 0x02, MBP_CH = 0x03, MBP_TM = 0x04, MBP_BOOT = 0x10 };
 enum { MBP_NAV_PVT = 0x01, MBP_RAW_MEAS = 0x01, MBP_RAW_EPH = 0x02, MBP_CH_STAT = 0x01, MBP_TM_STAT = 0x01 };
 #define MBP_MAXLEN 2048
 
@@ -59,6 +60,8 @@ typedef struct {                 /* телеметрия (ИТМ) */
 } mbp_tm_t;
 
 uint16_t mbp_crc16(const uint8_t *b, int n);
+/* оформление кадра: данные (plen байт) уже записаны с buf + 6; возвращает длину кадра */
+int mbp_frame(uint8_t *buf, int cls, int id, int plen);
 /* сообщения; возвращают длину кадра */
 int mbp_pvt(uint8_t *buf, int week, const sol_t *s);
 int mbp_meas(uint8_t *buf, int week, double tow, const mbp_meas_t *m, int n);

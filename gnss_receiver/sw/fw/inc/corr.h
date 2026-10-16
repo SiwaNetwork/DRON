@@ -52,6 +52,9 @@ void     corr_start(const int *chs, int n, uint64_t t_start);
 /* у движка канала ch есть ещё не сработавший пуск на другой отсчёт (не t_start): новый пуск
  * заменил бы его, поэтому откладывается */
 int      corr_start_pending(int ch, uint64_t n_now, uint64_t t_start);
+/* отсчёт пуска канала ch «как можно раньше»: через 1 мс (начало группы) или вместе с ожидающим
+ * пуском движка, если до него не меньше 0,1 мс (иначе — после него) */
+uint64_t corr_start_next(int ch, uint64_t n_now);
 void     corr_stop(int ch);
 /* новые частоты (вступают в силу в конце группы следующего сброса) */
 void     corr_set_rates(int ch, double f_carr_hz, double code_cps);

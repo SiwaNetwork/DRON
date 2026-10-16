@@ -131,6 +131,17 @@ int corr_start_pending(int ch, uint64_t n_now, uint64_t t_start)
     return pend_m[e] && pend_t[e] > n_now && pend_t[e] != t_start;
 }
 
+uint64_t corr_start_next(int ch, uint64_t n_now)
+{
+    int e = ch / 16;
+    if (pend_m[e] && pend_t[e] > n_now) {
+        if (pend_t[e] >= n_now + 2400) return pend_t[e];    /* ≥ 0,1 мс — канал успеет настроиться */
+        for (int i = 0; i < 100000 && corr_time_now() <= pend_t[e]; i++) ;   /* < 0,1 мс */
+        n_now = corr_time_now();
+    }
+    return ((n_now + 24000) >> 2) << 2;
+}
+
 void corr_stop(int ch)
 {
     fpga_wr(R_CH(ch / 16, ch % 16, CH_CTRL), CORR[ch].ctrl);

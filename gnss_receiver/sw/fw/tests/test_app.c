@@ -1,0 +1,117 @@
+/* Сквозная проверка прикладного уровня ПО МК (app.c) на модели ПЛИС: прерывание ПЛИС (TIC 1 мс,
+ * результаты корреляторов, 1PPS), решение по запросу из прерывания, поиск в фоне по одному КА.
+ * Длительность поиска одного КА на МК имитируется: после каждого шага поиска модель ПЛИС
+ * продолжает работу 50 мс с обслуживанием прерываний и решений (как при вытеснении фона).
+ * Имитатор — sim_gps.c (GPS L1 C/A над Москвой). Проверка: координаты, 1PPS от ПЛИС против
+ * истинной секунды GPST, NMEA (контрольные суммы), отсутствие вложенных блокировок. */
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include "gnss.h"
+#include "fpga.h"
+#include "corr.h"
+#include "corr_sim.h"
+#include "rx.h"
+#include "nmea.h"
+#include "app.h"
+#include "sim_gps.h"
+
+#define DUR    28.0                  /* с */
+#define T_ACQ  0.05                  /* имитируемая длительность поиска одного КА, с */
+#define CHUNK  4096
+
+static app_t A;
+static rx_t RX;
+static uint8_t SNAP[APP_NSNAP][SNAP_BYTES(APP_SNAP_N)];
+static int lk_on, lk_n, lk_bad, n_sent, n_bad_cs, n_gga;
+
+static void lock(int on)
+{
+    if (on == lk_on) lk_bad++;       /* вложенная или лишняя разблокировка */
+    lk_on = on;
+    lk_n += on;
+}
+
+static void out(const char *s, int n)
+{
+    char b[4096];
+    memcpy(b, s, (size_t)n);
+    b[n] = 0;
+    for (char *p = b; *p;) {
+        char *q = strstr(p, "\r\n");
+        if (!q) { n_bad_cs++; break; }
+        *q = 0;
+        n_sent++;
+        if (!nmea_check(p)) n_bad_cs++;
+        if (!strncmp(p + 3, "GGA", 3)) n_gga++;
+        p = q + 2;
+    }
+}
+
+/* модель ПЛИС на CHUNK отсчётов; прерывание ПЛИС, затем запрошенное им решение (PendSV) */
+static int pend;
+static void step(void)
+{
+    corr_sim_run(CHUNK, sim_gps_src);
+    if (fpga_rd(R_IRQ_STATUS) & fpga_rd(R_IRQ_MASK)) pend |= app_irq(&A);
+    if (pend) { pend = 0; app_sol(&A); }
+}
+
+int main(void)
+{
+    int NS = sim_gps_init(DUR);
+    printf("Имитатор: КА GPS %d, %.0f с; поиск одного КА — %.0f мс\n", NS, DUR, T_ACQ * 1e3);
+    corr_sim_init(1);
+    uint8_t *snap[APP_NSNAP];
+    for (int k = 0; k < APP_NSNAP; k++) snap[k] = SNAP[k];
+    int e = app_init(&A, &RX, snap, lock);
+    printf("app_init: %d, версия ПЛИС %08X, каналов %d\n", e, (unsigned)A.fpga_ver, A.nch);
+    int ok = e == 0;
+    A.nsig = 1;                                          /* имитатор — только GPS L1 C/A */
+    A.out = out;
+    RX.pcfg.trop = 0;                                    /* имитатор без атмосферы */
+    int pps_prev = 0, n_pps = 0, nsol_prev = 0;
+    double rec_sec = -1, rec_qe = 0, maxerr = 0, maxpps = 0, t_first = -1;
+    while (sim_gps_t(corr_sim_nsmp()) < SIM_T0 + DUR - 0.01) {
+        step();
+        /* импульс 1PPS выдан ПЛИС: сравнение с истинной секундой GPST (взведённой перед выдачей) */
+        uint64_t t96;
+        int np = corr_sim_pps(&t96);
+        if (np != pps_prev) {
+            pps_prev = np;
+            double n_true = (rec_sec - SIM_T0) * FS_HZ * (1 + SIM_DELTA);
+            double err = ((double)(t96 + 1 + PPS_DELAY_T96) - 4.0 * n_true) / F96_HZ + rec_qe;
+            printf("  1PPS: секунда %.0f, ошибка (с qErr) %+.2f нс\n", rec_sec, err * 1e9);
+            if (fabs(err) > maxpps) maxpps = fabs(err);
+            n_pps++;
+        }
+        rec_sec = A.pps_sec;
+        rec_qe = A.pps_qerr;
+        if ((int)A.n_sol != nsol_prev) {
+            nsol_prev = (int)A.n_sol;
+            double d[3] = {RX.sol.pos[0] - SIM_RR[0], RX.sol.pos[1] - SIM_RR[1], RX.sol.pos[2] - SIM_RR[2]};
+            double err = sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
+            if (t_first < 0) t_first = sim_gps_t(corr_sim_nsmp()) - SIM_T0;
+            printf("  t=%5.1f с: решение %d, КА %2d, ошибка коорд. %6.2f м\n", sim_gps_t(RX.sol_n) - SIM_T0,
+                   nsol_prev, RX.sol.nsat, err);
+            if (err > maxerr) maxerr = err;
+        }
+        int w = app_poll(&A);
+        if (w & APP_ACQ) {                               /* поиск на МК занимает время */
+            for (int i = 0; i < (int)(T_ACQ * FS_HZ / CHUNK); i++) step();
+        }
+    }
+    int ntrk = 0;
+    for (int k = 0; k < CORR_MAXCH; k++) ntrk += RX.ch[k].used && RX.ch[k].trk.state == TRK_LOCK;
+    printf("Прерываний %u (TIC %u, 1PPS %u, опозданий фиксации %u); поисков %u, найдено %u; в слежении %d\n",
+           (unsigned)A.n_irq, (unsigned)A.n_tic, (unsigned)A.n_pps, (unsigned)A.n_late, (unsigned)A.n_acq,
+           (unsigned)A.n_found, ntrk);
+    printf("Решений %u (отказов %u), первое через %.1f с; NMEA: выдач %u, предложений %d, GGA %d, ошибок %d\n",
+           (unsigned)A.n_sol, (unsigned)A.n_fail, t_first, (unsigned)A.n_nmea, n_sent, n_gga, n_bad_cs);
+    printf("Блокировок %d, нарушений %d; макс. ошибка координат %.2f м, 1PPS (с qErr) %.2f нс по %d импульсам\n",
+           lk_n, lk_bad, maxerr, maxpps * 1e9, n_pps);
+    if (A.n_sol < 3 || maxerr > 15 || n_pps < 2 || maxpps > 20e-9 || n_bad_cs || n_gga != (int)A.n_sol ||
+        lk_bad || lk_on || A.n_late || ntrk < NS - 1) ok = 0;
+    printf("ИТОГ: %s\n", ok ? "ПРОЙДЕН" : "НЕ ПРОЙДЕН");
+    return !ok;
+}

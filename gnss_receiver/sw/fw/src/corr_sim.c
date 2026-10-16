@@ -41,6 +41,19 @@ static int snap_busy, snap_rec, snap_nib;
 static uint32_t snap_left, snap_wa, snap_sr, snap_t0;
 /* журнал сбросов (для тестов) */
 static void (*dump_cb)(int ch, const corr_sim_dump_t *d);
+/* MAX2771 ×8 за ведущим SPI ПЛИС (max_spi.v): регистры 0x0–0xA, LD — после записи синтезатора
+ * (регистр 0x4) включённой микросхемы; значения по умолчанию — условные (CONF1 — по документации) */
+static const uint32_t MX_DEF[11] = {0xBEA41603u, 0x20550288u, 0x0EAFE1DCu, 0x698C0008u, 0x0C000080u,
+                                    0x00000070u, 0x08000000u, 0x10061B20u, 0x01E0F401u, 0x014C0402u,
+                                    0x10061B20u};
+#define MX_DIEID 0x1u                    /* CONF2[1:0] — только чтение */
+static uint32_t mx[8][11];
+static uint8_t  mx_ld, mx_dead;
+static int      mx_busy, mx_frames, mx_bad;
+/* шкала времени (timebase.v): TIC — каждые TIC_PERIOD отсчётов, 1PPS — в такт PPS_T */
+static uint32_t tic_cnt, tic_prev;
+static uint64_t tic_t, pps_t, pps_last;
+static int      pps_armed, pps_n;
 
 static uint32_t sim_rd(uint32_t a);
 static void sim_wr(uint32_t a, uint32_t v);
@@ -57,11 +70,39 @@ void corr_sim_init(int n_eng)
     memset(regs, 0, sizeof(regs));
     regs[R_CTRL] = 0xFF00;
     snap_busy = 0;
+    for (int c = 0; c < 8; c++)
+        for (int k = 0; k < 11; k++) mx[c][k] = MX_DEF[k];
+    for (int c = 0; c < 8; c++) mx[c][1] = (mx[c][1] & ~3u) | MX_DIEID;
+    mx_ld = 0; mx_dead = 0; mx_busy = 0; mx_frames = 0; mx_bad = 0;
+    tic_cnt = 0; tic_prev = 0; tic_t = 0; pps_t = 0; pps_last = 0; pps_armed = 0; pps_n = 0;
+    regs[R_PPS_CTRL] = 9600000u;
     fpga_rd_fn = sim_rd;
     fpga_wr_fn = sim_wr;
 }
 
 void corr_sim_set_dump_cb(void (*cb)(int ch, const corr_sim_dump_t *d)) { dump_cb = cb; }
+uint32_t corr_sim_max_reg(int ch, int addr) { return mx[ch & 7][addr % 11]; }
+void corr_sim_max_fault(uint8_t dead) { mx_dead = dead; }
+int corr_sim_max_frames(void) { return mx_frames; }
+int corr_sim_max_bad(void) { return mx_bad; }
+int corr_sim_pps(uint64_t *t96_last) { if (t96_last) *t96_last = pps_last; return pps_n; }
+
+/* кадр SPI: ответ — только включённая (SHDN = 1) исправная микросхема при SPI у МК */
+static void mx_frame(uint32_t cmd)
+{
+    int ch = (int)(cmd & 7), rd = (int)(cmd >> 3 & 1), a = (int)(cmd >> 4 & 0xFFF);
+    int on = (regs[R_CTRL] >> (8 + ch) & 1) && !(regs[R_CTRL] & 8u) && !(mx_dead >> ch & 1);
+    if (mx_busy) mx_bad++;               /* пуск при занятом ведущем ПЛИС не выполняется */
+    mx_frames++;
+    mx_busy = 3;
+    if (rd) { regs[R_SPI_RDATA] = on && a < 11 ? mx[ch][a] : 0u; return; }
+    if (!on || a >= 11) return;
+    uint32_t v = regs[R_SPI_WDATA];
+    if (a == 0 && (v >> 22 & 0xFFu) != 0xFAu) mx_bad++;    /* CONF1[29:22] = 11111010 */
+    if (a == 1) v = (v & ~3u) | MX_DIEID;
+    mx[ch][a] = v;
+    if (a == 4) mx_ld |= (uint8_t)(1u << ch);
+}
 uint64_t corr_sim_nsmp(void) { return nsmp; }
 
 static int chip(const seng_t *e, int s, const sslot_t *c, uint32_t ci, uint32_t cf)
@@ -159,6 +200,14 @@ void corr_sim_run(uint64_t n, uint32_t (*src)(uint64_t i))
                 if (--snap_left == 0) { snap_busy = 0; snap_rec = 0; irq_st |= IRQ_SNAP; }
             }
         }
+        /* TIC: смена периода сбрасывает счётчик */
+        uint32_t per = regs[R_TIC_PERIOD];
+        if (per != tic_prev) { tic_prev = per; tic_cnt = 0; }
+        else if (per && ++tic_cnt == per) { tic_cnt = 0; tic_t = t96; irq_st |= IRQ_TIC; }
+        /* 1PPS: такты 96 МГц между отсчётами — t96 … t96 + 3 */
+        if (pps_armed && pps_t >= t96 && pps_t < t96 + 4) {
+            pps_armed = 0; pps_last = pps_t; pps_n++; irq_st |= IRQ_PPS;
+        } else if (pps_armed && pps_t < t96) pps_armed = 0;    /* момент в прошлом — не выдаётся */
         t96 += 4;
     }
 }
@@ -204,12 +253,17 @@ static uint32_t sim_rd(uint32_t a)
     switch (a) {
     case R_ID: return 0x4D475038u;
     case R_VERSION: return ((uint32_t)NE << 24) | 0x0100;
-    case R_STATUS: return 0x2FFu;
+    case R_STATUS: return 0x300u | (mx_ld & (uint8_t)(regs[R_CTRL] >> 8));
     case R_T96_LO: regs[R_T96_HI] = (uint32_t)(t96 >> 32); return (uint32_t)t96;
     case R_IRQ_STATUS: return irq_st | (any_ready() ? IRQ_CORR : 0);
     case R_SNAP_CTRL: return regs[a] | ((uint32_t)snap_busy << 31);
     case R_SNAP_T0: return snap_t0;
-    case R_SPI_CMD: return regs[a] & 0x7FFFFFFFu;
+    case R_TIC_T_LO: return (uint32_t)tic_t;
+    case R_TIC_T_HI: return (uint32_t)(tic_t >> 32);
+    case R_PPS_CTRL: return (regs[a] & 0x7FFFFFFFu) | ((uint32_t)pps_armed << 31);
+    case R_SPI_CMD:
+        if (mx_busy) { mx_busy--; return regs[a] | 0x80000000u; }
+        return regs[a] & 0x7FFFFFFFu;
     default: return a < 256 ? regs[a] : 0;
     }
 }
@@ -254,7 +308,11 @@ static void sim_wr(uint32_t a, uint32_t v)
         regs[a] = v; snap_busy = 1; snap_rec = 0; snap_left = regs[R_SNAP_LEN]; snap_wa = 0;
         snap_nib = 0; snap_sr = 0;
         break;
-    case R_SPI_CMD: regs[a] = v; irq_st |= IRQ_SPI; break;
+    case R_SPI_CMD: regs[a] = v; mx_frame(v); irq_st |= IRQ_SPI; break;
+    case R_SPI_RDATA: break;
+    case R_PPS_T_HI:
+        regs[a] = v; pps_t = (uint64_t)v << 32 | regs[R_PPS_T_LO]; pps_armed = 1;
+        break;
     default: regs[a] = v; break;
     }
 }

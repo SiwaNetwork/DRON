@@ -43,7 +43,9 @@ syn: $(B)/mgp8.json syn/mgp8.lpf
 	nextpnr-ecp5 --45k --package CABGA381 --speed 6 --json $(B)/mgp8.json --lpf syn/mgp8.lpf \
 	    --textcfg $(B)/mgp8.config --report $(B)/pnr_report.json --seed $(SEED) > $(B)/nextpnr.log 2>&1
 	grep -E "Max frequency" $(B)/nextpnr.log | tail -1
-	ecppack --compress $(B)/mgp8.config $(B)/mgp8.bit
+	# MCCLK 38,8 МГц (по умолчанию 2,4): конфигурация из W25Q128 (чтение 03h — до 50 МГц) за доли
+	# секунды; МК ждёт DONE 2 с (sw/fw/plat/fmc.c)
+	ecppack --compress --freq 38.8 $(B)/mgp8.config $(B)/mgp8.bit
 
 engine: | $(B)
 	yosys -q -p "read_verilog rtl/corr_engine.v rtl/cmem_4kx4.v syn/engine_wrap.v; synth_ecp5 -top engine_wrap -json $(B)/ew.json"
