@@ -1852,50 +1852,16 @@
     )
     (uuid "344665a5-f2e9-5b25-8508-e79ac12654bb")
   )
-  (global_label "LNAIN_E"
-    (shape passive)
-    (at 45.72 43.18 180)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify right)
-    )
-    (uuid "e63eee5a-d2d3-5ffd-b788-bf8aee07917c")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 45.72 43.18 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.8 1.8)
-        )
-        (justify left) hide
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 48.26 48.26)
-      (xy 45.72 48.26)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "6e193f09-09cf-5c07-a4eb-0cc314d5de19")
-  )
   (symbol
     (lib_id "mgp8:GND")
-    (at 45.72 48.26 270)
+    (at 45.72 43.18 270)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
     (uuid "9dfcf83c-a292-5421-9c51-a78a6b03e4a4")
     (property "Reference" "#PWR05001"
-      (at 45.72 48.26 0)
+      (at 45.72 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -1904,7 +1870,7 @@
       )
     )
     (property "Value" "GND"
-      (at 45.72 48.26 0)
+      (at 45.72 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -1913,7 +1879,7 @@
       )
     )
     (property "Footprint" ""
-      (at 45.72 48.26 0)
+      (at 45.72 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -1922,7 +1888,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 45.72 48.26 0)
+      (at 45.72 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -1944,18 +1910,18 @@
   )
   (wire
     (pts
-      (xy 48.26 58.42)
-      (xy 45.72 58.42)
+      (xy 48.26 48.26)
+      (xy 45.72 48.26)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "51726ec6-34da-5d3d-9747-f2eb9169cdf1")
+    (uuid "6e193f09-09cf-5c07-a4eb-0cc314d5de19")
   )
-  (global_label "LNAO_E"
+  (global_label "LNAIN_E"
     (shape passive)
-    (at 45.72 58.42 180)
+    (at 45.72 48.26 180)
     (fields_autoplaced)
     (effects
       (font
@@ -1964,9 +1930,9 @@
       )
       (justify right)
     )
-    (uuid "95032b8f-5f2d-57be-84b5-f3bc8bfd9500")
+    (uuid "bf1c2ad5-8e55-54eb-8f2b-cc63da9096e1")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 45.72 58.42 0)
+      (at 45.72 48.26 0)
       (effects
         (font
           (face "osifont")
@@ -1977,8 +1943,42 @@
     )
   )
   (no_connect
-    (at 48.26 63.5)
-    (uuid "0f773c76-8fd3-54d0-9c91-7ebac68429bf")
+    (at 48.26 58.42)
+    (uuid "886d7fda-01e2-50ca-831f-f2a4ab47f6a0")
+  )
+  (wire
+    (pts
+      (xy 48.26 63.5)
+      (xy 45.72 63.5)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "befdd9ed-70de-50a4-8dc3-797ebb4da196")
+  )
+  (global_label "LNAO_E"
+    (shape passive)
+    (at 45.72 63.5 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "0d188fbb-53a4-508f-a21e-65788b9443ea")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 45.72 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
   )
   (wire
     (pts
@@ -1991,50 +1991,16 @@
     )
     (uuid "efad45b4-fbe0-5fa3-be4d-0d36f990b0a3")
   )
-  (global_label "MIXI_E"
-    (shape passive)
-    (at 45.72 68.58 180)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify right)
-    )
-    (uuid "fee53b6f-627d-597b-8710-0330e799ea86")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 45.72 68.58 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.8 1.8)
-        )
-        (justify left) hide
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 48.26 73.66)
-      (xy 45.72 73.66)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "3f1d7f37-4b0f-562a-95f2-3f2571ed52fa")
-  )
   (symbol
     (lib_id "mgp8:GND")
-    (at 45.72 73.66 270)
+    (at 45.72 68.58 270)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
     (uuid "4916d1df-5d86-5411-aac7-0d0bcc6c3bf6")
     (property "Reference" "#PWR05002"
-      (at 45.72 73.66 0)
+      (at 45.72 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -2043,7 +2009,7 @@
       )
     )
     (property "Value" "GND"
-      (at 45.72 73.66 0)
+      (at 45.72 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -2052,7 +2018,7 @@
       )
     )
     (property "Footprint" ""
-      (at 45.72 73.66 0)
+      (at 45.72 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -2061,7 +2027,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 45.72 73.66 0)
+      (at 45.72 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -2078,6 +2044,40 @@
           (reference "#PWR05002")
           (unit 1)
         )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 48.26 73.66)
+      (xy 45.72 73.66)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "3f1d7f37-4b0f-562a-95f2-3f2571ed52fa")
+  )
+  (global_label "MIXI_E"
+    (shape passive)
+    (at 45.72 73.66 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "4dd2e2a4-f919-51d1-aa24-64f9d69b5e53")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 45.72 73.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
       )
     )
   )
@@ -2948,7 +2948,7 @@
         (justify left bottom)
       )
     )
-    (property "Value" "1,7пФ"
+    (property "Value" "1,1пФ"
       (at 48.92 177.86 0)
       (effects
         (font
@@ -2976,7 +2976,7 @@
         ) hide
       )
     )
-    (property "Наименование" "Конденсатор 0402 C0G 50 В 1,7 пФ"
+    (property "Наименование" "Конденсатор 0402 C0G 50 В 1,1 пФ"
       (at 45.72 175.26 0)
       (effects
         (font
@@ -2994,7 +2994,7 @@
         ) hide
       )
     )
-    (property "Артикул" "GJM1555C1H1R7BB01D"
+    (property "Артикул" "GJM1555C1H1R1BB01D"
       (at 45.72 175.26 0)
       (effects
         (font
@@ -3135,7 +3135,7 @@
         (justify left bottom)
       )
     )
-    (property "Value" "5,6нГн"
+    (property "Value" "8,2нГн"
       (at 66.7 181.67 0)
       (effects
         (font
@@ -3163,7 +3163,7 @@
         ) hide
       )
     )
-    (property "Наименование" "Катушка индуктивности 0402 5,6 нГн ±0,2 нГн"
+    (property "Наименование" "Катушка индуктивности 0402 8,2 нГн ±2 %"
       (at 63.5 179.07 0)
       (effects
         (font
@@ -3181,7 +3181,7 @@
         ) hide
       )
     )
-    (property "Артикул" "LQW15AN5N6C8ZD"
+    (property "Артикул" "LQW15AN8N2G8ZD"
       (at 63.5 179.07 0)
       (effects
         (font
@@ -6117,50 +6117,16 @@
     )
     (uuid "7ddd6d49-77e6-549f-917c-e6cbbde694cc")
   )
-  (global_label "LNAIN_F"
-    (shape passive)
-    (at 152.4 43.18 180)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify right)
-    )
-    (uuid "fb43062d-ba3a-580e-ab95-1c72f81966ee")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 152.4 43.18 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.8 1.8)
-        )
-        (justify left) hide
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 154.94 48.26)
-      (xy 152.4 48.26)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "1a4dab50-c6d5-55c6-8271-31e54ba4bbbe")
-  )
   (symbol
     (lib_id "mgp8:GND")
-    (at 152.4 48.26 270)
+    (at 152.4 43.18 270)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
     (uuid "ca75522d-540a-5b11-8d9b-e62aefd75b3c")
     (property "Reference" "#PWR05022"
-      (at 152.4 48.26 0)
+      (at 152.4 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -6169,7 +6135,7 @@
       )
     )
     (property "Value" "GND"
-      (at 152.4 48.26 0)
+      (at 152.4 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -6178,7 +6144,7 @@
       )
     )
     (property "Footprint" ""
-      (at 152.4 48.26 0)
+      (at 152.4 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -6187,7 +6153,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 152.4 48.26 0)
+      (at 152.4 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -6209,18 +6175,18 @@
   )
   (wire
     (pts
-      (xy 154.94 58.42)
-      (xy 152.4 58.42)
+      (xy 154.94 48.26)
+      (xy 152.4 48.26)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "8ef1be9e-a3ad-5f50-9785-7167fa60a1f4")
+    (uuid "1a4dab50-c6d5-55c6-8271-31e54ba4bbbe")
   )
-  (global_label "LNAO_F"
+  (global_label "LNAIN_F"
     (shape passive)
-    (at 152.4 58.42 180)
+    (at 152.4 48.26 180)
     (fields_autoplaced)
     (effects
       (font
@@ -6229,9 +6195,9 @@
       )
       (justify right)
     )
-    (uuid "0c0e843b-11f4-5840-893b-d7ae25e6f162")
+    (uuid "4622d0b6-332d-5ea9-81a5-8783a08abb95")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 152.4 58.42 0)
+      (at 152.4 48.26 0)
       (effects
         (font
           (face "osifont")
@@ -6242,8 +6208,42 @@
     )
   )
   (no_connect
-    (at 154.94 63.5)
-    (uuid "ed850100-f9da-5d47-87da-e1caf376b117")
+    (at 154.94 58.42)
+    (uuid "d19165e4-9708-5905-a979-a78cbfaaa0b9")
+  )
+  (wire
+    (pts
+      (xy 154.94 63.5)
+      (xy 152.4 63.5)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "0d8d6c8a-653f-5be5-934f-f6554a0e62ff")
+  )
+  (global_label "LNAO_F"
+    (shape passive)
+    (at 152.4 63.5 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "dde249f3-5811-5c75-a59d-c2f00f97aa10")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 152.4 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
   )
   (wire
     (pts
@@ -6256,50 +6256,16 @@
     )
     (uuid "d70254cd-4411-53ef-ac49-f6c984c1b606")
   )
-  (global_label "MIXI_F"
-    (shape passive)
-    (at 152.4 68.58 180)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify right)
-    )
-    (uuid "08d41a61-4515-5426-a90b-1e1b672409d6")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 152.4 68.58 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.8 1.8)
-        )
-        (justify left) hide
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 154.94 73.66)
-      (xy 152.4 73.66)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "1477168b-4d8f-52b8-a8ed-f0e2a6119dad")
-  )
   (symbol
     (lib_id "mgp8:GND")
-    (at 152.4 73.66 270)
+    (at 152.4 68.58 270)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
     (uuid "8ef97b28-3248-54f0-a598-4aed66499cb7")
     (property "Reference" "#PWR05023"
-      (at 152.4 73.66 0)
+      (at 152.4 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -6308,7 +6274,7 @@
       )
     )
     (property "Value" "GND"
-      (at 152.4 73.66 0)
+      (at 152.4 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -6317,7 +6283,7 @@
       )
     )
     (property "Footprint" ""
-      (at 152.4 73.66 0)
+      (at 152.4 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -6326,7 +6292,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 152.4 73.66 0)
+      (at 152.4 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -6343,6 +6309,40 @@
           (reference "#PWR05023")
           (unit 1)
         )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 154.94 73.66)
+      (xy 152.4 73.66)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "1477168b-4d8f-52b8-a8ed-f0e2a6119dad")
+  )
+  (global_label "MIXI_F"
+    (shape passive)
+    (at 152.4 73.66 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "483e5027-f512-5ba8-b497-9f0c0d9f02f6")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 152.4 73.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
       )
     )
   )
@@ -7213,7 +7213,7 @@
         (justify left bottom)
       )
     )
-    (property "Value" "1,7пФ"
+    (property "Value" "1,1пФ"
       (at 155.6 177.86 0)
       (effects
         (font
@@ -7241,7 +7241,7 @@
         ) hide
       )
     )
-    (property "Наименование" "Конденсатор 0402 C0G 50 В 1,7 пФ"
+    (property "Наименование" "Конденсатор 0402 C0G 50 В 1,1 пФ"
       (at 152.4 175.26 0)
       (effects
         (font
@@ -7259,7 +7259,7 @@
         ) hide
       )
     )
-    (property "Артикул" "GJM1555C1H1R7BB01D"
+    (property "Артикул" "GJM1555C1H1R1BB01D"
       (at 152.4 175.26 0)
       (effects
         (font
@@ -7400,7 +7400,7 @@
         (justify left bottom)
       )
     )
-    (property "Value" "5,6нГн"
+    (property "Value" "8,2нГн"
       (at 173.38 181.67 0)
       (effects
         (font
@@ -7428,7 +7428,7 @@
         ) hide
       )
     )
-    (property "Наименование" "Катушка индуктивности 0402 5,6 нГн ±0,2 нГн"
+    (property "Наименование" "Катушка индуктивности 0402 8,2 нГн ±2 %"
       (at 170.18 179.07 0)
       (effects
         (font
@@ -7446,7 +7446,7 @@
         ) hide
       )
     )
-    (property "Артикул" "LQW15AN5N6C8ZD"
+    (property "Артикул" "LQW15AN8N2G8ZD"
       (at 170.18 179.07 0)
       (effects
         (font
@@ -10382,50 +10382,16 @@
     )
     (uuid "a572cd41-e779-59f6-a571-7b4096d08add")
   )
-  (global_label "LNAIN_G"
-    (shape passive)
-    (at 260.35 43.18 180)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify right)
-    )
-    (uuid "ad6ffc7a-0f7c-5681-beaa-7d61a6dc7194")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 260.35 43.18 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.8 1.8)
-        )
-        (justify left) hide
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 262.89 48.26)
-      (xy 260.35 48.26)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "4e2ae328-c762-5dd0-bcde-3186f81643c6")
-  )
   (symbol
     (lib_id "mgp8:GND")
-    (at 260.35 48.26 270)
+    (at 260.35 43.18 270)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
     (uuid "85483ad4-e435-5e78-8981-3fd626a156bf")
     (property "Reference" "#PWR05043"
-      (at 260.35 48.26 0)
+      (at 260.35 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -10434,7 +10400,7 @@
       )
     )
     (property "Value" "GND"
-      (at 260.35 48.26 0)
+      (at 260.35 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -10443,7 +10409,7 @@
       )
     )
     (property "Footprint" ""
-      (at 260.35 48.26 0)
+      (at 260.35 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -10452,7 +10418,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 260.35 48.26 0)
+      (at 260.35 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -10474,18 +10440,18 @@
   )
   (wire
     (pts
-      (xy 262.89 58.42)
-      (xy 260.35 58.42)
+      (xy 262.89 48.26)
+      (xy 260.35 48.26)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "e9e19d9b-c0c4-5f66-936d-07b83e9ebde5")
+    (uuid "4e2ae328-c762-5dd0-bcde-3186f81643c6")
   )
-  (global_label "LNAO_G"
+  (global_label "LNAIN_G"
     (shape passive)
-    (at 260.35 58.42 180)
+    (at 260.35 48.26 180)
     (fields_autoplaced)
     (effects
       (font
@@ -10494,9 +10460,9 @@
       )
       (justify right)
     )
-    (uuid "cd9c3ccf-8033-5533-a4ab-e5ea2a8618c3")
+    (uuid "602f1014-402f-551a-9879-54a4c97f25d4")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 260.35 58.42 0)
+      (at 260.35 48.26 0)
       (effects
         (font
           (face "osifont")
@@ -10507,8 +10473,42 @@
     )
   )
   (no_connect
-    (at 262.89 63.5)
-    (uuid "36c2b9e7-7e99-5261-9800-d10b4a62b45a")
+    (at 262.89 58.42)
+    (uuid "67bd5d28-221e-5461-a48a-4c8d85b31ead")
+  )
+  (wire
+    (pts
+      (xy 262.89 63.5)
+      (xy 260.35 63.5)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "a12d7e6d-2b71-550c-94db-a7076a10c836")
+  )
+  (global_label "LNAO_G"
+    (shape passive)
+    (at 260.35 63.5 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "a0207fa2-c99d-5843-a854-57c090d121b4")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 260.35 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
   )
   (wire
     (pts
@@ -10521,50 +10521,16 @@
     )
     (uuid "3b4b8575-64a3-5169-8f76-f554021c9357")
   )
-  (global_label "MIXI_G"
-    (shape passive)
-    (at 260.35 68.58 180)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify right)
-    )
-    (uuid "2c096bdd-57e4-55fb-b4af-52e3c5bb70df")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 260.35 68.58 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.8 1.8)
-        )
-        (justify left) hide
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 262.89 73.66)
-      (xy 260.35 73.66)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "d1689857-3af4-595e-8324-7831368d9df2")
-  )
   (symbol
     (lib_id "mgp8:GND")
-    (at 260.35 73.66 270)
+    (at 260.35 68.58 270)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
     (uuid "60fb252f-d8c8-52c3-bf8c-bf79c351b22a")
     (property "Reference" "#PWR05044"
-      (at 260.35 73.66 0)
+      (at 260.35 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -10573,7 +10539,7 @@
       )
     )
     (property "Value" "GND"
-      (at 260.35 73.66 0)
+      (at 260.35 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -10582,7 +10548,7 @@
       )
     )
     (property "Footprint" ""
-      (at 260.35 73.66 0)
+      (at 260.35 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -10591,7 +10557,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 260.35 73.66 0)
+      (at 260.35 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -10608,6 +10574,40 @@
           (reference "#PWR05044")
           (unit 1)
         )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 262.89 73.66)
+      (xy 260.35 73.66)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "d1689857-3af4-595e-8324-7831368d9df2")
+  )
+  (global_label "MIXI_G"
+    (shape passive)
+    (at 260.35 73.66 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "8a59312a-9422-5d5e-89a3-4b31e750e10a")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 260.35 73.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
       )
     )
   )
@@ -11478,7 +11478,7 @@
         (justify left bottom)
       )
     )
-    (property "Value" "1,7пФ"
+    (property "Value" "1,1пФ"
       (at 262.28 177.86 0)
       (effects
         (font
@@ -11506,7 +11506,7 @@
         ) hide
       )
     )
-    (property "Наименование" "Конденсатор 0402 C0G 50 В 1,7 пФ"
+    (property "Наименование" "Конденсатор 0402 C0G 50 В 1,1 пФ"
       (at 259.08 175.26 0)
       (effects
         (font
@@ -11524,7 +11524,7 @@
         ) hide
       )
     )
-    (property "Артикул" "GJM1555C1H1R7BB01D"
+    (property "Артикул" "GJM1555C1H1R1BB01D"
       (at 259.08 175.26 0)
       (effects
         (font
@@ -11665,7 +11665,7 @@
         (justify left bottom)
       )
     )
-    (property "Value" "5,6нГн"
+    (property "Value" "8,2нГн"
       (at 281.33 181.67 0)
       (effects
         (font
@@ -11693,7 +11693,7 @@
         ) hide
       )
     )
-    (property "Наименование" "Катушка индуктивности 0402 5,6 нГн ±0,2 нГн"
+    (property "Наименование" "Катушка индуктивности 0402 8,2 нГн ±2 %"
       (at 278.13 179.07 0)
       (effects
         (font
@@ -11711,7 +11711,7 @@
         ) hide
       )
     )
-    (property "Артикул" "LQW15AN5N6C8ZD"
+    (property "Артикул" "LQW15AN8N2G8ZD"
       (at 278.13 179.07 0)
       (effects
         (font
@@ -14647,50 +14647,16 @@
     )
     (uuid "82aa4591-be6d-58bc-8cb8-a89d9a97d112")
   )
-  (global_label "LNAIN_H"
-    (shape passive)
-    (at 367.03 43.18 180)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify right)
-    )
-    (uuid "64218a2b-c26e-5258-9214-b68621e6b438")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 367.03 43.18 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.8 1.8)
-        )
-        (justify left) hide
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 369.57 48.26)
-      (xy 367.03 48.26)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "9bbfab24-523a-5a07-a304-b2e353897ee2")
-  )
   (symbol
     (lib_id "mgp8:GND")
-    (at 367.03 48.26 270)
+    (at 367.03 43.18 270)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
     (uuid "e45d4017-732e-5818-b4f8-ffdbaac4e501")
     (property "Reference" "#PWR05064"
-      (at 367.03 48.26 0)
+      (at 367.03 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -14699,7 +14665,7 @@
       )
     )
     (property "Value" "GND"
-      (at 367.03 48.26 0)
+      (at 367.03 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -14708,7 +14674,7 @@
       )
     )
     (property "Footprint" ""
-      (at 367.03 48.26 0)
+      (at 367.03 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -14717,7 +14683,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 367.03 48.26 0)
+      (at 367.03 43.18 0)
       (effects
         (font
           (face "osifont")
@@ -14739,18 +14705,18 @@
   )
   (wire
     (pts
-      (xy 369.57 58.42)
-      (xy 367.03 58.42)
+      (xy 369.57 48.26)
+      (xy 367.03 48.26)
     )
     (stroke
       (width 0)
       (type default)
     )
-    (uuid "3a38f370-df0f-5278-9903-e113c3c222ff")
+    (uuid "9bbfab24-523a-5a07-a304-b2e353897ee2")
   )
-  (global_label "LNAO_H"
+  (global_label "LNAIN_H"
     (shape passive)
-    (at 367.03 58.42 180)
+    (at 367.03 48.26 180)
     (fields_autoplaced)
     (effects
       (font
@@ -14759,9 +14725,9 @@
       )
       (justify right)
     )
-    (uuid "78285a2b-dcf1-5d66-b848-a5f560e77ec3")
+    (uuid "ec765540-7fe5-5279-b40b-3138d5ad2131")
     (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 367.03 58.42 0)
+      (at 367.03 48.26 0)
       (effects
         (font
           (face "osifont")
@@ -14772,8 +14738,42 @@
     )
   )
   (no_connect
-    (at 369.57 63.5)
-    (uuid "295951ad-f4df-5dba-8a6c-6f516d510fa3")
+    (at 369.57 58.42)
+    (uuid "0b7f59ad-2e56-5230-afbc-7f1ce26dd2cd")
+  )
+  (wire
+    (pts
+      (xy 369.57 63.5)
+      (xy 367.03 63.5)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "fda53e4d-aaf9-5610-b66f-3aca72bd5212")
+  )
+  (global_label "LNAO_H"
+    (shape passive)
+    (at 367.03 63.5 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "604e76f9-752a-52e5-b0bb-0f8a4b665e6e")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 367.03 63.5 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
+      )
+    )
   )
   (wire
     (pts
@@ -14786,50 +14786,16 @@
     )
     (uuid "d3912775-f382-5ca4-959c-ca7e6bc1ce70")
   )
-  (global_label "MIXI_H"
-    (shape passive)
-    (at 367.03 68.58 180)
-    (fields_autoplaced)
-    (effects
-      (font
-        (face "osifont")
-        (size 2.5 2.5)
-      )
-      (justify right)
-    )
-    (uuid "ac0cbce1-0e6f-56de-affc-a0ccd9a365ac")
-    (property "Intersheetrefs" "${INTERSHEET_REFS}"
-      (at 367.03 68.58 0)
-      (effects
-        (font
-          (face "osifont")
-          (size 1.8 1.8)
-        )
-        (justify left) hide
-      )
-    )
-  )
-  (wire
-    (pts
-      (xy 369.57 73.66)
-      (xy 367.03 73.66)
-    )
-    (stroke
-      (width 0)
-      (type default)
-    )
-    (uuid "0bf7a257-bc63-56f7-90f5-ac4fe876e6a1")
-  )
   (symbol
     (lib_id "mgp8:GND")
-    (at 367.03 73.66 270)
+    (at 367.03 68.58 270)
     (unit 1)
     (in_bom no)
     (on_board no)
     (dnp no)
     (uuid "7ff4f308-0bdf-548a-a383-07a41a4ccff2")
     (property "Reference" "#PWR05065"
-      (at 367.03 73.66 0)
+      (at 367.03 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -14838,7 +14804,7 @@
       )
     )
     (property "Value" "GND"
-      (at 367.03 73.66 0)
+      (at 367.03 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -14847,7 +14813,7 @@
       )
     )
     (property "Footprint" ""
-      (at 367.03 73.66 0)
+      (at 367.03 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -14856,7 +14822,7 @@
       )
     )
     (property "Datasheet" ""
-      (at 367.03 73.66 0)
+      (at 367.03 68.58 0)
       (effects
         (font
           (face "osifont")
@@ -14873,6 +14839,40 @@
           (reference "#PWR05065")
           (unit 1)
         )
+      )
+    )
+  )
+  (wire
+    (pts
+      (xy 369.57 73.66)
+      (xy 367.03 73.66)
+    )
+    (stroke
+      (width 0)
+      (type default)
+    )
+    (uuid "0bf7a257-bc63-56f7-90f5-ac4fe876e6a1")
+  )
+  (global_label "MIXI_H"
+    (shape passive)
+    (at 367.03 73.66 180)
+    (fields_autoplaced)
+    (effects
+      (font
+        (face "osifont")
+        (size 2.5 2.5)
+      )
+      (justify right)
+    )
+    (uuid "e7f77ee2-6479-54c5-a640-54da965c75d9")
+    (property "Intersheetrefs" "${INTERSHEET_REFS}"
+      (at 367.03 73.66 0)
+      (effects
+        (font
+          (face "osifont")
+          (size 1.8 1.8)
+        )
+        (justify left) hide
       )
     )
   )
@@ -15743,7 +15743,7 @@
         (justify left bottom)
       )
     )
-    (property "Value" "1,7пФ"
+    (property "Value" "1,1пФ"
       (at 370.23 177.86 0)
       (effects
         (font
@@ -15771,7 +15771,7 @@
         ) hide
       )
     )
-    (property "Наименование" "Конденсатор 0402 C0G 50 В 1,7 пФ"
+    (property "Наименование" "Конденсатор 0402 C0G 50 В 1,1 пФ"
       (at 367.03 175.26 0)
       (effects
         (font
@@ -15789,7 +15789,7 @@
         ) hide
       )
     )
-    (property "Артикул" "GJM1555C1H1R7BB01D"
+    (property "Артикул" "GJM1555C1H1R1BB01D"
       (at 367.03 175.26 0)
       (effects
         (font
@@ -15930,7 +15930,7 @@
         (justify left bottom)
       )
     )
-    (property "Value" "5,6нГн"
+    (property "Value" "8,2нГн"
       (at 388.01 181.67 0)
       (effects
         (font
@@ -15958,7 +15958,7 @@
         ) hide
       )
     )
-    (property "Наименование" "Катушка индуктивности 0402 5,6 нГн ±0,2 нГн"
+    (property "Наименование" "Катушка индуктивности 0402 8,2 нГн ±2 %"
       (at 384.81 179.07 0)
       (effects
         (font
@@ -15976,7 +15976,7 @@
         ) hide
       )
     )
-    (property "Артикул" "LQW15AN5N6C8ZD"
+    (property "Артикул" "LQW15AN8N2G8ZD"
       (at 384.81 179.07 0)
       (effects
         (font

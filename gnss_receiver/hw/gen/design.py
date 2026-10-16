@@ -156,12 +156,17 @@ def build():
             n, ch = i + 1, CH[i]
             rail = f"+3V3_RF{i // 2 + 1}"
             blk = f"ch{n}"
+            # каналы 1–2 (L1/E1/B1, G1) — верхний диапазон MAX2771 (LNAIN_HI/MIXIN_HI, согласование 5,6 нГн + 1,7 пФ);
+            # каналы 3–8 (1176…1279 МГц) — нижний (LNAIN_LO/MIXIN_LO, 8,4 нГн -> ближайший ряд 8,2 нГн + 1,1 пФ)
+            lo = i >= 2
+            hi_lo = ("LO", "HI") if lo else ("HI", "LO")
             s.add(C("470p"), {"1": f"RF{n}", "2": f"RFM_{ch}"}, blk)
-            s.add(C("1.7p"), {"1": f"RFM_{ch}", "2": GND}, blk)
-            s.add(P.inductor("5.6n"), {"1": f"RFM_{ch}", "2": f"LNAIN_{ch}"}, blk)
+            s.add(C("1.1p" if lo else "1.7p"), {"1": f"RFM_{ch}", "2": GND}, blk)
+            s.add(P.inductor("8.2n" if lo else "5.6n"), {"1": f"RFM_{ch}", "2": f"LNAIN_{ch}"}, blk)
             s.add(mx, {
-                "LNAIN_HI": f"LNAIN_{ch}", "LNAIN_LO": GND, "LNAOUT_HI": f"LNAO_{ch}", "LNAOUT_LO": None,
-                "MIXIN_HI": f"MIXI_{ch}", "MIXIN_LO": GND, "XTAL": f"XTAL_{ch}", "CPOUT": f"CP_{ch}",
+                f"LNAIN_{hi_lo[0]}": f"LNAIN_{ch}", f"LNAIN_{hi_lo[1]}": GND,
+                f"LNAOUT_{hi_lo[0]}": f"LNAO_{ch}", f"LNAOUT_{hi_lo[1]}": None,
+                f"MIXIN_{hi_lo[0]}": f"MIXI_{ch}", f"MIXIN_{hi_lo[1]}": GND, "XTAL": f"XTAL_{ch}", "CPOUT": f"CP_{ch}",
                 "ADC_CLKIN": f"ADC_CLK_{ch}", "CLKOUT": "ADC_CLK_SRC" if i == 0 else None,
                 "SHDN": f"MAX_SHDN_{ch}", "NC": None, "LD": f"MAX_LD_{ch}",
                 "I1": f"MAX_I1_{ch}", "I0": f"MAX_I0_{ch}", "Q1": f"MAX_Q1_{ch}", "Q0": f"MAX_Q0_{ch}",

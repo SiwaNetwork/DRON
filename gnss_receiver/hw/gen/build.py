@@ -1,10 +1,12 @@
 """Сборка проекта KiCad схемы МГП-8 и проверка списка соединений.
 
-Запуск: python3 hw/gen/build.py  (из каталога gnss_receiver)"""
+Запуск: python3 hw/gen/build.py [--pdf]  (из каталога gnss_receiver);
+--pdf — дополнительно выгрузить kd/ШИВА.468157.001 Э3.pdf через kicad-cli со шрифтом tools/fonts/osifont-mgp8.ttf."""
 import json
 import os
 import subprocess
 import sys
+import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -55,5 +57,36 @@ def main():
     return d
 
 
+def export_pdf():
+    """Э3 в PDF. Шрифт osifont подключается своим fonts.conf только для kicad-cli (в систему не ставится)."""
+    import symlib
+    from verify_netlist import kicad_cli
+    cli = kicad_cli()
+    kicad_fc = os.path.join(os.path.dirname(os.path.dirname(cli)), "etc", "fonts", "fonts.conf")
+    base = kicad_fc if os.path.exists(kicad_fc) else "/etc/fonts/fonts.conf"
+    tmp = tempfile.mkdtemp()
+    conf = os.path.join(tmp, "fonts.conf")
+
+    def fwd(path):
+        return path.replace(os.sep, "/")
+    lines = ['<?xml version="1.0"?>',
+             '<!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">',
+             "<fontconfig>",
+             f"  <dir>{fwd(os.path.join(ROOT, 'tools', 'fonts'))}</dir>",
+             f'  <include ignore_missing="yes">{fwd(base)}</include>',
+             f"  <cachedir>{fwd(tmp)}/cache</cachedir>",
+             "</fontconfig>"]
+    with open(conf, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    pdf = os.path.join(ROOT, "kd", f"{META['designation']}.pdf")
+    r = subprocess.run([cli, "sch", "export", "pdf", "-o", pdf, os.path.join(OUT, "mgp8.kicad_sch")],
+                       env=dict(os.environ, FONTCONFIG_FILE=conf), capture_output=True, text=True)
+    if r.returncode or "not found" in (r.stdout + r.stderr):
+        sys.exit(f"kicad-cli: {r.stdout}{r.stderr}")
+    print("Э3:", pdf, f"(KiCad: {symlib.KICAD_SYM})")
+
+
 if __name__ == "__main__":
     main()
+    if "--pdf" in sys.argv[1:]:
+        export_pdf()

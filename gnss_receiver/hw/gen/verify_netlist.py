@@ -3,7 +3,9 @@
 Проверяет, что разбиение выводов на цепи в KiCad совпадает с моделью design.py (с точностью
 до имён цепей), что все компоненты присутствуют и что неподключённые выводы совпадают.
 """
+import glob
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -11,6 +13,12 @@ import tempfile
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from sexp import loads, find, first  # noqa: E402
+
+
+def kicad_cli():
+    """kicad-cli из PATH или из установки KiCad в Windows."""
+    win = sorted(glob.glob("C:/Program Files/KiCad/*/bin/kicad-cli.exe"), reverse=True)
+    return shutil.which("kicad-cli") or (win[0] if win else "kicad-cli")
 
 
 def kicad_nets(netfile):
@@ -59,7 +67,7 @@ def main(outdir):
     import build
     d = build.main()
     net = os.path.join(tempfile.mkdtemp(), "mgp8.net")
-    subprocess.run(["kicad-cli", "sch", "export", "netlist", "-o", net, os.path.join(outdir, "mgp8.kicad_sch")],
+    subprocess.run([kicad_cli(), "sch", "export", "netlist", "-o", net, os.path.join(outdir, "mgp8.kicad_sch")],
                    check=True, capture_output=True)
     probs = compare(d, net)
     if probs:

@@ -45,7 +45,12 @@ ORDER = ["Спецификация", "Э1", "Э3", "ПЭ3", "ВП", "ТЗ", "П�
 
 
 def pages(path):
-    from pypdf import PdfReader
+    try:
+        from pypdf import PdfReader
+    except ImportError:                      # Windows: pypdf не установлен, есть pymupdf
+        import pymupdf
+        with pymupdf.open(path) as doc:
+            return doc.page_count
     return len(PdfReader(path).pages)
 
 
@@ -68,7 +73,7 @@ def build_ep():
     md += ["", "Исходные тексты схемы, конфигурации ПЛИС, ПО и расчётных моделей — каталог "
            "`gnss_receiver` репозитория проекта (README.md)."]
     path = os.path.join(ROOT, "docs", "00_ЭП.md")
-    open(path, "w", encoding="utf-8").write("\n".join(md) + "\n")
+    open(path, "w", encoding="utf-8", newline="\n").write("\n".join(md) + "\n")
     build(path)
 
 

@@ -10,12 +10,22 @@
 Все тексты переводятся на шрифт osifont (ISO 3098 / ГОСТ 2.304).
 """
 import copy
+import glob
 import os
 import re
 
 from sexp import Q, loads, dumps, find, first, remove
 
-KICAD_SYM = "/usr/share/kicad/symbols"
+def _kicad_sym_dir():
+    """Каталог стандартной библиотеки УГО KiCad: $KICAD_SYMBOL_DIR, Linux или установка KiCad в Windows."""
+    if os.environ.get("KICAD_SYMBOL_DIR"):
+        return os.environ["KICAD_SYMBOL_DIR"]
+    cands = ["/usr/share/kicad/symbols"] + sorted(glob.glob("C:/Program Files/KiCad/*/share/kicad/symbols"), reverse=True)
+    return next((c for c in cands if os.path.isdir(c)), cands[0])
+
+
+KICAD_SYM = _kicad_sym_dir()
+KICAD_TEMPLATE = os.path.join(os.path.dirname(KICAD_SYM.rstrip("/\\")), "template")
 HERE = os.path.dirname(os.path.abspath(__file__))
 POCKET_LIB = os.path.join(HERE, "data", "pocket_sdr_v2.3-eagle-import.kicad_sym")
 FONT = "osifont"
@@ -81,9 +91,63 @@ def _rename(sym, new):
     return sym
 
 
+def _unnamed_pins(node):
+    """KiCad 10 записывает пустое имя вывода как "", прежние версии — "~": приводим к "~"."""
+    for c in node:
+        if isinstance(c, list) and c:
+            nm = first(c, "name") if c[0] == "pin" else None
+            if nm is not None and nm[1] == "":
+                nm[1] = Q("~")
+            _unnamed_pins(c)
+    return node
+
+
+# Отличия библиотеки KiCad 10 от KiCad 7, по которой выпущена схема Э3: имена и номера выводов, посадочные места.
+# Для KiCad 7 замены ничего не меняют.
+_COMPAT = {
+    "W25Q128JVS": dict(names={"1": "CS", "2": "DO(IO1)", "3": "IO2", "5": "DI(IO0)", "7": "IO3"},
+                       fp="Package_SO:SOIC-8_5.23x5.23mm_P1.27mm"),
+    "Micro_SD_Card_Det_Hirose_DM3AT": dict(nums={"SH": "11"}),
+}
+
+
+def _compat(sym, name):
+    fix = _COMPAT.get(name)
+
+    def walk(node):
+        for c in node:
+            if not (isinstance(c, list) and c):
+                continue
+            if c[0] == "pin":
+                num, nm = first(c, "number"), first(c, "name")
+                if num[1] in fix.get("names", {}):
+                    nm[1] = Q(fix["names"][num[1]])
+                if num[1] in fix.get("nums", {}):
+                    num[1] = Q(fix["nums"][num[1]])
+            elif c[0] == "property" and c[1] == "Footprint" and "fp" in fix:
+                c[2] = Q(fix["fp"])
+            else:
+                walk(c)
+    if fix:
+        walk(sym)
+    return sym
+
+
+def _pin_order(node):
+    """Порядок выводов как в KiCad 7 — по номеру как строке (KiCad 10 сортирует по числу)."""
+    idx = [i for i, c in enumerate(node) if isinstance(c, list) and c and c[0] == "pin"]
+    pins = sorted((node[i] for i in idx), key=lambda p: str(first(p, "number")[1]))
+    for i, p in zip(idx, pins):
+        node[i] = p
+    for c in node:
+        if isinstance(c, list) and c and c[0] == "symbol":
+            _pin_order(c)
+    return node
+
+
 def kicad(libfile, name, new=None):
-    sym = _flatten(_load(os.path.join(KICAD_SYM, libfile)), name)
-    return _restyle(_rename(sym, new or name))
+    sym = _compat(_unnamed_pins(_flatten(_load(os.path.join(KICAD_SYM, libfile)), name)), name)
+    return _restyle(_rename(_pin_order(sym), new or name))
 
 
 def pocket(name, new=None):

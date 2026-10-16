@@ -422,7 +422,7 @@ LEGACY = {"%C0": "${COMMENT1}", "%C1": "${COMMENT2}", "%C2": "${COMMENT3}", "%C3
 
 def write_worksheet(path):
     """Рамка и основная надпись по ГОСТ 2.104 (формы 1 и 2а) на основе gost_landscape.kicad_wks из KiCad."""
-    src = open("/usr/share/kicad/template/gost_landscape.kicad_wks", encoding="utf-8").read()
+    src = open(os.path.join(symlib.KICAD_TEMPLATE, "gost_landscape.kicad_wks"), encoding="utf-8").read()
     for k, v in LEGACY.items():
         src = src.replace(f'"{k}"', f'"{v}"').replace(f"{k}\"", f"{v}\"")
     src = src.replace("Формат %Z", "Формат ${PAPER}").replace("N°", "№")
@@ -565,7 +565,7 @@ def write_project(design, outdir, meta, papers=None):
         f.write('(sym_lib_table\n  (lib (name "mgp8")(type "KiCad")(uri "${KIPRJMOD}/mgp8.kicad_sym")(options "")(descr "МГП-8"))\n)\n')
     write_worksheet(os.path.join(outdir, "eskd.kicad_wks"))
     import json
-    pro = json.load(open("/usr/share/kicad/template/kicad.kicad_pro"))
+    pro = json.load(open(os.path.join(symlib.KICAD_TEMPLATE, "kicad.kicad_pro"), encoding="utf-8"))
     pro["meta"]["filename"] = f"{proj.name}.kicad_pro"
     pro["schematic"] = {"page_layout_descr_file": "eskd.kicad_wks", "subpart_id_separator": 46,
                         "subpart_first_id": 49, "drawing": {"default_text_size": 98.4, "default_line_thickness": 10.0}}

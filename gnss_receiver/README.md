@@ -17,7 +17,7 @@
 |---|---|
 | `docs/` | исходные тексты документов: обзор открытых разработок, ТЗ, ПЗ, ПМ, описание программы |
 | `kd/` | КД в PDF: Э1, Э3, ПЭ3, спецификация, ВП, ТЗ, ПЗ, ПМ, описание программы ПО МК |
-| `hw/gen/` | схема Э3 «как код» (Python) → проект KiCad 7 (`hw/kicad/`), перечни ЕСКД |
+| `hw/gen/` | схема Э3 «как код» (Python) → проект KiCad 7/10 (`hw/kicad/`), перечни ЕСКД |
 | `hw/spice/` | SPICE-модели узлов: питание антенны, bias-tee, вход REF, выход 1PPS |
 | `fpga/rtl/` | Verilog: `corr_engine` (16 каналов на движок), `corr_bank`, `notch`, `rf_capture`, `timebase`, `fmc_slave`, `max_spi`, `snapshot`, `mgp8_core`, `mgp8_top` |
 | `fpga/model/` | битово-точные модели коррелятора и режекторного фильтра (Python) |
@@ -30,7 +30,7 @@
 ## Инструменты
 
 Используются: Python 3 (numpy, scipy, matplotlib, reportlab), Icarus Verilog,
-Yosys, nextpnr-ecp5 и Project Trellis (ecppack), ngspice, gcc и KiCad 7 (kicad-cli).
+Yosys, nextpnr-ecp5 и Project Trellis (ecppack), ngspice, gcc и KiCad 7 или 10 (kicad-cli).
 Для `tests/check_output.py` нужны также pyrtcm и pynmeagps.
 
 ## Проверка
@@ -52,7 +52,8 @@ make -C sw/fw test-long
 python3 sim/rf_budget.py; python3 sim/freq_plan.py; python3 sim/notch_sim.py
 python3 sim/power_budget.py; python3 sim/reliability.py
 # схема и перечни (Э3, ПЭ3, спецификация, ВП); текстовые документы (ТЗ, ПЗ, ПМ, описание программы)
-python3 hw/gen/build.py
+python3 hw/gen/build.py --pdf
+python3 hw/gen/eskd_lists.py
 python3 tools/build_docs.py
 # вычислительное ядро ПО МК для STM32H743 (arm-none-eabi-gcc)
 make -C sw/fw mcu
