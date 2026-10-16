@@ -1,4 +1,5 @@
-"""Перечень элементов (ПЭ3), спецификация и ведомость покупных изделий (ВП) по модели схемы."""
+"""Перечень элементов (ПЭ3), спецификация и ведомость покупных изделий (ВП) по модели схемы:
+kd/<обозначение>.pdf (основной экземпляр) и .docx (редактируемая копия)."""
 import os
 import re
 import sys
@@ -11,6 +12,7 @@ from reportlab.lib.pagesizes import A3, A4, landscape  # noqa: E402
 from reportlab.lib.units import mm  # noqa: E402
 from reportlab.pdfgen import canvas  # noqa: E402
 
+import eskd_docx as D  # noqa: E402
 import eskd_pdf as E  # noqa: E402
 
 DES = "ШИВА.468157.001"
@@ -96,22 +98,21 @@ def pe3_rows(design):
     return rows
 
 
-def write_pe3(design, path, meta):
-    c = canvas.Canvas(path, pagesize=A4)
-    c.setTitle("Перечень элементов")
-    m = dict(meta, designation=f"{DES} ПЭ3", doctype="Перечень элементов", format="A4")
-    pages = E.list_pages(c, 210, 297, m, pe3_rows(design), [20, 110, 10, 45],
-                         ["Поз.\nобозна-\nчение", "Наименование", "Кол.", "Примечание"],
-                         ["left", "left", "center", "left"], form_first="2")
+def _write(path, pw, ph, m, rows, widths, head, al, title, font=3.5):
+    """Перечень в PDF (основной экземпляр) и рядом в DOCX (редактируемая копия) с теми же строками."""
+    c = canvas.Canvas(path, pagesize=landscape(A3) if pw > ph else A4)
+    c.setTitle(title)
+    pages = E.list_pages(c, pw, ph, m, rows, widths, head, al, form_first="2", font=font)
     c.save()
-    # повторно с известным числом листов
-    c = canvas.Canvas(path, pagesize=A4)
-    c.setTitle("Перечень элементов")
-    E.list_pages(c, 210, 297, dict(m, pages=pages), pe3_rows(design), [20, 110, 10, 45],
-                 ["Поз.\nобозна-\nчение", "Наименование", "Кол.", "Примечание"],
-                 ["left", "left", "center", "left"], form_first="2")
-    c.save()
+    D.list_to_docx(path[:-4] + ".docx", pw, ph, dict(m, pages=pages), rows, widths, head, al, font=font)
     return pages
+
+
+def write_pe3(design, path, meta):
+    m = dict(meta, designation=f"{DES} ПЭ3", doctype="Перечень элементов", format="A4")
+    return _write(path, 210, 297, m, pe3_rows(design), [20, 110, 10, 45],
+                  ["Поз.\nобозна-\nчение", "Наименование", "Кол.", "Примечание"],
+                  ["left", "left", "center", "left"], "Перечень элементов")
 
 
 def purchased(design):
@@ -170,12 +171,7 @@ def write_spec(design, path, meta):
     widths = [6, 6, 8, 70, 63, 10, 22]
     head = ["Формат", "Зона", "Поз.", "Обозначение", "Наименование", "Кол.", "Приме-\nчание"]
     al = ["center", "center", "center", "left", "left", "center", "left"]
-    for _ in range(2):
-        c = canvas.Canvas(path, pagesize=A4)
-        c.setTitle("Спецификация")
-        pages = E.list_pages(c, 210, 297, m, rows, widths, head, al, form_first="2", font=3.0)
-        c.save()
-    return pages
+    return _write(path, 210, 297, m, rows, widths, head, al, "Спецификация", font=3.0)
 
 
 def write_vp(design, path, meta):
@@ -202,18 +198,13 @@ def write_vp(design, path, meta):
             "на регу-\nлир.", "всего", "Примечание"]
     al = ["center", "left", "left", "left", "left", "left", "center", "center", "center", "center", "left"]
     m = dict(meta, designation=f"{DES} ВП", doctype="Ведомость покупных изделий", format="A3")
-    for _ in range(2):
-        c = canvas.Canvas(path, pagesize=landscape(A3))
-        c.setTitle("Ведомость покупных изделий")
-        pages = E.list_pages(c, 420, 297, m, rows, widths, head, al, form_first="2", font=3.0)
-        c.save()
-    return pages
+    return _write(path, 420, 297, m, rows, widths, head, al, "Ведомость покупных изделий", font=3.0)
 
 
 def main(outdir):
     import build
     d = build.main()
-    meta = E.Meta(title="Модуль приемника ГНСС МГП-8", company="SiwaNetwork", lit="Э", dev="Разработчик",
+    meta = E.Meta(title="Модуль приемника ГНСС МГП-8", company="ООО ШИВА НЕТВОРК", lit="Э", dev="Разработчик",
                   date="10.2026")
     os.makedirs(outdir, exist_ok=True)
     p1 = write_pe3(d, os.path.join(outdir, f"{DES} ПЭ3.pdf"), meta)

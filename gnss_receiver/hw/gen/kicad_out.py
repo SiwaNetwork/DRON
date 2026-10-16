@@ -426,6 +426,14 @@ def write_worksheet(path):
     for k, v in LEGACY.items():
         src = src.replace(f'"{k}"', f'"{v}"').replace(f"{k}\"", f"{v}\"")
     src = src.replace("Формат %Z", "Формат ${PAPER}").replace("N°", "№")
+    # знака № нет в штриховом шрифте KiCad — надписи с ним шрифтом osifont (в штампе 3 мм ≈ высоте
+    # штриховых 2,5 мм; в боковых графах 2,5 мм, чтобы уложиться в 25 мм)
+    for a, b in (("№докум.", "№ докум."), ("Взам.инв.№", "Взам. инв. №"), ("Инв.№дубл.", "Инв. № дубл."),
+                 ("Инв.№подл.", "Инв. № подл.")):
+        src = src.replace(f'"{a}"', f'"{b}"')
+    src = re.sub(r'(\(tbtext "[^"\n]*№[^"\n]*"[^\n]*?) \(justify',
+                 lambda m: m.group(1) + f' (font (face "{FONT}") (size {2.5 if "rotate" in m.group(1) else 3} '
+                 f'{2.5 if "rotate" in m.group(1) else 3})) (justify', src)
     src = src.replace("(page_layout", "(kicad_wks (version 20220228) (generator mgp8_gen)", 1)
     # графа 1: наименование изделия и документа в две строки; литера; масштаб
     src = src.replace('(tbtext "${TITLE}" (name "text34:Text") (pos 85 27.5)',

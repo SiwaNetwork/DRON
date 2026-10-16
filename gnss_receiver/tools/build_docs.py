@@ -1,5 +1,6 @@
 """Текстовые документы КД в PDF по ГОСТ 2.105/2.104 (рамка, основные надписи по форме 2/2а):
-docs/*.md с заголовком YAML (title, designation, doctype) -> kd/<обозначение>.pdf.
+docs/*.md с заголовком YAML (title, designation, doctype) -> kd/<обозначение>.pdf (основной
+экземпляр) и kd/<обозначение>.docx (редактируемая копия для Word; правки вносятся в .md).
 Запуск: python3 tools/build_docs.py [файл.md ...]"""
 import os
 import re
@@ -8,6 +9,7 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..")
 sys.path.insert(0, HERE)
+import eskd_docx as D  # noqa: E402
 import eskd_pdf as E  # noqa: E402
 
 DOCS = ["02_ТЗ.md", "03_ПЗ.md", "04_ПМ.md", "05_Описание_программы.md"]
@@ -24,17 +26,19 @@ def front(md):
     return out
 
 
-def build(path):
+def build(path, docx=True):
     md = open(path, encoding="utf-8").read()
     fm = front(md)
     des = fm.get("designation", "ШИВА.468157.001")
     title = fm.get("product", "Модуль приемника ГНСС МГП-8")
     doctype = fm.get("docname", fm.get("title", "").split(". ")[-1])
-    meta = E.Meta(designation=des, title=title, doctype=doctype, company="SiwaNetwork", lit="Э",
+    meta = E.Meta(designation=des, title=title, doctype=doctype, company="ООО ШИВА НЕТВОРК", lit="Э",
                   dev="Разработчик", date="10.2026")
     out = os.path.join(ROOT, "kd", f"{des}.pdf")
     n = E.md_to_pdf(path, out, meta)
-    print(f"{os.path.basename(path)} -> kd/{des}.pdf, листов: {n}")
+    if docx:
+        D.md_to_docx(path, out[:-4] + ".docx", meta)
+    print(f"{os.path.basename(path)} -> kd/{des}.pdf{' и .docx' if docx else ''}, листов: {n}")
 
 
 NAMES = {"Э1": "Схема электрическая структурная", "Э3": "Схема электрическая принципиальная",
@@ -74,7 +78,7 @@ def build_ep():
            "`gnss_receiver` репозитория проекта (README.md)."]
     path = os.path.join(ROOT, "docs", "00_ЭП.md")
     open(path, "w", encoding="utf-8", newline="\n").write("\n".join(md) + "\n")
-    build(path)
+    build(path, docx=False)
 
 
 def main():

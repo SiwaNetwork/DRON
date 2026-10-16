@@ -40,7 +40,7 @@
 - `git push` работает (Git Credential Manager, учётная запись SiwaNetwork). `gh` не авторизован.
 - Средства сборки установлены (2026-10-13): MSYS2 `C:\msys64` (UCRT64: gcc, make,
   arm-none-eabi-gcc, iverilog 13, yosys, nextpnr-ecp5, prjtrellis, ngspice), Python 3.13 с
-  numpy/scipy/matplotlib/reportlab/pyrtcm/pynmeagps/pymupdf (`python3.exe` — копия
+  numpy/scipy/matplotlib/reportlab/python-docx/pyrtcm/pynmeagps/pymupdf (`python3.exe` — копия
   `python.exe`; Python «родной» Windows, не MSYS — пути с `\`).
 - KiCad 10.0 — `C:\Program Files\KiCad\10.0`. Схема: `sh tools/win/run.sh 'python3
   hw/gen/build.py --pdf'` (из `gnss_receiver`) — генерация, сверка списка соединений с
@@ -57,6 +57,17 @@
 - Проверено на ПК 2026-10-13: `make -C sw/fw test` и `make -C fpga sim` — ПРОЙДЕН.
 - PDF КД: `sh gnss_receiver/tools/win/run.sh 'python3 tools/build_docs.py docs/03_ПЗ.md'`;
   на Windows вместо Liberation Serif берётся метрически совместимый Times New Roman.
+- DOCX КД (решение владельца 2026-10-16): ТЗ, ПЗ, ПМ, описание программы (`build_docs.py`) и
+  ПЭ3, спецификация, ВП (`hw/gen/eskd_lists.py`, вызывается из `build.py`) выходят в `kd/`
+  также в DOCX (`tools/eskd_docx.py`: рамка и боковые графы — VML в колонтитуле, штамп
+  форм 2/2а, osifont встроен). **Подлинник — PDF**, DOCX — редактируемая копия; правки
+  вносятся в `docs/*.md` / `hw/gen`, оба файла пересобираются вместе. Выход детерминирован.
+  Число листов Word считает полями: у перечней совпадает с PDF, у ТЗ/ПЗ/ПМ на лист меньше
+  (другая вёрстка абзацев) — допустимо. Проверка в Word: копировать DOCX под латинским
+  именем и сохранить в PDF через COM (кириллица в аргументах PowerShell не проходит).
+- Предприятие в штампах всех документов — «ООО ШИВА НЕТВОРК» (решение владельца 2026-10-16;
+  `company=` в `build.py`, `draw_e1.py`, `build_docs.py`, `eskd_lists.py`). Имя учётной
+  записи и URL GitHub (SiwaNetwork) не менять.
 - Сеть на ПК бывает нестабильной (PyPI, github.com) — при сбое повторить позже.
 - В облачной сессии Claude Code (Linux) средства ставятся через apt/pip, обёртка не нужна.
 
@@ -81,6 +92,10 @@ _Обновлять при каждой передаче._
   нижнего диапазона (LNAIN_LO/LNAOUT_LO/MIXIN_LO, согласование 8,2 нГн + 1,1 пФ), каналы
   1–2 — на верхнем (5,6 нГн + 1,7 пФ); ПЗ 4.2.4, 5.1.1. Драйверу MAX2771 (задача 3) для
   каналов 3–8 задавать LNAMODE = 1, MIXERMODE = 1, LOBAND = 1.
+- 2026-10-16. КД в DOCX рядом с PDF (7 документов, см. «Окружение»), предприятие —
+  ООО ШИВА НЕТВОРК; в рамке Э3 надписи со знаком «№» — шрифтом osifont (в штриховом шрифте
+  KiCad знака нет). Дальше — задача 3: `src/plat/` (старт, system, uart, main), `mgp8.ld`,
+  цель ELF, драйвер MAX2771 по SPI.
 - Выполнено (см. ПЗ разд. 7): схема, ПЛИС 80 каналов (96,9 МГц), ПО МК: GPS L1 C/A,
   ГЛОНАСС L1OF, Galileo E1-B, BeiDou B1I (MEO/IGSO) полностью, вторые частоты L2C/L5, G2,
   E5a, B3I (двухчастотный режим), NMEA/RTCM/собственный протокол, КД.
@@ -120,3 +135,6 @@ _Обновлять при каждой передаче._
 - 2026-10-16 — та же сессия: Э3 — нижний диапазон MAX2771 для каналов 3–8 (ПЭ3,
   спецификация, ВП, ПЗ пересобраны); генератор схемы работает на Windows с KiCad 10
   (`build.py --pdf`), выход совпадает с KiCad 7.
+- 2026-10-16 — та же сессия: КД в DOCX (`tools/eskd_docx.py`) для ТЗ, ПЗ, ПМ, описания
+  программы, ПЭ3, спецификации, ВП — проверено в Word (листы перечней совпадают с PDF);
+  предприятие «ООО ШИВА НЕТВОРК» во всех штампах; знак «№» в рамке Э3.

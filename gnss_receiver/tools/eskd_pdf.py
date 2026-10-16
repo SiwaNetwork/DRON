@@ -304,20 +304,21 @@ def inline(t):
     return t
 
 
-def md_story(md, s, basedir, width_mm=175):
-    """Упрощённый Markdown -> flowables."""
-    story = []
+def md_blocks(md):
+    """Упрощённый Markdown -> блоки (общий разбор для PDF и DOCX):
+    ('p', текст), ('h', уровень, текст), ('li', маркер, уровень, текст), ('tcap', текст),
+    ('table', строки), ('img', подпись, путь), ('code', текст)."""
+    out = []
     lines = md.split("\n")
     if lines and lines[0].strip() == "---":
         end = lines.index("---", 1)
         lines = lines[end + 1:]
     i = 0
     para = []
-    tab_no = [0]
 
     def flush():
         if para:
-            story.append(Paragraph(inline(" ".join(para)), s["body"]))
+            out.append(("p", " ".join(para)))
             para.clear()
     while i < len(lines):
         ln = lines[i]
@@ -329,8 +330,7 @@ def md_story(md, s, basedir, width_mm=175):
             while j < len(lines) and not lines[j].strip().startswith("```"):
                 buf.append(lines[j])
                 j += 1
-            story.append(Preformatted("\n".join(buf), s["code"]))
-            story.append(Spacer(1, 3))
+            out.append(("code", "\n".join(buf)))
             i = j + 1
             continue
         if not st:
@@ -340,26 +340,13 @@ def md_story(md, s, basedir, width_mm=175):
         m = re.match(r"^(#{1,3})\s+(.*)$", st)
         if m:
             flush()
-            lvl = len(m.group(1))
-            story.append(CondPageBreak(30 * mm))
-            story.append(Paragraph(inline(m.group(2)), s[f"h{lvl}"]))
+            out.append(("h", len(m.group(1)), m.group(2)))
             i += 1
             continue
         m = re.match(r"^!\[(.*?)\]\((.*?)\)", st)
         if m:
             flush()
-            path = os.path.join(basedir, m.group(2))
-            if os.path.exists(path):
-                from reportlab.lib.utils import ImageReader
-                iw, ih = ImageReader(path).getSize()
-                w = width_mm * mm
-                h = w * ih / iw
-                if h > 200 * mm:
-                    h = 200 * mm
-                    w = h * iw / ih
-                story.append(KeepTogether([Image(path, w, h), Paragraph(inline(m.group(1)), s["cap"])]))
-            else:
-                story.append(Paragraph(f"[нет файла {m.group(2)}]", s["plain"]))
+            out.append(("img", m.group(1), m.group(2)))
             i += 1
             continue
         if st.startswith("|"):
@@ -372,46 +359,90 @@ def md_story(md, s, basedir, width_mm=175):
                 i += 1
             if rows:
                 ncol = max(len(r) for r in rows)
-                rows = [r + [""] * (ncol - len(r)) for r in rows]
-                lens = [max(len(r[k]) for r in rows) + 4 for k in range(ncol)]
-                tot = sum(lens)
-                widths = [max(12, width_mm * L / tot) * mm for L in lens]
-                scale = width_mm * mm / sum(widths)
-                widths = [w * scale for w in widths]
-                data = [[Paragraph(inline(c), s["cellc"] if ri == 0 else s["cell"]) for c in r]
-                        for ri, r in enumerate(rows)]
-                t = Table(data, colWidths=widths, repeatRows=1)
-                t.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.5, colors.black),
-                                       ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
-                                       ("TOPPADDING", (0, 0), (-1, -1), 1.5),
-                                       ("BOTTOMPADDING", (0, 0), (-1, -1), 1.5)]))
-                story.append(t)
-                story.append(Spacer(1, 4))
+                out.append(("table", [r + [""] * (ncol - len(r)) for r in rows]))
             continue
         m = re.match(r"^(\s*)([-*]|\d+[.)])\s+(.*)$", ln)
         if m and not re.match(r"^\d+\.\d", st):
             flush()
-            bullet = "–" if m.group(2) in "-*" else m.group(2)
-            ind = len(m.group(1)) // 2
             text = m.group(3)
             j = i + 1
             while j < len(lines) and lines[j].startswith("  ") and lines[j].strip() and \
                     not re.match(r"^\s*([-*]|\d+[.)])\s+", lines[j]):
                 text += " " + lines[j].strip()
                 j += 1
-            st_li = ParagraphStyle("lix", parent=s["li"], leftIndent=(17 + 5 * ind) * mm,
-                                   bulletIndent=(12.5 + 5 * ind) * mm)
-            story.append(Paragraph(inline(text), st_li, bulletText=bullet))
+            out.append(("li", "–" if m.group(2) in "-*" else m.group(2), len(m.group(1)) // 2, text))
             i = j
             continue
         if re.match(r"^Таблица\s+\d+", st):
             flush()
-            story.append(Paragraph(inline(st), s["tcap"]))
+            out.append(("tcap", st))
             i += 1
             continue
         para.append(st)
         i += 1
     flush()
+    return out
+
+
+def table_widths(rows, width_mm):
+    """Ширины столбцов таблицы, мм: по длине самого длинного текста, не менее 12 мм."""
+    lens = [max(len(r[k]) for r in rows) + 4 for k in range(len(rows[0]))]
+    tot = sum(lens)
+    widths = [max(12, width_mm * L / tot) for L in lens]
+    scale = width_mm / sum(widths)
+    return [w * scale for w in widths]
+
+
+def image_size(path, width_mm, max_h_mm=200):
+    """Размер рисунка, мм: на ширину текста, но не выше max_h_mm."""
+    from reportlab.lib.utils import ImageReader
+    iw, ih = ImageReader(path).getSize()
+    w = width_mm
+    h = w * ih / iw
+    if h > max_h_mm:
+        h = max_h_mm
+        w = h * iw / ih
+    return w, h
+
+
+def md_story(md, s, basedir, width_mm=175):
+    """Упрощённый Markdown -> flowables."""
+    story = []
+    for b in md_blocks(md):
+        kind = b[0]
+        if kind == "p":
+            story.append(Paragraph(inline(b[1]), s["body"]))
+        elif kind == "code":
+            story.append(Preformatted(b[1], s["code"]))
+            story.append(Spacer(1, 3))
+        elif kind == "h":
+            story.append(CondPageBreak(30 * mm))
+            story.append(Paragraph(inline(b[2]), s[f"h{b[1]}"]))
+        elif kind == "img":
+            path = os.path.join(basedir, b[2])
+            if os.path.exists(path):
+                w, h = image_size(path, width_mm)
+                story.append(KeepTogether([Image(path, w * mm, h * mm), Paragraph(inline(b[1]), s["cap"])]))
+            else:
+                story.append(Paragraph(f"[нет файла {b[2]}]", s["plain"]))
+        elif kind == "table":
+            rows = b[1]
+            data = [[Paragraph(inline(c), s["cellc"] if ri == 0 else s["cell"]) for c in r]
+                    for ri, r in enumerate(rows)]
+            t = Table(data, colWidths=[w * mm for w in table_widths(rows, width_mm)], repeatRows=1)
+            t.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.5, colors.black),
+                                   ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                                   ("TOPPADDING", (0, 0), (-1, -1), 1.5),
+                                   ("BOTTOMPADDING", (0, 0), (-1, -1), 1.5)]))
+            story.append(t)
+            story.append(Spacer(1, 4))
+        elif kind == "li":
+            _, bullet, ind, text = b
+            st_li = ParagraphStyle("lix", parent=s["li"], leftIndent=(17 + 5 * ind) * mm,
+                                   bulletIndent=(12.5 + 5 * ind) * mm)
+            story.append(Paragraph(inline(text), st_li, bulletText=bullet))
+        elif kind == "tcap":
+            story.append(Paragraph(inline(b[1]), s["tcap"]))
     return story
 
 

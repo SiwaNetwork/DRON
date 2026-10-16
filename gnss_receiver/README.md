@@ -16,7 +16,7 @@
 | Каталог | Содержание |
 |---|---|
 | `docs/` | исходные тексты документов: обзор открытых разработок, ТЗ, ПЗ, ПМ, описание программы |
-| `kd/` | КД в PDF: Э1, Э3, ПЭ3, спецификация, ВП, ТЗ, ПЗ, ПМ, описание программы ПО МК |
+| `kd/` | КД в PDF (подлинник): Э1, Э3, ПЭ3, спецификация, ВП, ТЗ, ПЗ, ПМ, описание программы ПО МК; текстовые документы и перечни — также в DOCX (редактируемая копия для Word) |
 | `hw/gen/` | схема Э3 «как код» (Python) → проект KiCad 7/10 (`hw/kicad/`), перечни ЕСКД |
 | `hw/spice/` | SPICE-модели узлов: питание антенны, bias-tee, вход REF, выход 1PPS |
 | `fpga/rtl/` | Verilog: `corr_engine` (16 каналов на движок), `corr_bank`, `notch`, `rf_capture`, `timebase`, `fmc_slave`, `max_spi`, `snapshot`, `mgp8_core`, `mgp8_top` |
@@ -25,11 +25,11 @@
 | `sw/fw/` | ПО МК (C99): драйвер коррелятора, захват (в т. ч. слабых сигналов), слежение (ФАП 3-го порядка, длительное накопление, повторный захват), GPS LNAV, строки ГЛОНАСС, Galileo I/NAV, BeiDou D1, эфемериды, PVT (GPS, ГЛОНАСС, Galileo, BeiDou), 1PPS, NMEA, RTCM 3.3, собственный двоичный протокол, спектральный контроль; тесты на ПК |
 | `sw/pyrx/` | эталонный программный приёмник и имитатор сигналов (Python) |
 | `sim/` | расчёты: частотный план, энергетика ВЧ-тракта, сигналы, PVT/DOP, режекторный фильтр, мощность и тепловой режим, надёжность |
-| `tools/` | оформление PDF по ЕСКД (рамки, штампы), шрифт osifont с исправлениями |
+| `tools/` | оформление PDF и DOCX по ЕСКД (рамки, штампы), шрифт osifont с исправлениями |
 
 ## Инструменты
 
-Используются: Python 3 (numpy, scipy, matplotlib, reportlab), Icarus Verilog,
+Используются: Python 3 (numpy, scipy, matplotlib, reportlab, python-docx), Icarus Verilog,
 Yosys, nextpnr-ecp5 и Project Trellis (ecppack), ngspice, gcc и KiCad 7 или 10 (kicad-cli).
 Для `tests/check_output.py` нужны также pyrtcm и pynmeagps.
 
@@ -51,7 +51,9 @@ make -C sw/fw test-long
 # расчёты (результаты — sim/out/*.md, *.png)
 python3 sim/rf_budget.py; python3 sim/freq_plan.py; python3 sim/notch_sim.py
 python3 sim/power_budget.py; python3 sim/reliability.py
-# схема и перечни (Э3, ПЭ3, спецификация, ВП); текстовые документы (ТЗ, ПЗ, ПМ, описание программы)
+# схема и перечни (Э3, ПЭ3, спецификация, ВП); текстовые документы (ТЗ, ПЗ, ПМ, описание программы).
+# Перечни и текстовые документы выходят в PDF и DOCX; правки вносятся в исходники (docs/*.md,
+# hw/gen), DOCX пересобирается вместе с PDF
 python3 hw/gen/build.py --pdf
 python3 hw/gen/eskd_lists.py
 python3 tools/build_docs.py

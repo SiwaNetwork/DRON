@@ -68,7 +68,7 @@ def arrow(c, pts, label=None, lpos=0, double=False, w=0.35):
 
 def main(path):
     meta = E.Meta(designation="ШИВА.468157.001 Э1", title="Модуль приемника ГНСС МГП-8",
-                  doctype="Схема электрическая структурная", company="SiwaNetwork", lit="Э", dev="Разработчик",
+                  doctype="Схема электрическая структурная", company="ООО ШИВА НЕТВОРК", lit="Э", dev="Разработчик",
                   format="A3", date="10.2026")
     c = canvas.Canvas(path, pagesize=landscape(A3))
     c.setTitle("Схема электрическая структурная")
