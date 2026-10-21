@@ -4,8 +4,8 @@
 CC      ?= gcc
 CFLAGS  ?= -std=c99 -O2 -g -Wall -Wextra -Wno-unused-parameter -Iinc -Isrc
 LDLIBS  = -lm
-SRC     = src/signals.c src/codes.c src/gen/code_tab.c src/corr_sim.c src/corr.c src/fft.c src/acq.c src/track.c src/eph.c src/rinex.c src/pvt.c src/lnav.c src/nmea.c src/rx.c src/spectrum.c src/rtcm3.c src/glonav.c src/proto.c src/inav.c src/bdsnav.c src/max2771.c src/app.c src/bootp.c
-TESTS   = build/test_boot build/test_max2771 build/test_glonav build/test_inav build/test_bdsnav build/test_codes build/test_corr_sim build/test_pvt build/test_lnav build/test_spectrum build/test_output build/test_acq_weak build/test_rx_l1
+SRC     = src/signals.c src/codes.c src/gen/code_tab.c src/corr_sim.c src/acqf_sim.c src/corr.c src/fft.c src/acq.c src/track.c src/eph.c src/rinex.c src/pvt.c src/lnav.c src/nmea.c src/rx.c src/spectrum.c src/rtcm3.c src/glonav.c src/proto.c src/inav.c src/bdsnav.c src/max2771.c src/app.c src/bootp.c
+TESTS   = build/test_boot build/test_max2771 build/test_glonav build/test_inav build/test_bdsnav build/test_codes build/test_corr_sim build/test_pvt build/test_lnav build/test_spectrum build/test_output build/test_acq_weak build/test_acq_fpga build/test_rx_l1
 LONG    = build/test_trk_dyn build/test_trk_weak build/test_rx_pvt build/test_rx_glo build/test_rx_dual build/test_rx_gb build/test_rx_dual2 build/test_app
 
 all: $(TESTS)
@@ -44,7 +44,7 @@ MCU_CC     = arm-none-eabi-gcc
 MCU_CFLAGS = -std=c99 -O2 -Wall -Wextra -Wno-unused-parameter -mcpu=cortex-m7 -mfpu=fpv5-d16 \
              -mfloat-abi=hard -mthumb -ffunction-sections -fdata-sections -DMGP8_MCU -Iinc -Isrc -Iplat \
              -fstack-usage -fcallgraph-info=su
-MCU_SRC    = $(filter-out src/corr_sim.c src/rinex.c,$(SRC))
+MCU_SRC    = $(filter-out src/corr_sim.c src/acqf_sim.c src/rinex.c,$(SRC))
 MCU_OBJ    = $(patsubst %.c,build/mcu/%.o,$(MCU_SRC))
 
 build/mcu/%.o: %.c $(wildcard inc/*.h) $(wildcard plat/*.h)

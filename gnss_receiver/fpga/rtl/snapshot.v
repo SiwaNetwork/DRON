@@ -2,7 +2,8 @@
 // МГП-8. Буфер снимка отсчётов для захвата сигналов (БПФ-поиск в МК).
 // Записывает LEN отсчётов (кратно 8, ≤ 65536) одного ВЧ-канала во внутреннем формате
 // {sI, mI, sQ, mQ}: 8 отсчётов в слове, первый — в младших битах. Запуск — сразу или с отсчёта,
-// младшие 32 бит номера которого равны T_START. Память 8K × 32 (EBR).
+// младшие 32 бит номера которого равны T_START. Память — общий пул ускорителя захвата (acq_fft.v):
+// слово wa — пары пул[2·wa[12:10]], пул[2·wa[12:10] + 1]; пуск запрещён, пока занят ускоритель.
 // =============================================================================
 `default_nettype none
 
@@ -13,6 +14,7 @@ module snapshot (
     input  wire [31:0] smp_data,
     input  wire [63:0] smp_count,
     input  wire        arm,              // строб запуска
+    input  wire        inhibit,          // запрет пуска (ускоритель захвата занят)
     input  wire [2:0]  ch,
     input  wire        at_time,
     input  wire [31:0] t_start,
@@ -20,10 +22,10 @@ module snapshot (
     output reg         busy,
     output reg         done,             // строб завершения
     output reg  [31:0] t0,               // номер первого отсчёта (мл. 32 бит)
-    input  wire [12:0] rd_addr,
-    output reg  [31:0] rd_data
+    output wire        mem_we,           // запись слова в пул
+    output wire [12:0] mem_wa,
+    output wire [31:0] mem_wd
 );
-    reg [31:0] mem [0:8191];
     reg        rec;
     reg [2:0]  ch_r;
     reg        at_r;
@@ -40,7 +42,7 @@ module snapshot (
         if (rst) begin
             busy <= 1'b0; rec <= 1'b0;
         end else begin
-            if (arm && !busy) begin
+            if (arm && !busy && !inhibit) begin
                 busy <= 1'b1; rec <= 1'b0; ch_r <= ch; at_r <= at_time; ts_r <= t_start;
                 left <= len; wa <= 0; nib <= 0;
             end else if (busy && smp_stb) begin
@@ -60,9 +62,8 @@ module snapshot (
             if (we) wa <= wa + 1'b1;
         end
     end
-    always @(posedge clk) begin
-        if (we) mem[wa] <= wd;
-        rd_data <= mem[rd_addr];
-    end
+    assign mem_we = we;
+    assign mem_wa = wa;
+    assign mem_wd = wd;
 endmodule
 `default_nettype wire

@@ -4,7 +4,9 @@
 // Адресное пространство шины FMC (слова 32 бит, адрес слова = HADDR[16:2]):
 //   0x0000–0x00FF  системные регистры (таблица ниже)
 //   0x1000–0x1FFF  корреляторы: 0x1000 + {engine[2:0], reg[8:0]} — см. corr_bank.v, corr_engine.v
-//   0x2000–0x3FFF  буфер снимка (8K слов по 8 отсчётов)
+//   0x2000–0x3FFF  буфер снимка (8K слов по 8 отсчётов; память — общий пул ускорителя захвата)
+//   0x4000–0x7FFF  ускоритель захвата (acq_fft.v): запись — спектр опоры R[k] (0x4000 + k),
+//                  чтение — общий пул 16 × 1K (0x4000 + 1024·p + a)
 // Системные регистры:
 //   0x00 ID = 0x4D475038 («MGP8»)            0x01 VERSION {NENG[7:0], 8'h00, версия[15:0]}
 //   0x02 CTRL: [1:0] фаза приёма отсчётов, [2] выдача отсчётов в FX3, [3] SPI у FX3,
@@ -14,7 +16,7 @@
 //   0x06 TIC_PERIOD (отсчётов; 0 — выкл.), 0x07 TIC_T_LO, 0x08 TIC_T_HI (чт.)
 //   0x09 IRQ_STATUS (чт.), 0x0A IRQ_MASK, 0x0B IRQ_CLR (запись 1 — сброс):
 //        [0] корреляторы (уровень), [1] TIC, [2] 1PPS выдан, [3] EXTINT, [4] REF, [5] SPI,
-//        [6] снимок готов
+//        [6] снимок готов, [7] захват в ПЛИС завершён
 //   0x0C PPS_T_LO, 0x0D PPS_T_HI (запись взводит импульс), 0x0E PPS_CTRL: [23:0] длительность,
 //        тактов; [24] активный низкий; [31] (чт.) взведён
 //   0x0F EXT_CTRL: [0] спад; 0x10 EXT_T_LO, 0x11 EXT_T_HI (чт.)
@@ -28,7 +30,10 @@
 //        [8] снимок — до фильтра (1) / после фильтра (0), [23:16] дизеринг перед повторным квантованием
 //   0x51 NOTCH_MU: 4 бита на канал (μ, постоянная сглаживания 2^μ отсчётов)
 //   0x58–0x5F NOTCH_DPHI[0..7]: приращение фазы NCO помехи за отсчёт (f/Fд·2^32, Fд = 24 МГц)
-// Корреляторы и снимок получают отсчёты после режекторного фильтра (задержка 18 тактов, номер
+//   0x60–0x86 ускоритель захвата: CTRL, STAT, DPHI, K, NS, NPER, SCALE, T, M[0..6], T0, DSH[0..6],
+//        PEAK[0..6], SUM[0..6] — см. acq_fft.v и sw/fw/inc/fpga.h (R_ACQ_*); снимок и захват
+//        взаимно исключают друг друга (общая память)
+// Корреляторы, снимок и захват получают отсчёты после режекторного фильтра (задержка 18 тактов, номер
 // отсчёта сопровождает данные); FX3 и шкала времени — непосредственно с АЦП.
 // Задержка данных чтения — 4 такта (параметр RLAT ведомого FMC).
 // =============================================================================
@@ -189,8 +194,9 @@ module mgp8_core #(
     assign max_shdn = ctrl[15:8];
 
     // ------------------------------------------------------------ снимок
-    wire        snap_busy, snap_done;
-    wire [31:0] snap_t0, snap_rdata;
+    wire        snap_busy, snap_done, snap_we, acq_busy, acq_done;
+    wire [12:0] snap_wa;
+    wire [31:0] snap_t0, snap_wd, acq_reg_q, acq_mem_q;
     // источник снимка (до или после фильтра) — через регистр
     reg         s_stb;
     reg  [31:0] s_data;
@@ -202,16 +208,24 @@ module mgp8_core #(
     end
     snapshot u_snap (
         .clk(clk), .rst(rst), .smp_stb(s_stb), .smp_data(s_data), .smp_count(s_count),
-        .arm(snap_arm), .ch(snap_ctrl[2:0]), .at_time(snap_ctrl[3]), .t_start(snap_t),
-        .len(snap_len[16:0]), .busy(snap_busy), .done(snap_done), .t0(snap_t0),
-        .rd_addr(bus_addr[12:0]), .rd_data(snap_rdata));
+        .arm(snap_arm), .inhibit(acq_busy), .ch(snap_ctrl[2:0]), .at_time(snap_ctrl[3]),
+        .t_start(snap_t), .len(snap_len[16:0]), .busy(snap_busy), .done(snap_done), .t0(snap_t0),
+        .mem_we(snap_we), .mem_wa(snap_wa), .mem_wd(snap_wd));
+
+    // ------------------------------------------------------------ ускоритель захвата
+    acq_fft u_acq (
+        .clk(clk), .rst(rst), .smp_stb(s_stb), .smp_data(s_data), .smp_count(s_count[31:0]),
+        .bus_we(bus_we), .bus_addr(bus_addr), .bus_wdata(bus_wdata),
+        .reg_q(acq_reg_q), .mem_q(acq_mem_q),
+        .snap_we(snap_we), .snap_wa(snap_wa), .snap_wd(snap_wd),
+        .inhibit(snap_busy | snap_we), .busy(acq_busy), .done(acq_done));
 
     // ------------------------------------------------------------ прерывания
-    reg [6:0] irq_st;
+    reg [7:0] irq_st;
     always @(posedge clk) begin
         if (rst) irq_st <= 0;
         else begin
-            if (bus_we && sel_sys && ra == 8'h0B) irq_st[6:1] <= irq_st[6:1] & ~bus_wdata[6:1];
+            if (bus_we && sel_sys && ra == 8'h0B) irq_st[7:1] <= irq_st[7:1] & ~bus_wdata[7:1];
             irq_st[0] <= corr_irq;
             if (tic_ev)    irq_st[1] <= 1'b1;
             if (pps_ev)    irq_st[2] <= 1'b1;
@@ -219,9 +233,10 @@ module mgp8_core #(
             if (ref_ev)    irq_st[4] <= 1'b1;
             if (spi_done)  irq_st[5] <= 1'b1;
             if (snap_done) irq_st[6] <= 1'b1;
+            if (acq_done)  irq_st[7] <= 1'b1;
         end
     end
-    assign irq = |(irq_st & irq_mask[6:0]);
+    assign irq = |(irq_st & irq_mask[7:0]);
 
     // ------------------------------------------------------------ FX3: отсчёты в формате PocketSDR
     reg [1:0] uph;
@@ -235,7 +250,8 @@ module mgp8_core #(
 
     // ------------------------------------------------------------ чтение (задержка 4 такта)
     reg [31:0] t96_hi_l;
-    reg [31:0] sys_rd;
+    reg [31:0] rg0, rg1, rg2, rg3, rg4, rg5;
+    reg [3:0]  rh;
     // асинхронные входы состояния — через двухтриггерный синхронизатор
     reg [9:0]  st_s1, st_s2;
     always @(posedge clk) begin
@@ -244,54 +260,70 @@ module mgp8_core #(
     end
     always @(posedge clk) begin
         if (bus_re && sel_sys && ra == 8'h04) t96_hi_l <= t96[63:32];
-        case (ra)
-            8'h00: sys_rd <= 32'h4D475038;
-            8'h01: sys_rd <= {NENG[7:0], 8'h00, VERSION};
-            8'h02: sys_rd <= ctrl;
-            8'h03: sys_rd <= {22'd0, st_s2};
-            8'h04: sys_rd <= t96[31:0];
-            8'h05: sys_rd <= t96_hi_l;
-            8'h06: sys_rd <= tic_period;
-            8'h07: sys_rd <= tic_t[31:0];
-            8'h08: sys_rd <= tic_t[63:32];
-            8'h09: sys_rd <= {25'd0, irq_st};
-            8'h0A: sys_rd <= irq_mask;
-            8'h0C: sys_rd <= pps_lo;
-            8'h0D: sys_rd <= pps_hi;
-            8'h0E: sys_rd <= {pps_armed, pps_ctrl[30:0]};
-            8'h0F: sys_rd <= ext_ctrl;
-            8'h10: sys_rd <= ext_t[31:0];
-            8'h11: sys_rd <= ext_t[63:32];
-            8'h12: sys_rd <= ref_t[31:0];
-            8'h13: sys_rd <= ref_t[63:32];
-            8'h14: sys_rd <= ref_cnt;
-            8'h20: sys_rd <= {spi_busy, spi_cmd[30:0]};
-            8'h21: sys_rd <= spi_wdata;
-            8'h22: sys_rd <= spi_rdata;
-            8'h23: sys_rd <= spi_div;
-            8'h30: sys_rd <= {snap_busy, snap_ctrl[30:0]};
-            8'h31: sys_rd <= snap_t;
-            8'h32: sys_rd <= snap_len;
-            8'h33: sys_rd <= snap_t0;
-            8'h40: sys_rd <= dbg_sel;
-            8'h50: sys_rd <= notch_ctl;
-            8'h51: sys_rd <= notch_mu;
-            8'h58, 8'h59, 8'h5A, 8'h5B, 8'h5C, 8'h5D, 8'h5E, 8'h5F:
-                   sys_rd <= notch_dp[ra[2:0]];
-            default: sys_rd <= 32'd0;
+        // два уровня: внутри группы ra[7:4] — по ra[3:0] (регистр у источников), затем группа
+        rh <= ra[7:4];
+        case (ra[3:0])
+            4'h0: rg0 <= 32'h4D475038;
+            4'h1: rg0 <= {NENG[7:0], 8'h00, VERSION};
+            4'h2: rg0 <= ctrl;
+            4'h3: rg0 <= {22'd0, st_s2};
+            4'h4: rg0 <= t96[31:0];
+            4'h5: rg0 <= t96_hi_l;
+            4'h6: rg0 <= tic_period;
+            4'h7: rg0 <= tic_t[31:0];
+            4'h8: rg0 <= tic_t[63:32];
+            4'h9: rg0 <= {24'd0, irq_st};
+            4'hA: rg0 <= irq_mask;
+            4'hC: rg0 <= pps_lo;
+            4'hD: rg0 <= pps_hi;
+            4'hE: rg0 <= {pps_armed, pps_ctrl[30:0]};
+            4'hF: rg0 <= ext_ctrl;
+            default: rg0 <= 32'd0;
+        endcase
+        case (ra[3:0])
+            4'h0: rg1 <= ext_t[31:0];
+            4'h1: rg1 <= ext_t[63:32];
+            4'h2: rg1 <= ref_t[31:0];
+            4'h3: rg1 <= ref_t[63:32];
+            4'h4: rg1 <= ref_cnt;
+            default: rg1 <= 32'd0;
+        endcase
+        case (ra[3:0])
+            4'h0: rg2 <= {spi_busy, spi_cmd[30:0]};
+            4'h1: rg2 <= spi_wdata;
+            4'h2: rg2 <= spi_rdata;
+            4'h3: rg2 <= spi_div;
+            default: rg2 <= 32'd0;
+        endcase
+        case (ra[3:0])
+            4'h0: rg3 <= {snap_busy, snap_ctrl[30:0]};
+            4'h1: rg3 <= snap_t;
+            4'h2: rg3 <= snap_len;
+            4'h3: rg3 <= snap_t0;
+            default: rg3 <= 32'd0;
+        endcase
+        rg4 <= (ra[3:0] == 4'h0) ? dbg_sel : 32'd0;
+        case (ra[3:0])
+            4'h0: rg5 <= notch_ctl;
+            4'h1: rg5 <= notch_mu;
+            4'h8, 4'h9, 4'hA, 4'hB, 4'hC, 4'hD, 4'hE, 4'hF:
+                  rg5 <= notch_dp[ra[2:0]];
+            default: rg5 <= 32'd0;
         endcase
     end
-    // выравнивание задержек: системные регистры 1 → 3 такта, снимок 1 → 3, корреляторы 3
-    reg [31:0] sys_d1, sys_d2, snap_d1, snap_d2;
+    wire [31:0] sys_rd = (rh == 4'h0) ? rg0 : (rh == 4'h1) ? rg1 : (rh == 4'h2) ? rg2 :
+                         (rh == 4'h3) ? rg3 : (rh == 4'h4) ? rg4 : (rh == 4'h5) ? rg5 : 32'd0;
+    // выравнивание задержек: системные регистры и регистры захвата 1 → 3 такта, память захвата
+    // (пул, снимок) — 3 (регистр в acq_fft.v), корреляторы 3
+    reg [31:0] sys_d1, sys_d2;
     reg [1:0]  rsel0, rsel1, rsel2;
     always @(posedge clk) begin
-        sys_d1 <= sys_rd;   sys_d2 <= sys_d1;
-        snap_d1 <= snap_rdata; snap_d2 <= snap_d1;
-        rsel0 <= sel_corr ? 2'd1 : sel_snap ? 2'd2 : 2'd0;
+        sys_d1 <= sys_rd | acq_reg_q;   sys_d2 <= sys_d1;
+        rsel0 <= sel_corr ? 2'd1 : (sel_snap || bus_addr[14]) ? 2'd2 : 2'd0;
         rsel1 <= rsel0; rsel2 <= rsel1;
         case (rsel2)
             2'd1:    bus_rdata <= corr_rdata;
-            2'd2:    bus_rdata <= snap_d2;
+            2'd2:    bus_rdata <= acq_mem_q;
             default: bus_rdata <= sys_d2;
         endcase
     end

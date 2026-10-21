@@ -41,6 +41,29 @@
 #define R_NOTCH_DPHI(k) (0x0058u + (uint32_t)(k))   /* f/Fд·2^32 */
 #define NOTCH_SNAP_RAW (1u << 8)
 #define R_SNAP_DATA   0x2000u   /* 8K слов, 8 отсчётов {sI,mI,sQ,mQ} в слове, первый — мл. */
+/* ускоритель захвата (БПФ-поиск, fpga/rtl/acq_fft.v; общий пул памяти со снимком) */
+#define R_ACQ_CTRL    0x0060u   /* зап.: [0] пуск, [1] с отсчёта ACQ_T, [2] стоп, [6:4] гипотез (1..7),
+                                 * [10:8] ВЧ-канал; чт.: [31] занят, [30] сбой расписания */
+#define R_ACQ_STAT    0x0061u   /* обработано периодов */
+#define R_ACQ_DPHI    0x0062u   /* приращение NCO переноса (fпч + f)/Fд·2^32 */
+#define R_ACQ_K       0x0063u   /* периодов накопления (1..65536; 0 — 65536) */
+#define R_ACQ_NS      0x0064u   /* отсчётов на период кода (≥ 2048) */
+#define R_ACQ_NPER    0x0065u   /* шаг начал периодов, отсчётов */
+#define R_ACQ_SCALE   0x0066u   /* [10:0] маска ÷2 прямого БПФ, [21:11] обратного, [26:22] сдвиг
+                                 * мощности, [28:27] сдвиг ячеек захвата */
+#define R_ACQ_T       0x0067u
+#define R_ACQ_M(g)    (0x0068u + (uint32_t)(g))   /* сдвиг спектра гипотезы, ячеек [10:0] */
+#define R_ACQ_T0      0x006Fu   /* отсчёт начала первого периода */
+#define R_ACQ_DSH(g)  (0x0070u + (uint32_t)(g))   /* сдвиг кода за шаг Nper, ячеек·2^21 */
+#define R_ACQ_PEAK(g) (0x0078u + (uint32_t)(g))   /* [17:0] максимум, [28:18] ячейка */
+#define R_ACQ_SUM(g)  (0x0080u + (uint32_t)(g))   /* сумма 2048 ячеек */
+#define R_ACQ_MEM     0x4000u   /* зап.: 0x4000 + k — спектр опоры R[k] {im[8:0], re[8:0]};
+                                 * чт.: 0x4000 + 0x800·g + n — накопитель A_g[n] */
+#define ACQ_N         2048u
+#define ACQ_G         7u
+/* тактов 96 МГц на обработку периода при ng гипотезах: прямое БПФ и ng корреляций по 11 этапов
+ * (1024 бабочки + 16 тактов слива конвейера) */
+#define ACQ_PROC_CLK(ng) ((1u + (uint32_t)(ng)) * 11u * 1040u + 64u)
 
 #define IRQ_CORR      (1u << 0)
 #define IRQ_TIC       (1u << 1)
@@ -49,6 +72,7 @@
 #define IRQ_REF       (1u << 4)
 #define IRQ_SPI       (1u << 5)
 #define IRQ_SNAP      (1u << 6)
+#define IRQ_ACQ       (1u << 7)
 
 /* --- корреляторы: 0x1000 + {engine[2:0], reg[8:0]} */
 #define CORR_BASE     0x1000u

@@ -303,6 +303,148 @@ int acq_weak_result(const acq_weak_t *w, int i, acq_res_t *r, uint32_t *tref)
     return r->found;
 }
 
+/* ---------------------------------------------------------------- ускоритель захвата ПЛИС */
+#define AH_FMASK 0x7C0u          /* ÷2 на этапах 6–10 прямого БПФ: шум X ≈ 70 из ±255 */
+#define AH_IMASK 0x6AAu          /* этапы 1, 3, 5, 7, 9, 10 корреляции */
+#define AH_CSH   1u
+
+int acq_hw_init(acq_hw_t *h, int sig, int fcn, const int *prn, int nprn, double dop_min, double dop_max,
+                double step, int K)
+{
+    const sig_info_t *si = &SIGS[sig];
+    memset(h, 0, sizeof(*h));
+    if (nprn < 1 || nprn > AW_MAXPRN || step <= 0 || K < 1 || K > 65536 || dop_max < dop_min) return 0;
+    if (si->boc || si->tdm || si->code_ms != 1 || 2 * si->code_len > (int)ACQ_N) return 0;
+    init_tab();
+    h->sig = sig; h->fcn = fcn; h->rf = si->rf; h->nprn = nprn;
+    memcpy(h->prn, prn, sizeof(int) * (size_t)nprn);
+    h->L = si->code_len;
+    h->Ns = (int)lround(h->L / si->chip_rate * FS_HZ);
+    h->nper = h->Ns + 512;
+    double fbin = FS_HZ / h->Ns;                       /* ячейка БПФ — 1/T */
+    h->q = (int)lround(fbin / step);
+    if (h->q < 1) h->q = 1;
+    h->step = fbin / h->q;
+    h->dop_min = dop_min; h->K = K; h->thresh = 6.5;
+    h->nd = (int)floor((dop_max - dop_min) / h->step + 1e-9) + 1;
+    for (int r = 0; r < h->q && r < h->nd; r++) {
+        int nr = (h->nd - r + h->q - 1) / h->q;
+        for (int j = 0; j < nr; j += (int)ACQ_G) {
+            if (h->nrun >= AH_MAXRUN) return 0;
+            h->run_d0[h->nrun] = r + j * h->q;
+            h->run_ng[h->nrun] = nr - j < (int)ACQ_G ? nr - j : (int)ACQ_G;
+            h->nrun++;
+        }
+    }
+    for (int i = 0; i < nprn; i++) {
+        if (code_gen(sig, prn[i], BITS) != h->L) return 0;
+        h->z[i] = 0;
+    }
+    return 1;
+}
+
+/* спектр копии в отсчётах середин ячеек: R[k] = FFT(c((k + ½)·L/N)), ±255 */
+static void ah_load_rep(const acq_hw_t *h, int prn)
+{
+    const sig_info_t *si = &SIGS[h->sig];
+    code_gen(h->sig, prn, BITS);
+    for (unsigned k = 0; k < ACQ_N; k++) { R[k].re = rep(si, h->L, (k + 0.5) * h->L / ACQ_N); R[k].im = 0; }
+    fft(R, ACQ_N, 0);
+    float mx = 0;
+    for (unsigned k = 0; k < ACQ_N; k++) {
+        if (fabsf(R[k].re) > mx) mx = fabsf(R[k].re);
+        if (fabsf(R[k].im) > mx) mx = fabsf(R[k].im);
+    }
+    float s = mx > 0 ? 255.0f / mx : 0;
+    for (unsigned k = 0; k < ACQ_N; k++) {
+        int32_t re = (int32_t)lroundf(R[k].re * s), im = (int32_t)lroundf(R[k].im * s);
+        fpga_wr(R_ACQ_MEM + k, ((uint32_t)re & 511u) | ((uint32_t)im & 511u) << 9);
+    }
+}
+
+static int ah_start(acq_hw_t *h)
+{
+    const sig_info_t *si = &SIGS[h->sig];
+    int d0 = h->run_d0[h->ir], ng = h->run_ng[h->ir], c = (ng - 1) / 2;
+    double fif = sig_if(h->sig, h->fcn), fc = sig_carrier(h->sig, h->fcn);
+    double f0 = h->dop_min + (d0 + c * h->q) * h->step;
+    fpga_wr(R_ACQ_DPHI, (uint32_t)(int64_t)llround((fif + f0) / FS_HZ * 4294967296.0));
+    for (int g = 0; g < ng; g++) {
+        double fd = h->dop_min + (d0 + g * h->q) * h->step;
+        double rate = si->chip_rate * (1 + fd / fc);
+        /* сдвиг пика за шаг Nper — в ячейках БПФ, 11.21 по модулю N */
+        double sh = fmod(rate * h->nper / FS_HZ * ACQ_N / h->L, (double)ACQ_N);
+        fpga_wr(R_ACQ_M(g), (uint32_t)(g - c) & (ACQ_N - 1));
+        fpga_wr(R_ACQ_DSH(g), (uint32_t)(int64_t)llround(sh * 2097152.0));
+    }
+    int psh = (int)lround(12 + log2((double)h->K));
+    if (psh > 31) psh = 31;
+    fpga_wr(R_ACQ_K, (uint32_t)h->K & 0xFFFFu);
+    fpga_wr(R_ACQ_NS, (uint32_t)h->Ns);
+    fpga_wr(R_ACQ_NPER, (uint32_t)h->nper);
+    fpga_wr(R_ACQ_SCALE, AH_FMASK | AH_IMASK << 11 | (uint32_t)psh << 22 | AH_CSH << 27);
+    fpga_wr(R_ACQ_CTRL, 1u | (uint32_t)ng << 4 | (uint32_t)h->rf << 8);
+    uint32_t st = fpga_rd(R_ACQ_CTRL);
+    if (st >> 31) return 1;
+    if (st >> 30 & 1) h->nfail++;                       /* сбой расписания — запуск пропускается */
+    return st >> 30 & 1 ? -1 : 0;                       /* 0 — пул занят снимком, повтор позже */
+}
+
+static void ah_collect(acq_hw_t *h)
+{
+    int d0 = h->run_d0[h->ir], ng = h->run_ng[h->ir], i = h->ip;
+    uint32_t t0 = fpga_rd(R_ACQ_T0);
+    for (int g = 0; g < ng; g++) {
+        uint32_t pk = fpga_rd(R_ACQ_PEAK(g)), sum = fpga_rd(R_ACQ_SUM(g));
+        double best = pk & 0x3FFFFu, mean = sum / (double)ACQ_N;
+        int bk = (int)(pk >> 18 & (ACQ_N - 1));
+        double z = mean > 0 ? (best / mean - 1) * sqrt((double)h->K) : 0;
+        if (z > h->z[i]) {
+            h->z[i] = z;
+            h->cp[i] = fmod((double)(ACQ_N - bk) * h->L / ACQ_N, (double)h->L);
+            h->dop[i] = h->dop_min + (d0 + g * h->q) * h->step;
+            h->tr[i] = t0;
+        }
+    }
+}
+
+int acq_hw_poll(acq_hw_t *h)
+{
+    for (;;) {
+        if (h->ip >= h->nprn) return 1;
+        if (h->st == 1) {
+            if (fpga_rd(R_ACQ_CTRL) >> 31) return 0;    /* идёт накопление */
+            ah_collect(h);
+        } else {
+            if (h->ir == 0 && h->st == 0) { ah_load_rep(h, h->prn[h->ip]); h->st = 2; }
+            int r = ah_start(h);
+            if (r == 0) return 0;
+            if (r > 0) { h->st = 1; return 0; }
+        }
+        h->st = 0;
+        if (++h->ir >= h->nrun) { h->ir = 0; h->ip++; }
+    }
+}
+
+int acq_hw_result(const acq_hw_t *h, int i, acq_res_t *r, uint32_t *tref)
+{
+    memset(r, 0, sizeof(*r));
+    if (i < 0 || i >= h->nprn) return 0;
+    r->metric = h->z[i];
+    r->code_phase = h->cp[i];
+    r->doppler = h->dop[i];
+    r->found = h->z[i] > h->thresh;
+    double snr = h->z[i] / sqrt((double)h->K), T = h->Ns / FS_HZ;
+    r->cn0 = snr > 0 ? 10 * log10(snr / T) : 0;
+    if (tref) *tref = h->tr[i];
+    return r->found;
+}
+
+double acq_hw_run_time(const acq_hw_t *h)
+{
+    return ((double)(h->K - 1) * h->nper + h->Ns) / FS_HZ + ACQ_PROC_CLK(h->run_ng[0]) / 96e6;
+}
+
 int acq_search(const uint8_t *x4, int n, int sig, int prn, int fcn, const acq_cfg_t *cfg, acq_res_t *r)
 {
     const uint8_t *xs[1] = {x4};

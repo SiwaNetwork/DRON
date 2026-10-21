@@ -8,6 +8,7 @@
 #include <math.h>
 #include "fpga.h"
 #include "corr_sim.h"
+#include "acqf_sim.h"
 
 uint32_t (*fpga_rd_fn)(uint32_t a);
 void (*fpga_wr_fn)(uint32_t a, uint32_t v);
@@ -35,8 +36,8 @@ static int NE;
 static uint64_t t96, nsmp;
 static uint32_t regs[256];
 static uint32_t irq_st;
-/* снимок */
-static uint32_t snap[8192];
+/* снимок (память — общий пул ускорителя захвата) и ускоритель захвата */
+static acqf_t ACQ;
 static int snap_busy, snap_rec, snap_nib;
 static uint32_t snap_left, snap_wa, snap_sr, snap_t0;
 /* журнал сбросов (для тестов) */
@@ -70,6 +71,7 @@ void corr_sim_init(int n_eng)
     memset(regs, 0, sizeof(regs));
     regs[R_CTRL] = 0xFF00;
     snap_busy = 0;
+    acqf_reset(&ACQ);
     for (int c = 0; c < 8; c++)
         for (int k = 0; k < 11; k++) mx[c][k] = MX_DEF[k];
     for (int c = 0; c < 8; c++) mx[c][1] = (mx[c][1] & ~3u) | MX_DIEID;
@@ -196,10 +198,11 @@ void corr_sim_run(uint64_t n, uint32_t (*src)(uint64_t i))
             if (!snap_rec && (!at || (uint32_t)nsmp == regs[R_SNAP_T])) { snap_rec = 1; snap_t0 = (uint32_t)nsmp; }
             if (snap_rec) {
                 snap_sr |= ((w >> (4 * ch)) & 0xF) << (4 * snap_nib);
-                if (++snap_nib == 8) { snap[snap_wa++ & 8191] = snap_sr; snap_sr = 0; snap_nib = 0; }
+                if (++snap_nib == 8) { acqf_snap_wr(&ACQ, snap_wa++ & 8191, snap_sr); snap_sr = 0; snap_nib = 0; }
                 if (--snap_left == 0) { snap_busy = 0; snap_rec = 0; irq_st |= IRQ_SNAP; }
             }
         }
+        if (acqf_sample(&ACQ, (uint32_t)nsmp, w)) irq_st |= IRQ_ACQ;
         /* TIC: смена периода сбрасывает счётчик */
         uint32_t per = regs[R_TIC_PERIOD];
         if (per != tic_prev) { tic_prev = per; tic_cnt = 0; }
@@ -221,7 +224,8 @@ static int any_ready(void)
 
 static uint32_t sim_rd(uint32_t a)
 {
-    if (a >= R_SNAP_DATA && a < R_SNAP_DATA + 8192) return snap[a - R_SNAP_DATA];
+    if (a >= R_SNAP_DATA && a < R_SNAP_DATA + 8192) return acqf_snap_rd(&ACQ, a - R_SNAP_DATA);
+    if ((a >= R_ACQ_CTRL && a < R_ACQ_SUM(ACQ_G)) || (a >= R_ACQ_MEM && a < 0x8000u)) return acqf_rd(&ACQ, a);
     if (a >= CORR_BASE && a < CORR_BASE + 0x1000) {
         uint32_t e = (a >> 9) & 7, r = a & 0x1FF;
         if (e == 7) {
@@ -301,10 +305,16 @@ static void sim_wr(uint32_t a, uint32_t v)
         }
         return;
     }
+    if ((a >= R_ACQ_CTRL && a < R_ACQ_SUM(ACQ_G)) || (a >= R_ACQ_MEM && a < 0x8000u)) {
+        if (a == R_ACQ_CTRL && snap_busy) v &= ~1u;          /* снимок и ускоритель — общий пул */
+        acqf_wr(&ACQ, a, v);
+        return;
+    }
     if (a >= 256) return;
     switch (a) {
     case R_IRQ_CLR: irq_st &= ~v; break;
     case R_SNAP_CTRL:
+        if (ACQ.busy) break;
         regs[a] = v; snap_busy = 1; snap_rec = 0; snap_left = regs[R_SNAP_LEN]; snap_wa = 0;
         snap_nib = 0; snap_sr = 0;
         break;

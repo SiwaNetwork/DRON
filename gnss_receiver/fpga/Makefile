@@ -1,16 +1,16 @@
 # МГП-8, ПЛИС: моделирование (Icarus Verilog) и сборка (Yosys + nextpnr-ecp5 + ecppack).
-#   make sim       — все тесты RTL (движок коррелятора, режекторный фильтр, система)
+#   make sim       — все тесты RTL (движок коррелятора, режекторный фильтр, ускоритель захвата, система)
 #   make syn       — синтез, размещение и трассировка LFE5U-45F-6BG381I, build/mgp8.bit
 #   make engine    — P&R одного движка коррелятора (оценка частоты, 3 seed)
 #   make notch     — P&R режекторного фильтра (оценка частоты)
 RTL    = rtl/cmem_4kx4.v rtl/corr_engine.v rtl/corr_bank.v rtl/rf_capture.v rtl/notch.v \
-         rtl/timebase.v rtl/fmc_slave.v rtl/max_spi.v rtl/snapshot.v rtl/mgp8_core.v rtl/mgp8_top.v
+         rtl/timebase.v rtl/fmc_slave.v rtl/max_spi.v rtl/snapshot.v rtl/acq_fft.v rtl/mgp8_core.v          rtl/mgp8_top.v
 IVFLAGS = -g2005 -Wall
 B       = build
 SEED   ?= 1
 
-.PHONY: sim sim-engine sim-notch sim-sys syn engine notch clean
-sim: sim-engine sim-notch sim-sys
+.PHONY: sim sim-engine sim-notch sim-acq sim-sys syn engine notch acq clean
+sim: sim-engine sim-notch sim-acq sim-sys
 
 $(B):
 	mkdir -p $(B) tb/out tb/stim
@@ -26,6 +26,16 @@ sim-notch: | $(B)
 	iverilog $(IVFLAGS) -o $(B)/tb_notch.vvp tb/tb_notch.v rtl/notch.v
 	vvp -n $(B)/tb_notch.vvp > $(B)/sim_notch.log
 	python3 tb/gen_notch.py check
+
+# ускоритель захвата: эталон — битово-точная модель sw/fw/src/acqf_sim.c (сверяется с моделью
+# Python model/acq_model.py); gen_acq также пишет таблицу поворотов rtl/acq_tw.hex
+sim-acq: | $(B)
+	gcc -O2 -I ../sw/fw/inc -o $(B)/gen_acq tb/gen_acq.c ../sw/fw/src/acqf_sim.c -lm
+	$(B)/gen_acq gen
+	python3 model/acq_model.py
+	iverilog $(IVFLAGS) -o $(B)/tb_acq.vvp tb/tb_acq.v rtl/acq_fft.v
+	vvp -n $(B)/tb_acq.vvp > $(B)/sim_acq.log
+	$(B)/gen_acq check
 
 sim-sys: | $(B)
 	python3 tb/gen_sys.py gen
@@ -58,6 +68,12 @@ notch: | $(B)
 	nextpnr-ecp5 --45k --package CABGA381 --speed 6 --json $(B)/nw.json --lpf syn/notch_wrap.lpf \
 	    --lpf-allow-unconstrained --seed 1 > $(B)/nw_pnr.log 2>&1; \
 	grep -E "Max frequency" $(B)/nw_pnr.log | tail -1
+
+acq: | $(B)
+	yosys -q -p "read_verilog rtl/acq_fft.v syn/acq_wrap.v; synth_ecp5 -top acq_wrap -json $(B)/aw.json"
+	nextpnr-ecp5 --45k --package CABGA381 --speed 6 --json $(B)/aw.json --lpf syn/acq_wrap.lpf \
+	    --lpf-allow-unconstrained --timing-allow-fail --seed 1 > $(B)/aw_pnr.log 2>&1; \
+	grep -E "Max frequency" $(B)/aw_pnr.log | tail -1
 
 clean:
 	rm -rf $(B) tb/out tb/stim
