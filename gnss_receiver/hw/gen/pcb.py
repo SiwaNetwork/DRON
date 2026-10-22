@@ -193,8 +193,10 @@ def copy_fields(b):
     """Поля символов (Наименование, Изготовитель, Артикул…) — в посадочные места, скрытыми на слое
     сборочного чертежа: иначе проверка соответствия схеме выдаёт предупреждение на каждый элемент."""
     root = loads(open(os.path.join(TMP, "mgp8.net"), encoding="utf-8").read())
+    # не FindFootprintByReference: после долгой работы с платой SWIG иногда отдаёт голый SwigPyObject
+    fps = {fp.GetReference(): fp for fp in b.GetFootprints()}
     for c in find(first(root, "components"), "comp"):
-        fp, fl = b.FindFootprintByReference(str(first(c, "ref")[1])), first(c, "fields")
+        fp, fl = fps.get(str(first(c, "ref")[1])), first(c, "fields")
         if fp is None or not fl:
             continue
         for f in find(fl, "field"):
@@ -1197,8 +1199,11 @@ def save_out(b, out_pcb):
         f.write("\n")
 
 
-def stage_finish():
-    b = merge_ses()
+def stage_finish(src="ses"):
+    """Выпуск платы: merge_ses, поля символов, заливки земли снаружи, чистка висящих, DRC.
+    `finish board` начинает с уже собранной merge_ses платы %TEMP%/mgp8pcb/proj: после импорта
+    большого .ses в том же процессе SWIG иногда теряет классы объектов (SwigPyObject вместо FOOTPRINT)."""
+    b = pcbnew.LoadBoard(os.path.join(TMP, "mgp8.kicad_pcb")) if src == "board" else merge_ses()
     copy_fields(b)
     # заливка земли на наружных слоях (копланарные ВЧ-линии, экраны, отвод тепла)
     gnd = b.FindNet("GND")
