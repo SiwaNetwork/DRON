@@ -125,7 +125,7 @@ def ecp5():
                   ["*GND", ""] + ["#" + b for b in ("W4", "W5", "W8", "W9", "W10", "W11", "W13", "W14", "W17", "W18")],
                   {"sub": "Питание"}))
     pd = ic("LFE5U45", "DD", "Микросхемы", "Микросхема LFE5U-45F-6BG381I", "LFE5U-45F-6BG381I", "Lattice",
-            "Package_BGA:Lattice_caBGA-381_17.0x17.0mm_Layout20x20_P0.8mm_Ball0.4mm_Pad0.4mm_NSMD",
+            "Package_BGA:Lattice_caBGA-381_17x17mm_Layout20x20_P0.8mm",
             "kicad", "FPGA_Lattice.kicad_sym", "LFE5U-85F-6BG381x", units,
             rename=lambda p: _ecp5_name(p["num"]) if re.fullmatch(r"P[TBLR]\d+[A-D]", p["name"]) else p["name"])
     pd.banks = banks
@@ -223,7 +223,8 @@ def microsd():
     return kicad_ic("MICROSD", "XS", "Держатель карты microSD DM3AT-SF-PEJM5", "DM3AT-SF-PEJM5", "Hirose",
                     "Connector.kicad_sym", "Micro_SD_Card_Det_Hirose_DM3AT",
                     ["DAT0", "DAT1", "DAT2", "DAT3/CD", "CMD", "CLK", "", "VDD", "VSS"],
-                    ["DET_A", "DET_B", "", "SHIELD"], "microSD", group="Соединители")
+                    ["DET_A", "DET_B", "", "SHIELD"], "microSD", group="Соединители",
+                    fp=f"{LIB}:microSD_HC_Hirose_DM3AT-SF-PEJM5")
 
 
 def conn(key, pn, mfr, n, fp, name, title, labels=None):

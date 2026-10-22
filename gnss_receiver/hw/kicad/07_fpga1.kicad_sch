@@ -43,7 +43,7 @@
           ) hide
         )
       )
-      (property "Footprint" "Package_BGA:Lattice_caBGA-381_17.0x17.0mm_Layout20x20_P0.8mm_Ball0.4mm_Pad0.4mm_NSMD"
+      (property "Footprint" "Package_BGA:Lattice_caBGA-381_17x17mm_Layout20x20_P0.8mm"
         (at 0 0 0)
         (effects
           (font
@@ -8167,7 +8167,7 @@
         (justify left top) hide
       )
     )
-    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17.0x17.0mm_Layout20x20_P0.8mm_Ball0.4mm_Pad0.4mm_NSMD"
+    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17x17mm_Layout20x20_P0.8mm"
       (at 76.2 78.74 0)
       (effects
         (font
@@ -9257,7 +9257,7 @@
         (justify left top) hide
       )
     )
-    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17.0x17.0mm_Layout20x20_P0.8mm_Ball0.4mm_Pad0.4mm_NSMD"
+    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17x17mm_Layout20x20_P0.8mm"
       (at 191.77 83.82 0)
       (effects
         (font
@@ -10569,7 +10569,7 @@
         (justify left top) hide
       )
     )
-    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17.0x17.0mm_Layout20x20_P0.8mm_Ball0.4mm_Pad0.4mm_NSMD"
+    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17x17mm_Layout20x20_P0.8mm"
       (at 302.26 83.82 0)
       (effects
         (font
@@ -11768,7 +11768,7 @@
         (justify left top) hide
       )
     )
-    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17.0x17.0mm_Layout20x20_P0.8mm_Ball0.4mm_Pad0.4mm_NSMD"
+    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17x17mm_Layout20x20_P0.8mm"
       (at 394.97 83.82 0)
       (effects
         (font
@@ -12090,7 +12090,7 @@
         (justify left top) hide
       )
     )
-    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17.0x17.0mm_Layout20x20_P0.8mm_Ball0.4mm_Pad0.4mm_NSMD"
+    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17x17mm_Layout20x20_P0.8mm"
       (at 482.6 83.82 0)
       (effects
         (font
@@ -13312,7 +13312,7 @@
         (justify left top) hide
       )
     )
-    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17.0x17.0mm_Layout20x20_P0.8mm_Ball0.4mm_Pad0.4mm_NSMD"
+    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17x17mm_Layout20x20_P0.8mm"
       (at 73.66 196.85 0)
       (effects
         (font

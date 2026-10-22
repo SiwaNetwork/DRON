@@ -11,6 +11,7 @@ import tempfile
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import design  # noqa: E402
+import footprints  # noqa: E402
 import kicad_out  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
@@ -54,6 +55,11 @@ def main():
     # распиновка ПЛИС для сборки конфигурации
     with open(os.path.join(ROOT, "hw", "gen", "data", "fpga_pinout.json"), "w") as f:
         json.dump(d.fpga_pins, f, indent=1, sort_keys=True)
+    # узлы схемы по позиционным обозначениям — для размещения на плате (hw/gen/pcb.py)
+    blocks = {c.ref: [c.sheet, c.block] for c in d.comps}
+    with open(os.path.join(ROOT, "hw", "gen", "data", "blocks.json"), "w") as f:
+        json.dump(blocks, f, indent=0, sort_keys=True)
+    print("Посадочные места mgp8.pretty:", len(footprints.write_lib()))
     return d
 
 

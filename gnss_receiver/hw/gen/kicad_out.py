@@ -571,9 +571,18 @@ def write_project(design, outdir, meta, papers=None):
     symlib.write_lib([_libsym(k) for k in sorted(P.SYMBOLS)], os.path.join(outdir, "mgp8.kicad_sym"))
     with open(os.path.join(outdir, "sym-lib-table"), "w") as f:
         f.write('(sym_lib_table\n  (lib (name "mgp8")(type "KiCad")(uri "${KIPRJMOD}/mgp8.kicad_sym")(options "")(descr "МГП-8"))\n)\n')
+    with open(os.path.join(outdir, "fp-lib-table"), "w") as f:
+        f.write('(fp_lib_table\n  (lib (name "mgp8")(type "KiCad")(uri "${KIPRJMOD}/mgp8.pretty")(options "")(descr "МГП-8"))\n)\n')
     write_worksheet(os.path.join(outdir, "eskd.kicad_wks"))
     import json
     pro = json.load(open(os.path.join(symlib.KICAD_TEMPLATE, "kicad.kicad_pro"), encoding="utf-8"))
+    # правила и классы цепей платы задаёт hw/gen/pcb.py — при пересборке схемы они сохраняются
+    path = os.path.join(outdir, f"{proj.name}.kicad_pro")
+    if os.path.exists(path):
+        old = json.load(open(path, encoding="utf-8"))
+        for key in ("board", "net_settings"):
+            if key in old:
+                pro[key] = old[key]
     pro["meta"]["filename"] = f"{proj.name}.kicad_pro"
     pro["schematic"] = {"page_layout_descr_file": "eskd.kicad_wks", "subpart_id_separator": 46,
                         "subpart_first_id": 49, "drawing": {"default_text_size": 98.4, "default_line_thickness": 10.0}}

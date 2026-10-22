@@ -7875,7 +7875,7 @@
         ) hide
       )
     )
-    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17.0x17.0mm_Layout20x20_P0.8mm_Ball0.4mm_Pad0.4mm_NSMD"
+    (property "Footprint" "Package_BGA:Lattice_caBGA-381_17x17mm_Layout20x20_P0.8mm"
       (at 0 0 0)
       (effects
         (font
@@ -18376,7 +18376,7 @@
         ) hide
       )
     )
-    (property "Footprint" ""
+    (property "Footprint" "mgp8:microSD_HC_Hirose_DM3AT-SF-PEJM5"
       (at 0 0 0)
       (effects
         (font
@@ -24389,7 +24389,7 @@
         ) hide
       )
     )
-    (property "Footprint" "Package_SO:SOIC-8_5.23x5.23mm_P1.27mm"
+    (property "Footprint" "Package_SO:SOIC-8_5.3x5.3mm_P1.27mm"
       (at 0 0 0)
       (effects
         (font

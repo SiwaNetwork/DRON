@@ -7335,7 +7335,7 @@
         (justify left top)
       )
     )
-    (property "Footprint" "Connector_Coaxial:SMA_Samtec_SMA-J-P-X-ST-EM1_EdgeMount"
+    (property "Footprint" "Connector_Coaxial:SMA_Samtec_SMA-J-P-H-ST-EM1_EdgeMount"
       (at 387.35 90.17 0)
       (effects
         (font
@@ -10042,7 +10042,7 @@
         (justify left top)
       )
     )
-    (property "Footprint" "Connector_Coaxial:SMA_Samtec_SMA-J-P-X-ST-EM1_EdgeMount"
+    (property "Footprint" "Connector_Coaxial:SMA_Samtec_SMA-J-P-H-ST-EM1_EdgeMount"
       (at 530.86 80.01 0)
       (effects
         (font

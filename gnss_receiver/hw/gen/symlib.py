@@ -103,10 +103,11 @@ def _unnamed_pins(node):
 
 
 # Отличия библиотеки KiCad 10 от KiCad 7, по которой выпущена схема Э3: имена и номера выводов, посадочные места.
-# Для KiCad 7 замены ничего не меняют.
+# Для KiCad 7 замены имён и номеров ничего не меняют; посадочное место W25Q128 — по библиотеке KiCad 10
+# (в KiCad 7 оно называлось SOIC-8_5.23x5.23mm_P1.27mm).
 _COMPAT = {
     "W25Q128JVS": dict(names={"1": "CS", "2": "DO(IO1)", "3": "IO2", "5": "DI(IO0)", "7": "IO3"},
-                       fp="Package_SO:SOIC-8_5.23x5.23mm_P1.27mm"),
+                       fp="Package_SO:SOIC-8_5.3x5.3mm_P1.27mm"),
     "Micro_SD_Card_Det_Hirose_DM3AT": dict(nums={"SH": "11"}),
 }
 

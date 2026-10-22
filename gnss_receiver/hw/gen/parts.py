@@ -207,7 +207,7 @@ def crystal(kind):
 def coax(note=""):
     key = _reg_symbol("Coax", _eskd("Coax"))
     return _mk(key, "XW", "Соединители", "Розетка SMA угловая на край платы SMA-J-P-H-ST-EM1", "SMA-J-P-H-ST-EM1",
-               "Samtec", "Connector_Coaxial:SMA_Samtec_SMA-J-P-X-ST-EM1_EdgeMount", value="SMA", note=note)
+               "Samtec", "Connector_Coaxial:SMA_Samtec_SMA-J-P-H-ST-EM1_EdgeMount", value="SMA", note=note)
 
 
 # ------------------------------------------------------------------ микросхемы

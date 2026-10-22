@@ -1169,7 +1169,7 @@
           ) hide
         )
       )
-      (property "Footprint" ""
+      (property "Footprint" "mgp8:microSD_HC_Hirose_DM3AT-SF-PEJM5"
         (at 0 0 0)
         (effects
           (font
@@ -11882,7 +11882,7 @@
         (justify left top) hide
       )
     )
-    (property "Footprint" ""
+    (property "Footprint" "mgp8:microSD_HC_Hirose_DM3AT-SF-PEJM5"
       (at 448.31 210.82 0)
       (effects
         (font
