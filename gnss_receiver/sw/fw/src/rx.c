@@ -16,6 +16,7 @@
 #include <math.h>
 #include <string.h>
 #include "fpga.h"
+#include "codes.h"
 #include "rx.h"
 
 #define TWO32 4294967296.0
@@ -55,38 +56,44 @@ static rx_t *RX;                     /* для обратного вызова (
 
 static void lock(const rx_t *r, int on) { if (r->lock) r->lock(on); }
 
-/* поиск КА q (PRN; ГЛОНАСС — литера) и настройка канала слежения. t_start ≠ 0 — пуск на этот
- * отсчёт выполняет вызывающий (общий для группы), t_start = 0 — пуск сразу (≈ 1 мс после
- * поиска). 1 — канал настроен (*chp), 0 — КА уже в слежении или не найден, −1 — нет свободного
- * канала или декодера сообщений. Поиск — без блокировки; занятие канала и декодера, загрузка
- * кода и пуск — под блокировкой (общие с rx_process данные и регистры движка) */
-static int acq_one(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap, int len, int sig,
-                   int q, uint64_t t_start, const acq_cfg_t *ac, int *chp)
+int rx_tracked(const rx_t *r, int sig, int q)
+{
+    int glo = SIGS[sig].sys == SYS_GLO;
+    for (int k = 0; k < CORR_MAXCH; k++)
+        if (r->ch[k].used && r->ch[k].sig == sig && (glo ? r->ch[k].fcn == q : r->ch[k].prn == q)) return 1;
+    return 0;
+}
+
+static int msg_free(const rx_t *r)
+{
+    int m = 0;
+    while (m < RX_NMSG && r->msg_busy[m]) m++;
+    return m;
+}
+
+/* занятие канала и декодера, загрузка кода, пуск слежения по результату поиска a (фаза кода — на
+ * отсчёт tref, мл. 32 бит) — под блокировкой; weak — втягивание слабого сигнала */
+static int ch_start(rx_t *r, int sig, int q, const acq_res_t *a, uint32_t tref, uint64_t t_start, int weak,
+                    int *chp)
 {
     const sig_info_t *si = &SIGS[sig];
     int glo = si->sys == SYS_GLO;
     int prn = glo ? 1 : q, fcn = glo ? q : 0;            /* ГЛОНАСС: код общий, перебор литер */
-    for (int k = 0; k < CORR_MAXCH; k++)
-        if (r->ch[k].used && r->ch[k].sig == sig && (glo ? r->ch[k].fcn == fcn : r->ch[k].prn == prn)) return 0;
-    int m = 0;
-    while (m < RX_NMSG && r->msg_busy[m]) m++;
-    if (m == RX_NMSG) return -1;
-    acq_res_t a;
-    if (!acq_search_multi(x4, t0, nsnap, len, sig, prn, fcn, ac, &a)) return 0;
     lock(r, 1);
-    m = 0;
-    while (m < RX_NMSG && r->msg_busy[m]) m++;
+    int m = msg_free(r);
     int ch = m < RX_NMSG ? corr_alloc(sig) : -1;
     if (ch < 0) { lock(r, 0); return -1; }
     uint64_t ts = t_start ? t_start : corr_start_next(ch, corr_time_now());
-    double rate = si->chip_rate * (1 + a.doppler / sig_carrier(sig, fcn));
-    /* t0 — мл. 32 бит номера отсчёта (переполнение через 179 с): разность — по модулю 2^32 */
-    double cps = a.code_phase + rate * (double)(int32_t)((uint32_t)ts - t0[0]) / FS_HZ;
+    double rate = si->chip_rate * (1 + a->doppler / sig_carrier(sig, fcn));
+    /* tref — мл. 32 бит номера отсчёта (переполнение через 179 с): разность — по модулю 2^32 */
+    double cps = a->code_phase + rate * (double)(int32_t)((uint32_t)ts - tref) / FS_HZ;
     corr_load_code(ch, sig, prn);
     rx_ch_t *c = &r->ch[ch];
     memset(c, 0, sizeof(*c));
     c->ch = ch; c->sig = sig; c->prn = glo ? 0 : prn; c->fcn = fcn;
-    trk_start(&c->trk, ch, sig, prn, fcn, a.doppler, cps, ts, &r->tcfg);
+    trk_cfg_t tc = r->tcfg;
+    tc.weak = weak;
+    trk_start(&c->trk, ch, sig, prn, fcn, a->doppler, cps, ts, &tc);
     c->trk.on_bit = on_bit;
     c->trk.ctx = c;
     r->msg_busy[m] = 1;
@@ -100,6 +107,22 @@ static int acq_one(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int ns
     lock(r, 0);
     *chp = ch;
     return 1;
+}
+
+/* поиск КА q (PRN; ГЛОНАСС — литера) и настройка канала слежения. t_start ≠ 0 — пуск на этот
+ * отсчёт выполняет вызывающий (общий для группы), t_start = 0 — пуск сразу (≈ 1 мс после
+ * поиска). 1 — канал настроен (*chp), 0 — КА уже в слежении или не найден, −1 — нет свободного
+ * канала или декодера сообщений. Поиск — без блокировки; занятие канала и декодера, загрузка
+ * кода и пуск — под блокировкой (общие с rx_process данные и регистры движка) */
+static int acq_one(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap, int len, int sig,
+                   int q, uint64_t t_start, const acq_cfg_t *ac, int *chp)
+{
+    int glo = SIGS[sig].sys == SYS_GLO;
+    if (rx_tracked(r, sig, q)) return 0;
+    if (msg_free(r) == RX_NMSG) return -1;
+    acq_res_t a;
+    if (!acq_search_multi(x4, t0, nsnap, len, sig, glo ? 1 : q, glo ? q : 0, ac, &a)) return 0;
+    return ch_start(r, sig, q, &a, t0[0], t_start, 0, chp);
 }
 
 static void sig_range(int sig, int *q0, int *q1)
@@ -134,7 +157,104 @@ int rx_acquire_one(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int ns
     return acq_one(r, x4, t0, nsnap, len, sig, q, 0, ac, &ch);
 }
 
+int rx_start(rx_t *r, int sig, int q, const acq_res_t *a, uint32_t tref, int weak)
+{
+    int ch;
+    RX = r;
+    if (rx_tracked(r, sig, q)) return 0;
+    return ch_start(r, sig, q, a, tref, 0, weak, &ch);
+}
+
 int rx_sig_range(int sig, int *q0, int *q1) { sig_range(sig, q0, q1); return *q1 - *q0 + 1; }
+
+/* Ложный захват взаимно-корреляционного пика. ВКФ кодов L1 C/A — до −21…−24 дБ: у КА 45 дБГц это
+ * «сигнал» 21–24 дБГц, и при девяти сильных КА максимум по ячейкам ускорителя (256 мс) — у порога
+ * (z ≈ 6, порог 6,5), а часть превышает его. Захват такого пика — на частоте сильного КА
+ * + k·1 кГц (произведение кодов периодично с периодом 1 мс), уровень — ВКФ кодов на разности
+ * фаз кода каналов с поворотом на разность частот. Канал ложный, если уровень, ожидаемый по
+ * C/N0 сильного КА, не ниже C/N0 канала минус запас. Проверка — после синхронизации по битам
+ * (оценка C/N0 — по когерентной сумме бита). Для случайной фазы кода уровень ВКФ ≈ −30 дБ,
+ * поэтому настоящий слабый сигнал отбрасывается, лишь если его частота в пределах допуска от
+ * линии сильного КА и фаза кода — на пике ВКФ (вероятность < 10^−3 при 45 и 29 дБГц) */
+#define RX_XC_DELAY  0.5             /* с после синхронизации по битам */
+#define RX_XC_DF     10.0            /* допуск отклонения разности частот от кратной 1 кГц, Гц */
+#define RX_XC_MIN    10.0            /* сильный КА — выше по C/N0 не менее чем на, дБ */
+#define RX_XC_MARGIN 6.0             /* запас по уровню, дБ */
+#define RX_XC_MAX    8               /* сильных КА на проверку */
+
+/* |ВКФ| / L кода prn_s (принятый) и кода prn_c (копия) при сдвиге копии lag (чипы, дробный —
+ * линейная интерполяция) и разности частот df (Гц); коды с периодом 1 мс до 1024 чипов */
+static double xc_level(int sig, int prn_s, int prn_c, double lag, double df)
+{
+    static uint8_t cs[CODE_MAX_BYTES], cc[CODE_MAX_BYTES];
+    const sig_info_t *si = &SIGS[sig];
+    int L = si->code_len;
+    code_gen(sig, prn_s, cs);
+    code_gen(sig, prn_c, cc);
+    lag = fmod(lag, (double)L);
+    if (lag < 0) lag += L;
+    int l0 = (int)lag;
+    double e = lag - l0, w = 2 * GPI * df / si->chip_rate, cr = cos(w), ci = sin(w), rr = 1, ri = 0;
+    double ar = 0, ai = 0, br = 0, bi = 0;
+    for (int m = 0, j = l0; m < L; m++) {
+        int a = code_bit(cs, m), j1 = j + 1 < L ? j + 1 : 0;
+        double b0 = a == code_bit(cc, j) ? 1 : -1, b1 = a == code_bit(cc, j1) ? 1 : -1;
+        ar += b0 * rr; ai += b0 * ri;
+        br += b1 * rr; bi += b1 * ri;
+        double t = rr * cr - ri * ci; ri = rr * ci + ri * cr; rr = t;
+        j = j1;
+    }
+    return hypot((1 - e) * ar + e * br, (1 - e) * ai + e * bi) / L;
+}
+
+int rx_xcheck(rx_t *r)
+{
+    int nrel = 0;
+    for (int k = 0; k < CORR_MAXCH; k++) {
+        rx_ch_t *c = &r->ch[k];
+        /* отбор без блокировки (поля могут меняться в прерывании), проверка и копия — под ней */
+        if (!c->used || c->f2 || !c->trk.weak || c->xc || !c->trk.bit_sync) continue;
+        if (c->xc_t != 0 && c->trk.t < c->xc_t + RX_XC_DELAY) continue;
+        lock(r, 1);
+        if (!c->used || c->f2 || !c->trk.weak || c->xc || !c->trk.bit_sync || c->trk.state != TRK_LOCK ||
+            SIGS[c->sig].code_len > 1024) {
+            lock(r, 0);
+            continue;
+        }
+        if (c->xc_t == 0) c->xc_t = c->trk.t;
+        if (c->trk.t < c->xc_t + RX_XC_DELAY) { lock(r, 0); continue; }
+        int sig = c->sig, prn = c->prn, ns = 0, ps[RX_XC_MAX];
+        double t_mark = c->xc_t, cn0 = c->trk.cn0, f = trk_doppler(&c->trk), cp, dl[RX_XC_MAX], df[RX_XC_MAX],
+               cn_s[RX_XC_MAX];
+        uint64_t n = corr_time_now();
+        corr_phase_at(c->ch, n, &cp, NULL);
+        for (int j = 0; j < CORR_MAXCH && ns < RX_XC_MAX; j++) {
+            const rx_ch_t *s = &r->ch[j];
+            if (j == k || !s->used || s->f2 || s->sig != sig || s->trk.state != TRK_LOCK ||
+                s->trk.cn0 < cn0 + RX_XC_MIN)
+                continue;
+            double d = f - trk_doppler(&s->trk);
+            if (fabs(d - 1000.0 * floor(d / 1000.0 + 0.5)) > RX_XC_DF) continue;
+            double cps;
+            corr_phase_at(s->ch, n, &cps, NULL);
+            ps[ns] = s->prn; dl[ns] = cp - cps; df[ns] = d; cn_s[ns] = s->trk.cn0;
+            ns++;
+        }
+        lock(r, 0);
+        /* уровни ВКФ — без блокировки */
+        int bad = 0;
+        for (int i = 0; i < ns && !bad; i++)
+            bad = cn_s[i] + 20 * log10(xc_level(sig, ps[i], prn, dl[i], df[i]) + 1e-9) > cn0 - RX_XC_MARGIN;
+        lock(r, 1);
+        if (c->used && c->prn == prn && c->xc_t == t_mark) {
+            if (bad) c->trk.state = TRK_IDLE;            /* канал освобождает rx_process */
+            else c->xc = 1;
+        }
+        lock(r, 0);
+        nrel += bad;
+    }
+    return nrel;
+}
 
 /* привязка времени излучения к эпохе кода, ближайшей к началу отсчёта n */
 static void set_ref(rx_ch_t *c, uint64_t n, double tow)
@@ -404,7 +524,7 @@ int rx_latch(rx_t *r, uint64_t n_m)
         rx_ch_t *c = &r->ch[k];
         if (!c->used || c->f2) continue;
         rx_ch_t *c2 = c->pair ? &r->ch[c->pair - 1] : NULL;
-        if (!c->tx_ok || c->trk.state != TRK_LOCK) {
+        if (!c->tx_ok || c->trk.state != TRK_LOCK || (c->trk.weak && !c->xc)) {
             c->hs_n = 0;
             if (c2) c2->hs_n = 0;
             continue;

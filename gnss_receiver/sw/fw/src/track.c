@@ -34,6 +34,8 @@ void trk_default_cfg(trk_cfg_t *c)
     c->pll_order = 3;
     c->pll_bw3 = 18.0;
     c->reacq_thr = 4.5;      /* шум: P(max(E,P,L) > 4,5·среднее) ≈ 0,033; 5 из 8 — ≈ 2·10^−6 на интервал */
+    c->weak = 0;
+    c->weak_time = 0.8;      /* по 0,4 с на грубую и точную оценку частоты */
 }
 
 void trk_start(trk_t *k, int ch, int sig, int prn, int fcn, double doppler, double code_phase,
@@ -82,12 +84,101 @@ void trk_start(trk_t *k, int ch, int sig, int prn, int fcn, double doppler, doub
     k->pll_order = k->T >= 0.01 ? 2 : cfg->pll_order;   /* 3-й порядок — при коротком периоде */
     k->pll_bw3 = cfg->pll_bw3 < bmax ? cfg->pll_bw3 : bmax;
     k->reacq_thr = cfg->reacq_thr;
+    /* слабый сигнал (период кода 1 мс; проверено для L1 C/A — у ГЛОНАСС блоки 10 мс не согласованы
+     * с символами 10 мс с меандром): без ЧАП, ФАП 2-го порядка */
+    if (cfg->weak && k->T < 0.0015) {
+        k->weak = 1;
+        k->weak_time = cfg->weak_time;
+        k->fll_time = cfg->weak_time;
+        k->wf = 0;
+        k->pll_order = 2;
+    }
     corr_config(ch, sig, prn, fcn, 1, k->spacing, k->f_carr, k->f_code, code_phase, 0.0, t_start);
+}
+
+/* слабый сигнал: блок TRK_WBLK периодов. Этап 1 — ДПФ блока по гипотезам частоты относительно
+ * постоянной частоты NCO, мощности суммируются по блокам; по окончании — максимум с
+ * параболической интерполяцией (СКО ≈ 3 Гц при 29 дБГц за 0,4 с — вне полосы захвата ФАП
+ * Костаса ≈ 3 Гц). Этап 2 — по разности фаз сумм соседних блоков, знак — по скалярному
+ * произведению (биты), суммы векторных произведений за этап (СКО < 1 Гц). Этап 3 — индикатор
+ * захвата cos 2Δφ по сумме блока (при 29 дБГц по одному периоду его среднее ≈ 0,44 — у порога
+ * 0,4; по блоку 10 мс ≈ 0,8 и при перепаде знака бита внутри блока) */
+static void weak_epoch(trk_t *k, double I, double Q)
+{
+    k->wk_i[k->wk_n] = (float)I;
+    k->wk_q[k->wk_n] = (float)Q;
+    if (++k->wk_n < TRK_WBLK) return;
+    k->wk_n = 0;
+    double si = 0, sq = 0, Tb = TRK_WBLK * k->T;
+    for (int n = 0; n < TRK_WBLK; n++) { si += k->wk_i[n]; sq += k->wk_q[n]; }
+    if (k->weak == 3) {
+        double p2 = si * si + sq * sq;
+        if (p2 > 0) k->lock += 0.2 * ((si * si - sq * sq) / p2 - k->lock);
+        return;
+    }
+    if (k->weak == 2) {
+        if (k->wk_nblk++) {
+            double cr = k->wk_pi * sq - k->wk_pq * si, dt = k->wk_pi * si + k->wk_pq * sq;
+            k->wk_c += dt >= 0 ? cr : -cr;
+            k->wk_d += fabs(dt);
+        }
+        k->wk_pi = si; k->wk_pq = sq;
+        if (k->wk_nblk * Tb < 0.5 * k->weak_time - 0.5 * k->T) return;
+        k->f0 += atan2(k->wk_c, k->wk_d) / (2 * GPI * Tb);
+        k->f_carr = k->f0;
+        k->int_f = 0;
+        k->lock = 0;
+        k->weak = 3;
+        return;
+    }
+    for (int b = 0; b < TRK_WNF; b++) {
+        double w = -2 * GPI * (b - TRK_WNF / 2) * TRK_WDF * k->T, cr = cos(w), ci = sin(w);
+        double rr = 1, ri = 0, xr = 0, xi = 0;
+        for (int n = 0; n < TRK_WBLK; n++) {
+            xr += k->wk_i[n] * rr - k->wk_q[n] * ri;
+            xi += k->wk_i[n] * ri + k->wk_q[n] * rr;
+            double t = rr * cr - ri * ci; ri = rr * ci + ri * cr; rr = t;
+        }
+        k->wu.p[b] += (float)(xr * xr + xi * xi);
+    }
+    if (++k->wk_nblk * Tb < 0.5 * k->weak_time - 0.5 * k->T) return;
+    int bm = 0;
+    for (int b = 1; b < TRK_WNF; b++) if (k->wu.p[b] > k->wu.p[bm]) bm = b;
+    double df = 0;
+    if (bm > 0 && bm < TRK_WNF - 1) {
+        double pm = k->wu.p[bm - 1], p0 = k->wu.p[bm], pp = k->wu.p[bm + 1], den = pm - 2 * p0 + pp;
+        if (den < 0) df = 0.5 * (pm - pp) / den;
+    }
+    k->f0 += ((bm - TRK_WNF / 2) + df) * TRK_WDF;
+    k->f_carr = k->f0;
+    k->wk_nblk = 0;
+    memset(&k->wu, 0, sizeof(k->wu));                 /* далее — буферы синхронизации по битам */
+    k->weak = 2;
+}
+
+/* синхронизация по битам по энергии (слабый сигнал): для каждого сдвига — сумма |Σ I| по окну
+ * длиной в бит, оканчивающемуся на интервале с этим сдвигом; при 29 дБГц гистограмма смен
+ * знака не сходится (ложные смены ≈ 0,18 на интервал против 0,5 на границе бита) */
+static void bit_sync_energy(trk_t *k, double I)
+{
+    int L = k->bit_len, j = (int)(k->n_epoch % (uint64_t)L);
+    k->bs_sum += I - k->wu.bs.buf[j];
+    k->wu.bs.buf[j] = (float)I;
+    if (++k->bs_n < L) return;
+    k->wu.bs.e[j] += (float)fabs(k->bs_sum);
+    if (k->bs_n < L * 51) return;                     /* 50 бит */
+    int bm = 0;
+    for (int i = 1; i < L; i++) if (k->wu.bs.e[i] > k->wu.bs.e[bm]) bm = i;
+    int bi = (bm + 1) % L;                            /* окно оканчивается на bm — bm + 1 первый в бите */
+    k->bit_sync = 1;
+    k->bit_pos = (int)((k->n_epoch - (uint64_t)bi) % (uint64_t)L);
+    k->bit_acc = 0;
 }
 
 static void bit_sync(trk_t *k, double I, const corr_dump_t *d)
 {
     int s = I >= 0 ? 1 : -1;
+    if (!k->bit_sync && k->weak) { bit_sync_energy(k, I); return; }
     if (!k->bit_sync) {
         int L = k->bit_len;
         if (k->prev_sign && s != k->prev_sign) k->bit_hist[k->n_epoch % (uint64_t)L]++;
@@ -176,7 +267,9 @@ static void loops(trk_t *k, double EI, double EQ, double I, double Q, double LI,
     k->pI = I; k->pQ = Q; k->have_prev = 1;
     /* фильтр петли несущей: этап 1 (t < fll_time) — только ЧАП с широкой полосой (втягивание
      * частоты из ячейки захвата), этап 2 — ФАП с поддержкой ЧАП (полоса ЧАП — номинальная) */
-    if (k->t < k->fll_time) {
+    if (k->weak == 1 || k->weak == 2) {
+        k->f_carr = k->f0;               /* слабый сигнал: оценка частоты при постоянной частоте NCO */
+    } else if (!k->weak && k->t < k->fll_time) {
         double wfw = 4 * k->wf;
         /* петля 1-го порядка устойчива при K·T < 2; при длинном периоде (L2CM, 20 мс) четырёхкратная
          * полоса нарушила бы и это условие, и Bn·T ≤ 0,1 (K = 4·Bn) */
@@ -202,7 +295,9 @@ static void loops(trk_t *k, double EI, double EQ, double I, double Q, double LI,
      * (при накоплении) */
     double p2 = I * I + Q * Q;
     double al = k->ncoh > 1 ? 0.2 : 0.05;
-    if (p2 > 0) k->lock += al * ((I * I - Q * Q) / p2 - k->lock);
+    if (k->weak && k->ncoh == 1) {
+        if (k->weak < 3) { k->last_perr = perr; return; }    /* индикатор — по блокам (weak_epoch) */
+    } else if (p2 > 0) k->lock += al * ((I * I - Q * Q) / p2 - k->lock);
     /* состояние: втягивание -> захват (сужение полосы ФАП до pll_bw_lock) -> срыв -> повторный
      * захват по индикатору; более 1 с в срыве — канал освобождается для повторного поиска */
     if (k->state == TRK_PULLIN && k->t > k->fll_time + 0.05 && k->lock > 0.4) {
@@ -211,7 +306,7 @@ static void loops(trk_t *k, double EI, double EQ, double I, double Q, double LI,
             double wn = k->pll_bw_lock / 0.53;
             k->a2 = 1.414 * wn;
             k->w2 = wn * wn;
-            k->wf = k->fll_bw_lock / 0.25;
+            k->wf = k->weak ? 0 : k->fll_bw_lock / 0.25;
             double w0 = k->pll_bw3 / 0.7845;
             k->w3 = w0 * w0 * w0; k->a3w = 1.1 * w0 * w0; k->b3w = 2.4 * w0;
             k->x1 = 0;
@@ -289,6 +384,7 @@ void trk_update(trk_t *k, const corr_dump_t *d)
     double I = sc * d->PI, Q = sc * d->PQ;
     double EI = sc * d->EI, EQ = sc * d->EQ, LI = sc * d->LI, LQ = sc * d->LQ;
     if (k->ncoh == 1) {
+        if (k->weak) weak_epoch(k, I, Q);
         loops(k, EI, EQ, I, Q, LI, LQ, k->T);
     } else {
         k->acc[0] += EI; k->acc[1] += EQ; k->acc[2] += I;

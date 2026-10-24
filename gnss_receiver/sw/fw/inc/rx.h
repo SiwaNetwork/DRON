@@ -40,6 +40,8 @@ typedef struct {
     double   ref_tow;
     int      pair;               /* канал первой частоты <-> второй того же КА: индекс + 1 (0 — нет) */
     int      f2;                 /* канал второй частоты (без навигационных данных и измерений) */
+    int      xc;                 /* слабый сигнал: 1 — проверен на взаимную корреляцию (rx_xcheck) */
+    double   xc_t;               /* время слежения при синхронизации по битам (0 — ещё нет), с */
     /* сглаживание кода по фазе несущей (фильтр Хэтча) */
     int      hs_n;               /* измерений в фильтре (0 — сброшен) */
     double   hs_p, hs_l, hs_t;   /* сглаженная ПД, фаза несущей (м) и время последнего измерения */
@@ -88,6 +90,14 @@ int    rx_acquire(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsn
 int    rx_acquire_one(rx_t *r, const uint8_t *const *x4, const uint32_t *t0, int nsnap, int len, int sig,
                       int q, const acq_cfg_t *ac);
 int    rx_sig_range(int sig, int *q0, int *q1);     /* диапазон q для rx_acquire_one; число номеров */
+int    rx_tracked(const rx_t *r, int sig, int q);   /* 1 — КА q сигнала sig в слежении */
+/* пуск канала по результату внешнего поиска (ускоритель ПЛИС, acq_hw_*): доплер и фаза кода на
+ * отсчёт tref (мл. 32 бит); weak — втягивание слабого сигнала (trk_cfg_t.weak). Коды возврата —
+ * как у rx_acquire_one */
+int    rx_start(rx_t *r, int sig, int q, const acq_res_t *a, uint32_t tref, int weak);
+/* проверка каналов слабого сигнала на ложный захват взаимно-корреляционного пика сильного КА
+ * (из фона; до проверки канал не даёт измерений): число освобождённых каналов */
+int    rx_xcheck(rx_t *r);
 /* чтение результатов коррелятора, петли, навигационные данные */
 void   rx_process(rx_t *r, uint64_t n_now);
 /* измерения на отсчёт n_m и навигационное решение; 1 — решение получено */

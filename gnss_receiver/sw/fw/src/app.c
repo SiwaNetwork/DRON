@@ -1,11 +1,12 @@
 /* МГП-8: прикладной уровень ПО МК — см. inc/app.h. */
+#include <math.h>
 #include <string.h>
 #include "app.h"
 #include "fpga.h"
 #include "nmea.h"
 #include "mem.h"
 
-enum { ST_IDLE, ST_SNAP, ST_ACQ };
+enum { ST_IDLE, ST_SNAP, ST_ACQ, ST_HW };
 
 /* копии для решения в фоне: прерывание может заменить измерения и эфемериды во время решения */
 static obs_t OBS[PVT_MAXOBS] MEM_SRAM4;
@@ -24,6 +25,7 @@ int app_init(app_t *a, rx_t *r, uint8_t *const *snap, void (*lock)(int on))
     a->nsig = (int)(sizeof(DEF_SIG) / sizeof(DEF_SIG[0]));
     memcpy(a->sig, DEF_SIG, sizeof(DEF_SIG));
     a->acq_period = 10.0;
+    a->hw_K = 256;
     a->pps_sec = -1;
     rx_init(r);
     r->lock = lock;
@@ -136,16 +138,58 @@ static void snap_begin(app_t *a, int rf)
     acq_snap_start(rf, APP_SNAP_N, 0);
 }
 
-/* сигнал a->si списка или конец цикла поиска */
+/* поиск на ускорителе очередного КА сигнала a->si, начиная с a->q, из тех, что не в слежении;
+ * 0 — КА сигнала кончились или сигнал не для ускорителя. Только L1 C/A: втягивание слабого
+ * сигнала проверено для битов 20 мс; у ГЛОНАСС символы 10 мс с меандром — блоки оценки частоты
+ * (10 мс) почти всегда содержат смену знака */
+static int hw_next(app_t *a)
+{
+    int sig = a->sig[a->si];
+    if (sig != SIG_L1CA) return 0;
+    for (; a->q <= a->q1; a->q++) {
+        if (rx_tracked(a->rx, sig, a->q)) continue;
+        int prn = a->q;
+        if (!acq_hw_init(&a->hw, sig, 0, &prn, 1, -a->ac.dop_max, a->ac.dop_max, a->ac.dop_step, a->hw_K))
+            return 0;
+        a->st = ST_HW;
+        a->hw_c = 0;
+        return 1;
+    }
+    return 0;
+}
+
+/* результат подтверждения r (фаза кода на отсчёт tr) — на месте кандидата a->hw_res: фаза кода
+ * кандидата, перенесённая по его доплеру на tr, ±APP_HW_DP чипа, и z ≥ APP_HW_T1 */
+static int hw_place(const app_t *a, int sig, const acq_res_t *r, uint32_t tr)
+{
+    const sig_info_t *si = &SIGS[sig];
+    const acq_res_t *c = &a->hw_res;
+    double L = si->code_len, dt = (double)(int32_t)(tr - a->hw_tr) / FS_HZ;
+    double e = fmod(r->code_phase - c->code_phase - si->chip_rate * (1 + c->doppler / sig_carrier(sig, 0)) * dt, L);
+    if (e > L / 2) e -= L;
+    else if (e < -L / 2) e += L;
+    return r->metric >= APP_HW_T1 && fabs(e) <= APP_HW_DP;
+}
+
+/* сигнал a->si списка в проходе a->pass или конец цикла поиска */
 static void sig_begin(app_t *a)
 {
-    if (a->si >= a->nsig) {
-        a->st = ST_IDLE;
-        a->acq_next = corr_time_now() + (uint64_t)(a->acq_period * FS_HZ);
-        return;
+    for (;;) {
+        if (a->si >= a->nsig) {
+            if (a->pass || a->hw_K <= 0) {
+                a->st = ST_IDLE;
+                a->acq_next = corr_time_now() + (uint64_t)(a->acq_period * FS_HZ);
+                return;
+            }
+            a->pass = 1;
+            a->si = 0;
+            continue;
+        }
+        rx_sig_range(a->sig[a->si], &a->q, &a->q1);
+        if (!a->pass) { a->st = ST_ACQ; return; }
+        if (hw_next(a)) return;
+        a->si++;
     }
-    rx_sig_range(a->sig[a->si], &a->q, &a->q1);
-    a->st = ST_ACQ;
 }
 
 int app_sol(app_t *a)
@@ -158,10 +202,11 @@ int app_sol(app_t *a)
 
 int app_poll(app_t *a)
 {
-    int w = APP_IDLE;
+    int w = APP_IDLE, x = rx_xcheck(a->rx);
+    if (x) { a->n_xc += (uint32_t)x; w |= APP_HW; }
     switch (a->st) {
     case ST_IDLE:
-        if (corr_time_now() >= a->acq_next) { a->si = 0; sig_begin(a); }
+        if (corr_time_now() >= a->acq_next) { a->si = 0; a->pass = 0; sig_begin(a); }
         break;
     case ST_SNAP:
         if (!acq_snap_read(APP_SNAP_N, a->snap[a->k], &a->t0[a->k])) break;
@@ -183,6 +228,38 @@ int app_poll(app_t *a)
         if (s > 0) a->n_found++;
         w |= APP_ACQ;
         if (s < 0 || ++a->q > a->q1) { a->si++; sig_begin(a); }
+        break;
+    }
+    case ST_HW: {
+        /* накопление идёт в ПЛИС; результат — фаза кода на отсчёт начала лучшего запуска */
+        if (!acq_hw_poll(&a->hw)) break;
+        acq_res_t res;
+        uint32_t tr;
+        int sig = a->sig[a->si], f = acq_hw_result(&a->hw, 0, &res, &tr), s = 0;
+        w |= APP_HW;
+        a->hw_q = a->q; a->hw_z = res.metric; a->hw_s = 0;
+        /* кандидат (z ≥ APP_HW_T1, в том числе выше порога) — подтверждение: 2·hw_K периодов в
+         * ячейке доплера кандидата и двух соседних (три запуска); пуск — по результату
+         * подтверждения на месте кандидата. При фоне ВКФ сильных КА максимум шума по ячейкам
+         * поиска часто выше порога, а при подтверждении — в случайном месте */
+        if (a->hw_c) f = hw_place(a, sig, &res, tr);
+        else if (res.metric >= APP_HW_T1) {
+            int prn = a->q;
+            double st = a->hw.step;
+            if (acq_hw_init(&a->hw, sig, 0, &prn, 1, res.doppler - st, res.doppler + st, st, 2 * a->hw_K)) {
+                a->hw_c = 1;
+                a->hw_res = res;
+                a->hw_tr = tr;
+                break;
+            }
+        }
+        a->hw_c = 0;
+        if (f) s = rx_start(a->rx, sig, a->q, &res, tr, 1);
+        a->n_hw++;
+        if (s > 0) a->n_hw_found++;
+        a->hw_s = s;
+        a->q++;
+        if (s < 0 || !hw_next(a)) { a->si++; sig_begin(a); }
         break;
     }
     }

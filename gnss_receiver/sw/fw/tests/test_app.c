@@ -2,8 +2,12 @@
  * результаты корреляторов, 1PPS), решение по запросу из прерывания, поиск в фоне по одному КА.
  * Длительность поиска одного КА на МК имитируется: после каждого шага поиска модель ПЛИС
  * продолжает работу 50 мс с обслуживанием прерываний и решений (как при вытеснении фона).
- * Имитатор — sim_gps.c (GPS L1 C/A над Москвой). Проверка: координаты, 1PPS от ПЛИС против
- * истинной секунды GPST, NMEA (контрольные суммы), отсутствие вложенных блокировок. */
+ * Имитатор — sim_gps.c (GPS L1 C/A над Москвой), один КА — при C/N0 29 дБГц: его находит только
+ * второй проход поиска — на ускорителе ПЛИС. Проверка: координаты, 1PPS от ПЛИС против истинной
+ * секунды GPST, NMEA (контрольные суммы), отсутствие вложенных блокировок; слабый КА — пуск по
+ * ускорителю, захват фазы, синхронизация по битам и по подкадрам (время излучения); КА, которых
+ * нет в имитаторе, — не в слежении после проверки и не в измерениях (канал слабого сигнала даёт
+ * измерения лишь после синхронизации по битам и проверки на взаимную корреляцию). */
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -16,8 +20,9 @@
 #include "app.h"
 #include "sim_gps.h"
 
-#define DUR    28.0                  /* с */
+#define DUR    40.0                  /* с */
 #define T_ACQ  0.05                  /* имитируемая длительность поиска одного КА, с */
+#define CN0_W  29.0                  /* C/N0 слабого КА, дБГц */
 #define CHUNK  4096
 
 static app_t A;
@@ -48,6 +53,13 @@ static void out(const char *s, int n)
     }
 }
 
+static int in_sim(int ns, int prn)
+{
+    for (int i = 0; i < ns; i++)
+        if (sim_gps_prn(i) == prn) return 1;
+    return 0;
+}
+
 /* модель ПЛИС на CHUNK отсчётов; прерывание ПЛИС, затем запрошенное им решение (PendSV) */
 static int pend;
 static void step(void)
@@ -59,8 +71,10 @@ static void step(void)
 
 int main(void)
 {
-    int NS = sim_gps_init(DUR);
-    printf("Имитатор: КА GPS %d, %.0f с; поиск одного КА — %.0f мс\n", NS, DUR, T_ACQ * 1e3);
+    int NS = sim_gps_init(DUR), PW = sim_gps_prn(0);
+    sim_gps_cn0(0, CN0_W);                               /* меньший PRN — раньше во втором проходе */
+    printf("Имитатор: КА GPS %d, %.0f с; поиск одного КА — %.0f мс; PRN %d — %.0f дБГц\n", NS, DUR, T_ACQ * 1e3,
+           PW, CN0_W);
     corr_sim_init(1);
     uint8_t *snap[APP_NSNAP];
     for (int k = 0; k < APP_NSNAP; k++) snap[k] = SNAP[k];
@@ -72,6 +86,7 @@ int main(void)
     RX.pcfg.trop = 0;                                    /* имитатор без атмосферы */
     int pps_prev = 0, n_pps = 0, nsol_prev = 0;
     double rec_sec = -1, rec_qe = 0, maxerr = 0, maxpps = 0, t_first = -1;
+    static int wst[CORR_MAXCH];                          /* состояние канала слабого сигнала (для печати) */
     while (sim_gps_t(corr_sim_nsmp()) < SIM_T0 + DUR - 0.01) {
         step();
         /* импульс 1PPS выдан ПЛИС: сравнение с истинной секундой GPST (взведённой перед выдачей) */
@@ -96,22 +111,64 @@ int main(void)
                    nsol_prev, RX.sol.nsat, err);
             if (err > maxerr) maxerr = err;
         }
+        uint32_t hw_prev = A.n_hw, xc_prev = A.n_xc;
+        int c_prev = A.hw_c;
         int w = app_poll(&A);
         if (w & APP_ACQ) {                               /* поиск на МК занимает время */
             for (int i = 0; i < (int)(T_ACQ * FS_HZ / CHUNK); i++) step();
         }
+        double t = sim_gps_t(corr_sim_nsmp()) - SIM_T0;
+        if (A.n_hw != hw_prev || (A.hw_c && !c_prev))
+            printf("  t=%5.1f с: ускоритель — PRN %2d (%s): z = %4.1f%s\n", t, A.hw_q, in_sim(NS, A.hw_q) ? "есть" : "нет",
+                   A.hw_z, A.hw_c ? ", подтверждение" : A.hw_s > 0 ? ", подтверждён — пуск канала" :
+                   c_prev ? ", не подтверждён" : "");
+        if (A.n_xc != xc_prev) printf("  t=%5.1f с: ложный захват (взаимная корреляция) — канал освобождён\n", t);
+        /* каналы слабого сигнала: пуск, захват фазы, синхронизация по битам, проверка */
+        for (int k = 0; k < CORR_MAXCH; k++) {
+            const rx_ch_t *c = &RX.ch[k];
+            int s = !c->used || !c->trk.weak ? 0 : c->xc ? 4 : c->trk.bit_sync ? 3 : c->trk.state == TRK_LOCK ? 2 : 1;
+            if (s > wst[k]) {
+                static const char *const EV[] = {"", "пуск", "захват фазы", "синхронизация по битам",
+                                                 "проверка на взаимную корреляцию пройдена"};
+                printf("  t=%5.1f с: канал %d, PRN %d (%s) — %s, C/N0 %.1f дБГц\n", t, k, c->prn,
+                       in_sim(NS, c->prn) ? "есть" : "нет", EV[s], c->trk.cn0);
+            }
+            wst[k] = s;
+        }
     }
-    int ntrk = 0;
-    for (int k = 0; k < CORR_MAXCH; k++) ntrk += RX.ch[k].used && RX.ch[k].trk.state == TRK_LOCK;
-    printf("Прерываний %u (TIC %u, 1PPS %u, опозданий фиксации %u); поисков %u, найдено %u; в слежении %d\n",
-           (unsigned)A.n_irq, (unsigned)A.n_tic, (unsigned)A.n_pps, (unsigned)A.n_late, (unsigned)A.n_acq,
-           (unsigned)A.n_found, ntrk);
+    /* в слежении — КА имитатора; ложные (нет в имитаторе) — в захвате без проверки слабого сигнала
+     * или в измерениях */
+    int ntrk = 0, nfalse = 0;
+    const rx_ch_t *cw = NULL;
+    for (int k = 0; k < CORR_MAXCH; k++) {
+        const rx_ch_t *c = &RX.ch[k];
+        if (!c->used) continue;
+        if (!in_sim(NS, c->prn)) nfalse += c->trk.state == TRK_LOCK && (!c->trk.weak || c->xc);
+        else ntrk += c->trk.state == TRK_LOCK;
+        if (c->sig == SIG_L1CA && c->prn == PW) cw = c;
+    }
+    for (int i = 0; i < RX.nobs; i++) nfalse += !in_sim(NS, RX.obs[i].prn);
+    printf("Прерываний %u (TIC %u, 1PPS %u, опозданий фиксации %u); поисков %u, найдено %u; на ускорителе %u, "
+           "найдено %u, освобождено каналов по ВКФ %u; в слежении %d КА имитатора, ложных %d\n", (unsigned)A.n_irq,
+           (unsigned)A.n_tic, (unsigned)A.n_pps, (unsigned)A.n_late, (unsigned)A.n_acq, (unsigned)A.n_found,
+           (unsigned)A.n_hw, (unsigned)A.n_hw_found, (unsigned)A.n_xc, ntrk, nfalse);
     printf("Решений %u (отказов %u), первое через %.1f с; NMEA: выдач %u, предложений %d, GGA %d, ошибок %d\n",
            (unsigned)A.n_sol, (unsigned)A.n_fail, t_first, (unsigned)A.n_nmea, n_sent, n_gga, n_bad_cs);
     printf("Блокировок %d, нарушений %d; макс. ошибка координат %.2f м, 1PPS (с qErr) %.2f нс по %d импульсам\n",
            lk_n, lk_bad, maxerr, maxpps * 1e9, n_pps);
+    int wk = cw && cw->trk.weak && cw->trk.state == TRK_LOCK && cw->trk.bit_sync && cw->xc && cw->tx_ok, wo = 0;
+    for (int i = 0; i < RX.nobs; i++) wo |= RX.obs[i].prn == PW;
+    if (cw)
+        printf("Слабый КА PRN %d: пуск по %s, %s, C/N0 %.1f дБГц, %s, %s, %s, %s\n", PW,
+               cw->trk.weak ? "ускорителю" : "поиску на МК", cw->trk.state == TRK_LOCK ? "захват фазы" : "НЕТ захвата",
+               cw->trk.cn0, cw->trk.bit_sync ? "синхронизация по битам" : "НЕТ синхронизации по битам",
+               cw->xc ? "проверка на взаимную корреляцию пройдена" : "НЕТ проверки на взаимную корреляцию",
+               cw->tx_ok ? "время излучения по подкадрам" : "НЕТ синхронизации по подкадрам",
+               wo ? "в измерениях" : "НЕ в измерениях");
+    else
+        printf("Слабый КА PRN %d: НЕ в слежении\n", PW);
     if (A.n_sol < 3 || maxerr > 15 || n_pps < 2 || maxpps > 20e-9 || n_bad_cs || n_gga != (int)A.n_sol ||
-        lk_bad || lk_on || A.n_late || ntrk < NS - 1) ok = 0;
+        lk_bad || lk_on || A.n_late || ntrk < NS || nfalse || !wk) ok = 0;
     printf("ИТОГ: %s\n", ok ? "ПРОЙДЕН" : "НЕ ПРОЙДЕН");
     return !ok;
 }

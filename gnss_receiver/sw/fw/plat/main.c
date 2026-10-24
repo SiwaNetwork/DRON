@@ -5,7 +5,7 @@
  * ПЛИС, сброс FX3 снимается, АЦП и питание антенны, карта microSD, FDCAN, прикладной уровень
  * (app_init: ПЛИС, MAX2771, приёмник), прерывание ПЛИС (EXTI PE5), планировщик.
  * Задачи фона (plat/sched.c):
- *   t_acq  — поиск КА (app_poll), на каждом проходе;
+ *   t_acq  — поиск КА (app_poll: по снимкам, затем на ускорителе ПЛИС), на каждом проходе;
  *   t_cmd  — команда ENTER загрузчика с обоих UART, на каждом проходе;
  *   t_led  — индикаторы FIX и ANT, 100 мс;
  *   t_tm   — телеметрия (АЦП, ток антенны, ФАПЧ): кадр MBP_TM в порт GPS, строка в отладочный
@@ -117,10 +117,11 @@ static int t_tm(void)
         .fpga_ok = fpga_st == FPGA_OK, .pll_lock = (uint8_t)(st >> 9 & 1u),
     };
     uart_write(UART_GPS, buf, mbp_tm(buf, &m));
-    dbg("tm: t %d C, ant %d mA st %d (kz %u), v5 %u v3v3 %u v1v1 %u mV, ld %x, irq %u, sol %u, acq %u/%u\r\n",
+    dbg("tm: t %d C, ant %d mA st %d (kz %u), v5 %u v3v3 %u v1v1 %u mV, ld %x, irq %u, sol %u, acq %u/%u, "
+        "hw %u/%u, xc %u\r\n",
         (int)t.t_mcu, (int)t.ant_ma, t.ant, t.n_short, (unsigned)(t.v5 * 1000.0f),
         (unsigned)(t.v3v3 * 1000.0f), (unsigned)(t.v1v1 * 1000.0f), st & 0xFFu,
-        A.n_irq, A.n_sol, A.n_found, A.n_acq);
+        A.n_irq, A.n_sol, A.n_found, A.n_acq, A.n_hw_found, A.n_hw, A.n_xc);
     return 1;
 }
 

@@ -123,3 +123,10 @@ int sim_gps_init(double dur)
     }
     return NS;
 }
+
+int sim_gps_prn(int i) { return i >= 0 && i < NS ? S[i].prn : 0; }
+
+void sim_gps_cn0(int i, double cn0)
+{
+    if (i >= 0 && i < NS) S[i].A = sqrt(pow(10, cn0 / 10) / FS_HZ);
+}

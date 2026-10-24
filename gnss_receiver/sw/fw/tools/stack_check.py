@@ -29,15 +29,15 @@ LEVELS = [
 ]
 # косвенные вызовы: «файл:строка» места вызова -> функции
 INDIRECT = {
-    "src/app.c:15": ["irq_lock"],                         # rx->lock
-    "src/rx.c:56": ["irq_lock"],
-    "src/app.c:87": ["plat/main.c:nmea_out"],             # app->out
-    "src/app.c:88": ["plat/main.c:nmea_out"],
-    "src/app.c:89": ["plat/main.c:nmea_out"],
+    "src/app.c:16": ["irq_lock"],                         # rx->lock
+    "src/rx.c:57": ["irq_lock"],
+    "src/app.c:89": ["plat/main.c:nmea_out"],             # app->out
     "src/app.c:90": ["plat/main.c:nmea_out"],
     "src/app.c:91": ["plat/main.c:nmea_out"],
     "src/app.c:92": ["plat/main.c:nmea_out"],
-    "src/track.c:113": ["src/rx.c:on_bit"],               # trk->on_bit
+    "src/app.c:93": ["plat/main.c:nmea_out"],
+    "src/app.c:94": ["plat/main.c:nmea_out"],
+    "src/track.c:204": ["src/rx.c:on_bit"],               # trk->on_bit
     "plat/sched.c:27": ["plat/main.c:t_acq", "plat/main.c:t_cmd", "plat/main.c:t_led", "plat/main.c:t_tm"],
     "src/bootp.c:69": ["plat/boot.c:io_prog"],            # io->prog, io->erase, b->send
     "src/bootp.c:93": ["plat/boot.c:io_erase"],
