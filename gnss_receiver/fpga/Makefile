@@ -8,6 +8,9 @@ RTL    = rtl/cmem_4kx4.v rtl/corr_engine.v rtl/corr_bank.v rtl/rf_capture.v rtl/
 IVFLAGS = -g2005 -Wall
 B       = build
 SEED   ?= 1
+# размещение с повышенным весом тайминга: с выводами каналов по положению на плате (ПЗ 6.2.2)
+# при весе по умолчанию (10, показатель 2) зёрна 1–7 дают 86–92 МГц
+PNR    ?= --placer-heap-timingweight 30 --placer-heap-critexp 4
 
 .PHONY: sim sim-engine sim-notch sim-acq sim-sys syn engine notch acq clean
 sim: sim-engine sim-notch sim-acq sim-sys
@@ -51,7 +54,7 @@ syn/mgp8.lpf: syn/gen_lpf.py
 
 syn: $(B)/mgp8.json syn/mgp8.lpf
 	nextpnr-ecp5 --45k --package CABGA381 --speed 6 --json $(B)/mgp8.json --lpf syn/mgp8.lpf \
-	    --textcfg $(B)/mgp8.config --report $(B)/pnr_report.json --seed $(SEED) > $(B)/nextpnr.log 2>&1
+	    --textcfg $(B)/mgp8.config --report $(B)/pnr_report.json --seed $(SEED) $(PNR) > $(B)/nextpnr.log 2>&1
 	grep -E "Max frequency" $(B)/nextpnr.log | tail -1
 	# MCCLK 38,8 МГц (по умолчанию 2,4): конфигурация из W25Q128 (чтение 03h — до 50 МГц) за доли
 	# секунды; МК ждёт DONE 2 с (sw/fw/plat/fmc.c)

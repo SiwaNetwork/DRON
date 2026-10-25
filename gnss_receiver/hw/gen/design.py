@@ -27,10 +27,13 @@ def C(v):
 def fpga_signals():
     """Сигналы ПЛИС по банкам. Значение None — назначить свободный вывод банка."""
     b7, b6 = [], []
-    for i, ch in enumerate(CH):
+    # Каналы — в банки по положению на плате: ПЛИС повёрнута на −90°, банк 7 справа, банк 6 слева,
+    # выводы по порядку имён идут справа налево. Каналы 5–8 (правый экран) — в банк 7, каналы 1–4
+    # (левый экран) — в банк 6, крайний правый канал первым: шины каналов над ПЛИС не пересекаются.
+    for i, ch in reversed(list(enumerate(CH))):
         sig = [f"MAX_I1_{ch}", f"MAX_I0_{ch}", f"MAX_Q1_{ch}", f"MAX_Q0_{ch}",
                f"MAX_LD_{ch}", f"MAX_CSN_{ch}", f"MAX_SHDN_{ch}"]
-        (b7 if i < 4 else b6).extend(sig)
+        (b6 if i < 4 else b7).extend(sig)
     b7 += ["MAX_SCLK", "MAX_SDATA"]
     fixed = {"ADC_SCLK": "G2", "REF_CMP": "H2",
              "FLASH_CS": "R2", "FLASH_MOSI": "W2", "FLASH_MISO": "V2", "FLASH_WP": "Y2", "FLASH_HOLD": "W1"}
